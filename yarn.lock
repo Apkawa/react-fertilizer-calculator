@@ -2987,6 +2987,21 @@ chardet@^0.7.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
+chemical-formula@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/chemical-formula/-/chemical-formula-2.0.0.tgz#27b592e8570323dd50c0d8ad14bbc867f123c059"
+  integrity sha512-k5wrzBhvDjs8Q8jOYUnS41Tq0x+w5K1w0gHHcRAMRJLlUj2DAMidU9K5VWm2gN173Jct79TPT/Dok0DZImRJjQ==
+  dependencies:
+    chemical-symbols "^2.0.0"
+    lodash.forown "^4.2.0"
+    lodash.indexof "^4.0.3"
+    lodash.isfinite "^3.0.0"
+
+chemical-symbols@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/chemical-symbols/-/chemical-symbols-2.0.0.tgz#065cf32f9950a8bfd49847d9c7810328207451cb"
+  integrity sha512-m2VFYraVAWSAWt9OdmFhtO2viPwtC2aD/I6aJR4KJA8J7rYuL6EP8x+fN5fr48Iy5uo6Zbhpc2ENjrPhaVSklg==
+
 chokidar@^2.0.2, chokidar@^2.1.8:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.8.tgz#804b3a7b6a99358c3c5c61e71d8728f041cff917"
@@ -6731,6 +6746,21 @@ lodash._reinterpolate@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
   integrity sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
+
+lodash.forown@^4.2.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.forown/-/lodash.forown-4.4.0.tgz#85115cf04f73ef966eced52511d3893cc46683af"
+  integrity sha1-hRFc8E9z75ZuztUlEdOJPMRmg68=
+
+lodash.indexof@^4.0.3:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/lodash.indexof/-/lodash.indexof-4.0.5.tgz#53714adc2cddd6ed87638f893aa9b6c24e31ef3c"
+  integrity sha1-U3FK3Czd1u2HY4+JOqm2wk4x7zw=
+
+lodash.isfinite@^3.0.0:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/lodash.isfinite/-/lodash.isfinite-3.3.2.tgz#fb89b65a9a80281833f0b7478b3a5104f898ebb3"
+  integrity sha1-+4m2WpqAKBgz8LdHizpRBPiY67M=
 
 lodash.memoize@4.x, lodash.memoize@^4.1.2:
   version "4.1.2"

@@ -20,6 +20,9 @@
     "noEmit": true,
     "jsx": "react"
   },
+  "files": [
+    "./src/types.d.ts"
+  ],
   "include": [
     "src"
   ]

@@ -1,22 +1,7 @@
 import {product} from "./itertools";
+import {countDecimals, entries, keys, round, sum} from "../utils";
+import {Elements, Fertilizer} from "./fertilizer";
 
-type Entries<T> = {
-  [K in keyof T]: [K, T[K]];
-}[keyof T][];
-
-
-export interface Elements {
-  N: number,
-  P: number,
-  K: number,
-  Ca: number,
-  Mg: number,
-}
-
-
-export interface Fertilizer extends Elements {
-  id: string,
-}
 
 export interface FertilizerWeights {
   id: string,
@@ -39,46 +24,51 @@ export interface CalculateOptions {
   ignore_Mg?: boolean,
 }
 
+/*
+TODO
+P  x 2,29 =P2O5
+K  x 1,2  =K2O
+Ca x 1,4  =Ca0
+Mg x 1,66 =Mg
+S  x 2,5  =SO3
+S  x 3    =SO4
+N  x 4,43 =NO3
+
+и в обратную сторону
+
+P2O5 x 0,44 =P
+K2O  x 0,83 =K
+CaO  x 0,71 =Ca
+MgO  x 0,6  =Mg
+SO3  x 0,4  =S
+SO4  x 0,33 =S
+NO3  x 0,22 =N
+ */
+
 const COEFFICIENT_OF_ELEMENTS: Elements = {
   N: 1,
   P: 0.436,
   K: 0.83,
   Mg: 0.6,
   Ca: 0.715,
-
-}
-
-export function sum(values: number[]) {
-  return values.reduce((a, b) => a + b, 0)
-}
-
-export function round(number: number, precision: number = 0) {
-  const p = Math.pow(10, precision)
-  return Math.round((number + Number.EPSILON) * p) / p
-}
-
-export function countDecimals(value: number): number {
-  if (Math.floor(value.valueOf()) === value.valueOf()) return 0;
-  return value.toString().split(".")[1].length || 0;
 }
 
 export function sumFertilizers(fertilizers: Fertilizer[], portions: number[]): Elements {
-  let el = Object.entries(COEFFICIENT_OF_ELEMENTS) as Entries<Elements>
-  return <unknown>(Object.fromEntries(el.map(([key, coefficient]) =>
+  const pairs = keys(COEFFICIENT_OF_ELEMENTS).map(key =>
     [
       key,
       sum(
         portions.map(
-          (weight, index) => weight * coefficient * fertilizers[index][key])
+          (weight, index) => weight * fertilizers[index][key])
       )
     ]
-  ))) as Elements
+  )
+  return Object.fromEntries(pairs)
 }
 
 
 export function getScoreElement(needElements: Elements, currentElements: Elements): Elements {
-  let entries = Object.entries(needElements) as Entries<Elements>
-  return <unknown>Object.fromEntries(entries.map(([key, value]) => {
+  let pairs = entries(needElements).map(([key, value]) => {
     let curVal = currentElements[key]
     let score = 100
     if (curVal !== 0) {
@@ -89,7 +79,8 @@ export function getScoreElement(needElements: Elements, currentElements: Element
       }
     }
     return [key, score]
-  })) as Elements
+  })
+  return Object.fromEntries(pairs)
 
 }
 
@@ -165,7 +156,7 @@ export function calculate(
     })
   }
 
-  var ignored = 0;
+  let ignored = 0;
   if (options.ignore_Ca) {
     ignored += 1
   }
