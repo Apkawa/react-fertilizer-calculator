@@ -1,12 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import {applyMiddleware, createStore} from 'redux'
+import createSagaMiddleware from 'redux-saga'
+
 import * as serviceWorker from './serviceWorker';
+import rootSaga from "./saga";
+
+import Root from './Root'
+
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(
+  () => {
+  },
+  applyMiddleware(sagaMiddleware)
+)
+
+sagaMiddleware.run(rootSaga)
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Root store={store}/>
   </React.StrictMode>,
   document.getElementById('root')
 );

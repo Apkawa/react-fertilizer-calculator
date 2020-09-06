@@ -1,7 +1,7 @@
 import {calculateMassParts, parseMolecule} from "./chem";
 import {AtomNameType} from "./constants";
 
-describe("parseMolecula", () => {
+describe("parseMolecule", () => {
   test('H2O', () => {
     const result = parseMolecule("H2O")
     expect(result).toEqual({H: 2, O: 1})
