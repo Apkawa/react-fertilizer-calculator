@@ -1,21 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {applyMiddleware, createStore} from 'redux'
-import createSagaMiddleware from 'redux-saga'
 
 import * as serviceWorker from './serviceWorker';
-import rootSaga from "./saga";
 
 import Root from './Root'
+import {store} from "./redux";
 
-const sagaMiddleware = createSagaMiddleware()
-const store = createStore(
-  () => {
-  },
-  applyMiddleware(sagaMiddleware)
-)
-
-sagaMiddleware.run(rootSaga)
 
 
 ReactDOM.render(

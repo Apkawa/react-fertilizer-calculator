@@ -1,13 +1,17 @@
 import React, {FunctionComponent} from "react";
 import {Box, Button, Card, Flex, Text} from "rebass";
-import {ELEMENT_NAMES} from "../constants";
+import {FertilizerType} from "./types";
+import {normalizeFertilizer} from "../../../calculator/fertilizer";
+import {useSelector} from "react-redux";
+import {CalculatorState} from "../types";
+import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
 
 interface ElementProps {
   name: string,
   value: number,
 }
 
-const Element: FunctionComponent<ElementProps> = ({name, value}) => {
+export const Element: FunctionComponent<ElementProps> = ({name, value}) => {
   return (
     <Box bg="primary" flex={1} mx={1} px={2} color={'background'}>
       <Flex flexDirection='column' alignItems={'center'}>
@@ -19,29 +23,37 @@ const Element: FunctionComponent<ElementProps> = ({name, value}) => {
 }
 
 interface SelectedListItemProps {
+  item: FertilizerType,
+  onRemove: () => void,
+  needWeight?: number,
 }
 
 
-export const SelectedListItem: FunctionComponent<SelectedListItemProps> = () => {
+export const SelectedListItem: FunctionComponent<SelectedListItemProps> = ({item, onRemove, needWeight}) => {
+  const normalizedFertilizer = normalizeFertilizer(item, false)
   return (
-      <Card width={'auto'}>
-        <Flex justifyContent={'space-between'}>
-          <Box>
-            SelectedFertilizer
-            <Flex justifyContent={'space-around'}>
-              {
-                ELEMENT_NAMES.map((name) => <Element name={name} value={0}/>
-                )
-              }
-            </Flex>
-          </Box>
-          <Flex alignItems="center">
-            <Text>
-              1.0
-            </Text>
+    <Card width={'auto'}>
+      <Flex justifyContent={'space-between'}>
+        <Box>
+          {item.id}
+          <Flex justifyContent={'space-around'}>
+            {
+              FERTILIZER_ELEMENT_NAMES.map((name) =>
+                <Element
+                  name={name} key={name}
+                  value={normalizedFertilizer[name]}
+                />
+              )
+            }
           </Flex>
-          <Button variant="outline">X</Button>
+        </Box>
+        <Flex alignItems="center">
+          <Text>
+            { needWeight || 0}
+          </Text>
         </Flex>
-      </Card>
+        <Button variant="outline" type={'button'} onClick={() => onRemove()}>X</Button>
+      </Flex>
+    </Card>
   )
 }

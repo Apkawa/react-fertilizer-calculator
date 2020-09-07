@@ -1,6 +1,7 @@
-import React, { FunctionComponent } from "react";
+import React, {FunctionComponent} from "react";
 import {Card, Flex, Heading} from "rebass";
-import {Label, Radio} from "@rebass/forms";
+import {Radio} from "../../ui/ReduxForm/Radio";
+import {decimal, number} from "../../ui/ReduxForm/normalizers";
 
 const ACCURACY_VARIANTS = [
   0.2,
@@ -17,10 +18,12 @@ export const Accuracy: FunctionComponent<AccuracyProps> = () => {
           <Flex flexDirection="column">
             <Heading fontSize={2}>Точность</Heading>
             {ACCURACY_VARIANTS.map(a =>
-              <Label>
-                <Radio name="accuracy" value={a}/>
-                {a} грамма
-              </Label>
+                <Radio
+                  name="accuracy"
+                  value={a}
+                  label={`${a} грамма`}
+                  normalize={decimal}
+                />
             )}
           </Flex>
       </Card>

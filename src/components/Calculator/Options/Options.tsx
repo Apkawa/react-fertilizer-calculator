@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from "react";
+import React, {ComponentType} from "react";
 import {Box, Button, Flex} from "rebass";
 import {Recipe} from "./Recipe";
 import {IgnoreElement} from "./IgnoreElement";
@@ -8,16 +8,19 @@ import {SolutionVolume} from "./SolutionVolume";
 interface OptionsProps {
 }
 
-export const Options: FunctionComponent<OptionsProps> = () => {
+
+export const Options: ComponentType<OptionsProps> = () => {
   return (
     <Flex flexDirection="column">
       <Box flex={1}>
-        <Button width="100%" my={2}>Calculate</Button>
+        <Button width="100%" my={2} type="submit">Calculate</Button>
       </Box>
       <Box flex={1}>
         <Recipe/>
       </Box>
-      <SolutionVolume/>
+      <Box my={2}>
+        <SolutionVolume/>
+      </Box>
       <Flex sx={{
         '& > *': {flex: 1}
       }}>
@@ -30,3 +33,4 @@ export const Options: FunctionComponent<OptionsProps> = () => {
     </Flex>
   )
 }
+

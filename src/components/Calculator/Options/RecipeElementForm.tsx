@@ -1,10 +1,15 @@
 import React, {FunctionComponent} from "react";
-import {Input} from "@rebass/forms";
 import {Flex} from "rebass";
+import {Input} from "../../ui/ReduxForm/Input";
+import {number} from "../../ui/ReduxForm/normalizers";
 
 interface RecipeElementFormProps {
   name: string
 }
+
+export const getRecipeFieldName = (name: string) => `recipe.${name}`
+
+
 
 export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = ({name}) => {
   return (
@@ -13,7 +18,11 @@ export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = ({na
         {name}
       </label>
       <Input
-        name={name} maxLength={4} pattern="/^\d+$/"
+        name={getRecipeFieldName(name)}
+        maxLength={3}
+        pattern="^\d+$"
+        autoComplete="off"
+        normalize={number}
         width="3rem"
         style={{
           textAlign: "center"

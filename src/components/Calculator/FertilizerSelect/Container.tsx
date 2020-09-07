@@ -1,16 +1,19 @@
-import React, {FunctionComponent} from "react";
-import {Box, Flex} from "rebass";
-import {AddItem} from "./AddItem";
+import React from "react";
 import {SelectedList} from "./SelectedList";
+import {FieldArray} from "redux-form";
+import {FertilizerType} from "./types";
+import {required} from "../../ui/ReduxForm/validators";
 
-interface ContainerProps {
-}
 
-export const Container: FunctionComponent<ContainerProps> = () => {
+
+
+export const Container = () => {
   return (
-    <Flex sx={{flexDirection: 'column'}} width='auto'>
-        <AddItem/>
-        <SelectedList/>
-    </Flex>
+    <FieldArray<{}>
+      name={"fertilizers"}
+      component={SelectedList}
+      validate={required("Выберите удобрения")}
+    />
   )
 }
+

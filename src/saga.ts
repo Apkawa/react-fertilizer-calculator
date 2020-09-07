@@ -1,9 +1,12 @@
 import {all} from 'redux-saga/effects'
+import calculatorRootSaga from "./components/Calculator/saga";
 
-const sagas: Generator<CallableFunction>[] = [
-  //
+type AnySagaGenerator = Generator<any, any, any>;
+
+const sagas: (() => AnySagaGenerator)[] = [
+  calculatorRootSaga
 ]
 
 export default function* rootSaga() {
-  yield all(sagas)
+  yield all(sagas.map(s => s()))
 }
