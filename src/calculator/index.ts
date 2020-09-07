@@ -1,20 +1,23 @@
 import {product} from "./itertools";
 import {countDecimals, entries, keys, round, sum} from "../utils";
 import {Elements, Fertilizer} from "./fertilizer";
+import {FERTILIZER_ELEMENT_NAMES} from "./constants";
 
 
 export interface FertilizerWeights {
   id: string,
   weight: number
+  base_weight: number,
 }
 
 export interface CalculateResult {
   fertilizers: FertilizerWeights[],
+  elements: Elements,
   score: number,
   stats: {
     time: number,
     count: number,
-  }
+  },
 }
 
 export interface CalculateOptions {
@@ -45,16 +48,9 @@ SO4  x 0,33 =S
 NO3  x 0,22 =N
  */
 
-const COEFFICIENT_OF_ELEMENTS: Elements = {
-  N: 1,
-  P: 0.436,
-  K: 0.83,
-  Mg: 0.6,
-  Ca: 0.715,
-}
 
 export function sumFertilizers(fertilizers: Fertilizer[], portions: number[]): Elements {
-  const pairs = keys(COEFFICIENT_OF_ELEMENTS).map(key =>
+  const pairs = FERTILIZER_ELEMENT_NAMES.map(key =>
     [
       key,
       sum(
@@ -94,11 +90,16 @@ export function calculate(
   let count = 0;
   const {accuracy = 0.1, max_iterations = 15} = options || {}
   const precision = countDecimals(accuracy)
-  let weights: FertilizerWeights[] = fertilizers.map(v => ({id: v.id, weight: max_iterations}))
+  let weights: FertilizerWeights[] = fertilizers.map(v => ({
+    id: v.id,
+    weight: max_iterations,
+    base_weight: max_iterations
+  }))
 
   let best_score = 1000000;
   let score;
   let score_percent = 0;
+  let calculatedElements: Elements = { N: 0, P: 0, K: 0, Ca: 0, Mg: 0}
 
 
   for (let currentAccuracy of [0.5, 0.2, 0.1, 0.05, 0.01]) {
@@ -138,9 +139,11 @@ export function calculate(
       const current_score = sum(Object.values(score_el))
       score = sum(Object.values(score_el).map(v => Math.pow(v, 2)))
       if (best_score > score) {
+        calculatedElements = n_el
         best_score = score
         score_percent = current_score
         weights.forEach((v, index) => {
+          v.base_weight = portions[index]
           v.weight = portions[index]
         })
       }
@@ -163,9 +166,13 @@ export function calculate(
   if (options.ignore_Mg) {
     ignored += 1
   }
+  for (let [k, v] of entries(calculatedElements)) {
+    calculatedElements[k] = round(v)
+  }
+
   const result: CalculateResult = {
-    fertilizers: weights.filter(v => v.weight > 0)
-      .map(v => ({...v, weight: round(v.weight / 10, precision)})),
+    fertilizers: weights.map(v => ({...v, weight: round(v.weight / 10, precision)})),
+    elements: calculatedElements,
     score: Math.round(100 / ((score_percent - (5 - ignored)) / (5 - ignored) + 1)),
     stats: {
       time: (new Date().getTime() - time) / 1000,

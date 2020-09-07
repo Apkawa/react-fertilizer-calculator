@@ -42,6 +42,13 @@ describe("Calculate", () => {
           "weight": 1,
         },
       ],
+      elements: {
+        "N": 193,
+        "P": 53,
+        "K": 347,
+        "Ca": 170,
+        "Mg": 26
+      },
       "score": 74,
     })
   })
@@ -53,7 +60,7 @@ describe("Calculate", () => {
         Ca: 170,
         Mg: 50,
       },
-      defaultFertilizers.map(normalizeFertilizer),
+      defaultFertilizers.map(f => normalizeFertilizer(f)),
       {ignore_Mg: true, ignore_Ca: true, accuracy: 0.01}
     )
     expect(result).toMatchObject({
@@ -78,7 +85,7 @@ describe("Calculate", () => {
         Ca: 170,
         Mg: 50,
       },
-      defaultFertilizers.map(normalizeFertilizer),
+      defaultFertilizers.map(f => normalizeFertilizer(f)),
       {accuracy: 0.01}
     )
     expect(result).toMatchObject({

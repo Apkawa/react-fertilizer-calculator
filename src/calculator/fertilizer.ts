@@ -53,7 +53,7 @@ export function buildNPKFertilizer(id: string, npk: NPKElements): FertilizerInfo
     }
 }
 
-export function normalizeFertilizer(fertilizerInfo: FertilizerInfo): Fertilizer {
+export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass=true): Fertilizer {
   const el: Elements = { N: 0, P: 0, K: 0, Ca: 0, Mg: 0}
 
   for (let comp of fertilizerInfo.composition) {
@@ -64,7 +64,7 @@ export function normalizeFertilizer(fertilizerInfo: FertilizerInfo): Fertilizer 
         if (comp.percent) {
           percent = comp.percent;
         }
-        el[atom] = percent * mass
+        el[atom] = convertMass ? percent * mass : percent
       }
     }
   }
