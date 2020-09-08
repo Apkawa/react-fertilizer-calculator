@@ -1,5 +1,5 @@
 import {calculate} from "./index";
-import {buildNPKFertilizer, Elements, Fertilizer, FertilizerInfo, normalizeFertilizer} from "./fertilizer";
+import {buildNPKFertilizer, FertilizerInfo, normalizeFertilizer} from "./fertilizer";
 
 
 const defaultFertilizers: FertilizerInfo[] = [

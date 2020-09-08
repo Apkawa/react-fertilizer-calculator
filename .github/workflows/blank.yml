@@ -16,6 +16,7 @@ jobs:
         run: |
           yarn --frozen-lockfile
           yarn test -- --watchAll=false --all
+          yarn lint
           yarn build
       - name: Deploy to GitHub Pages
         if: success()

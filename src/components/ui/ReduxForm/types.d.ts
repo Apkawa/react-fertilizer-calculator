@@ -1,12 +1,5 @@
 import {ComponentType, FunctionComponent} from "react";
-import {
-  BaseFieldProps,
-  InjectedArrayProps,
-  InjectedFormProps,
-  WrappedFieldArrayProps,
-  WrappedFieldInputProps
-} from "redux-form";
-import {CalculatorFormValues} from "../../Calculator/types";
+import {BaseFieldProps, InjectedFormProps, WrappedFieldArrayProps, WrappedFieldInputProps} from "redux-form";
 
 export type WrapperInputType<T> = FunctionComponent<T & WrappedFieldInputProps>
 
