@@ -1,6 +1,6 @@
 {
   "name": "fertilizer-calculator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "dependencies": {
     "@loadable/component": "^5.13.1",
@@ -33,8 +33,7 @@
       "react-app"
     ],
     "parser": "@typescript-eslint/parser",
-    "rules": {
-    }
+    "rules": {}
   },
   "browserslist": {
     "production": [
