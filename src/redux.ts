@@ -13,11 +13,21 @@ const reducers = combineReducers({
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const sagaMiddleware = createSagaMiddleware()
+
+const persistedState = localStorage.getItem('reduxState')
+  ? JSON.parse(localStorage.getItem('reduxState') as string)
+  : {}
+
 export const store = createStore(
   reducers,
+  persistedState,
   composeEnhancers(
     applyMiddleware(sagaMiddleware),
   )
 )
+
+store.subscribe(() => {
+  localStorage.setItem('reduxState', JSON.stringify(store.getState()))
+})
 
 sagaMiddleware.run(rootSaga)
