@@ -3,7 +3,6 @@ import {Card, Flex} from "rebass";
 import {Label} from "@rebass/forms";
 import {Input} from "../../ui/ReduxForm/Input";
 import {number} from "../../ui/ReduxForm/normalizers";
-import {required} from "../../ui/ReduxForm/validators";
 
 
 interface SolutionVolumeProps {

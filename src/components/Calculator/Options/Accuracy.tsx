@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from "react";
 import {Card, Flex, Heading} from "rebass";
 import {Radio} from "../../ui/ReduxForm/Radio";
-import {decimal, number} from "../../ui/ReduxForm/normalizers";
+import {decimal} from "../../ui/ReduxForm/normalizers";
 
 const ACCURACY_VARIANTS = [
   0.2,

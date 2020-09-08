@@ -13,7 +13,7 @@ interface SelectedListProps {
 
 export const SelectedList: ReduxFieldArrayType<SelectedListProps, FertilizerType> = (
   {fields, meta: {error}}) => {
-  const [values, setFormValue] = useFormValues<CalculatorFormValues>()
+  const values = useFormValues<CalculatorFormValues>()[0]
   const fertilizers = values.fertilizers;
   const {
     result,

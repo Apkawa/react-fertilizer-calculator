@@ -2,8 +2,6 @@ import React, {FunctionComponent} from "react";
 import {Box, Button, Card, Flex, Text} from "rebass";
 import {FertilizerType} from "./types";
 import {normalizeFertilizer} from "../../../calculator/fertilizer";
-import {useSelector} from "react-redux";
-import {CalculatorState} from "../types";
 import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
 
 interface ElementProps {

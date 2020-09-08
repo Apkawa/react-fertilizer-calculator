@@ -31,9 +31,9 @@ var findSubgroups = function(formula) {
       }
       currentFormula += ch;
       continue;
-    } else if (ch == '(') {
+    } else if (ch === '(') {
       //If we are outside of parenthesis start a new subgroup
-      if (level == 0 && currentFormula) {
+      if (level === 0 && currentFormula) {
         pushSubgroup();
       }
       if (level > 0) {
@@ -41,9 +41,9 @@ var findSubgroups = function(formula) {
         currentFormula += ch;
       }
       level += 1;
-    } else if (ch == ')') {
+    } else if (ch === ')') {
       level -= 1;
-      if (level == 0) {
+      if (level === 0) {
         //Finishing top-level subgroup; mark it so we can count multiples
         finishingNestedSubgroup = true;
       } else {
@@ -51,7 +51,7 @@ var findSubgroups = function(formula) {
         currentFormula += ch;
       }
     } else if (/[*+]/.test(ch)) {
-      if (level == 0 && currentFormula) {
+      if (level === 0 && currentFormula) {
         pushSubgroup();
       }
       if (level > 0) {
@@ -82,7 +82,7 @@ var findSubgroups = function(formula) {
 var decomposeFormula = function(formula) {
   if (!formula) return {};
   var subgroups = findSubgroups(formula);
-  if (subgroups.length == 1) {
+  if (subgroups.length === 1) {
     //We have a primitive formula that we can just count!
     return _decomposePrimitiveFormula(formula);
   } else {

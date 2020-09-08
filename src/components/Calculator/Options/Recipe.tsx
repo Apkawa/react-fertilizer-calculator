@@ -45,7 +45,7 @@ interface RecipeProps {
 }
 
 export const Recipe: FunctionComponent<RecipeProps> = () => {
-  const [_, setValue] = useFormValues()
+  const setValue = useFormValues()[1]
 
   const setRecipe = (elements: Elements) => {
     for (let [name, value] of Object.entries(elements)) {

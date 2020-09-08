@@ -26,8 +26,6 @@ function getScoreDisplay(score: number): string {
 export const Result: FunctionComponent<ResultProps> = () => {
   const {
     result,
-    process,
-    error
   } = useSelector<any>(state => state.calculator) as CalculatorState
 
   const {solution_volume, accuracy} = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues

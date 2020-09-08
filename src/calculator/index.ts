@@ -1,5 +1,5 @@
 import {product} from "./itertools";
-import {countDecimals, entries, keys, round, sum} from "../utils";
+import {countDecimals, entries, round, sum} from "../utils";
 import {Elements, Fertilizer} from "./fertilizer";
 import {FERTILIZER_ELEMENT_NAMES} from "./constants";
 
@@ -149,14 +149,15 @@ export function calculate(
       }
     }
     weights = weights.filter(v => v.weight > 0)
-    fertilizers = fertilizers.filter(f => {
+    let newFertilizers: Fertilizer[] = []
+    for (let f of fertilizers) {
       for (let w of weights) {
         if (w.id === f.id) {
-          return true
+          newFertilizers.push(f)
         }
       }
-      return false
-    })
+    }
+    fertilizers = newFertilizers
   }
 
   let ignored = 0;

@@ -1,4 +1,4 @@
-import React, {ComponentType, useState} from "react";
+import React from "react";
 
 import {Checkbox as RebassCheckbox, CheckboxProps as RebassCheckboxProps, Label} from "@rebass/forms";
 import {Field as ReduxField} from "redux-form";
