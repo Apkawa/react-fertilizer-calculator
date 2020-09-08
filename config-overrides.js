@@ -24,6 +24,7 @@ module.exports = {
   },
   webpack: (config) => {
     const info = getBuildInfo()
+    config.output.publicPath = './'
     config.plugins = [
       ...config.plugins,
       new webpack.DefinePlugin({

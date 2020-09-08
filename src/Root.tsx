@@ -33,8 +33,7 @@ const Root: FunctionComponent<RootProps> = ({store}) => (
         <Box flex={1}>
           <Router>
             <Switch>
-              <Route exact path="/" component={pages.App}/>
-              <Route path="/calculator" component={pages.Calculator}/>
+              <Route exact path="/" component={pages.Calculator}/>
               <Route path="*" component={pages.NotFound}/>
             </Switch>
           </Router>
