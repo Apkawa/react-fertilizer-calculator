@@ -1,9 +1,12 @@
+import {ParsedMolecule, SubgroupType} from "./molecularParser";
+
 const Parser = require('./molecularParser');
+
 
 
 describe('molecularParser', function () {
   describe('findSubgroups', function () {
-    const subgroupTestData = {
+    const subgroupTestData: {[k: string]: SubgroupType[]} = {
       CH2O: [
         {
           formula: 'CH2O',
@@ -118,7 +121,7 @@ describe('molecularParser', function () {
   }); //end parseSubgroups
 
   describe('decomposeFormula', function () {
-    const decomposeTestData = {
+    const decomposeTestData: {[k: string]: ParsedMolecule} = {
       CH2O: {
         C: 1,
         H: 2,
@@ -159,7 +162,6 @@ describe('molecularParser', function () {
       for (let formula in decomposeTestData) {
         expect(Parser.decomposeFormula(formula)).toEqual(decomposeTestData[formula])
       }
-
     });
 
     it('should decompose crazy formulae correctly.', function () {
