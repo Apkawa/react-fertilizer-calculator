@@ -5,8 +5,9 @@ import {HashRouter as Router, Route, Switch} from 'react-router-dom'
 import {ThemeProvider} from 'theme-ui'
 
 import pages from './pages'
+import {Box, Flex} from "rebass";
 
-const presets : any = require('@theme-ui/presets')
+const presets: any = require('@theme-ui/presets')
 
 // example theme.js
 const defaultTheme = {
@@ -28,13 +29,22 @@ type RootProps = {
 const Root: FunctionComponent<RootProps> = ({store}) => (
   <Provider store={store}>
     <ThemeProvider theme={defaultTheme}>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={pages.App}/>
-          <Route path="/calculator" component={pages.Calculator}/>
-          <Route path="*" component={pages.NotFound}/>
-        </Switch>
-      </Router>
+      <Flex flexDirection='column' margin={2}>
+        <Box flex={1}>
+          <Router>
+            <Switch>
+              <Route exact path="/" component={pages.App}/>
+              <Route path="/calculator" component={pages.Calculator}/>
+              <Route path="*" component={pages.NotFound}/>
+            </Switch>
+          </Router>
+        </Box>
+        <Flex justifyContent={"flex-end"} marginTop="auto" flex={1}>
+          <Box>
+            {__VERSION__} {__COMMIT_HASH__}
+          </Box>
+        </Flex>
+      </Flex>
     </ThemeProvider>
   </Provider>
 )
