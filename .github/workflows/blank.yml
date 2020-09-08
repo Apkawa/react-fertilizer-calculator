@@ -13,10 +13,10 @@ jobs:
         with:
           node-version: 12.x
       - name: Build
-        run:
-          - yarn --frozen-lockfile
-          - yarn test -- --watchAll=false --all
-          - yarn build
+        run: |
+          yarn --frozen-lockfile
+          yarn test -- --watchAll=false --all
+          yarn build
       - name: Deploy to GitHub Pages
         if: success()
         uses: crazy-max/ghaction-github-pages@v2
