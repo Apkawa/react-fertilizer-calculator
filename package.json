@@ -20,13 +20,20 @@
     "theme-ui": "^0.3.1"
   },
   "scripts": {
-    "preversion": "yarn test -- --watchAll=false --all && yarn lint",
+    "preversion": "yarn full-check",
+    "full-check": "yarn test -- --watchAll=false --all && yarn lint",
     "start": "PUBLIC_URL=./ react-app-rewired start",
     "build": "PUBLIC_URL=./ react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "types": "typesync && yarn",
     "lint": "eslint --ext js,ts,tsx src"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn full-check",
+      "pre-push": "yarn full-check"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -66,6 +73,7 @@
     "@types/testing-library__jest-dom": "^5.9.2",
     "@types/testing-library__react": "^10.2.0",
     "@types/theme-ui": "^0.3.6",
+    "husky": "^4.3.0",
     "react-app-rewired": "^2.1.6",
     "ts-jest": "^26.3.0",
     "typescript": "~3.7.2",

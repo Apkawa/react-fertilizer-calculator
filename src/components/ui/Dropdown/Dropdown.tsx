@@ -28,6 +28,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
   const [opened, setOpened] = useState(false)
   const [item, setItem] = useState(props.value || null)
   const [value, setValue] = useState(renderValue(props.value || null))
+  const [editing, setEditing] = useState(false)
   const containerRef = useRef<HTMLDivElement>()
 
   useEffect(() => {
@@ -48,22 +49,29 @@ export function Dropdown<T>(props: DropdownProps<T>) {
     setValue(renderValue(item))
 
     props.onChange && props.onChange(item)
-
+    setEditing(false)
     setOpened(false)
   }
-  const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const val = event.target.value
     setValue(val)
+    setEditing(true)
     setOpened(false)
   }
 
-  const onKeyDownInput = (event: KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDownInputHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     event.stopPropagation()
     if (event.key === 'Enter') {
       props.onEdit && props.onEdit(value)
     }
     if (event.key === 'Escape') {
       onClickItemHandler(item)
+    }
+  }
+
+  const onBlurInputHandler = () => {
+    if (editing) {
+      value && props.onEdit && props.onEdit(value)
     }
   }
 
@@ -78,9 +86,9 @@ export function Dropdown<T>(props: DropdownProps<T>) {
         <Flex>
           <Input
             value={value}
-            onChange={onChangeInput}
-            onKeyDown={onKeyDownInput}
-            onBlur={() => value && props.onEdit && props.onEdit(value)}
+            onChange={onChangeInputHandler}
+            onKeyDown={onKeyDownInputHandler}
+            onBlur={onBlurInputHandler}
           />
           <Button type="button" onClick={() => setOpened(!opened)}> V </Button>
         </Flex>

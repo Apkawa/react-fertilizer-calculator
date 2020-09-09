@@ -5,6 +5,9 @@ import {buildNPKFertilizer, Elements, FertilizerInfo, normalizeFertilizer} from 
 import {Dropdown} from "../../ui/Dropdown/Dropdown";
 import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
 import {AddItemElementForm} from "./AddItemElementForm";
+import {useDispatch, useSelector} from "react-redux";
+import {CalculatorState} from "../types";
+import {fertilizerPush, fertilizerRemove} from "../actions";
 
 interface AddItemProps {
   onAdd: (item: FertilizerType) => void
@@ -12,8 +15,13 @@ interface AddItemProps {
 
 
 export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
-  const [selected, setSelected] = useState<FertilizerInfo>(defaultFertilizers[0])
+  const {
+    fertilizers,
+  } = useSelector<any>(state => state.calculator) as CalculatorState
+  const [selected, setSelected] = useState<FertilizerInfo>(fertilizers[0])
   const [creating, setCreating] = useState(false)
+
+  const dispatch = useDispatch()
 
 
   const getElements = (f: FertilizerInfo) => {
@@ -36,11 +44,16 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
     setSelected(emptyFertilizer)
     setCreating(true)
   }
-
   const onAddHandler = () => {
     let fertilizer = buildNPKFertilizer(selected.id, elements)
     onAdd(fertilizer)
+    if (creating) {
+      dispatch(fertilizerPush(selected))
+    }
     setCreating(false)
+  }
+  const onRemoveItemHandler = (item: FertilizerInfo) => {
+    dispatch(fertilizerRemove(item))
   }
   return (
     <Card>
@@ -49,10 +62,20 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
           <Box flex={1} pr={2}>
             <Dropdown<FertilizerInfo>
               value={selected}
-              items={defaultFertilizers}
+              items={fertilizers}
               onChange={onChangeHandler}
               onEdit={onEditHandler}
-              renderItem={({item}) => <span>{item.id}</span>}
+              renderItem={({item}) => (
+                <Flex flex={1} justifyContent="space-between">
+                  <Box>
+                    {item.id}
+                  </Box>
+                  <button onClick={event => {
+                    event.stopPropagation()
+                    onRemoveItemHandler(item)
+                  }}>-</button>
+                </Flex>
+              )}
               renderValue={item => item?.id || ""}
             />
           </Box>
@@ -76,17 +99,3 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
   )
 }
 
-const defaultFertilizers: FertilizerInfo[] = [
-  buildNPKFertilizer(
-    "Valagro 3:11:38",
-    {
-      N: 3, P: 11, K: 38, Ca: 0, Mg: 4,
-    }),
-  buildNPKFertilizer("Кальциевая селитра",
-    {
-      N: 16, Ca: 24,
-    }),
-  buildNPKFertilizer("Сульфат магния", {Mg: 16}),
-  buildNPKFertilizer("Сульфат калия", {K: 50}),
-  buildNPKFertilizer("Нитрат калия", {N: 14, K: 46})
-]

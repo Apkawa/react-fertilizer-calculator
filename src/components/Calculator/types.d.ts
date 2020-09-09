@@ -1,5 +1,5 @@
 import {Elements, FertilizerInfo} from "../../calculator/fertilizer";
-import {InferValuesTypes} from "../../redux/types";
+import {InferValuesTypes} from "../../redux-helpers/types";
 import * as actions from "./actions";
 import {CalculateResult} from "../../calculator";
 
@@ -13,9 +13,10 @@ export interface CalculatorFormValues {
 }
 
 export interface CalculatorState {
-  result: CalculateResult | null,
-  process: boolean,
-  error: boolean
+  readonly result: CalculateResult | null,
+  readonly process: boolean,
+  readonly error: boolean,
+  readonly fertilizers: FertilizerInfo[]
 }
 
 

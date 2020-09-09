@@ -43,3 +43,4 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 * https://fettblog.eu/typescript-react/components/
 * https://basarat.gitbook.io/typescript/
+* https://github.com/piotrwitek/react-redux-typescript-guide#typing-reducer

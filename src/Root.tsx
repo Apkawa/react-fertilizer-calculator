@@ -7,6 +7,7 @@ import {ThemeProvider} from 'theme-ui'
 import pages from './pages'
 import {Box, Flex} from "rebass";
 import {defaultTheme} from "./theme";
+import {ForkMeOnGitHub} from "./components/ui/ForkMeOnGitHub";
 
 
 type RootProps = {
@@ -15,6 +16,7 @@ type RootProps = {
 const Root: FunctionComponent<RootProps> = ({store}) => (
   <Provider store={store}>
     <ThemeProvider theme={defaultTheme}>
+      <ForkMeOnGitHub />
       <Flex flexDirection='column' margin={2}>
         <Box flex={1}>
           <Router>
