@@ -1,8 +1,10 @@
-import React, {FunctionComponent, useState} from "react";
+import React, {FunctionComponent, useEffect, useState} from "react";
 import {Box, Button, Card, Flex} from "rebass";
-import {Select} from '@rebass/forms'
 import {FertilizerType} from "./types";
-import {buildNPKFertilizer, FertilizerInfo} from "../../../calculator/fertilizer";
+import {buildNPKFertilizer, Elements, FertilizerInfo, normalizeFertilizer} from "../../../calculator/fertilizer";
+import {Dropdown} from "../../ui/Dropdown/Dropdown";
+import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
+import {AddItemElementForm} from "./AddItemElementForm";
 
 interface AddItemProps {
   onAdd: (item: FertilizerType) => void
@@ -10,28 +12,64 @@ interface AddItemProps {
 
 
 export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
-  const [selected, setSelected] = useState<string>(defaultFertilizers[0].id)
+  const [selected, setSelected] = useState<FertilizerInfo>(defaultFertilizers[0])
+  const [creating, setCreating] = useState(false)
+
+
+  const getElements = (f: FertilizerInfo) => {
+    return normalizeFertilizer(f, false).elements
+  }
+
+  const [elements, setElements] = useState<Elements>(getElements(selected))
+
+  useEffect(() => {
+    setElements(getElements(selected))
+  }, [selected])
+
+  const onChangeHandler = (item: FertilizerInfo | null) => {
+    item && setSelected(item)
+    setCreating(false)
+  }
+
+  const onEditHandler = (value: string) => {
+    const emptyFertilizer = buildNPKFertilizer(value, {})
+    setSelected(emptyFertilizer)
+    setCreating(true)
+  }
 
   const onAddHandler = () => {
-    for (let info of defaultFertilizers) {
-      if (info.id === selected) {
-        onAdd(info)
-      }
-    }
+    let fertilizer = buildNPKFertilizer(selected.id, elements)
+    onAdd(fertilizer)
+    setCreating(false)
   }
   return (
     <Card>
-      <Flex sx={{justifyContent: 'space-around'}}>
-        <Box flex={1} pr={2}>
-          <Select onChange={(e) => setSelected(e.target.value)}>
-            {defaultFertilizers.map(info =>
-              <option value={info.id} key={info.id}>{info.id}</option>
-            )}
-          </Select>
-        </Box>
-        <Button
-          type="button"
-          onClick={onAddHandler}>Add</Button>
+      <Flex flexDirection="column">
+        <Flex justifyContent="space-between">
+          <Box flex={1} pr={2}>
+            <Dropdown<FertilizerInfo>
+              value={selected}
+              items={defaultFertilizers}
+              onChange={onChangeHandler}
+              onEdit={onEditHandler}
+              renderItem={({item}) => <span>{item.id}</span>}
+              renderValue={item => item?.id || ""}
+            />
+          </Box>
+          <Button
+            type="button"
+            onClick={onAddHandler}>Add</Button>
+        </Flex>
+        <Flex>
+          {FERTILIZER_ELEMENT_NAMES.map(el => (
+            <AddItemElementForm
+              disabled={!creating}
+              name={el}
+              value={elements[el]}
+              onChange={v => setElements({...elements, [el]: v})}
+            />
+          ))}
+        </Flex>
       </Flex>
 
     </Card>

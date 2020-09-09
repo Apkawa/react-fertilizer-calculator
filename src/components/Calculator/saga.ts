@@ -1,7 +1,7 @@
 import {all, fork, put, select, takeLatest} from 'redux-saga/effects'
-import {getFormValues, stopSubmit} from "redux-form";
+import {actionTypes, getFormValues, stopSubmit} from "redux-form";
 import {CALCULATE_START, REDUX_FORM_NAME} from "./constants";
-import {calculateError, calculateSuccess} from "./actions";
+import {calculateError, calculateStart, calculateSuccess} from "./actions";
 import {calculate} from "../../calculator";
 import {CalculatorFormValues} from "./types";
 import {normalizeFertilizer} from "../../calculator/fertilizer";
@@ -34,6 +34,19 @@ export function* calculatorSagaWatcher() {
   yield takeLatest(CALCULATE_START, calculateStartSaga);
 }
 
+export function* calculatorFormChangeWatcher() {
+
+  yield takeLatest([
+      actionTypes.CHANGE,
+      actionTypes.BLUR,
+      actionTypes.ARRAY_PUSH,
+      actionTypes.ARRAY_REMOVE
+    ],
+    function* () {
+      yield put(calculateStart())
+    });
+}
+
 export default function* calculatorRootSaga() {
-  yield all([fork(calculatorSagaWatcher)]);
+  yield all([fork(calculatorSagaWatcher), fork(calculatorFormChangeWatcher)]);
 }

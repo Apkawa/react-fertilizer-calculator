@@ -6,22 +6,8 @@ import {ThemeProvider} from 'theme-ui'
 
 import pages from './pages'
 import {Box, Flex} from "rebass";
+import {defaultTheme} from "./theme";
 
-const presets: any = require('@theme-ui/presets')
-
-// example theme.js
-const defaultTheme = {
-  ...presets.polaris,
-  card: {
-    boxShadow: 'small',
-    p: 2,
-  },
-
-  shadows: {
-    small: '0 0 4px rgba(0, 0, 0, .125)',
-    large: '0 0 24px rgba(0, 0, 0, .125)'
-  },
-}
 
 type RootProps = {
   store: any
@@ -34,6 +20,7 @@ const Root: FunctionComponent<RootProps> = ({store}) => (
           <Router>
             <Switch>
               <Route exact path="/" component={pages.Calculator}/>
+              <Route path="/example" component={pages.Example}/>
               <Route path="*" component={pages.NotFound}/>
             </Switch>
           </Router>

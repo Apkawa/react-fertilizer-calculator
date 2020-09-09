@@ -26,9 +26,11 @@ const initialValues: CalculatorFormValues = {
 export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormValues> = ({handleSubmit}) => {
   const dispatch = useDispatch()
   return (
-    <form onSubmit={handleSubmit((e) => {
-      dispatch(calculateStart())
-    })}>
+    <form
+      onSubmit={handleSubmit(() => {
+        dispatch(calculateStart())
+      })}
+    >
       <Flex>
         <Box flex={1}>
           <FertilizerSelect/>

@@ -11,7 +11,7 @@ interface ElementProps {
 
 export const Element: FunctionComponent<ElementProps> = ({name, value}) => {
   return (
-    <Box bg="primary" flex={1} mx={1} px={2} color={'background'}>
+    <Box bg="primary" flex={1} mx={1} px={2} color={'background'} minWidth="2.5em">
       <Flex flexDirection='column' alignItems={'center'}>
         <Box>{name}</Box>
         <Box>{value}</Box>
@@ -39,7 +39,7 @@ export const SelectedListItem: FunctionComponent<SelectedListItemProps> = ({item
               FERTILIZER_ELEMENT_NAMES.map((name) =>
                 <Element
                   name={name} key={name}
-                  value={normalizedFertilizer[name]}
+                  value={normalizedFertilizer.elements[name]}
                 />
               )
             }

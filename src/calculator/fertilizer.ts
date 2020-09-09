@@ -9,8 +9,9 @@ export interface Elements {
   Mg: number,
 }
 
-export interface Fertilizer extends Elements {
+export interface Fertilizer {
   id: string,
+  elements: Elements
 }
 
 export interface FertilizerComposition {
@@ -39,7 +40,7 @@ const NPKOxides = {
 
 export function buildNPKFertilizer(id: string, npk: NPKElements): FertilizerInfo {
     const composition: FertilizerComposition[] = entries(npk)
-      .filter(([k,v]) => v > 0)
+      .filter(v => v[1] > 0)
       .map(([k, v]) => {
         return {
           formula: NPKOxides[k],
@@ -70,7 +71,7 @@ export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass=
   }
   return {
     id: fertilizerInfo.id,
-    ...el
+    elements: el
   }
 
 }

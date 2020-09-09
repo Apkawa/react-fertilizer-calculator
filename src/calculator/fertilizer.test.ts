@@ -38,11 +38,13 @@ test("convert FertilizerInfo to element Fertilizer", () => {
       N: 3, P: 11, K: 38, Ca: 0, Mg: 4,
     }))
   expect(res).toEqual({
-      "Ca": 0,
-      "K": 31.54,
-      "Mg": 2.4,
-      "N": 3,
-      "P": 4.84,
+      elements: {
+        "Ca": 0,
+        "K": 31.54,
+        "Mg": 2.4,
+        "N": 3,
+        "P": 4.84,
+      },
       "id": "Valagro 3:11:38",
     }
   )

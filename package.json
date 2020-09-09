@@ -21,8 +21,8 @@
   },
   "scripts": {
     "preversion": "yarn test -- --watchAll=false --all && yarn lint",
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "start": "PUBLIC_URL=./ react-app-rewired start",
+    "build": "PUBLIC_URL=./ react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "types": "typesync && yarn",

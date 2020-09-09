@@ -55,7 +55,7 @@ export function sumFertilizers(fertilizers: Fertilizer[], portions: number[]): E
       key,
       sum(
         portions.map(
-          (weight, index) => weight * fertilizers[index][key])
+          (weight, index) => weight * fertilizers[index].elements[key])
       )
     ]
   )
@@ -171,7 +171,7 @@ export function calculate(
     calculatedElements[k] = round(v)
   }
 
-  const result: CalculateResult = {
+  return {
     fertilizers: weights.map(v => ({...v, weight: round(v.weight / 10, precision)})),
     elements: calculatedElements,
     score: Math.round(100 / ((score_percent - (5 - ignored)) / (5 - ignored) + 1)),
@@ -180,5 +180,4 @@ export function calculate(
       count: count,
     }
   }
-  return result
 }
