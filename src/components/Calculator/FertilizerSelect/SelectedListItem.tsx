@@ -13,7 +13,7 @@ interface ElementProps {
 
 export const Element: FunctionComponent<ElementProps> = ({name, value}) => {
   return (
-    <Box bg="primary" flex={1} mx={1} px={2} color={'background'} minWidth="2.5em">
+    <Box bg="primary" flex={1} mx="2px" px={1} color={'background'} minWidth="2.5em">
       <Flex flexDirection='column' alignItems={'center'}>
         <Box>{name}</Box>
         <Box>{value}</Box>
@@ -47,12 +47,14 @@ export const SelectedListItem: FunctionComponent<SelectedListItemProps> = ({item
             }
           </Flex>
         </Box>
-        <Flex alignItems="center">
+        <Flex alignItems="center" margin={1}>
           <Text>
             {needWeight || 0}
           </Text>
         </Flex>
         <IconButton
+          padding={1}
+          alignSelf="center"
           component={Cross}
           onClick={() => onRemove()}
         />

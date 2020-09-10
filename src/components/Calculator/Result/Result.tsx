@@ -7,9 +7,16 @@ import {REDUX_FORM_NAME} from "../constants";
 import {countDecimals, round} from "../../../utils";
 import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
 import {Element} from "../FertilizerSelect/SelectedListItem";
+import styled from "styled-components";
 
 interface ResultProps {
 }
+
+const StyledList = styled.ul`
+  @media screen and (min-width: 800px) {
+    width: 75%;
+  }
+`
 
 function getScoreDisplay(score: number): string {
   let score_display = "Не соответствует";
@@ -46,12 +53,12 @@ export const Result: FunctionComponent<ResultProps> = () => {
         </Heading>
 
         <Text fontSize={6}>{`${score || 0}%`}</Text>
-        <ul style={{width: '75%'}}>
+        <StyledList>
           <li>{solution_volume}л воды</li>
           {fertilizers.map(f =>
             <li key={f.id}>{round(f.weight * solution_volume, countDecimals(accuracy))}г {f.id}</li>
           )}
-        </ul>
+        </StyledList>
         {result?.stats &&
         <Text>
           Обработано вариантов: {result?.stats.count} Время: {result?.stats.time} сек

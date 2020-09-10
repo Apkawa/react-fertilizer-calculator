@@ -21,7 +21,7 @@ export const Accuracy: FunctionComponent<AccuracyProps> = () => {
                 <Radio
                   name="accuracy"
                   value={a}
-                  label={`${a} грамма`}
+                  label={`${a} г.`}
                   normalize={decimal}
                 />
             )}
