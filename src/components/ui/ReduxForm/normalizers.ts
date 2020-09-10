@@ -4,6 +4,6 @@ export function number(value: any) {
   return value && parseInt(value)
 }
 
-export function decimal(value: any, parts?: number) {
+export function decimal(value: any) {
   return value && parseFloat(value)
 }

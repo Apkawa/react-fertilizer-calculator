@@ -1,9 +1,12 @@
 import React, {FunctionComponent} from "react";
 import {Button, Card, Flex} from "rebass";
+import {Broom} from '@styled-icons/fa-solid/Broom'
 import {getRecipeFieldName, RecipeElementForm} from "./RecipeElementForm";
 import {Elements} from "../../../calculator/fertilizer";
 import {useFormValues} from "../../../hooks/ReduxForm";
 import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
+
+import {IconButton} from "../../ui/IconButton";
 
 export const DEFAULT_RECIPES = [
   {
@@ -71,10 +74,10 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
               onClick={() => setRecipe(elements)}
             >{name}</Button>
           )}
-          <Button
-            type="button"
+          <IconButton
+            component={Broom}
             onClick={resetRecipe}
-          >X</Button>
+          />
         </Flex>
         <Flex justifyContent="space-between">
           {

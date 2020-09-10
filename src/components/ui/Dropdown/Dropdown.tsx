@@ -1,9 +1,21 @@
 import React, {ChangeEvent, KeyboardEvent, useEffect, useRef, useState} from "react";
 import {Input} from "@rebass/forms";
-import {Button, Flex} from "rebass";
+import {Box, Flex} from "rebass";
+import styled from '@emotion/styled'
+import {ChevronDownSquare} from '@emotion-icons/boxicons-solid/ChevronDownSquare'
 import {DropdownList} from "./DropdownList";
 import {DropdownContext, DropdownContextInterface} from "./context";
 import {ItemType, RenderItemCallback, RenderValueCallback} from "./types";
+
+const IconDown = styled(ChevronDownSquare)`
+  color: ${(props: any) => props.theme.colors.text};
+  height: 3rem;
+  opacity: 0.5;
+  
+  &:hover {
+    opacity: 0.7;
+  }
+`
 
 export interface DropdownProps<T> {
   value?: ItemType<T>,
@@ -83,19 +95,28 @@ export function Dropdown<T>(props: DropdownProps<T>) {
   return (
     <DropdownContext.Provider value={context}>
       <Flex flexDirection="column" width={width} ref={containerRef}>
-        <Flex>
+        <Flex sx={{position: 'relative'}}>
           <Input
             value={value}
             onChange={onChangeInputHandler}
             onKeyDown={onKeyDownInputHandler}
             onBlur={onBlurInputHandler}
           />
-          <Button type="button" onClick={() => setOpened(!opened)}> V </Button>
+          <Box
+            sx={{
+              position: "absolute",
+              right: 0
+            }}
+          >
+            <IconDown
+              onClick={() => setOpened(!opened)}
+            />
+          </Box>
         </Flex>
-        <Flex>
+        <Flex  sx={{position: 'relative'}}>
           <Flex sx={{position: "absolute"}}
                 flexDirection="column"
-                width={containerRef.current?.offsetWidth}
+                width="100%"
           >
             {opened && <DropdownList<T> items={props.items}/>}
           </Flex>

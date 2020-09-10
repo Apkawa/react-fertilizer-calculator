@@ -79,51 +79,12 @@ export const findSubgroups = function (formula: string): SubgroupType[] {
 }
 
 /**
- * @param formula String A molecular formula, eg CH(CH3)3
- * @return elementCounts A map of element:count, eg
- * {
- *   C: 4,
- *   H: 10
- * }
- */
-export const decomposeFormula = function (formula: string): ParsedMolecule {
-  if (!formula) return {};
-  const subgroups = findSubgroups(formula);
-  if (subgroups.length === 1) {
-    //We have a primitive formula that we can just count!
-    return _decomposePrimitiveFormula(formula);
-  } else {
-    //We have subgroups
-    let combinedCounts: ParsedMolecule = {};
-    subgroups.forEach(function (subgroup) {
-      var subgroupCounts = decomposeFormula(subgroup.formula)
-      var elementCount;
-      for (let element in subgroupCounts) {
-        if (ATOMIC_MASS.hasOwnProperty(element)) {
-          let _el = element as AtomNameType
-          elementCount = (subgroupCounts[_el] || 0) * subgroup.count;
-          if (element in combinedCounts) {
-            combinedCounts[_el] = (combinedCounts[_el] || 0) + elementCount;
-          } else {
-            combinedCounts[_el] = elementCount;
-          }
-
-        }
-      }
-    });
-    return combinedCounts;
-  }
-}
-
-let elementRe: RegExp = /([A-Z][a-z]{0,2})(\d*)/g
-let singleElementRe: RegExp = /([A-Z][a-z]{0,2})(\d*)/
-/**
  * @param formula String A primitive (ie, without subgroups/parentheses, like
  * CH4) molecular formula
  * @return elementCounts A map of element:count, eg {C:1, H:4}
  * @api private
  */
-var _decomposePrimitiveFormula = function (formula: string): ParsedMolecule {
+const _decomposePrimitiveFormula = function (formula: string): ParsedMolecule {
   let elementCounts: ParsedMolecule = {};
   let match = formula.match(elementRe)
   if (!match) {
@@ -151,6 +112,45 @@ var _decomposePrimitiveFormula = function (formula: string): ParsedMolecule {
 
 
   return elementCounts;
+};
+/**
+ * @param formula String A molecular formula, eg CH(CH3)3
+ * @return elementCounts A map of element:count, eg
+ * {
+ *   C: 4,
+ *   H: 10
+ * }
+ */
+export const decomposeFormula = function (formula: string): ParsedMolecule {
+  if (!formula) return {};
+  const subgroups = findSubgroups(formula);
+  if (subgroups.length === 1) {
+    //We have a primitive formula that we can just count!
+    return _decomposePrimitiveFormula(formula);
+  } else {
+    //We have subgroups
+    let combinedCounts: ParsedMolecule = {};
+    subgroups.forEach(function (subgroup) {
+      const subgroupCounts = decomposeFormula(subgroup.formula);
+      let elementCount;
+      for (let element in subgroupCounts) {
+        if (ATOMIC_MASS.hasOwnProperty(element)) {
+          let _el = element as AtomNameType
+          elementCount = (subgroupCounts[_el] || 0) * subgroup.count;
+          if (element in combinedCounts) {
+            combinedCounts[_el] = (combinedCounts[_el] || 0) + elementCount;
+          } else {
+            combinedCounts[_el] = elementCount;
+          }
+
+        }
+      }
+    });
+    return combinedCounts;
+  }
 }
+
+let elementRe: RegExp = /([A-Z][a-z]{0,2})(\d*)/g
+let singleElementRe: RegExp = /([A-Z][a-z]{0,2})(\d*)/
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 import {Calculator} from "../../components/Calculator";
-import {Box, Flex} from "rebass";
+import {Box, Flex, Heading} from "rebass";
 
 
 export default () => {
@@ -12,7 +12,7 @@ export default () => {
       }
     }>
       <Box width='936px'>
-        <h1>Calculator</h1>
+        <Heading>Калькулятор удобрений</Heading>
         <Calculator/>
       </Box>
     </Flex>

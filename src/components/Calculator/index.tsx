@@ -31,7 +31,12 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
         dispatch(calculateStart())
       })}
     >
-      <Flex>
+      <Flex sx={{
+        flexDirection: 'row',
+        '@media screen and (max-width: 800px)': {
+          flexDirection: 'column-reverse'
+        }
+      }}>
         <Box flex={1}>
           <FertilizerSelect/>
         </Box>

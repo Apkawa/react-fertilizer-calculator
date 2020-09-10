@@ -4,37 +4,51 @@ import {HashRouter as Router, Route, Switch} from 'react-router-dom'
 
 import {ThemeProvider} from 'theme-ui'
 
+
 import pages from './pages'
 import {Box, Flex} from "rebass";
 import {defaultTheme} from "./theme";
 import {ForkMeOnGitHub} from "./components/ui/ForkMeOnGitHub";
+import {ColorModeToggle} from "./components/ColorModeToggle";
 
 
 type RootProps = {
   store: any
 }
-const Root: FunctionComponent<RootProps> = ({store}) => (
-  <Provider store={store}>
-    <ThemeProvider theme={defaultTheme}>
-      <ForkMeOnGitHub />
-      <Flex flexDirection='column' margin={2}>
-        <Box flex={1}>
-          <Router>
-            <Switch>
-              <Route exact path="/" component={pages.Calculator}/>
-              <Route path="/example" component={pages.Example}/>
-              <Route path="*" component={pages.NotFound}/>
-            </Switch>
-          </Router>
-        </Box>
-        <Flex justifyContent={"flex-end"} marginTop="auto" flex={1}>
-          <Box>
-            {__VERSION__} {__COMMIT_HASH__}
+
+const Root: FunctionComponent<RootProps> = ({store}) => {
+
+
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={defaultTheme}>
+        <Flex justifyContent="space-between">
+          <Box padding={3}>
+            <ColorModeToggle/>
           </Box>
+          <ForkMeOnGitHub/>
+
         </Flex>
-      </Flex>
-    </ThemeProvider>
-  </Provider>
-)
+
+        <Flex flexDirection='column' margin={2}>
+          <Box flex={1}>
+            <Router>
+              <Switch>
+                <Route exact path="/" component={pages.Calculator}/>
+                <Route path="/example" component={pages.Example}/>
+                <Route path="*" component={pages.NotFound}/>
+              </Switch>
+            </Router>
+          </Box>
+          <Flex justifyContent={"flex-end"} marginTop="auto" flex={1}>
+            <Box>
+              {__VERSION__} {__COMMIT_HASH__}
+            </Box>
+          </Flex>
+        </Flex>
+      </ThemeProvider>
+    </Provider>
+  )
+}
 
 export default Root

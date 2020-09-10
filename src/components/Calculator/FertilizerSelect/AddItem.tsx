@@ -1,13 +1,12 @@
-import React, {FunctionComponent, useEffect, useState} from "react";
+import React, {FunctionComponent, useState} from "react";
 import {Box, Button, Card, Flex} from "rebass";
 import {FertilizerType} from "./types";
-import {buildNPKFertilizer, Elements, FertilizerInfo, normalizeFertilizer} from "../../../calculator/fertilizer";
+import {buildNPKFertilizer, FertilizerInfo} from "../../../calculator/fertilizer";
 import {Dropdown} from "../../ui/Dropdown/Dropdown";
-import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
-import {AddItemElementForm} from "./AddItemElementForm";
 import {useDispatch, useSelector} from "react-redux";
 import {CalculatorState} from "../types";
 import {fertilizerPush, fertilizerRemove} from "../actions";
+import {AddItemFertilizerEditForm, getElements} from "./AddItemFertilizerEditForm";
 
 interface AddItemProps {
   onAdd: (item: FertilizerType) => void
@@ -24,16 +23,6 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
   const dispatch = useDispatch()
 
 
-  const getElements = (f: FertilizerInfo) => {
-    return normalizeFertilizer(f, false).elements
-  }
-
-  const [elements, setElements] = useState<Elements>(getElements(selected))
-
-  useEffect(() => {
-    setElements(getElements(selected))
-  }, [selected])
-
   const onChangeHandler = (item: FertilizerInfo | null) => {
     item && setSelected(item)
     setCreating(false)
@@ -45,7 +34,7 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
     setCreating(true)
   }
   const onAddHandler = () => {
-    let fertilizer = buildNPKFertilizer(selected.id, elements)
+    let fertilizer = buildNPKFertilizer(selected.id, getElements(selected))
     onAdd(fertilizer)
     if (creating) {
       dispatch(fertilizerPush(selected))
@@ -73,7 +62,8 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
                   <button onClick={event => {
                     event.stopPropagation()
                     onRemoveItemHandler(item)
-                  }}>-</button>
+                  }}>-
+                  </button>
                 </Flex>
               )}
               renderValue={item => item?.id || ""}
@@ -83,16 +73,11 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
             type="button"
             onClick={onAddHandler}>Add</Button>
         </Flex>
-        <Flex>
-          {FERTILIZER_ELEMENT_NAMES.map(el => (
-            <AddItemElementForm
-              disabled={!creating}
-              name={el}
-              value={elements[el]}
-              onChange={v => setElements({...elements, [el]: v})}
-            />
-          ))}
-        </Flex>
+        <AddItemFertilizerEditForm
+          fertilizer={selected}
+          allowEdit={creating}
+          onChange={item => setSelected(item)}
+        />
       </Flex>
 
     </Card>

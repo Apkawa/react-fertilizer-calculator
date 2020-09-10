@@ -1,8 +1,10 @@
 import React, {FunctionComponent} from "react";
-import {Box, Button, Card, Flex, Text} from "rebass";
+import {Box, Card, Flex, Text} from "rebass";
+import {Cross} from "@styled-icons/entypo/Cross"
 import {FertilizerType} from "./types";
 import {normalizeFertilizer} from "../../../calculator/fertilizer";
 import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
+import {IconButton} from "../../ui/IconButton";
 
 interface ElementProps {
   name: string,
@@ -47,10 +49,13 @@ export const SelectedListItem: FunctionComponent<SelectedListItemProps> = ({item
         </Box>
         <Flex alignItems="center">
           <Text>
-            { needWeight || 0}
+            {needWeight || 0}
           </Text>
         </Flex>
-        <Button variant="outline" type={'button'} onClick={() => onRemove()}>X</Button>
+        <IconButton
+          component={Cross}
+          onClick={() => onRemove()}
+        />
       </Flex>
     </Card>
   )
