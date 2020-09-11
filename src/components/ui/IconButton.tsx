@@ -7,7 +7,7 @@ import {Theme} from "../../theme";
 
 interface IconButtonProps extends Omit<ButtonProps, keyof React.HTMLProps<HTMLButtonElement>> {
   component: EmotionIcon,
-  onClick: MouseEventHandler<HTMLButtonElement>,
+  onClick?: MouseEventHandler<HTMLButtonElement>,
   size?: number|string
 }
 

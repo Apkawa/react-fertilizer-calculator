@@ -4,6 +4,7 @@ import NotFound from './NotFound'
 export default {
   App: loadable(() => import('./App')),
   NotFound,
+  Help: loadable(() => import('./Help')),
   Calculator: loadable(() => import('./Calculator')),
   Example: loadable(() => import('./Example')),
 }

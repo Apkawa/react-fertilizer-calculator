@@ -1,8 +1,8 @@
 const webpack = require('webpack');
 const packageJson = require('./package.json');
-const {InjectManifest} = require('workbox-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
-const {rewireWorkboxGenerate, defaultGenerateConfig} = require('react-app-rewire-workbox');
+const { rewireWorkboxGenerate, defaultGenerateConfig } = require('react-app-rewire-workbox');
 const path = require('path');
 
 const esModules = [
@@ -10,7 +10,7 @@ const esModules = [
 ]
 
 function getBuildInfo() {
-  let [commitHash, isoDate] = require('child_process')
+  let [ commitHash, isoDate ] = require('child_process')
     .execSync("git show --no-patch --no-notes --pretty='%h;%cI' HEAD")
     .toString().trim().split(";");
 
@@ -38,17 +38,22 @@ module.exports = {
         __COMMIT_DATE__: JSON.stringify(info.isoDate)
       })
     ]
+    config.module.rules.push(
+      {
+        test: /\.md$/i,
+        use: 'raw-loader',
+      },
+    )
     const workboxConfig = {
       ...defaultGenerateConfig,
       swDest: path.join(__dirname, 'build', 'pwa-sw.js'),
       skipWaiting: true,
       // Define runtime caching rules.
-      runtimeCaching: [{
+      runtimeCaching: [ {
         urlPattern: new RegExp('/'),
         handler: 'StaleWhileRevalidate',
-        options: {
-        },
-      }],
+        options: {},
+      } ],
 
     };
     config = rewireWorkboxGenerate(workboxConfig)(config, env);

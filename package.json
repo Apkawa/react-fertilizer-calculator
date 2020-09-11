@@ -12,6 +12,7 @@
     "react": "^16.13.1",
     "react-app-rewire-workbox": "^2.0.1",
     "react-dom": "^16.13.1",
+    "react-markdown": "^4.3.1",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
@@ -31,7 +32,8 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "types": "typesync && yarn",
-    "lint": "eslint --ext js,ts,tsx src"
+    "lint": "eslint --ext js,ts,tsx src",
+    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'"
   },
   "husky": {
     "hooks": {
@@ -44,7 +46,9 @@
       "react-app"
     ],
     "parser": "@typescript-eslint/parser",
-    "rules": {}
+    "rules": {
+      "import/no-webpack-loader-syntax": "off"
+    }
   },
   "browserslist": {
     "production": [
@@ -80,7 +84,9 @@
     "@types/workbox-sw": "^4.3.1",
     "cross-env": "^7.0.2",
     "husky": "^4.3.0",
+    "raw-loader": "^4.0.1",
     "react-app-rewired": "^2.1.6",
+    "source-map-explorer": "^2.5.0",
     "ts-jest": "^26.3.0",
     "typescript": "~3.7.2",
     "typesync": "^0.7.0",

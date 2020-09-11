@@ -12,3 +12,7 @@ declare global { // need this declaration if in a module
 } // need this declaration if in a module
 
 
+declare module "!!raw-loader!*" {
+  const value: string
+  export default value
+}

@@ -17,12 +17,13 @@ type RootProps = {
 
 const Root: FunctionComponent<RootProps> = ({store}) => {
 
-
   return (
     <Provider store={store}>
       <ThemeProvider theme={defaultTheme}>
         <Flex justifyContent="space-between">
-          <Box padding={3}>
+          <Box
+            padding={3}
+          >
             <ColorModeToggle/>
           </Box>
           <ForkMeOnGitHub/>
@@ -34,6 +35,7 @@ const Root: FunctionComponent<RootProps> = ({store}) => {
               <Switch>
                 <Route exact path="/" component={pages.Calculator}/>
                 <Route path="/example" component={pages.Example}/>
+                <Route path="/help" component={pages.Help}/>
                 <Route path="*" component={pages.NotFound}/>
               </Switch>
             </Router>

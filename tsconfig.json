@@ -29,11 +29,10 @@
   "moduleResolution": "node",
   "baseUrl": "./src",
   "paths": {
-    "@ui/*": [
-      "ui/*"
-    ]
+    "@ui/*": "ui/*",
+    "docs/": "./docs/"
   },
   "include": [
-    "src"
+    "./src/**/*"
   ]
 }
