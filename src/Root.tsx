@@ -1,12 +1,11 @@
 import React, {FunctionComponent} from 'react'
 import {Provider} from 'react-redux'
 import {HashRouter as Router, Route, Switch} from 'react-router-dom'
-
 import {ThemeProvider} from 'theme-ui'
 
 
 import pages from './pages'
-import {Box, Flex} from "rebass";
+import {Box, Flex, Text} from "rebass";
 import {defaultTheme} from "./theme";
 import {ForkMeOnGitHub} from "./components/ui/ForkMeOnGitHub";
 import {ColorModeToggle} from "./components/ColorModeToggle";
@@ -27,7 +26,6 @@ const Root: FunctionComponent<RootProps> = ({store}) => {
             <ColorModeToggle/>
           </Box>
           <ForkMeOnGitHub/>
-
         </Flex>
 
         <Flex flexDirection='column' margin={2}>
@@ -41,9 +39,9 @@ const Root: FunctionComponent<RootProps> = ({store}) => {
             </Router>
           </Box>
           <Flex justifyContent={"flex-end"} marginTop="auto" flex={1}>
-            <Box>
-              {__VERSION__} {__COMMIT_HASH__}
-            </Box>
+            <Text fontSize={1}>
+              {__VERSION__} {__COMMIT_HASH__} [{__COMMIT_DATE__}]
+            </Text>
           </Flex>
         </Flex>
       </ThemeProvider>

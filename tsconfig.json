@@ -6,6 +6,9 @@
       "dom.iterable",
       "esnext"
     ],
+    "types": [
+      "workbox-sw"
+    ],
     "downlevelIteration": true,
     "allowJs": true,
     "skipLibCheck": true,
