@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "target": "es5",
     "lib": [
@@ -24,14 +25,9 @@
     "jsx": "react"
   },
   "files": [
-    "./src/globals.d.ts"
+    "./types/globals.d.ts"
   ],
   "moduleResolution": "node",
-  "baseUrl": "./src",
-  "paths": {
-    "@ui/*": "ui/*",
-    "docs/": "./docs/"
-  },
   "include": [
     "./src/**/*"
   ]

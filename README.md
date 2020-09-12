@@ -4,8 +4,10 @@
 
 https://apkawa.github.io/react-fertilizer-calculator/
 
-
 базируется на логике из http://chile-forum.ru/index.php/topic,2699.0.html
+
+* [Описание методики расчетов](src/docs/technique.md)
+* [Краткая справка](src/docs/how_to_use.md)
 
 # Технологии
 
@@ -25,11 +27,13 @@ https://apkawa.github.io/react-fertilizer-calculator/
 * [ ] Добавление рецептов
 * [x] Темная тема
 * [ ] Экспорт и импорт
-* [ ] Уточнение логики расчетов
-* [ ] Справка
+* [x] Уточнение логики расчетов
+* [x] Справка
 * [x] Мобильная версия
 
 # Полезная информация
 
 * https://www.yara.nl/siteassets/toolbox/nutrient-solutions/nutrient-solutions-for-greenhouse-crops-dec2017.pdf/
 * http://chile-forum.ru/index.php/topic,2512.0.html
+* https://agrovesti.net/lib/tech/fertilizer-tech/mineralnye-udobreniya-prakticheskoe-posobie-po-svojstvam-i-osobennostyam-primeneniya.html
+* https://floragrowing.com/ru/encyclopedia/sostavlenie-i-prigotovlenie-pitatelnogo-rastvora

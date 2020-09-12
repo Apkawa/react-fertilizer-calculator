@@ -6,6 +6,7 @@ import {FERTILIZER_ELEMENT_NAMES} from "./constants";
 
 export interface FertilizerWeights {
   id: string,
+  // г/л
   weight: number
   base_weight: number,
 }

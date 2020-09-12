@@ -44,9 +44,15 @@ module.exports = {
         use: 'raw-loader',
       },
     )
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, 'src/'),
+    }
+
     const workboxConfig = {
       ...defaultGenerateConfig,
       swDest: path.join(__dirname, 'build', 'pwa-sw.js'),
+      // Важный момент чтобы срабатывал рефреш.
       skipWaiting: true,
       // Define runtime caching rules.
       runtimeCaching: [ {

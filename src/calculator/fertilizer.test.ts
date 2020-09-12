@@ -48,5 +48,34 @@ test("convert FertilizerInfo to element Fertilizer", () => {
       "id": "Valagro 3:11:38",
     }
   )
+})
 
+test('Fertilizer formula to raw NPK', () => {
+  const result = normalizeFertilizer({
+    id: "Нитрат калия",
+    composition: [
+      {formula: "KNO3"}
+    ]
+  }, true)
+  expect(result).toMatchObject({
+    elements: {
+      K: 39,
+      N: 14
+    }
+  })
+})
+
+test('Fertilizer formula to oxide NPK', () => {
+  const result = normalizeFertilizer({
+    id: "Нитрат калия",
+    composition: [
+      {formula: "KNO3"}
+    ]
+  }, false)
+  expect(result).toMatchObject({
+    elements: {
+      K: 47,
+      N: 14
+    }
+  })
 })
