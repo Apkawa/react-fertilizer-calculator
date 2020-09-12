@@ -50,6 +50,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
         setOpened(false)
       }
     }
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -113,7 +114,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
             />
           </Box>
         </Flex>
-        <Flex  sx={{position: 'relative'}}>
+        <Flex sx={{position: 'relative'}}>
           <Flex sx={{position: "absolute"}}
                 flexDirection="column"
                 width="100%"
@@ -121,7 +122,6 @@ export function Dropdown<T>(props: DropdownProps<T>) {
             {opened && <DropdownList<T> items={props.items}/>}
           </Flex>
         </Flex>
-
       </Flex>
     </DropdownContext.Provider>
   )

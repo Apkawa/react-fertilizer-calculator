@@ -6,7 +6,7 @@ import {ThemeProvider} from 'theme-ui'
 
 import pages from './pages'
 import {Box, Flex, Text} from "rebass";
-import {defaultTheme} from "./theme";
+import {defaultTheme} from "./themes";
 import {ForkMeOnGitHub} from "./components/ui/ForkMeOnGitHub";
 import {ColorModeToggle} from "./components/ColorModeToggle";
 

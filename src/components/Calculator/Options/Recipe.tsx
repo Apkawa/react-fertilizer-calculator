@@ -1,54 +1,38 @@
-import React, {FunctionComponent} from "react";
-import {Button, Card, Flex} from "rebass";
+import React, {FunctionComponent, useState} from "react";
+import {Box, Card, Flex} from "rebass";
 import {Broom} from '@styled-icons/fa-solid/Broom'
+import {Save} from '@styled-icons/boxicons-regular/Save'
 import {getRecipeFieldName, RecipeElementForm} from "./RecipeElementForm";
-import {Elements} from "../../../calculator/fertilizer";
-import {useFormValues} from "../../../hooks/ReduxForm";
-import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
+import {Elements} from "@/calculator/fertilizer";
+import {useFormValues} from "@/hooks/ReduxForm";
+import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 
-import {IconButton} from "../../ui/IconButton";
-
-export const DEFAULT_RECIPES = [
-  {
-    name: "Вега",
-    color: 'green',
-    elements: {
-      N: 220,
-      P: 50,
-      K: 200,
-      Ca: 170,
-      Mg: 50,
-    }
-  },
-  {
-    name: "Цвет",
-    color: 'yellow',
-    elements: {
-      N: 150,
-      P: 90,
-      K: 280,
-      Ca: 170,
-      Mg: 50,
-    }
-  },
-  {
-    name: "Плод",
-    color: 'red',
-    elements: {
-      N: 140,
-      P: 50,
-      K: 330,
-      Ca: 170,
-      Mg: 50,
-    }
-  }
-]
+import {IconButton} from "@/components/ui/IconButton";
+import {Dropdown} from "@/components/ui/Dropdown/Dropdown";
+import {CalculatorState, Recipe as RecipeType} from "@/components/Calculator/types";
+import {useDispatch, useSelector} from "react-redux";
+import {recipePush, recipeRemove} from "@/components/Calculator/actions";
 
 interface RecipeProps {
 }
 
 export const Recipe: FunctionComponent<RecipeProps> = () => {
-  const setValue = useFormValues()[1]
+  const {
+    recipes = [],
+  } = useSelector<any>(state => state.calculator) as CalculatorState
+
+  const [values, setValue] = useFormValues()
+  const [selected, setSelected] = useState<RecipeType | undefined>(recipes?.[0])
+  const [creating, setCreating] = useState(false)
+
+  const dispatch = useDispatch()
+
+
+  const onChangeHandler = (item: RecipeType | null) => {
+    item && setSelected(item)
+    item && setRecipe(item.elements)
+    setCreating(false)
+  }
 
   const setRecipe = (elements: Elements) => {
     for (let [name, value] of Object.entries(elements)) {
@@ -57,27 +41,69 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
   }
   const resetRecipe = () => {
     let zeroValues = Object.fromEntries(FERTILIZER_ELEMENT_NAMES.map(el => [el, 0])) as unknown as Elements
+
     setRecipe(zeroValues)
+  }
+  const onEditHandler = (value: string) => {
+    let zeroValues = Object.fromEntries(FERTILIZER_ELEMENT_NAMES.map(el => [el, 0])) as unknown as Elements
+    setSelected({name: value, elements: zeroValues})
+    setRecipe(zeroValues)
+    setCreating(true)
+  }
+  const onAddHandler = () => {
+    if (!selected) {
+      return
+    }
+    const recipe = {name: selected.name, elements: values.recipe}
+    if (creating) {
+
+      dispatch(recipePush(recipe))
+    }
+    setCreating(false)
+  }
+  const onRemoveItemHandler = (item: RecipeType) => {
+    dispatch(recipeRemove(item))
   }
   return (
     <Card>
       <Flex flexDirection="column">
         <Flex
-          justifyContent="center"
         >
-          {DEFAULT_RECIPES.map(({name, color, elements}) =>
-            <Button
-              type="button"
-              marginRight={2}
-              bg={color}
-              color={'black'}
-              onClick={() => setRecipe(elements)}
-            >{name}</Button>
-          )}
-          <IconButton
-            component={Broom}
-            onClick={resetRecipe}
-          />
+          <Box flex={1} mx={2}>
+            <Dropdown<RecipeType>
+              value={selected}
+              items={recipes}
+              onChange={onChangeHandler}
+              onEdit={onEditHandler}
+              renderItem={({item}) => (
+                <Flex flex={1} justifyContent="space-between">
+                  <Box width={3} backgroundColor={item.color || 'gray'}>
+                  </Box>
+                  <Box flex={1} mx={2}>
+                    {item.name}
+                  </Box>
+                  <button onClick={event => {
+                    event.stopPropagation()
+                    onRemoveItemHandler(item)
+                  }}>-
+                  </button>
+                </Flex>
+              )}
+              renderValue={item => item?.name || ""}
+            />
+          </Box>
+          <Box>
+            <IconButton
+              marginRight={1}
+              component={Save}
+              disabled={!creating}
+              onClick={onAddHandler}
+            />
+            <IconButton
+              component={Broom}
+              onClick={resetRecipe}
+            />
+          </Box>
         </Flex>
         <Flex justifyContent="space-between">
           {

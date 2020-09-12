@@ -13,7 +13,7 @@ interface ElementProps {
 
 export const Element: FunctionComponent<ElementProps> = ({name, value}) => {
   return (
-    <Box bg="primary" flex={1} mx="2px" px={1} color={'background'} minWidth="2.5em">
+    <Box bg={name} flex={1} mx="2px" px={1} color={'black'} minWidth="2.5em">
       <Flex flexDirection='column' alignItems={'center'}>
         <Box>{name}</Box>
         <Box>{value}</Box>

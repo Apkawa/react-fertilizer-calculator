@@ -3,11 +3,13 @@ import {Button, ButtonProps} from "rebass";
 import {EmotionIcon} from '@emotion-icons/emotion-icon'
 
 import {useTheme} from "emotion-theming";
-import {Theme} from "../../theme";
+import {Theme} from "@/themes/types";
 
 
-interface IconButtonProps extends PropsWithChildren<Omit<ButtonProps, keyof React.HTMLProps<HTMLButtonElement>>> {
+interface IconButtonProps extends
+  PropsWithChildren<Omit<ButtonProps, keyof React.HTMLProps<HTMLButtonElement>>> {
   component: EmotionIcon,
+  disabled?: boolean,
   onClick?: MouseEventHandler<HTMLButtonElement>,
   size?: number | string
 }

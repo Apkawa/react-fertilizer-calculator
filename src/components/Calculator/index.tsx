@@ -7,14 +7,14 @@ import {Options} from "./Options/Options";
 import {Result} from "./Result/Result";
 import {reduxForm} from "redux-form";
 import {CalculatorFormValues} from "./types";
-import {DEFAULT_RECIPES} from "./Options/Recipe";
 import {ReduxFormType} from "../ui/ReduxForm/types";
 import {REDUX_FORM_NAME} from "./constants";
 import {useDispatch} from "react-redux";
-import {calculateStart, fertilizerReset} from "./actions";
+import {calculateStart, fertilizerReset, recipeReset} from "./actions";
 import {ImportFertilizers} from "@/components/Calculator/ImportExport/ImportFertilizers";
 import {ExportFertilizers} from "@/components/Calculator/ImportExport/ExportFertilizers";
 import {IconButton} from "@/components/ui/IconButton";
+import {DEFAULT_RECIPES} from "@/components/Calculator/constants/recipes";
 
 interface CalculatorProps {
 
@@ -53,7 +53,9 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
           <Card>
             <Heading fontSize={2}>Импорт/Экспорт</Heading>
             <Flex flexDirection="column" p={3}>
-              <Flex alignItems='center' justifyContent="space-between">
+              <Flex alignItems='center'
+                    paddingBottom={2}
+                    justifyContent="space-between">
                 <Text>Удобрения</Text>
                 <Box sx={{
                   "&>*": {
@@ -65,6 +67,23 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
                   <IconButton
                     component={Restart}
                     onClick={() => dispatch(fertilizerReset())}
+                  />
+                </Box>
+              </Flex>
+              <Flex alignItems='center'
+                    justifyContent="space-between"
+              >
+                <Text>Рецепты</Text>
+                <Box sx={{
+                  "&>*": {
+                    marginLeft: 1
+                  }
+                }}>
+                  {/*<ImportFertilizers />*/}
+                  {/*<ExportFertilizers />*/}
+                  <IconButton
+                    component={Restart}
+                    onClick={() => dispatch(recipeReset())}
                   />
                 </Box>
               </Flex>

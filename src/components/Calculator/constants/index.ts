@@ -10,4 +10,6 @@ export const FERTILIZERS_REMOVE = 'FERTILIZERS_REMOVE' as const
 export const FERTILIZERS_RESET = 'FERTILIZERS_RESET' as const
 
 
-
+export const RECIPE_PUSH = 'RECIPE_PUSH' as const
+export const RECIPE_REMOVE = 'RECIPE_REMOVE' as const
+export const RECIPE_RESET = 'RECIPE_RESET' as const

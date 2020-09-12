@@ -1,13 +1,16 @@
-import {Theme as OldTheme} from 'theme-ui'
+import {Theme} from "@/themes/types";
 
 const presets: any = require('@theme-ui/presets')
 
-export type Theme = OldTheme
-
-export const defaultTheme = {
+export const defaultTheme: Theme = {
   ...presets.polaris,
   colors: {
     ...presets.polaris.colors,
+    N: '#05AD11',
+    P: '#DBC403',
+    K: '#E07206',
+    Ca: '#D1C7C7',
+    Mg: '#AB0AE0',
     modes: {
       dark: {
         ...presets.polaris.colors.modes.dark,

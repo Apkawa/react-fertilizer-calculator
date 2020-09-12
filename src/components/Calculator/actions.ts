@@ -1,6 +1,7 @@
 import * as ActionNames from "./constants";
-import {CalculateResult} from "../../calculator";
-import {FertilizerInfo} from "../../calculator/fertilizer";
+import {CalculateResult} from "@/calculator";
+import {FertilizerInfo} from "@/calculator/fertilizer";
+import {Recipe} from "@/components/Calculator/types";
 
 export const calculateStart = () => ({
   type: ActionNames.CALCULATE_START,
@@ -27,6 +28,21 @@ export const fertilizerRemove = (payload: FertilizerInfo) => ({
 
 export const fertilizerReset = () => ({
   type: ActionNames.FERTILIZERS_RESET,
+})
+
+
+export const recipePush = (payload: Recipe) => ({
+  type: ActionNames.RECIPE_PUSH,
+  payload
+})
+
+export const recipeRemove = (payload: Recipe) => ({
+  type: ActionNames.RECIPE_REMOVE,
+  payload
+})
+
+export const recipeReset = () => ({
+  type: ActionNames.RECIPE_RESET,
 })
 
 

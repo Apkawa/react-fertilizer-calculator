@@ -1,7 +1,7 @@
-import {Elements, FertilizerInfo} from "../../calculator/fertilizer";
-import {InferValuesTypes} from "../../redux-helpers/types";
+import {Elements, FertilizerInfo} from "@/calculator/fertilizer";
+import {InferValuesTypes} from "@/redux-helpers/types";
 import * as actions from "./actions";
-import {CalculateResult} from "../../calculator";
+import {CalculateResult} from "@/calculator";
 
 export interface CalculatorFormValues {
   accuracy: number,
@@ -17,7 +17,13 @@ export interface CalculatorState {
   readonly process: boolean,
   readonly error: boolean,
   readonly fertilizers: FertilizerInfo[]
+  readonly recipes: Recipe[],
 }
 
+export interface Recipe {
+  name: string,
+  color?: string,
+  elements: Elements
+}
 
 export type ActionTypes = ReturnType<InferValuesTypes<typeof actions>>
