@@ -5,7 +5,7 @@ import {AddItemElementForm} from "./AddItemElementForm";
 import {buildNPKFertilizer, Elements, FertilizerInfo, normalizeFertilizer} from "../../../calculator/fertilizer";
 
 interface AddItemFertilizerEditFormProps {
-  fertilizer: FertilizerInfo,
+  fertilizer?: FertilizerInfo,
   allowEdit: boolean,
   onChange: (item: FertilizerInfo) => void
 }
@@ -20,9 +20,12 @@ export const AddItemFertilizerEditForm: FunctionComponent<AddItemFertilizerEditF
     allowEdit
   } = props
 
-  const [elements, setElements] = useState<Elements>(getElements(fertilizer))
+  const [elements, setElements] = useState<Elements|undefined>(fertilizer && getElements(fertilizer))
 
   const onChangeHandler = (el: FERTILIZER_ELEMENT_NAMES, val: number) => {
+    if (!elements || !fertilizer){
+      return
+    }
     const newElements: Elements = {...elements, [el]: val}
     const newFertilizer = buildNPKFertilizer(fertilizer.id, newElements)
     setElements(newElements)
@@ -30,7 +33,7 @@ export const AddItemFertilizerEditForm: FunctionComponent<AddItemFertilizerEditF
   }
 
   useEffect(() => {
-    setElements(getElements(fertilizer))
+    setElements(fertilizer && getElements(fertilizer))
   }, [fertilizer])
 
   return (
@@ -40,7 +43,7 @@ export const AddItemFertilizerEditForm: FunctionComponent<AddItemFertilizerEditF
           <AddItemElementForm
             disabled={!allowEdit}
             name={el}
-            value={elements[el]}
+            value={elements?.[el]||0}
             onChange={v => onChangeHandler(el, v)}
           />
         ))}

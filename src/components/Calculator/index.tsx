@@ -1,6 +1,6 @@
 import React from "react";
-
-import {Box, Flex} from 'rebass'
+import {Box, Flex, Card, Text, Heading} from 'rebass'
+import {Restart} from "@styled-icons/remix-line/Restart"
 
 import FertilizerSelect from './FertilizerSelect'
 import {Options} from "./Options/Options";
@@ -11,7 +11,10 @@ import {DEFAULT_RECIPES} from "./Options/Recipe";
 import {ReduxFormType} from "../ui/ReduxForm/types";
 import {REDUX_FORM_NAME} from "./constants";
 import {useDispatch} from "react-redux";
-import {calculateStart} from "./actions";
+import {calculateStart, fertilizerReset} from "./actions";
+import {ImportFertilizers} from "@/components/Calculator/ImportExport/ImportFertilizers";
+import {ExportFertilizers} from "@/components/Calculator/ImportExport/ExportFertilizers";
+import {IconButton} from "@/components/ui/IconButton";
 
 interface CalculatorProps {
 
@@ -47,6 +50,26 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
           <Box flex={1}>
             <Options/>
           </Box>
+          <Card>
+            <Heading fontSize={2}>Импорт/Экспорт</Heading>
+            <Flex flexDirection="column" p={3}>
+              <Flex alignItems='center' justifyContent="space-between">
+                <Text>Удобрения</Text>
+                <Box sx={{
+                  "&>*": {
+                    marginLeft: 1
+                  }
+                }}>
+                  <ImportFertilizers/>
+                  <ExportFertilizers />
+                  <IconButton
+                    component={Restart}
+                    onClick={() => dispatch(fertilizerReset())}
+                  />
+                </Box>
+              </Flex>
+            </Flex>
+          </Card>
         </Flex>
       </Flex>
     </form>

@@ -88,8 +88,7 @@ describe('molecularParser', function () {
           "count": 1,
           "formula": "(NH4)2HPO4+K2SO4"
         }
-      ]
-
+      ],
     }
 
     it('should parse easy formulae correctly.', function () {

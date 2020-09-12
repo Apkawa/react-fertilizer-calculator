@@ -1,8 +1,8 @@
 import React from "react";
-import {Calculator} from "../../components/Calculator";
+import {Calculator} from "@/components/Calculator";
 import {Box, Flex, Heading} from "rebass";
-import {IconButton} from "../../components/ui/IconButton";
-import {HelpCenter} from '@styled-icons/material-rounded/HelpCenter'
+import {IconButton} from "@/components/ui/IconButton";
+import {Help} from '@styled-icons/entypo/Help'
 import {Link} from "react-router-dom";
 
 
@@ -27,7 +27,8 @@ export default () => {
               padding={1}
               marginLeft={3}
               size={30}
-              component={HelpCenter} />
+              component={Help}
+            />
           </Link>
         </Flex>
         <Calculator/>

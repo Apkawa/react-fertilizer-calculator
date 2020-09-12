@@ -1,12 +1,15 @@
 import React, {FunctionComponent, useState} from "react";
-import {Box, Button, Card, Flex} from "rebass";
+import {Box, Card, Flex} from "rebass";
 import {FertilizerType} from "./types";
-import {buildNPKFertilizer, FertilizerInfo} from "../../../calculator/fertilizer";
-import {Dropdown} from "../../ui/Dropdown/Dropdown";
+import {buildNPKFertilizer, FertilizerInfo} from "@/calculator/fertilizer";
+import {Dropdown} from "@/components/ui/Dropdown/Dropdown";
+import {Plus} from "@styled-icons/boxicons-regular/Plus"
+
 import {useDispatch, useSelector} from "react-redux";
 import {CalculatorState} from "../types";
 import {fertilizerPush, fertilizerRemove} from "../actions";
 import {AddItemFertilizerEditForm, getElements} from "./AddItemFertilizerEditForm";
+import {IconButton} from "@/components/ui/IconButton";
 
 interface AddItemProps {
   onAdd: (item: FertilizerType) => void
@@ -17,7 +20,7 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
   const {
     fertilizers,
   } = useSelector<any>(state => state.calculator) as CalculatorState
-  const [selected, setSelected] = useState<FertilizerInfo>(fertilizers[0])
+  const [selected, setSelected] = useState<FertilizerInfo|undefined>(fertilizers[0])
   const [creating, setCreating] = useState(false)
 
   const dispatch = useDispatch()
@@ -34,6 +37,9 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
     setCreating(true)
   }
   const onAddHandler = () => {
+    if (!selected) {
+      return
+    }
     let fertilizer = buildNPKFertilizer(selected.id, getElements(selected))
     onAdd(fertilizer)
     if (creating) {
@@ -69,9 +75,10 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
               renderValue={item => item?.id || ""}
             />
           </Box>
-          <Button
-            type="button"
-            onClick={onAddHandler}>Add</Button>
+          <IconButton
+            onClick={onAddHandler}
+            component={Plus}/>
+
         </Flex>
         <AddItemFertilizerEditForm
           fertilizer={selected}

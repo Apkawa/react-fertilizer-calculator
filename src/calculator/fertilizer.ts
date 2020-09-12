@@ -66,7 +66,7 @@ export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass 
         if (comp.percent) {
           percent = comp.percent;
         }
-        elements[atom] = round(percent * mass, 2)
+        elements[atom] += round(percent * mass, 2)
       }
     }
   }
