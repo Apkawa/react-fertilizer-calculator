@@ -28,7 +28,7 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
           />
         </Flex>
         <Flex alignItems="center" justifyContent="space-between" paddingTop={2}>
-          <Label htmlFor="solution_concentration">Концетрация, %</Label>
+          <Label htmlFor="solution_concentration">Концентрация, %</Label>
           <Input
             name="solution_concentration"
             width="3rem"

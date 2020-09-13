@@ -32,9 +32,16 @@ https://apkawa.github.io/react-fertilizer-calculator/
     * [x] удобрения
     * [ ] рецепты
 * [ ] Логика расчетов
-    * [x] Добавить % концетрацию раствора
+    * [x] Добавить % концентрацию раствора
     * [x] Расчет итогового EC / ppm
     * [ ] Учет ppm воды 
+    * [ ] Расчет амонийного и нитратного азота \
+        https://gidroponika.com/content/view/772/237/ \
+        Иначе раствор будет постоянно подщелачиваться
+        
+    * [ ] Балансирование профиля [инфа](http://forum.ponics.ru/index.php?topic=336.msg134010#msg134010)
+        
+    
 * [x] Справка
 * [x] Мобильная версия
 * [ ] Покрутить цвета
@@ -45,3 +52,5 @@ https://apkawa.github.io/react-fertilizer-calculator/
 * http://chile-forum.ru/index.php/topic,2512.0.html
 * https://agrovesti.net/lib/tech/fertilizer-tech/mineralnye-udobreniya-prakticheskoe-posobie-po-svojstvam-i-osobennostyam-primeneniya.html
 * https://floragrowing.com/ru/encyclopedia/sostavlenie-i-prigotovlenie-pitatelnogo-rastvora
+* http://www.ponics.ru/2009/10/table_for_hydro/
+* http://forum.ponics.ru/index.php?topic=2533.0
