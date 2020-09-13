@@ -89,7 +89,7 @@ export function calculate(
 
   const time = new Date().getTime();
   let count = 0;
-  const {accuracy = 0.1, max_iterations = 15} = options || {}
+  const {accuracy = 0.1, max_iterations = 25} = options || {}
   const precision = countDecimals(accuracy)
   let weights: FertilizerWeights[] = fertilizers.map(v => ({
     id: v.id,
@@ -102,28 +102,31 @@ export function calculate(
   let score_percent = 0;
   let calculatedElements: Elements = { N: 0, P: 0, K: 0, Ca: 0, Mg: 0}
 
+  const accuracyList = [0.2, 0.1, 0.05, 0.01]
+  let step = accuracyList[0] * 10;
 
-  for (let currentAccuracy of [0.5, 0.2, 0.1, 0.05, 0.01]) {
+  for (let currentAccuracy of accuracyList) {
     if (currentAccuracy < accuracy) {
       break
     }
-    const step = currentAccuracy * 10;
 
+    const _step = step
     const weightRanges = weights.map(w => {
       const ranges = []
-      const weight = w.weight < step ? step : w.weight
-      let minWeight = weight - step
-      let maxWeight = weight + step
+      const weight = w.weight < _step ? _step : w.weight
+      let minWeight = weight - _step
+      let maxWeight = weight + _step
       if (weight === max_iterations) {
         // Maybe first iteration
         minWeight = 0
         maxWeight = max_iterations
       }
-      for (let i = minWeight; i <= maxWeight; i += step) {
+      for (let i = minWeight; i <= maxWeight; i += _step) {
         ranges.push(i)
       }
       return ranges
     })
+
 
     const it = product(...weightRanges)
 
@@ -159,6 +162,7 @@ export function calculate(
       }
     }
     fertilizers = newFertilizers
+    step = currentAccuracy * 10;
   }
 
   let ignored = 0;

@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {CalculatorFormValues, CalculatorState} from "../types";
 import {getFormValues} from "redux-form";
 import {REDUX_FORM_NAME} from "../constants";
-import {countDecimals, round} from "../../../utils";
+import {countDecimals, round, sum} from "../../../utils";
 import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
 import {Element} from "../FertilizerSelect/SelectedListItem";
 import styled from "styled-components";
@@ -35,11 +35,21 @@ export const Result: FunctionComponent<ResultProps> = () => {
     result,
   } = useSelector<any>(state => state.calculator) as CalculatorState
 
-  const {solution_volume, accuracy} = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues
+  const {
+    solution_volume,
+    solution_concentration = 100,
+    accuracy
+  } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues
 
-  const fertilizers = result?.fertilizers || []
+  const fertilizers = (result?.fertilizers || []).map(f => ({...f}))
   const score = result?.score || 0
-  const elements = result?.elements || { N: 0, P: 0, K: 0, Ca: 0, Mg: 0}
+  const elements = result?.elements || {N: 0, P: 0, K: 0, Ca: 0, Mg: 0}
+  fertilizers.forEach(f => {
+    f.weight = f.weight
+      * solution_volume
+      * (solution_concentration / 100)
+  })
+  const ppm = sum(fertilizers.map(f => f.weight * 1000)) / solution_volume
   return (
     <Card>
       <Flex alignItems="center" flexDirection="column">
@@ -55,10 +65,24 @@ export const Result: FunctionComponent<ResultProps> = () => {
         <Text fontSize={6}>{`${score || 0}%`}</Text>
         <StyledList>
           <li>{solution_volume}л воды</li>
-          {fertilizers.map(f =>
-            <li key={f.id}>{round(f.weight * solution_volume, countDecimals(accuracy))}г {f.id}</li>
-          )}
+          {fertilizers.map(f => {
+            return (
+              <li key={f.id}>
+                {round(f.weight, countDecimals(accuracy))}г {f.id}
+              </li>
+            )
+          })}
+          <li title="Или минерализация, в мг/л">
+            <b>TDS:</b> {ppm} ppm
+          </li>
+          <li title="">
+            {[1.0, 0.7, 0.5].map(k => {
+              const ec = round(ppm * (1/k)) / 1000
+              return (<p><b>EC({k}):</b> {ec} мСм/см</p>)
+              })}
+          </li>
         </StyledList>
+
         {result?.stats &&
         <Text>
           Обработано вариантов: {result?.stats.count} Время: {result?.stats.time} сек

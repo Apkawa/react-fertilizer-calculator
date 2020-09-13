@@ -3,7 +3,7 @@ import {Box, Button, Flex} from "rebass";
 import {Recipe} from "./Recipe";
 import {IgnoreElement} from "./IgnoreElement";
 import {Accuracy} from "./Accuracy";
-import {SolutionVolume} from "./SolutionVolume";
+import {Solution} from "./Solution";
 
 interface OptionsProps {
 }
@@ -19,7 +19,7 @@ export const Options: ComponentType<OptionsProps> = () => {
         <Recipe/>
       </Box>
       <Box my={2}>
-        <SolutionVolume/>
+        <Solution/>
       </Box>
       <Flex sx={{
         '& > *': {flex: 1}

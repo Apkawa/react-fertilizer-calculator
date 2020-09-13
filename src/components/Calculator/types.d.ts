@@ -6,6 +6,7 @@ import {CalculateResult} from "@/calculator";
 export interface CalculatorFormValues {
   accuracy: number,
   solution_volume: number,
+  solution_concentration: number,
   recipe: Elements,
   fertilizers: FertilizerInfo[],
   ignore_Ca?: boolean,

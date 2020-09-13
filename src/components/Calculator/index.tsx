@@ -23,6 +23,7 @@ interface CalculatorProps {
 const initialValues: CalculatorFormValues = {
   accuracy: 0.2,
   solution_volume: 1,
+  solution_concentration: 100,
   recipe: DEFAULT_RECIPES[0].elements,
   fertilizers: [],
 }

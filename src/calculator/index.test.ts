@@ -35,7 +35,7 @@ describe("Calculate", () => {
       "fertilizers": [
         {
           "id": "Valagro 3:11:38",
-          "weight": 1.1,
+          "weight": 1.2,
         },
         {
           "id": "Кальциевая селитра",
@@ -43,13 +43,13 @@ describe("Calculate", () => {
         },
       ],
       elements: {
-        "N": 193,
-        "P": 53,
-        "K": 347,
+        "N": 196,
+        "P": 58,
+        "K": 378,
         "Ca": 170,
-        "Mg": 26
+        "Mg": 29
       },
-      "score": 74,
+      "score": 73,
     })
   })
   test("Ignore Ca, Mg", () => {
@@ -92,7 +92,7 @@ describe("Calculate", () => {
       "fertilizers": [
         {
           "id": "Valagro 3:11:38",
-          "weight": 0.84,
+          "weight": 0.85,
         },
         {
           "id": "Кальциевая селитра",
@@ -100,10 +100,10 @@ describe("Calculate", () => {
         },
         {
           "id": "Сульфат магния",
-          "weight": 0.31,
+          "weight": 0.3,
         }
       ],
-      "score": 89,
+      "score": 88,
     })
   })
 })
