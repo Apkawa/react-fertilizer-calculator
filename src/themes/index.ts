@@ -6,7 +6,7 @@ export const defaultTheme: Theme = {
   ...presets.polaris,
   colors: {
     ...presets.polaris.colors,
-    N: '#05AD11',
+    NO3: '#05AD11',
     P: '#DBC403',
     K: '#E07206',
     Ca: '#D1C7C7',

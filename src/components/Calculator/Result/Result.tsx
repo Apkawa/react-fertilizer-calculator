@@ -5,7 +5,7 @@ import {CalculatorFormValues, CalculatorState} from "../types";
 import {getFormValues} from "redux-form";
 import {REDUX_FORM_NAME} from "../constants";
 import {countDecimals, round, sum} from "../../../utils";
-import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
+import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 import {Element} from "../FertilizerSelect/SelectedListItem";
 import styled from "styled-components";
 
@@ -43,7 +43,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
 
   const fertilizers = (result?.fertilizers || []).map(f => ({...f}))
   const score = result?.score || 0
-  const elements = result?.elements || {N: 0, P: 0, K: 0, Ca: 0, Mg: 0}
+  const elements = result?.elements || {NO3: 0, NH4: 0, P: 0, K: 0, Ca: 0, Mg: 0}
   fertilizers.forEach(f => {
     f.weight = f.weight
       * solution_volume
@@ -77,9 +77,9 @@ export const Result: FunctionComponent<ResultProps> = () => {
           </li>
           <li title="">
             {[1.0, 0.7, 0.5].map(k => {
-              const ec = round(ppm * (1/k)) / 1000
+              const ec = round(ppm * (1 / k)) / 1000
               return (<p><b>EC({k}):</b> {ec} мСм/см</p>)
-              })}
+            })}
           </li>
         </StyledList>
 

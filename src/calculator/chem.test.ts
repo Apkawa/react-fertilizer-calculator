@@ -1,4 +1,4 @@
-import {calculateMassParts, parseMolecule} from "./chem";
+import {calculateMassParts, parseMolecule, parseNitrates} from "./chem";
 import {AtomNameType} from "./constants";
 
 describe("parseMolecule", () => {
@@ -49,4 +49,19 @@ describe("calculateMassParts", () => {
   //   const result = calculateMassParts(parseMolecule('(NH4)2SO4 + (NH4)2HPO4 + K2SO4'))
   //   expect(result).toEqual({Ca: 0.17, N: 0.119, O: 0.678, H: 0.034})
   // })
+})
+
+describe("Parse nitrates", () => {
+  test("NH4NO3", () => {
+    const res = parseNitrates('NH4NO3')
+    expect(res).toEqual({NH4: 1, NO3: 1})
+  })
+  test("Ca(NO3)2 * 4H2O",() => {
+    const res = parseNitrates('Ca(NO3)2 * 4H2O')
+    expect(res).toEqual({NH4: 0, NO3: 2})
+  })
+  test("(NH4)2SO4 + (NH4)2HPO4 + K2SO4",() => {
+    const res = parseNitrates('(NH4)2SO4 + (NH4)2HPO4 + K2SO4')
+    expect(res).toEqual({NH4: 4, NO3: 0})
+  })
 })

@@ -1,5 +1,5 @@
 import {product} from "./itertools";
-import {countDecimals, entries, round, sum} from "../utils";
+import {countDecimals, entries, keys, round, sum, values} from "../utils";
 import {Elements, Fertilizer} from "./fertilizer";
 import {FERTILIZER_ELEMENT_NAMES} from "./constants";
 
@@ -74,6 +74,11 @@ export function getScoreElement(needElements: Elements, currentElements: Element
       } else {
         score = curVal / value
       }
+    } else {
+      if (curVal === value) {
+        // В рецепте тоже ноль
+        score = 1.0
+      }
     }
     return [key, score]
   })
@@ -89,7 +94,12 @@ export function calculate(
 
   const time = new Date().getTime();
   let count = 0;
-  const {accuracy = 0.1, max_iterations = 25} = options || {}
+  const {
+    accuracy = 0.1,
+    max_iterations = 25,
+    ignore_Ca=false,
+    ignore_Mg=false
+  } = options || {}
   const precision = countDecimals(accuracy)
   let weights: FertilizerWeights[] = fertilizers.map(v => ({
     id: v.id,
@@ -97,10 +107,23 @@ export function calculate(
     base_weight: max_iterations
   }))
 
+  let ignoredElements: Elements = { NO3: 0, NH4: 0,  P: 0, K: 0, Ca: 0, Mg: 0}
+  if (ignore_Ca) {
+    ignoredElements.Ca = 1
+  }
+  if (ignore_Mg) {
+    ignoredElements.Mg = 1
+  }
+  // for (let [e, v] of entries(needElements)) {
+  //   if (v === 0) {
+  //     ignoredElements[e] = 1
+  //   }
+  // }
+
   let best_score = 1000000;
   let score;
   let score_percent = 0;
-  let calculatedElements: Elements = { N: 0, P: 0, K: 0, Ca: 0, Mg: 0}
+  let calculatedElements: Elements = { NO3: 0, NH4: 0,  P: 0, K: 0, Ca: 0, Mg: 0}
 
   const accuracyList = [0.2, 0.1, 0.05, 0.01]
   let step = accuracyList[0] * 10;
@@ -133,12 +156,13 @@ export function calculate(
     for (let portions of it) {
       let n_el: Elements = sumFertilizers(fertilizers, portions)
       let score_el: Elements = getScoreElement(needElements, n_el)
-      if (options.ignore_Ca) {
-        score_el.Ca = 0
+
+      for (let [e, v] of entries(ignoredElements)) {
+        if (v) {
+          score_el[e] = 0
+        }
       }
-      if (options.ignore_Mg) {
-        score_el.Mg = 0
-      }
+
       count += 1
       const current_score = sum(Object.values(score_el))
       score = sum(Object.values(score_el).map(v => Math.pow(v, 2)))
@@ -165,21 +189,18 @@ export function calculate(
     step = currentAccuracy * 10;
   }
 
-  let ignored = 0;
-  if (options.ignore_Ca) {
-    ignored += 1
-  }
-  if (options.ignore_Mg) {
-    ignored += 1
-  }
+  let ignored = sum(values(ignoredElements));
+  const needElementsLength = keys(needElements).length
+
   for (let [k, v] of entries(calculatedElements)) {
     calculatedElements[k] = round(v)
   }
 
+  const totalScore = Math.round(100 / ((score_percent - (needElementsLength - ignored)) / (needElementsLength - ignored) + 1))
   return {
     fertilizers: weights.map(v => ({...v, weight: round(v.weight / 10, precision)})),
+    score: totalScore,
     elements: calculatedElements,
-    score: Math.round(100 / ((score_percent - (5 - ignored)) / (5 - ignored) + 1)),
     stats: {
       time: (new Date().getTime() - time) / 1000,
       count: count,

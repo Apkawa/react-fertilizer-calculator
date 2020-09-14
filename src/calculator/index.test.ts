@@ -6,21 +6,22 @@ const defaultFertilizers: FertilizerInfo[] = [
   buildNPKFertilizer(
     "Valagro 3:11:38",
     {
-      N: 3, P: 11, K: 38, Ca: 0, Mg: 4,
+      NO3: 3, P: 11, K: 38, Ca: 0, Mg: 4,
     }),
   buildNPKFertilizer("Кальциевая селитра",
     {
-    N: 16, Ca: 24,
-  }),
-  buildNPKFertilizer("Сульфат магния", { Mg: 16 }),
-  buildNPKFertilizer("Сульфат калия", { K: 50 }),
-  buildNPKFertilizer("Нитрат калия", { N: 14, K: 46 })
+      NO3: 16, Ca: 24,
+    }),
+  buildNPKFertilizer("Сульфат магния", {Mg: 16}),
+  buildNPKFertilizer("Сульфат калия", {K: 50}),
+  buildNPKFertilizer("Нитрат калия", {NO3: 14, K: 46})
 ]
 
 describe("Calculate", () => {
   test("Simple ", () => {
     const result = calculate({
-        N: 200,
+        NO3: 200,
+        NH4: 0,
         P: 50,
         K: 200,
         Ca: 170,
@@ -43,18 +44,20 @@ describe("Calculate", () => {
         },
       ],
       elements: {
-        "N": 196,
+        "NO3": 196,
+        "NH4": 0,
         "P": 58,
         "K": 378,
         "Ca": 170,
         "Mg": 29
       },
-      "score": 73,
+      "score": 77,
     })
   })
   test("Ignore Ca, Mg", () => {
     const result = calculate({
-        N: 200,
+        NO3: 200,
+        NH4: 0,
         P: 50,
         K: 200,
         Ca: 170,
@@ -74,12 +77,13 @@ describe("Calculate", () => {
           "weight": 1.1,
         },
       ],
-      "score": 84,
+      "score": 88,
     })
   })
   test("Accuracy calculation", () => {
     const result = calculate({
-        N: 200,
+        NO3: 200,
+        NH4: 0,
         P: 50,
         K: 200,
         Ca: 170,
@@ -103,7 +107,7 @@ describe("Calculate", () => {
           "weight": 0.3,
         }
       ],
-      "score": 88,
+      "score": 90,
     })
   })
 })

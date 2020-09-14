@@ -2,9 +2,10 @@ import React, {FunctionComponent} from "react";
 import {Box, Card, Flex, Text} from "rebass";
 import {Cross} from "@styled-icons/entypo/Cross"
 import {FertilizerType} from "./types";
-import {normalizeFertilizer} from "../../../calculator/fertilizer";
-import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
+import {normalizeFertilizer} from "@/calculator/fertilizer";
+import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 import {IconButton} from "../../ui/IconButton";
+import {round} from "@/utils";
 
 interface ElementProps {
   name: string,
@@ -13,10 +14,10 @@ interface ElementProps {
 
 export const Element: FunctionComponent<ElementProps> = ({name, value}) => {
   return (
-    <Box bg={name} flex={1} mx="2px" px={1} color={'black'} minWidth="2.5em">
+    <Box bg={name} flex={1} mx="2px" px={1} color={'black'} minWidth="2.1em" fontSize={1}>
       <Flex flexDirection='column' alignItems={'center'}>
         <Box>{name}</Box>
-        <Box>{value}</Box>
+        <Box>{round(value, 1)}</Box>
       </Flex>
     </Box>
   )

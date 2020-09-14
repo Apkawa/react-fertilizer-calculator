@@ -45,9 +45,9 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
     setRecipe(zeroValues)
   }
   const onEditHandler = (value: string) => {
-    let zeroValues = Object.fromEntries(FERTILIZER_ELEMENT_NAMES.map(el => [el, 0])) as unknown as Elements
+    let zeroValues = Object.fromEntries(FERTILIZER_ELEMENT_NAMES
+      .map(el => [el, selected?.elements[el] || 0])) as unknown as Elements
     setSelected({name: value, elements: zeroValues})
-    setRecipe(zeroValues)
     setCreating(true)
   }
   const onAddHandler = () => {

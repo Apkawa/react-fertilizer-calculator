@@ -1,8 +1,10 @@
 import {entries, keys, round, sum, values} from "../utils";
-import {calculateMassParts, parseMolecule} from "./chem";
+import {calculateMassParts, parseMolecule, parseNitrates} from "./chem";
+import {AtomNameType} from "@/calculator/constants";
 
 export interface Elements {
-  N: number,
+  NO3: number,
+  NH4: number,
   P: number,
   K: number,
   Ca: number,
@@ -31,7 +33,8 @@ export type NPKElements = {
 }
 
 const NPKOxides = {
-  N: 'N',
+  NO3: 'NO3',
+  NH4: 'NH4',
   P: 'P2O5',
   K: 'K2O',
   Ca: 'CaO',
@@ -56,17 +59,28 @@ export function buildNPKFertilizer(id: string, npk: NPKElements): FertilizerInfo
 
 // Расчет состава удобрения в чистые элементы
 export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass = true): Fertilizer {
-  const elements: Elements = {N: 0, P: 0, K: 0, Ca: 0, Mg: 0}
+  const elements: Elements = {NO3: 0, NH4: 0, P: 0, K: 0, Ca: 0, Mg: 0}
 
   for (let comp of fertilizerInfo.composition) {
     let massParts = calculateMassParts(parseMolecule(comp.formula))
     for (let [atom, mass] of entries(massParts)) {
-      if (elements.hasOwnProperty(atom)) {
-        let percent = 100
-        if (comp.percent) {
-          percent = comp.percent;
+      let subAtoms = {[atom]: 1}
+      if (atom === "N") {
+        subAtoms = parseNitrates(comp.formula)
+        if (keys(elements).includes(comp.formula as keyof Elements)) {
+          mass = 1
         }
-        elements[atom] += round(percent * mass, 2)
+      }
+      const totalSubAtoms = sum(values(subAtoms))
+      for (let [a, k] of entries(subAtoms)) {
+        if (elements.hasOwnProperty(a)) {
+          let percent = 100
+          if (comp.percent) {
+            percent = comp.percent;
+          }
+          percent *= (k / totalSubAtoms)
+          elements[a as keyof Elements] += round(percent * mass, 2)
+        }
       }
     }
   }
@@ -75,7 +89,11 @@ export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass 
     keys(elements).forEach(atom => {
       const oxide = NPKOxides[atom]
       const massParts = calculateMassParts(parseMolecule(oxide))
-      const elementMassPart = massParts[atom]
+      if (massParts.hasOwnProperty("N")) {
+        // ничего не делаем, азот не переводим в оксиды
+        return
+      }
+      const elementMassPart = massParts[atom as AtomNameType]
       if (elementMassPart) {
         const k = round(sum(values(massParts)) / elementMassPart, 2)
         elements[atom] = round(elements[atom] * k, 0)

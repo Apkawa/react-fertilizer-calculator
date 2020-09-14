@@ -99,5 +99,6 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
 
 export const Calculator = reduxForm<CalculatorFormValues>({
   form: REDUX_FORM_NAME,
-  initialValues
+  initialValues,
+  // enableReinitialize: true
 })(CalculatorContainer)

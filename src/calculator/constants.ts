@@ -121,6 +121,6 @@ export const ATOMIC_MASS = {
 }
 export type AtomNameType = keyof ATOMIC_MASS
 export type ATOMIC_MASS = typeof ATOMIC_MASS;
-export const FERTILIZER_ELEMENT_NAMES = ["N", "P", "K", "Ca", "Mg"] as const
+export const FERTILIZER_ELEMENT_NAMES = ["NO3", "NH4", "P", "K", "Ca", "Mg"] as const
 export type FERTILIZER_ELEMENT_NAMES = typeof FERTILIZER_ELEMENT_NAMES[number]
 

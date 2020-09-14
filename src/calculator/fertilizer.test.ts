@@ -5,12 +5,12 @@ test("Build NPK Fertilizer", () => {
   const res = buildNPKFertilizer(
     "Valagro 3:11:38",
     {
-      N: 3, P: 11, K: 38, Ca: 0, Mg: 4,
+      NO3: 3, P: 11, K: 38, Ca: 0, Mg: 4,
     })
   expect(res).toEqual({
     "composition": [
       {
-        "formula": "N",
+        "formula": "NO3",
         "percent": 3
       },
       {
@@ -36,14 +36,15 @@ describe("normalizeFertilizer", () => {
     const res = normalizeFertilizer(buildNPKFertilizer(
       "Valagro 3:11:38",
       {
-        N: 3, P: 11, K: 38, Ca: 0, Mg: 4,
+        NO3: 3, P: 11, K: 38, Ca: 0, Mg: 4,
       }))
     expect(res).toEqual({
         elements: {
           "Ca": 0,
           "K": 31.54,
           "Mg": 2.4,
-          "N": 3,
+          "NO3": 3,
+          "NH4": 0,
           "P": 4.84,
         },
         "id": "Valagro 3:11:38",
@@ -62,7 +63,7 @@ describe("normalizeFertilizer", () => {
     expect(result).toMatchObject({
       elements: {
         K: 39,
-        N: 14
+        NO3: 14
       }
     })
   })
@@ -78,7 +79,7 @@ describe("normalizeFertilizer", () => {
     expect(result).toMatchObject({
       elements: {
         K: 39,
-        N: 14
+        NO3: 14
       }
     })
   })
@@ -94,8 +95,20 @@ describe("normalizeFertilizer", () => {
     expect(result).toMatchObject({
       elements: {
         K: 47,
-        N: 14
+        NO3: 14
       }
+    })
+  })
+  test('Нитрат аммония  to NPK', () => {
+    const result = normalizeFertilizer({
+      id: "Нитрат аммония",
+      composition: [
+        {formula: "NH4NO3", percent: 98}
+      ]
+    }, false)
+    expect(result.elements).toMatchObject({
+      NO3: 17.15,
+      NH4: 17.15,
     })
   })
 })
