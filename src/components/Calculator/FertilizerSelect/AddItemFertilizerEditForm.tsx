@@ -2,7 +2,8 @@ import React, {FunctionComponent, useEffect, useState} from "react";
 import {Flex} from "rebass";
 import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
 import {AddItemElementForm} from "./AddItemElementForm";
-import {buildNPKFertilizer, Elements, FertilizerInfo, normalizeFertilizer} from "../../../calculator/fertilizer";
+import {buildNPKFertilizer, normalizeFertilizer} from "../../../calculator/fertilizer";
+import {Elements, FertilizerInfo} from "@/calculator/types";
 
 interface AddItemFertilizerEditFormProps {
   fertilizer?: FertilizerInfo,

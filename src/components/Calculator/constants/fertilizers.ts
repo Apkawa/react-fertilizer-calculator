@@ -1,4 +1,5 @@
-import {buildNPKFertilizer, FertilizerInfo} from "@/calculator/fertilizer";
+import {buildNPKFertilizer} from "@/calculator/fertilizer";
+import {FertilizerInfo} from "@/calculator/types";
 
 
 export const defaultFertilizers: FertilizerInfo[] = [

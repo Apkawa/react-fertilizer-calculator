@@ -1,7 +1,7 @@
-import {Elements, FertilizerInfo} from "@/calculator/fertilizer";
 import {InferValuesTypes} from "@/redux-helpers/types";
 import * as actions from "./actions";
 import {CalculateResult} from "@/calculator";
+import {Elements, FertilizerInfo} from "@/calculator/types";
 
 export interface CalculatorFormValues {
   accuracy: number,

@@ -3,7 +3,6 @@ import {Box, Card, Flex} from "rebass";
 import {Broom} from '@styled-icons/fa-solid/Broom'
 import {Save} from '@styled-icons/boxicons-regular/Save'
 import {getRecipeFieldName, RecipeElementForm} from "./RecipeElementForm";
-import {Elements} from "@/calculator/fertilizer";
 import {useFormValues} from "@/hooks/ReduxForm";
 import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 
@@ -12,6 +11,8 @@ import {Dropdown} from "@/components/ui/Dropdown/Dropdown";
 import {CalculatorState, Recipe as RecipeType} from "@/components/Calculator/types";
 import {useDispatch, useSelector} from "react-redux";
 import {recipePush, recipeRemove} from "@/components/Calculator/actions";
+import {Elements} from "@/calculator/types";
+import {calculateNPKBalance, getEmptyElements} from "@/calculator/helpers";
 
 interface RecipeProps {
 }
@@ -27,6 +28,7 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
 
   const dispatch = useDispatch()
 
+  const NPKBalance = calculateNPKBalance(values.recipe || getEmptyElements())
 
   const onChangeHandler = (item: RecipeType | null) => {
     item && setSelected(item)
@@ -109,6 +111,9 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
           {
             FERTILIZER_ELEMENT_NAMES.map(n => <RecipeElementForm name={n}/>)
           }
+        </Flex>
+        <Flex >
+          {JSON.stringify(NPKBalance)}
         </Flex>
       </Flex>
     </Card>

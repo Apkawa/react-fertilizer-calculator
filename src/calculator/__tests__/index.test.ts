@@ -1,5 +1,6 @@
-import {calculate} from "./index";
-import {buildNPKFertilizer, FertilizerInfo, normalizeFertilizer} from "./fertilizer";
+import {calculate} from "../index";
+import {buildNPKFertilizer, normalizeFertilizer} from "../fertilizer";
+import {FertilizerInfo} from "@/calculator/types";
 
 
 const defaultFertilizers: FertilizerInfo[] = [
@@ -26,6 +27,7 @@ describe("Calculate", () => {
         K: 200,
         Ca: 170,
         Mg: 50,
+        S: 0,
       },
       [
         normalizeFertilizer(defaultFertilizers[0]),
@@ -49,9 +51,10 @@ describe("Calculate", () => {
         "P": 58,
         "K": 378,
         "Ca": 170,
-        "Mg": 29
+        "Mg": 29,
+        S: 0
       },
-      "score": 77,
+      "score": 79,
     })
   })
   test("Ignore Ca, Mg", () => {
@@ -62,6 +65,7 @@ describe("Calculate", () => {
         K: 200,
         Ca: 170,
         Mg: 50,
+        S: 0,
       },
       defaultFertilizers.map(f => normalizeFertilizer(f)),
       {ignore_Mg: true, ignore_Ca: true, accuracy: 0.01}
@@ -77,7 +81,7 @@ describe("Calculate", () => {
           "weight": 1.1,
         },
       ],
-      "score": 88,
+      "score": 90,
     })
   })
   test("Accuracy calculation", () => {
@@ -88,6 +92,7 @@ describe("Calculate", () => {
         K: 200,
         Ca: 170,
         Mg: 50,
+        S: 0,
       },
       defaultFertilizers.map(f => normalizeFertilizer(f)),
       {accuracy: 0.01}
@@ -107,7 +112,7 @@ describe("Calculate", () => {
           "weight": 0.3,
         }
       ],
-      "score": 90,
+      "score": 91,
     })
   })
 })

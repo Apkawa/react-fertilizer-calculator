@@ -4,10 +4,11 @@ import {useSelector} from "react-redux";
 import {CalculatorFormValues, CalculatorState} from "../types";
 import {getFormValues} from "redux-form";
 import {REDUX_FORM_NAME} from "../constants";
-import {countDecimals, round, sum} from "../../../utils";
+import {countDecimals, round} from "@/utils";
 import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 import {Element} from "../FertilizerSelect/SelectedListItem";
 import styled from "styled-components";
+import {calculatePPM, getEmptyElements, ppmToEC} from "@/calculator/helpers";
 
 interface ResultProps {
 }
@@ -42,14 +43,18 @@ export const Result: FunctionComponent<ResultProps> = () => {
   } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues
 
   const fertilizers = (result?.fertilizers || []).map(f => ({...f}))
+  const ppm = calculatePPM(
+    fertilizers,
+    solution_volume,
+    solution_concentration,
+  )
   const score = result?.score || 0
-  const elements = result?.elements || {NO3: 0, NH4: 0, P: 0, K: 0, Ca: 0, Mg: 0}
+  const elements = result?.elements || getEmptyElements()
   fertilizers.forEach(f => {
     f.weight = f.weight
       * solution_volume
       * (solution_concentration / 100)
   })
-  const ppm = sum(fertilizers.map(f => f.weight * 1000)) / solution_volume
   return (
     <Card>
       <Flex alignItems="center" flexDirection="column">
@@ -77,8 +82,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
           </li>
           <li title="">
             {[1.0, 0.7, 0.5].map(k => {
-              const ec = round(ppm * (1 / k)) / 1000
-              return (<p><b>EC({k}):</b> {ec} мСм/см</p>)
+              return (<p><b>EC({k}):</b> {ppmToEC(ppm, k)} мСм/см</p>)
             })}
           </li>
         </StyledList>

@@ -1,36 +1,8 @@
 import {entries, keys, round, sum, values} from "../utils";
 import {calculateMassParts, parseMolecule, parseNitrates} from "./chem";
-import {AtomNameType} from "@/calculator/constants";
-
-export interface Elements {
-  NO3: number,
-  NH4: number,
-  P: number,
-  K: number,
-  Ca: number,
-  Mg: number,
-}
-
-export interface Fertilizer {
-  id: string,
-  elements: Elements
-}
-
-export interface FertilizerComposition {
-  // As example:
-  formula: string,
-  // 0-100%
-  percent?: number,
-}
-
-export interface FertilizerInfo {
-  id: string,
-  composition: FertilizerComposition[],
-}
-
-export type NPKElements = {
-  [El in keyof Elements]?: Elements[El]
-}
+import {AtomNameType} from "./constants";
+import {getEmptyElements} from "./helpers";
+import {Elements, Fertilizer, FertilizerComposition, FertilizerInfo, NPKElements} from "@/calculator/types";
 
 const NPKOxides = {
   NO3: 'NO3',
@@ -39,6 +11,7 @@ const NPKOxides = {
   K: 'K2O',
   Ca: 'CaO',
   Mg: 'MgO',
+  S: 'S',
 }
 
 export function buildNPKFertilizer(id: string, npk: NPKElements): FertilizerInfo {
@@ -59,8 +32,7 @@ export function buildNPKFertilizer(id: string, npk: NPKElements): FertilizerInfo
 
 // Расчет состава удобрения в чистые элементы
 export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass = true): Fertilizer {
-  const elements: Elements = {NO3: 0, NH4: 0, P: 0, K: 0, Ca: 0, Mg: 0}
-
+  const elements: Elements = getEmptyElements()
   for (let comp of fertilizerInfo.composition) {
     let massParts = calculateMassParts(parseMolecule(comp.formula))
     for (let [atom, mass] of entries(massParts)) {

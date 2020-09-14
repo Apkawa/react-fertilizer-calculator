@@ -47,6 +47,7 @@ https://apkawa.github.io/react-fertilizer-calculator/
     
 * [x] Справка
 * [x] Мобильная версия
+* [ ] вывод и печать расчетного профиля (https://github.com/MrRio/jsPDF)
 * [ ] Покрутить цвета
 
 # Полезная информация

@@ -1,7 +1,7 @@
 import * as ActionNames from "./constants";
 import {CalculateResult} from "@/calculator";
-import {FertilizerInfo} from "@/calculator/fertilizer";
 import {Recipe} from "@/components/Calculator/types";
+import {FertilizerInfo} from "@/calculator/types";
 
 export const calculateStart = () => ({
   type: ActionNames.CALCULATE_START,

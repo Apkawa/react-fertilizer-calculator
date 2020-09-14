@@ -1,7 +1,8 @@
 import {product} from "./itertools";
 import {countDecimals, entries, keys, round, sum, values} from "../utils";
-import {Elements, Fertilizer} from "./fertilizer";
 import {FERTILIZER_ELEMENT_NAMES} from "./constants";
+import {Elements, Fertilizer} from "./types";
+import {getEmptyElements} from "./helpers";
 
 
 export interface FertilizerWeights {
@@ -14,6 +15,7 @@ export interface FertilizerWeights {
 export interface CalculateResult {
   fertilizers: FertilizerWeights[],
   elements: Elements,
+  deltaElements: Elements,
   score: number,
   stats: {
     time: number,
@@ -107,7 +109,7 @@ export function calculate(
     base_weight: max_iterations
   }))
 
-  let ignoredElements: Elements = { NO3: 0, NH4: 0,  P: 0, K: 0, Ca: 0, Mg: 0}
+  let ignoredElements: Elements = getEmptyElements()
   if (ignore_Ca) {
     ignoredElements.Ca = 1
   }
@@ -123,7 +125,7 @@ export function calculate(
   let best_score = 1000000;
   let score;
   let score_percent = 0;
-  let calculatedElements: Elements = { NO3: 0, NH4: 0,  P: 0, K: 0, Ca: 0, Mg: 0}
+  let calculatedElements: Elements = getEmptyElements()
 
   const accuracyList = [0.2, 0.1, 0.05, 0.01]
   let step = accuracyList[0] * 10;
@@ -196,11 +198,17 @@ export function calculate(
     calculatedElements[k] = round(v)
   }
 
+  const deltaElementsPairs = entries(calculatedElements).map(([k, v]) => {
+    return [k, needElements[k] - v]
+  })
+  const deltaElements = Object.fromEntries(deltaElementsPairs)
+
   const totalScore = Math.round(100 / ((score_percent - (needElementsLength - ignored)) / (needElementsLength - ignored) + 1))
   return {
     fertilizers: weights.map(v => ({...v, weight: round(v.weight / 10, precision)})),
     score: totalScore,
     elements: calculatedElements,
+    deltaElements,
     stats: {
       time: (new Date().getTime() - time) / 1000,
       count: count,

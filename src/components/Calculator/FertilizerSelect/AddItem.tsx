@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useState} from "react";
 import {Box, Card, Flex} from "rebass";
 import {FertilizerType} from "./types";
-import {buildNPKFertilizer, FertilizerInfo} from "@/calculator/fertilizer";
+import {buildNPKFertilizer} from "@/calculator/fertilizer";
 import {Dropdown} from "@/components/ui/Dropdown/Dropdown";
 import {Plus} from "@styled-icons/boxicons-regular/Plus"
 
@@ -10,6 +10,7 @@ import {CalculatorState} from "../types";
 import {fertilizerPush, fertilizerRemove} from "../actions";
 import {AddItemFertilizerEditForm, getElements} from "./AddItemFertilizerEditForm";
 import {IconButton} from "@/components/ui/IconButton";
+import {FertilizerInfo} from "@/calculator/types";
 
 interface AddItemProps {
   onAdd: (item: FertilizerType) => void

@@ -1,4 +1,4 @@
-import {FertilizerInfo} from "../../../calculator/fertilizer";
+import {FertilizerInfo} from "@/calculator/types";
 
 
 export interface FertilizerType extends FertilizerInfo {

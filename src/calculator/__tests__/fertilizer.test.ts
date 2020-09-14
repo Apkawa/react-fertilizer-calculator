@@ -1,4 +1,4 @@
-import {buildNPKFertilizer, normalizeFertilizer} from "./fertilizer";
+import {buildNPKFertilizer, normalizeFertilizer} from "../fertilizer";
 
 
 test("Build NPK Fertilizer", () => {
@@ -46,6 +46,7 @@ describe("normalizeFertilizer", () => {
           "NO3": 3,
           "NH4": 0,
           "P": 4.84,
+          S: 0,
         },
         "id": "Valagro 3:11:38",
       }
@@ -63,7 +64,8 @@ describe("normalizeFertilizer", () => {
     expect(result).toMatchObject({
       elements: {
         K: 39,
-        NO3: 14
+        NO3: 14,
+        S: 0,
       }
     })
   })
