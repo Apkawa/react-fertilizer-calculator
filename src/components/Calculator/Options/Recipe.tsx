@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useState} from "react";
-import {Box, Card, Flex} from "rebass";
+import {Box, Card, Flex, Heading, Text} from "rebass";
 import {Broom} from '@styled-icons/fa-solid/Broom'
 import {Save} from '@styled-icons/boxicons-regular/Save'
 import {getRecipeFieldName, RecipeElementForm} from "./RecipeElementForm";
@@ -13,6 +13,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {recipePush, recipeRemove} from "@/components/Calculator/actions";
 import {Elements} from "@/calculator/types";
 import {calculateNPKBalance, getEmptyElements} from "@/calculator/helpers";
+
+
+export const StyledBalanceCell: FunctionComponent<{name:string, value: number}> = (props) => {
+  return (
+    <Flex flexDirection="column" m={1} alignItems="center">
+      <Heading fontSize={1}>{props.name}</Heading>
+      <Text>{props.value}</Text>
+    </Flex>
+  )
+}
 
 interface RecipeProps {
 }
@@ -112,8 +122,13 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
             FERTILIZER_ELEMENT_NAMES.map(n => <RecipeElementForm name={n}/>)
           }
         </Flex>
-        <Flex >
-          {JSON.stringify(NPKBalance)}
+        <Flex justifyContent="space-around">
+          <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
+          <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
+          <StyledBalanceCell name="%NH4" value={NPKBalance["%NH4"]}/>
+          <StyledBalanceCell name="N:K" value={NPKBalance["N:K"]}/>
+          <StyledBalanceCell name="K:Ca" value={NPKBalance["K:Ca"]}/>
+          <StyledBalanceCell name="Ca:Mg" value={NPKBalance["Ca:Mg"]}/>
         </Flex>
       </Flex>
     </Card>

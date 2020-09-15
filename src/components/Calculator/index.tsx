@@ -15,6 +15,8 @@ import {ImportFertilizers} from "@/components/Calculator/ImportExport/ImportFert
 import {ExportFertilizers} from "@/components/Calculator/ImportExport/ExportFertilizers";
 import {IconButton} from "@/components/ui/IconButton";
 import {DEFAULT_RECIPES} from "@/components/Calculator/constants/recipes";
+import {ExportRecipes} from "@/components/Calculator/ImportExport/ExportRecipes";
+import {ImportRecipes} from "@/components/Calculator/ImportExport/ImportRecipes";
 
 interface CalculatorProps {
 
@@ -80,8 +82,8 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
                     marginLeft: 1
                   }
                 }}>
-                  {/*<ImportFertilizers />*/}
-                  {/*<ExportFertilizers />*/}
+                  <ImportRecipes />
+                  <ExportRecipes />
                   <IconButton
                     component={Restart}
                     onClick={() => dispatch(recipeReset())}

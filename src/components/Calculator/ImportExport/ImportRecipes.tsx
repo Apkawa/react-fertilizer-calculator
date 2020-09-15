@@ -3,16 +3,15 @@ import {Import} from "@styled-icons/boxicons-regular/Import"
 import {IconButton} from "@/components/ui/IconButton";
 import {csvParse} from "@/utils/csv";
 import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
-import {buildNPKFertilizer} from "@/calculator/fertilizer";
 import {useDispatch} from "react-redux";
-import {fertilizerPush} from "@/components/Calculator/actions";
+import {recipePush} from "@/components/Calculator/actions";
 
-interface ImportFertilizersProps {
+interface ImportRecipesProps {
 }
 
 const COLUMNS = ['id', ...FERTILIZER_ELEMENT_NAMES]
 
-export function ImportFertilizers(props: ImportFertilizersProps) {
+export function ImportRecipes(props: ImportRecipesProps) {
   const buttonRef = createRef<HTMLButtonElement>()
   const dispatch = useDispatch()
   const [size, setSize] = useState({width: 0, height: 0})
@@ -32,8 +31,7 @@ export function ImportFertilizers(props: ImportFertilizersProps) {
       p.splice(0, 1)
     }
     for (let {id, ...npk} of p) {
-      const f = buildNPKFertilizer(id, npk)
-      dispatch(fertilizerPush(f))
+      dispatch(recipePush({name: id, elements: npk}))
     }
   }
 

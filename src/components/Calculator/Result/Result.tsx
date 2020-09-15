@@ -8,7 +8,8 @@ import {countDecimals, round} from "@/utils";
 import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 import {Element} from "../FertilizerSelect/SelectedListItem";
 import styled from "styled-components";
-import {calculatePPM, getEmptyElements, ppmToEC} from "@/calculator/helpers";
+import {calculateNPKBalance, calculatePPM, getEmptyElements, ppmToEC} from "@/calculator/helpers";
+import {StyledBalanceCell} from "@/components/Calculator/Options/Recipe";
 
 interface ResultProps {
 }
@@ -55,6 +56,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
       * solution_volume
       * (solution_concentration / 100)
   })
+  const NPKBalance = calculateNPKBalance(elements)
   return (
     <Card>
       <Flex alignItems="center" flexDirection="column">
@@ -86,6 +88,14 @@ export const Result: FunctionComponent<ResultProps> = () => {
             })}
           </li>
         </StyledList>
+        <Flex justifyContent="space-around">
+          <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
+          <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
+          <StyledBalanceCell name="%NH4" value={NPKBalance["%NH4"]}/>
+          <StyledBalanceCell name="N:K" value={NPKBalance["N:K"]}/>
+          <StyledBalanceCell name="K:Ca" value={NPKBalance["K:Ca"]}/>
+          <StyledBalanceCell name="Ca:Mg" value={NPKBalance["Ca:Mg"]}/>
+        </Flex>
 
         {result?.stats &&
         <Text>

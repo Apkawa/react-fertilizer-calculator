@@ -11,6 +11,7 @@ export interface CalculatorFormValues {
   fertilizers: FertilizerInfo[],
   ignore_Ca?: boolean,
   ignore_Mg?: boolean,
+  ignore_S?: boolean,
 }
 
 export interface CalculatorState {

@@ -28,6 +28,7 @@ export interface CalculateOptions {
   max_iterations?: number,
   ignore_Ca?: boolean,
   ignore_Mg?: boolean,
+  ignore_S?: boolean,
 }
 
 /*
@@ -100,7 +101,8 @@ export function calculate(
     accuracy = 0.1,
     max_iterations = 25,
     ignore_Ca=false,
-    ignore_Mg=false
+    ignore_Mg=false,
+    ignore_S=false,
   } = options || {}
   const precision = countDecimals(accuracy)
   let weights: FertilizerWeights[] = fertilizers.map(v => ({
@@ -115,6 +117,9 @@ export function calculate(
   }
   if (ignore_Mg) {
     ignoredElements.Mg = 1
+  }
+  if (ignore_S) {
+    ignoredElements.S = 1
   }
   // for (let [e, v] of entries(needElements)) {
   //   if (v === 0) {

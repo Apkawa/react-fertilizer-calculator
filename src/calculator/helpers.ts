@@ -39,6 +39,9 @@ export function calculateNPKBalance(npk: Elements): NPKBalance {
   result.EC = 0.095 * result.cations + 0.19
 
   entries(result).forEach(([k, v]) => {
+    if (!isFinite(v)) {
+      v = 0
+    }
     result[k] = round(v, 2)
   })
 

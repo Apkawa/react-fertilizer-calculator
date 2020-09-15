@@ -13,6 +13,7 @@ export const IgnoreElement: FunctionComponent<IgnoreElementProps> = () => {
         <Heading fontSize={2}>Игнорировать</Heading>
         <Checkbox name="ignore_Ca" label="Кальций" />
         <Checkbox name="ignore_Mg" label="Магний" />
+        <Checkbox name="ignore_S" label="Сера" />
       </Flex>
     </Card>
   )
