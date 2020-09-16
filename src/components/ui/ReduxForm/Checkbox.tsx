@@ -12,6 +12,7 @@ const WrappedCheckbox: WrapperInputType<CheckboxProps> = ({input, label, ...prop
   <Label>
     <RebassCheckbox
       {...props} {...input}
+      checked={input.value}
     />
     {label}
   </Label>
