@@ -69,6 +69,16 @@ describe("normalizeFertilizer", () => {
       }
     })
   })
+  test('raw NPK сульфат магния', () => {
+    const result = normalizeFertilizer(buildNPKFertilizer("сульфат магния", {Mg: 16.7, S: 13.5})
+    , true)
+    expect(result).toMatchObject({
+      elements: {
+        Mg: 10.02,
+        S: 13.5,
+      }
+    })
+  })
 
   test('Fertilizer complex formula to raw NPK', () => {
     const result = normalizeFertilizer({

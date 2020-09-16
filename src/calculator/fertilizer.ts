@@ -34,7 +34,8 @@ export function buildNPKFertilizer(id: string, npk: NPKElements): FertilizerInfo
 export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass = true): Fertilizer {
   const elements: Elements = getEmptyElements()
   for (let comp of fertilizerInfo.composition) {
-    let massParts = calculateMassParts(parseMolecule(comp.formula))
+    let atomCounts = parseMolecule(comp.formula)
+    let massParts = calculateMassParts(atomCounts)
     for (let [atom, mass] of entries(massParts)) {
       let subAtoms = {[atom]: 1}
       if (atom === "N") {
@@ -61,7 +62,8 @@ export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass 
     keys(elements).forEach(atom => {
       const oxide = NPKOxides[atom]
       const massParts = calculateMassParts(parseMolecule(oxide))
-      if (massParts.hasOwnProperty("N")) {
+      if (massParts.hasOwnProperty("N") || massParts.hasOwnProperty("S")) {
+
         // ничего не делаем, азот не переводим в оксиды
         return
       }

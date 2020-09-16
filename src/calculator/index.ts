@@ -1,4 +1,4 @@
-import {product} from "./itertools";
+import {combination, product} from "./itertools";
 import {countDecimals, entries, keys, round, sum, values} from "../utils";
 import {FERTILIZER_ELEMENT_NAMES} from "./constants";
 import {Elements, Fertilizer} from "./types";
@@ -86,10 +86,125 @@ export function getScoreElement(needElements: Elements, currentElements: Element
     return [key, score]
   })
   return Object.fromEntries(pairs)
+}
+
+// Подбор оптимального количества путем пересортировки удобрений
+export function calculate_v3(
+  needElements: Elements,
+  fertilizers: Fertilizer[],
+  options: CalculateOptions = {}
+): CalculateResult {
+
+  let result: CalculateResult|null = null
+  const time = new Date().getTime();
+  let count = 0;
+  for (let f of combination(fertilizers)) {
+    const r = calculate_v2(needElements, f, options)
+    if (!result) {
+      result = r
+      continue
+    }
+    if (result.score < r.score) {
+      result = r
+    }
+    count += 1
+  }
+  if (result) {
+    result.stats.count = count
+    result.stats.time = (new Date().getTime() - time) / 1000
+  }
+  return result as CalculateResult
 
 }
 
-export function calculate(
+// Алгоритм расчетов из https://github.com/siv237/HPG
+export function calculate_v2(
+  needElements: Elements,
+  fertilizers: Fertilizer[],
+  options: CalculateOptions = {}
+): CalculateResult {
+  const {
+    accuracy = 0.1,
+    ignore_Ca = false,
+    ignore_Mg = false,
+    ignore_S = false,
+  } = options || {}
+  const precision = countDecimals(accuracy)
+  let ignoredElements: Elements = getEmptyElements()
+
+  if (ignore_Ca) {
+    ignoredElements.Ca = 1
+  }
+  if (ignore_Mg) {
+    ignoredElements.Mg = 1
+  }
+  if (ignore_S) {
+    ignoredElements.S = 1
+  }
+
+  let weights: { [K: string]: FertilizerWeights } = Object.fromEntries(
+    fertilizers.map(v => ([v.id, {
+      id: v.id,
+      weight: 0,
+      base_weight: 0
+    }])))
+  const xElements = {...needElements}
+  const calcElements = getEmptyElements()
+
+  for (let f of fertilizers) {
+    let p = entries(f.elements)
+      .filter(v => v[1])
+      .sort((a, b) => xElements[a[0]] / a[1]  - xElements[b[0]] / b[1])
+    let primaryElement = p.filter(([a]) => xElements[a] > 0 && needElements[a] > 0)?.[0]?.[0]
+    let skipFert = p.filter(([a]) => needElements[a] <= 0 && !ignoredElements[a]).length > 0
+    if (!primaryElement || skipFert) {
+      continue
+    }
+
+
+    let m = Object.fromEntries(p)
+    let weight = xElements[primaryElement] / (m[primaryElement] * 10)
+    weights[f.id].weight = weight
+    for (let [a, v] of p) {
+      const e = round(weight * v * 10, precision)
+      calcElements[a] += round(e)
+      xElements[a] -= e
+    }
+  }
+  let score_el: Elements = getScoreElement(needElements, calcElements)
+  for (let [e, v] of entries(ignoredElements)) {
+    if (v) {
+      score_el[e] = 0
+    }
+  }
+  const score_percent = sum(Object.values(score_el))
+
+  let ignored = sum(values(ignoredElements));
+  const needElementsLength = keys(needElements).length
+  const totalScore = Math.round(100 / ((score_percent - (needElementsLength - ignored)) / (needElementsLength - ignored) + 1))
+
+  const deltaElementsPairs = entries(calcElements).map(([k, v]) => {
+    return [k, round(needElements[k] - v, 2)]
+  })
+  const deltaElements = Object.fromEntries(deltaElementsPairs)
+
+  return  {
+    fertilizers: values(weights)
+        .map(v => ({...v, weight: round(v.weight, precision)}))
+        .filter(v => v.weight),
+    elements: calcElements,
+    deltaElements,
+    score: totalScore,
+    stats: {
+      count: 0,
+      time: 0,
+    }
+  }
+
+
+}
+
+export function calculate_v1(
   needElements: Elements,
   fertilizers: Fertilizer[],
   options: CalculateOptions = {},
@@ -100,9 +215,9 @@ export function calculate(
   const {
     accuracy = 0.1,
     max_iterations = 25,
-    ignore_Ca=false,
-    ignore_Mg=false,
-    ignore_S=false,
+    ignore_Ca = false,
+    ignore_Mg = false,
+    ignore_S = false,
   } = options || {}
   const precision = countDecimals(accuracy)
   let weights: FertilizerWeights[] = fertilizers.map(v => ({
@@ -196,8 +311,6 @@ export function calculate(
     step = currentAccuracy * 10;
   }
 
-  let ignored = sum(values(ignoredElements));
-  const needElementsLength = keys(needElements).length
 
   for (let [k, v] of entries(calculatedElements)) {
     calculatedElements[k] = round(v)
@@ -208,6 +321,8 @@ export function calculate(
   })
   const deltaElements = Object.fromEntries(deltaElementsPairs)
 
+  let ignored = sum(values(ignoredElements));
+  const needElementsLength = keys(needElements).length
   const totalScore = Math.round(100 / ((score_percent - (needElementsLength - ignored)) / (needElementsLength - ignored) + 1))
   return {
     fertilizers: weights.map(v => ({...v, weight: round(v.weight / 10, precision)})),

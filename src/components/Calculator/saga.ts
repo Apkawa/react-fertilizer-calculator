@@ -2,7 +2,7 @@ import {all, fork, put, select, takeLatest} from 'redux-saga/effects'
 import {actionTypes, getFormValues, stopSubmit} from "redux-form";
 import {CALCULATE_START, REDUX_FORM_NAME} from "./constants";
 import {calculateError, calculateStart, calculateSuccess} from "./actions";
-import {calculate} from "@/calculator";
+import {calculate_v3} from "@/calculator";
 import {CalculatorFormValues} from "./types";
 import {normalizeFertilizer} from "@/calculator/fertilizer";
 
@@ -18,7 +18,7 @@ export function* calculateStartSaga() {
   const {ignore_Ca, ignore_Mg, ignore_S, accuracy} = formValues
 
   // Тут замораживается UI из за вычислений. нужно либо оптимизировать либо использовать WebWorker
-  const result = calculate(
+  const result = calculate_v3(
     formValues.recipe,
     formValues.fertilizers.map(f => normalizeFertilizer(f)),
     {

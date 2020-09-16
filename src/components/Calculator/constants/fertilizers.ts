@@ -12,7 +12,7 @@ export const defaultFertilizers: FertilizerInfo[] = [
     {
       NO3: 16, Ca: 24,
     }),
-  buildNPKFertilizer("Сульфат магния", {Mg: 16, S: 16}),
+  buildNPKFertilizer("Сульфат магния", {Mg: 16.7, S: 13.3}),
   buildNPKFertilizer("Сульфат калия", {K: 50, S: 18}),
   buildNPKFertilizer("Нитрат калия", {NO3: 14, K: 46}),
   buildNPKFertilizer("Монофосфат калия", {P: 50, K: 33}),

@@ -1,8 +1,18 @@
+import {Permutation} from "js-combinatorics";
+
+type GenericIterableIterator<T> = IterableIterator<{
+  [K in keyof T]: T[K] extends Iterable<infer U> ? U : never
+}>
+
+export function* combination<T extends Array<any>>(iterable: T): GenericIterableIterator<T> {
+  for (let p of new Permutation(iterable)) {
+    yield p as any
+  }
+}
+
 // NB: throws if any iterables passed to it are empty
 // via https://gist.github.com/cybercase/db7dde901d7070c98c48#gistcomment-3033459
-export function* product<T extends Array<Iterable<any>>>(...iterables: T): IterableIterator<{
-  [K in keyof T]: T[K] extends Iterable<infer U> ? U : never
-}> {
+export function* product<T extends Array<Iterable<any>>>(...iterables: T): GenericIterableIterator<T> {
   if (iterables.length === 0) {
     return;
   }
@@ -29,3 +39,5 @@ export function* product<T extends Array<Iterable<any>>>(...iterables: T): Itera
     results[i] = iterators[i].next();
   }
 }
+
+
