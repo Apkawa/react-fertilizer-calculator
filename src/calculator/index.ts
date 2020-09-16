@@ -161,12 +161,12 @@ export function calculate_v2(
       continue
     }
 
-
     let m = Object.fromEntries(p)
     let weight = xElements[primaryElement] / (m[primaryElement] * 10)
+    weights[f.id].base_weight = weight
     weights[f.id].weight = weight
     for (let [a, v] of p) {
-      const e = round(weight * v * 10, precision)
+      const e = weight * v * 10
       calcElements[a] += round(e)
       xElements[a] -= e
     }
@@ -184,13 +184,17 @@ export function calculate_v2(
   const totalScore = Math.round(100 / ((score_percent - (needElementsLength - ignored)) / (needElementsLength - ignored) + 1))
 
   const deltaElementsPairs = entries(calcElements).map(([k, v]) => {
-    return [k, round(needElements[k] - v, 2)]
+    return [k, round(needElements[k] - v, 1)]
   })
   const deltaElements = Object.fromEntries(deltaElementsPairs)
 
   return  {
     fertilizers: values(weights)
-        .map(v => ({...v, weight: round(v.weight, precision)}))
+        .map(v => ({
+          ...v,
+          base_weight: round(v.base_weight, precision),
+          weight: round(v.weight, precision),
+        }))
         .filter(v => v.weight),
     elements: calcElements,
     deltaElements,

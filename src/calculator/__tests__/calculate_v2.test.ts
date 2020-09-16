@@ -5,14 +5,7 @@ import {buildNPKFertilizer, normalizeFertilizer} from "../fertilizer";
 describe("Calculate V2", () => {
 
   test("Simple ", () => {
-
-    let NO3 = 135,
-      NH4 = 4.47,
-      P = 45,
-      K = 279.67,
-      Ca = 139,
-      Mg = 55.93,
-      S = 127.22
+    let NO3 = 135, NH4 = 4.47, P = 45, K = 279.67, Ca = 139, Mg = 55.93, S = 127.22
     const result = calculate_v2({
         NO3, NH4, P, K, Ca, Mg, S,
       },
@@ -29,56 +22,17 @@ describe("Calculate V2", () => {
       )
     )
     expect(result).toEqual({
-      "deltaElements": {
-        "Ca": 0,
-        "K": 11.67,
-        "Mg": -0.07,
-        "NH4": -0.53,
-        "NO3": -1,
-        "P": 0,
-        "S": 0.22
-      },
-      "elements": {
-        "Ca": 139,
-        "K": 268,
-        "Mg": 56,
-        "NH4": 5,
-        "NO3": 136,
-        "P": 45,
-        "S": 127
-      },
+      "deltaElements": {"Ca": 0, "K": 11.7, "Mg": -0.1, "NH4": 0.5, "NO3": 0, "P": 0, "S": 0.2},
+      "elements": {"Ca": 139, "K": 268, "Mg": 56, "NH4": 4, "NO3": 135, "P": 45, "S": 127},
       "fertilizers": [
-        {
-          "base_weight": 0,
-          "id": "Сульфат магния",
-          "weight": 0.6
-        },
-        {
-          "base_weight": 0,
-          "id": "Монофосфат калия",
-          "weight": 0.2
-        },
-        {
-          "base_weight": 0,
-          "id": "Кальциевая селитра",
-          "weight": 0.8
-        },
-        {
-          "base_weight": 0,
-          "id": "Нитрат калия",
-          "weight": 0.2
-        },
-        {
-          "base_weight": 0,
-          "id": "Сульфат калия",
-          "weight": 0.3
-        }
+        {"base_weight": 0.6, "id": "Сульфат магния", "weight": 0.6},
+        {"base_weight": 0.2, "id": "Монофосфат калия", "weight": 0.2},
+        {"base_weight": 0.8, "id": "Кальциевая селитра", "weight": 0.8},
+        {"base_weight": 0.2, "id": "Нитрат калия", "weight": 0.2},
+        {"base_weight": 0.3, "id": "Сульфат калия", "weight": 0.3}
       ],
       "score": 98,
-      "stats": {
-        "count": 0,
-        "time": 0
-      }
+      "stats": {"count": 0, "time": 0}
     })
   })
   test("Нитрат аммония с профилем без NH4", () => {
