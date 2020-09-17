@@ -106,7 +106,7 @@ describe("normalizeFertilizer", () => {
     }, false)
     expect(result).toMatchObject({
       elements: {
-        K: 47,
+        K: 46.8,
         NO3: 14
       }
     })
@@ -121,6 +121,18 @@ describe("normalizeFertilizer", () => {
     expect(result.elements).toMatchObject({
       NO3: 17.15,
       NH4: 17.15,
+    })
+  })
+  test('Сульфат магния  to raw NPK', () => {
+    const result = normalizeFertilizer({
+      id: "Нитрат аммония",
+      composition: [
+        {formula: "MgSO4*7H2O", percent: 98}
+      ]
+    }, true)
+    expect(result.elements).toMatchObject({
+      Mg: 9.8,
+      S: 12.74,
     })
   })
 })

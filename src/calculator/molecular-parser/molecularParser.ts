@@ -30,7 +30,10 @@ export const findSubgroups = function (formula: string): SubgroupType[] {
     currentCount = '';
   };
 
+  let i=-1;
+
   for (let ch of formula) {
+    i++
     if (/[A-Za-z]/.test(ch)) {
       if (finishingNestedSubgroup) {
         pushSubgroup();
@@ -66,9 +69,14 @@ export const findSubgroups = function (formula: string): SubgroupType[] {
       }
       level += 1
     } else if (/\d/.test(ch)) {
+      // TODO check numbers > 9
       if (finishingNestedSubgroup) {
         currentCount += ch;
       } else {
+        if (i === 0) {
+          currentCount += ch
+          continue
+        }
         currentFormula += ch;
       }
     }
@@ -124,7 +132,7 @@ const _decomposePrimitiveFormula = function (formula: string): ParsedMolecule {
 export const decomposeFormula = function (formula: string): ParsedMolecule {
   if (!formula) return {};
   const subgroups = findSubgroups(formula);
-  if (subgroups.length === 1) {
+  if (subgroups.length === 1 && subgroups[0].formula === formula) {
     //We have a primitive formula that we can just count!
     return _decomposePrimitiveFormula(formula);
   } else {

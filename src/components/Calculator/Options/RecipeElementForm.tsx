@@ -24,8 +24,10 @@ export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = ({na
       </Box>
       <Input
         name={getRecipeFieldName(name)}
-        maxLength={3}
-        pattern="^\d+$"
+        type="number"
+        step="1"
+        min="0"
+        max="999"
         autoComplete="off"
         normalize={number}
         width="3rem"

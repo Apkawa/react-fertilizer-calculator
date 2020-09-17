@@ -56,12 +56,10 @@ export function getEmptyElements(): Elements {
 // Считаем PPM раствора
 export function calculatePPM(
   fertilizers: FertilizerWeights[],
-  solution_volume: number = 1,
-  solution_concentration: number = 100): number {
+  solution_volume=1,
+): number {
   return sum(fertilizers.map(f => {
-    return (f.weight
-      * solution_volume
-      * (solution_concentration / 100)) * 1000
+    return f.weight * 1000
   })) / solution_volume
 }
 

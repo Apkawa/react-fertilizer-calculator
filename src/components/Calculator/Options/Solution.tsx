@@ -2,7 +2,7 @@ import React, {FunctionComponent} from "react";
 import {Card, Flex, Heading} from "rebass";
 import {Label} from "@rebass/forms";
 import {Input} from "../../ui/ReduxForm/Input";
-import {number} from "../../ui/ReduxForm/normalizers";
+import {decimal, number} from "../../ui/ReduxForm/normalizers";
 
 
 interface SolutionVolumeProps {
@@ -18,7 +18,9 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
           <Input
             name="solution_volume"
             width="3rem"
-            maxLength={3}
+            type="number"
+            step="1"
+            min="1"
             pattern="^\d+$"
             normalize={number}
             style={{
@@ -28,13 +30,15 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
           />
         </Flex>
         <Flex alignItems="center" justifyContent="space-between" paddingTop={2}>
-          <Label htmlFor="solution_concentration">Концентрация, %</Label>
+          <Label htmlFor="solution_concentration">Концентрация, 1/100%</Label>
           <Input
             name="solution_concentration"
             width="3rem"
-            maxLength={3}
-            pattern="^\d+$"
-            normalize={number}
+            type="number"
+            step="0.1"
+            min="0"
+            max="999"
+            normalize={decimal}
             style={{
               textAlign: "center"
             }}

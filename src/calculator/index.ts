@@ -29,29 +29,9 @@ export interface CalculateOptions {
   ignore_Ca?: boolean,
   ignore_Mg?: boolean,
   ignore_S?: boolean,
+  solution_volume?: number,
+  solution_concentration?: number,
 }
-
-/*
-TODO
-P  x 2,29 =P2O5
-K  x 1,2  =K2O
-Ca x 1,4  =Ca0
-Mg x 1,66 =Mg
-S  x 2,5  =SO3
-S  x 3    =SO4
-N  x 4,43 =NO3
-
-и в обратную сторону
-
-P2O5 x 0,44 =P
-K2O  x 0,83 =K
-CaO  x 0,71 =Ca
-MgO  x 0,6  =Mg
-SO3  x 0,4  =S
-SO4  x 0,33 =S
-NO3  x 0,22 =N
- */
-
 
 export function sumFertilizers(fertilizers: Fertilizer[], portions: number[]): Elements {
   const pairs = FERTILIZER_ELEMENT_NAMES.map(key =>
@@ -128,6 +108,8 @@ export function calculate_v2(
     ignore_Ca = false,
     ignore_Mg = false,
     ignore_S = false,
+    solution_volume=1,
+    solution_concentration=1,
   } = options || {}
   const precision = countDecimals(accuracy)
   let ignoredElements: Elements = getEmptyElements()
@@ -163,8 +145,8 @@ export function calculate_v2(
 
     let m = Object.fromEntries(p)
     let weight = xElements[primaryElement] / (m[primaryElement] * 10)
-    weights[f.id].base_weight = weight
-    weights[f.id].weight = weight
+    weights[f.id].base_weight = round(weight, 3)
+    weights[f.id].weight = round(weight * solution_volume * solution_concentration, precision)
     for (let [a, v] of p) {
       const e = weight * v * 10
       calcElements[a] += round(e)

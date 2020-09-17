@@ -17,6 +17,7 @@ import {IconButton} from "@/components/ui/IconButton";
 import {DEFAULT_RECIPES} from "@/components/Calculator/constants/recipes";
 import {ExportRecipes} from "@/components/Calculator/ImportExport/ExportRecipes";
 import {ImportRecipes} from "@/components/Calculator/ImportExport/ImportRecipes";
+import {Recipe} from "@/components/Calculator/Options/Recipe";
 
 interface CalculatorProps {
 
@@ -47,6 +48,9 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
           <FertilizerSelect/>
         </Box>
         <Flex flexDirection='column' mx={3} flex={1}>
+          <Box flex={1} marginBottom={2}>
+            <Recipe/>
+          </Box>
           <Box flex={1}>
             <Result/>
           </Box>
@@ -58,7 +62,9 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
             <Flex flexDirection="column" p={3}>
               <Flex alignItems='center'
                     paddingBottom={2}
-                    justifyContent="space-between">
+                    justifyContent="space-between"
+                    flexWrap="wrap"
+              >
                 <Text>Удобрения</Text>
                 <Box sx={{
                   "&>*": {
@@ -75,6 +81,7 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
               </Flex>
               <Flex alignItems='center'
                     justifyContent="space-between"
+                    flexWrap="wrap"
               >
                 <Text>Рецепты</Text>
                 <Box sx={{

@@ -15,7 +15,14 @@ export function* calculateStartSaga() {
     yield put(calculateError())
     return
   }
-  const {ignore_Ca, ignore_Mg, ignore_S, accuracy} = formValues
+  const {
+    ignore_Ca,
+    ignore_Mg,
+    ignore_S,
+    accuracy,
+    solution_volume,
+    solution_concentration,
+  } = formValues
 
   // Тут замораживается UI из за вычислений. нужно либо оптимизировать либо использовать WebWorker
   const result = calculate_v3(
@@ -26,6 +33,8 @@ export function* calculateStartSaga() {
       ignore_Mg,
       ignore_S,
       accuracy,
+      solution_volume,
+      solution_concentration,
     }
   )
 
@@ -53,6 +62,6 @@ export function* calculatorFormChangeWatcher() {
 export default function* calculatorRootSaga() {
   yield all([
     fork(calculatorSagaWatcher),
-    // fork(calculatorFormChangeWatcher)
+    fork(calculatorFormChangeWatcher)
   ]);
 }

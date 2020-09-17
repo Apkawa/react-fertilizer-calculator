@@ -39,7 +39,6 @@ export const Result: FunctionComponent<ResultProps> = () => {
 
   const {
     solution_volume,
-    solution_concentration = 100,
     accuracy
   } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues
 
@@ -47,23 +46,31 @@ export const Result: FunctionComponent<ResultProps> = () => {
   const ppm = calculatePPM(
     fertilizers,
     solution_volume,
-    solution_concentration,
   )
   const score = result?.score || 0
   const elements = result?.elements || getEmptyElements()
-  fertilizers.forEach(f => {
-    f.weight = f.weight
-      * solution_volume
-      * (solution_concentration / 100)
-  })
+  const deltaElements = result?.deltaElements || getEmptyElements()
   const NPKBalance = calculateNPKBalance(elements)
   return (
     <Card>
       <Flex alignItems="center" flexDirection="column">
         <Flex>
           {elements && FERTILIZER_ELEMENT_NAMES.map(
-            k => <Element name={k} value={elements[k]}/>
+            k => <Element
+              key={k}
+              name={k}
+              value={elements[k]}
+              delta={deltaElements[k]}
+            />
           )}
+        </Flex>
+        <Flex justifyContent="space-around">
+          <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
+          <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
+          <StyledBalanceCell name="%NH4" value={NPKBalance["%NH4"]}/>
+          <StyledBalanceCell name="N:K" value={NPKBalance["N:K"]}/>
+          <StyledBalanceCell name="K:Ca" value={NPKBalance["K:Ca"]}/>
+          <StyledBalanceCell name="Ca:Mg" value={NPKBalance["Ca:Mg"]}/>
         </Flex>
         <Heading fontSize={2}>
           Оценка: {getScoreDisplay(score)}
@@ -88,14 +95,6 @@ export const Result: FunctionComponent<ResultProps> = () => {
             })}
           </li>
         </StyledList>
-        <Flex justifyContent="space-around">
-          <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
-          <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
-          <StyledBalanceCell name="%NH4" value={NPKBalance["%NH4"]}/>
-          <StyledBalanceCell name="N:K" value={NPKBalance["N:K"]}/>
-          <StyledBalanceCell name="K:Ca" value={NPKBalance["K:Ca"]}/>
-          <StyledBalanceCell name="Ca:Mg" value={NPKBalance["Ca:Mg"]}/>
-        </Flex>
 
         {result?.stats &&
         <Text>

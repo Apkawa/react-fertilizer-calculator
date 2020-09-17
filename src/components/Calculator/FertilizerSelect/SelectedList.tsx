@@ -19,7 +19,7 @@ export const SelectedList: ReduxFieldArrayType<SelectedListProps, FertilizerType
     result,
   } = useSelector<any>(state => state.calculator) as CalculatorState
 
-  const calculatedFertilizersWeights = Object.fromEntries((result?.fertilizers || []).map(f => [f.id, f.weight]))
+  const calculatedFertilizersWeights = Object.fromEntries((result?.fertilizers || []).map(f => [f.id, f.base_weight]))
 
   const onAddHandler = (item: FertilizerType) => {
     for (let f of fertilizers) {

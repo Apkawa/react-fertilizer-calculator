@@ -3,10 +3,9 @@ import {ParsedMolecule, SubgroupType} from "./molecularParser";
 const Parser = require('./molecularParser');
 
 
-
 describe('molecularParser', function () {
   describe('findSubgroups', function () {
-    const subgroupTestData: {[k: string]: SubgroupType[]} = {
+    const subgroupTestData: { [k: string]: SubgroupType[] } = {
       CH2O: [
         {
           formula: 'CH2O',
@@ -89,6 +88,8 @@ describe('molecularParser', function () {
           "formula": "(NH4)2HPO4+K2SO4"
         }
       ],
+      'MgSO4*7H2O': [{"count": 1, "formula": "MgSO4"}, {"count": 1, "formula": "7H2O"}],
+      '7H2O': [{"count": 7, "formula": "H2O"}]
     }
 
     it('should parse easy formulae correctly.', function () {
@@ -120,7 +121,7 @@ describe('molecularParser', function () {
   }); //end parseSubgroups
 
   describe('decomposeFormula', function () {
-    const decomposeTestData: {[k: string]: ParsedMolecule} = {
+    const decomposeTestData: { [k: string]: ParsedMolecule } = {
       CH2O: {
         C: 1,
         H: 2,
@@ -154,7 +155,7 @@ describe('molecularParser', function () {
         "O": 12,
         "P": 1,
         "S": 2
-      }
+      },
     };
 
     it('should decompose formulae correctly', function () {
@@ -179,6 +180,15 @@ describe('molecularParser', function () {
       };
       const parsedDecomposition = Parser.decomposeFormula(formula);
       expect(parsedDecomposition).toEqual(decomposition)
+    });
+
+    it('should decompose complex formula correctly', function () {
+      expect(Parser.decomposeFormula('MgSO4*(H2O)7')).toEqual({
+        'Mg': 1, S: 1, H: 14, O: 4 + 7
+      })
+      expect(Parser.decomposeFormula('MgSO4*7H2O')).toEqual({
+        'Mg': 1, S: 1, H: 14, O: 4 + 7
+      })
     });
   });
 });

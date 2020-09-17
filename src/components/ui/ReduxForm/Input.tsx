@@ -8,7 +8,22 @@ interface InputProps extends RebassInputProps {
 }
 
 const WrappedInput: WrapperInputType<InputProps> = ({input, label, type = "text", ...props}: any) =>
-  <RebassInput  {...props} {...input} type={type} placeholder={label}/>
+  <RebassInput  {...props}
+                {...input}
+                sx={{
+                  ...input.sx,
+                  '::-webkit-inner-spin-button': {
+                    '-webkit-appearance': 'none',
+                    margin: 0,
+                  },
+                  '::-webkit-outer-spin-button': {
+                    '-webkit-appearance': 'none',
+                    margin: 0,
+                  }
+                }}
+                type={type}
+                placeholder={label}
+  />
 
 
 // TODO вывести тип

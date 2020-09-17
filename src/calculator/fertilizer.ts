@@ -70,7 +70,7 @@ export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass 
       const elementMassPart = massParts[atom as AtomNameType]
       if (elementMassPart) {
         const k = round(sum(values(massParts)) / elementMassPart, 2)
-        elements[atom] = round(elements[atom] * k, 0)
+        elements[atom] = round(elements[atom] * k, 2)
       }
     })
   }

@@ -15,9 +15,6 @@ export const Options: ComponentType<OptionsProps> = () => {
       <Box flex={1}>
         <Button width="100%" my={2} type="submit">Calculate</Button>
       </Box>
-      <Box flex={1}>
-        <Recipe/>
-      </Box>
       <Box my={2}>
         <Solution/>
       </Box>
