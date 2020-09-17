@@ -1,8 +1,5 @@
 import {buildNPKFertilizer} from "@/calculator/fertilizer";
 import {FertilizerInfo} from "@/calculator/types";
-import {Box, Flex} from "rebass";
-import {Recipe} from "@/components/Calculator/Options/Recipe";
-import React from "react";
 
 
 export const defaultFertilizers: FertilizerInfo[] = [

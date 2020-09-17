@@ -1,6 +1,5 @@
 import React, {ComponentType} from "react";
 import {Box, Button, Flex} from "rebass";
-import {Recipe} from "./Recipe";
 import {IgnoreElement} from "./IgnoreElement";
 import {Accuracy} from "./Accuracy";
 import {Solution} from "./Solution";
