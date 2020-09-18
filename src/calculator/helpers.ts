@@ -58,9 +58,9 @@ export function calculatePPM(
   fertilizers: FertilizerWeights[],
   solution_volume=1,
 ): number {
-  return sum(fertilizers.map(f => {
+  return round(sum(fertilizers.map(f => {
     return f.weight * 1000
-  })) / solution_volume
+  })) / solution_volume)
 }
 
 // ppm (мг/л) в EC (мСм/см).  k - коэфициент преобразования

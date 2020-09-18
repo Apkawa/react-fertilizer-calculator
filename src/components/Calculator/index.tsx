@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Flex, Card, Text, Heading} from 'rebass'
+import {Box, Card, Flex, Heading, Text} from 'rebass'
 import {Restart} from "@styled-icons/remix-line/Restart"
 
 import FertilizerSelect from './FertilizerSelect'
@@ -29,6 +29,10 @@ const initialValues: CalculatorFormValues = {
   solution_concentration: 100,
   recipe: DEFAULT_RECIPES[0].elements,
   fertilizers: [],
+
+  dilution_enabled: false,
+  dilution_volume: 20,
+  dilution_concentration: 1,
 }
 export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormValues> = ({handleSubmit}) => {
   const dispatch = useDispatch()
@@ -72,7 +76,7 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
                   }
                 }}>
                   <ImportFertilizers/>
-                  <ExportFertilizers />
+                  <ExportFertilizers/>
                   <IconButton
                     component={Restart}
                     onClick={() => dispatch(fertilizerReset())}
@@ -89,8 +93,8 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
                     marginLeft: 1
                   }
                 }}>
-                  <ImportRecipes />
-                  <ExportRecipes />
+                  <ImportRecipes/>
+                  <ExportRecipes/>
                   <IconButton
                     component={Restart}
                     onClick={() => dispatch(recipeReset())}

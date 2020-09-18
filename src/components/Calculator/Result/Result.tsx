@@ -4,12 +4,14 @@ import {useSelector} from "react-redux";
 import {CalculatorFormValues, CalculatorState} from "../types";
 import {getFormValues} from "redux-form";
 import {REDUX_FORM_NAME} from "../constants";
-import {countDecimals, round} from "@/utils";
 import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 import {Element} from "../FertilizerSelect/SelectedListItem";
 import styled from "styled-components";
-import {calculateNPKBalance, calculatePPM, getEmptyElements, ppmToEC} from "@/calculator/helpers";
-import {StyledBalanceCell} from "@/components/Calculator/Options/Recipe";
+import {calculateNPKBalance, getEmptyElements, ppmToEC} from "@/calculator/helpers";
+import {StyledBalanceCell} from "../Options/Recipe";
+import {ResultFertilizerList} from "./ResultFertilizerList";
+import {useFertilizerSolutionGroup, usePPM} from "./hooks";
+import {ResultDilution} from "@/components/Calculator/Result/ResultDilution";
 
 interface ResultProps {
 }
@@ -32,6 +34,7 @@ function getScoreDisplay(score: number): string {
   return score_display
 }
 
+
 export const Result: FunctionComponent<ResultProps> = () => {
   const {
     result,
@@ -39,18 +42,16 @@ export const Result: FunctionComponent<ResultProps> = () => {
 
   const {
     solution_volume,
-    accuracy
   } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues
 
-  const fertilizers = (result?.fertilizers || []).map(f => ({...f}))
-  const ppm = calculatePPM(
-    fertilizers,
-    solution_volume,
-  )
+  const ppm = usePPM()
+  const fertilizerWeightGroups = useFertilizerSolutionGroup()
+
   const score = result?.score || 0
   const elements = result?.elements || getEmptyElements()
   const deltaElements = result?.deltaElements || getEmptyElements()
   const NPKBalance = calculateNPKBalance(elements)
+
   return (
     <Card>
       <Flex alignItems="center" flexDirection="column">
@@ -64,6 +65,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
             />
           )}
         </Flex>
+
         <Flex justifyContent="space-around">
           <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
           <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
@@ -79,23 +81,20 @@ export const Result: FunctionComponent<ResultProps> = () => {
         <Text fontSize={6}>{`${score || 0}%`}</Text>
         <StyledList>
           <li>{solution_volume}л воды</li>
-          {fertilizers.map(f => {
-            return (
-              <li key={f.id}>
-                {round(f.weight, countDecimals(accuracy))}г {f.id}
+          {fertilizerWeightGroups.map(([g, f_weights]) =>
+            (<li>
+                <b> Раствор {g} </b>
+                <ul>
+                  <ResultFertilizerList fertilizers={f_weights}/>
+                </ul>
               </li>
             )
-          })}
+          )}
           <li title="Или минерализация, в мг/л">
-            <b>TDS:</b> {ppm} ppm
-          </li>
-          <li title="">
-            {[1.0, 0.7, 0.5].map(k => {
-              return (<p><b>EC({k}):</b> {ppmToEC(ppm, k)} мСм/см</p>)
-            })}
+            <b>TDS:</b> {ppm} ppm; <b>EC:</b> {ppmToEC(ppm, 1)} мСм/см
           </li>
         </StyledList>
-
+        <ResultDilution/>
         {result?.stats &&
         <Text>
           Обработано вариантов: {result?.stats.count} Время: {result?.stats.time} сек
@@ -105,3 +104,4 @@ export const Result: FunctionComponent<ResultProps> = () => {
     </Card>
   )
 }
+

@@ -20,3 +20,14 @@ export function countDecimals(value: number): number {
   if (Math.floor(value.valueOf()) === value.valueOf()) return 0;
   return value.toString().split(".")[1].length || 0;
 }
+
+type ToMapResult<T> = {[K in string]: T}
+export function toMap<T extends object>(list: T[], field: keyof T): ToMapResult<T> {
+  const m: ToMapResult<T> = {}
+  for (let i of list) {
+    let key = i[field] as any as string
+    m[key] = i
+  }
+  return m
+
+}
