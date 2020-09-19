@@ -18,6 +18,7 @@ import {DEFAULT_RECIPES} from "@/components/Calculator/constants/recipes";
 import {ExportRecipes} from "@/components/Calculator/ImportExport/ExportRecipes";
 import {ImportRecipes} from "@/components/Calculator/ImportExport/ImportRecipes";
 import {Recipe} from "@/components/Calculator/Options/Recipe";
+import {mobileStyles} from "@/components/ui/styled";
 
 interface CalculatorProps {
 
@@ -44,14 +45,21 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
     >
       <Flex sx={{
         flexDirection: 'row',
-        '@media screen and (max-width: 800px)': {
-          flexDirection: 'column-reverse'
-        }
+        ...mobileStyles({
+          flexDirection: 'column-reverse',
+        })
       }}>
-        <Box flex={1}>
+        <Box flex={1}
+             sx={{
+               marginRight: 2,
+               ...mobileStyles({
+                 marginRight: 0
+               })
+             }}
+        >
           <FertilizerSelect/>
         </Box>
-        <Flex flexDirection='column' mx={3} flex={1}>
+        <Flex flexDirection='column' flex={1}>
           <Box flex={1} marginBottom={2}>
             <Recipe/>
           </Box>

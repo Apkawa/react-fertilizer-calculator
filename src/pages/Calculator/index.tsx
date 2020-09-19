@@ -10,7 +10,6 @@ export default () => {
   return (
     <Flex sx={
       {
-        margin: "1rem",
         justifyContent: 'center'
       }
     }>

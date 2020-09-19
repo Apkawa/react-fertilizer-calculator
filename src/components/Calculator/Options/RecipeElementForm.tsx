@@ -16,7 +16,7 @@ export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = ({na
     <Flex flexDirection="column"
           justifyContent="center"
           alignItems="center"
-          width='4rem'
+          maxWidth='3rem'
     >
       <Box style={{textAlign: 'center'}}
       >
@@ -30,7 +30,7 @@ export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = ({na
         max="999"
         autoComplete="off"
         normalize={number}
-        width="3rem"
+        maxWidth="3rem"
         style={{
           textAlign: "center"
         }}
