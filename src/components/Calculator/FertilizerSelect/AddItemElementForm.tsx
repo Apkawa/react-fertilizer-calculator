@@ -23,7 +23,10 @@ export const AddItemElementForm: FunctionComponent<RecipeElementFormProps> = (pr
   const onChange = (value: string) => {
     const v = parseInt(value)
     setValue(v)
-    props.onChange && props.onChange(v)
+  }
+
+  const onBlur = () => {
+    props.onChange && props.onChange(value)
   }
 
   return (
@@ -39,6 +42,7 @@ export const AddItemElementForm: FunctionComponent<RecipeElementFormProps> = (pr
         value={value.toString()}
         disabled={disabled}
         onChange={event => onChange(event.target.value)}
+        onBlur={onBlur}
         style={{
           textAlign: "center"
         }}

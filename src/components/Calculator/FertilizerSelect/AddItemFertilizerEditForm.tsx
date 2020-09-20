@@ -7,7 +7,7 @@ import {Elements, FertilizerInfo} from "@/calculator/types";
 
 interface AddItemFertilizerEditFormProps {
   fertilizer?: FertilizerInfo,
-  allowEdit: boolean,
+  allowEdit?: boolean,
   onChange: (item: FertilizerInfo) => void
 }
 
@@ -18,7 +18,7 @@ export const getElements = (f: FertilizerInfo) => {
 export const AddItemFertilizerEditForm: FunctionComponent<AddItemFertilizerEditFormProps> = (props) => {
   const {
     fertilizer,
-    allowEdit
+    allowEdit=true
   } = props
 
   const [elements, setElements] = useState<Elements|undefined>(fertilizer && getElements(fertilizer))

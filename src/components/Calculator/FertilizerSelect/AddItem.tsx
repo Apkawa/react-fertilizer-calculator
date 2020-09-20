@@ -21,7 +21,7 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
   const {
     fertilizers,
   } = useSelector<any>(state => state.calculator) as CalculatorState
-  const [selected, setSelected] = useState<FertilizerInfo|undefined>(fertilizers[0])
+  const [selected, setSelected] = useState<FertilizerInfo | undefined>(fertilizers[0])
   const [creating, setCreating] = useState(false)
 
   const dispatch = useDispatch()
@@ -32,10 +32,14 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
     setCreating(false)
   }
 
-  const onEditHandler = (value: string) => {
-    const emptyFertilizer = buildNPKFertilizer(value, {})
-    setSelected(emptyFertilizer)
+  const onChangeFertilizerElements = (item: FertilizerInfo) =>{
+    setSelected(item)
     setCreating(true)
+  }
+
+  const onEditHandler = (value: string) => {
+    const newFertilizer = buildNPKFertilizer(value, selected ? getElements(selected) : {})
+    setSelected(newFertilizer)
   }
   const onAddHandler = () => {
     if (!selected) {
@@ -83,8 +87,7 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
         </Flex>
         <AddItemFertilizerEditForm
           fertilizer={selected}
-          allowEdit={creating}
-          onChange={item => setSelected(item)}
+          onChange={onChangeFertilizerElements}
         />
       </Flex>
 

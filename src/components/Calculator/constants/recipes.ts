@@ -3,12 +3,12 @@ import {Recipe} from "@/components/Calculator/types";
 export const DEFAULT_RECIPES: Recipe[] = [
   {
     name: "Универсальное",
-    elements: {NO3: 200, NH4: 0, P: 60, K: 250, Ca: 170, Mg: 50, S: 0}
+    elements: {NO3: 214, NH4: 14, P: 60, K: 250, Ca: 170, Mg: 50, S: 46}
   },
   {
     name: "Перец вегетация",
     color: 'green',
-    elements: {NO3: 220, NH4: 0, P: 50, K: 200, Ca: 170, Mg: 50, S: 56}
+    elements: {NO3: 224, NH4: 14, P: 39, K: 264, Ca: 200, Mg: 36, S: 56}
   },
   {
     name: "Перец цветение",

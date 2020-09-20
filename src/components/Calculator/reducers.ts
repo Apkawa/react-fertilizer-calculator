@@ -3,6 +3,7 @@ import * as ActionNames from "./constants";
 import {assertNever} from "@/redux-helpers/helpers";
 import {defaultFertilizers} from "./constants/fertilizers";
 import {DEFAULT_RECIPES} from "./constants/recipes";
+import {updateOrPush} from "@/utils";
 
 const initialState: CalculatorState = {
   result: null,
@@ -23,14 +24,17 @@ export const reducer = (state: CalculatorState = initialState, action: ActionTyp
       return {...state, process: false, error: true}
 
     case ActionNames.FERTILIZERS_PUSH:
-      return {...state, fertilizers: [...state.fertilizers, action.payload]}
+      return {
+        ...state,
+        fertilizers: updateOrPush(state.fertilizers, action.payload, 'id'),
+      }
     case ActionNames.FERTILIZERS_REMOVE:
       return {...state, fertilizers: state.fertilizers.filter(f => action.payload.id !== f.id)}
     case ActionNames.FERTILIZERS_RESET:
       return {...state, fertilizers: [...defaultFertilizers]}
 
     case ActionNames.RECIPE_PUSH:
-      return {...state, recipes: [...state.recipes, action.payload]}
+      return {...state, recipes: updateOrPush(state.recipes, action.payload, 'name')}
     case ActionNames.RECIPE_REMOVE:
       return {...state, recipes: state.recipes.filter(f => action.payload.name !== f.name)}
     case ActionNames.RECIPE_RESET:

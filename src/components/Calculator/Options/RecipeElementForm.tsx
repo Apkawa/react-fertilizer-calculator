@@ -4,14 +4,15 @@ import {Input} from "@/components/ui/ReduxForm/Input";
 import {number} from "@/components/ui/ReduxForm/normalizers";
 
 interface RecipeElementFormProps {
-  name: string
+  name: string,
 }
 
 export const getRecipeFieldName = (name: string) => `recipe.${name}`
 
 
 
-export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = ({name}) => {
+export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = (props) => {
+  const {name} = props
   return (
     <Flex flexDirection="column"
           justifyContent="center"

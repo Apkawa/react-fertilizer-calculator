@@ -34,7 +34,6 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
 
   const [values, setValue] = useFormValues()
   const [selected, setSelected] = useState<RecipeType | undefined>(recipes?.[0])
-  const [creating, setCreating] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -43,7 +42,6 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
   const onChangeHandler = (item: RecipeType | null) => {
     item && setSelected(item)
     item && setRecipe(item.elements)
-    setCreating(false)
   }
 
   const setRecipe = (elements: Elements) => {
@@ -60,18 +58,13 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
     let zeroValues = Object.fromEntries(FERTILIZER_ELEMENT_NAMES
       .map(el => [el, selected?.elements[el] || 0])) as unknown as Elements
     setSelected({name: value, elements: zeroValues})
-    setCreating(true)
   }
   const onAddHandler = () => {
     if (!selected) {
       return
     }
-    const recipe = {name: selected.name, elements: values.recipe}
-    if (creating) {
-
-      dispatch(recipePush(recipe))
-    }
-    setCreating(false)
+    const recipe = {...selected, elements: values.recipe}
+    dispatch(recipePush(recipe))
   }
   const onRemoveItemHandler = (item: RecipeType) => {
     dispatch(recipeRemove(item))
@@ -108,7 +101,6 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
             <IconButton
               marginRight={1}
               component={Save}
-              disabled={!creating}
               onClick={onAddHandler}
             />
             <IconButton
