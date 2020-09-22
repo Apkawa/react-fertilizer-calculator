@@ -34,6 +34,10 @@ const Root: FunctionComponent<RootProps> = ({store}) => {
             <Router>
               <Switch>
                 <Route exact path="/" component={pages.Calculator}/>
+                <Route path={
+                  [
+                    "/formula/:formula?/:percent?",
+                  ]} component={pages.ChemFormula}/>
                 <Route path="/example" component={pages.Example}/>
                 <Route path="/help" component={pages.Help}/>
                 <Route path="*" component={pages.NotFound}/>

@@ -2,7 +2,7 @@ import {entries, round, sum, values} from "../utils";
 import {ATOMIC_MASS, AtomNameType} from "./constants";
 import {decomposeFormula, findSubgroups} from './molecular-parser/molecularParser';
 
-type DecomposedChemFormula = {
+export type DecomposedChemFormula = {
   [Atom in AtomNameType]?: number;
 }
 

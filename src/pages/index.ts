@@ -6,5 +6,6 @@ export default {
   NotFound,
   Help: loadable(() => import('./Help')),
   Calculator: loadable(() => import('./Calculator')),
+  ChemFormula: loadable(() => import('./ChemFormula')),
   Example: loadable(() => import('./Example')),
 }
