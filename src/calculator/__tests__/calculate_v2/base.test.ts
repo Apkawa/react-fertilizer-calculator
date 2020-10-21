@@ -1,14 +1,14 @@
-import {calculate_v2, calculate_v3} from "../index";
-import {buildNPKFertilizer, normalizeFertilizer} from "../fertilizer";
-import {getEmptyElements} from "../helpers";
+import {calculate_v2, calculate_v3} from "../../index";
+import {buildNPKFertilizer, normalizeFertilizer} from "../../fertilizer";
+import {getEmptyElements, getFillElementsByType} from "../../helpers";
 
 const emptyElements = getEmptyElements()
 
 describe("Calculate V2", () => {
-
   test("Simple ", () => {
     let NO3 = 135, NH4 = 4.47, P = 45, K = 279.67, Ca = 139, Mg = 55.93, S = 127.22
     const result = calculate_v2({
+        ...emptyElements,
         NO3, NH4, P, K, Ca, Mg, S,
       },
       [
@@ -19,10 +19,14 @@ describe("Calculate V2", () => {
         {id: "Калий азотнокислый", elements: {...emptyElements, K: 38.2, NO3: 13.7}},
         {id: "Калий сернокислый", elements: {...emptyElements, K: 44.9, S: 18.4}},
       ],
-      {accuracy: 0.001}
+      {
+        accuracy: 0.001,
+        ignore: getFillElementsByType(true).micro
+      }
     )
     expect(result).toEqual({
       "deltaElements": {
+        ...emptyElements,
         "Ca": 0,
         "K": -0.3,
         "Mg": -0.1,
@@ -32,6 +36,7 @@ describe("Calculate V2", () => {
         "S": 0.2
       },
       "elements": {
+        ...emptyElements,
         "Ca": 139,
         "K": 280,
         "Mg": 56,
@@ -57,6 +62,7 @@ describe("Calculate V2", () => {
   })
   test("Нитрат аммония с профилем без NH4", () => {
     const result = calculate_v2({
+        ...emptyElements,
         NO3: 200, NH4: 0, P: 50, K: 200, Ca: 170, Mg: 50, S: 0,
       },
       [
@@ -73,6 +79,7 @@ describe("Calculate V2", () => {
 
   test("Сравнение расчетов с HPG", () => {
     const result = calculate_v2({
+        ...emptyElements,
         NO3: 200, NH4: 20, P: 40, K: 180, Ca: 200, Mg: 50, S: 73,
       },
       [
@@ -87,6 +94,7 @@ describe("Calculate V2", () => {
     )
     expect(result).toEqual({
       "deltaElements": {
+        ...emptyElements,
         "Ca": 0,
         "K": -16,
         "Mg": 0,
@@ -96,6 +104,7 @@ describe("Calculate V2", () => {
         "S": 0
       },
       "elements": {
+        ...emptyElements,
         "Ca": 200,
         "K": 196,
         "Mg": 50,
@@ -145,6 +154,7 @@ describe("Calculate V2", () => {
   })
   test("Сравнение v3 расчетов с HPG ", () => {
     const result = calculate_v3({
+        ...emptyElements,
         NO3: 200, NH4: 20, P: 40, K: 180, Ca: 200, Mg: 50, S: 73,
       },
       [

@@ -68,7 +68,7 @@ describe("Calculate", () => {
         S: 0,
       },
       defaultFertilizers.map(f => normalizeFertilizer(f)),
-      {ignore_Mg: true, ignore_Ca: true, accuracy: 0.01}
+      {ignore: {Mg: true, Ca: true}, accuracy: 0.01}
     )
     expect(result).toMatchObject({
       "fertilizers": [

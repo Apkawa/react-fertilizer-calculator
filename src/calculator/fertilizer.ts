@@ -11,15 +11,18 @@ const NPKOxides = {
   K: 'K2O',
   Ca: 'CaO',
   Mg: 'MgO',
-  S: 'S',
 }
 
 export function buildNPKFertilizer(id: string, npk: NPKElements): FertilizerInfo {
   const composition: FertilizerComposition[] = entries(npk)
     .filter(v => v[1] > 0)
     .map(([k, v]) => {
+        let oxide: string = k
+        if (NPKOxides.hasOwnProperty(k)) {
+          oxide = NPKOxides[k] as string
+        }
         return {
-          formula: NPKOxides[k],
+          formula: oxide,
           percent: v
         }
       }
@@ -60,7 +63,7 @@ export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass 
   if (!convertMass) {
     // Оксиды нужны только для отображения.
     keys(elements).forEach(atom => {
-      const oxide = NPKOxides[atom]
+      const oxide: string = (NPKOxides as any)[atom] || atom
       const massParts = calculateMassParts(parseMolecule(oxide))
       if (massParts.hasOwnProperty("N") || massParts.hasOwnProperty("S")) {
 

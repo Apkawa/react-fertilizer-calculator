@@ -1,7 +1,7 @@
 import {combination, product} from "./itertools";
 import {countDecimals, entries, keys, round, sum, values} from "../utils";
 import {FERTILIZER_ELEMENT_NAMES} from "./constants";
-import {Elements, Fertilizer} from "./types";
+import {Elements, Fertilizer, NeedElements} from "./types";
 import {getEmptyElements} from "./helpers";
 
 
@@ -23,14 +23,19 @@ export interface CalculateResult {
   },
 }
 
+export type IgnoreElements = {
+  [E in keyof Elements]?: boolean
+}
+
 export interface CalculateOptions {
   accuracy?: number,
   max_iterations?: number,
-  ignore_Ca?: boolean,
-  ignore_Mg?: boolean,
-  ignore_S?: boolean,
+  ignore?: IgnoreElements,
   solution_volume?: number,
   solution_concentration?: number,
+  // Необходимо для расчета с использованием предыдущих данных,
+  // например, после расчета микроэлементов добавляются макроэлементы и надо их как то учитывать и наоборот
+  prevElements?: Elements,
 }
 
 export function sumFertilizers(fertilizers: Fertilizer[], portions: number[]): Elements {
@@ -97,6 +102,11 @@ export function calculate_v3(
 
 }
 
+const ElementPriority = {
+  'NH4': 1000,
+  'B': 1000,
+}
+
 // Алгоритм расчетов из https://github.com/siv237/HPG
 export function calculate_v2(
   needElements: Elements,
@@ -105,23 +115,21 @@ export function calculate_v2(
 ): CalculateResult {
   const {
     accuracy = 0.1,
-    ignore_Ca = false,
-    ignore_Mg = false,
-    ignore_S = false,
+    ignore = {},
     solution_volume=1,
     solution_concentration=1,
+    prevElements=getEmptyElements(),
   } = options || {}
   const precision = countDecimals(accuracy)
   let ignoredElements: Elements = getEmptyElements()
 
-  if (ignore_Ca) {
-    ignoredElements.Ca = 1
-  }
-  if (ignore_Mg) {
-    ignoredElements.Mg = 1
-  }
-  if (ignore_S) {
-    ignoredElements.S = 1
+  for (let [key, flag] of entries(ignore)) {
+    if (flag) {
+      ignoredElements[key] = 1
+    }
+    if (typeof needElements[key] == "undefined") {
+      ignoredElements[key] = 1
+    }
   }
 
   let weights: { [K: string]: FertilizerWeights } = Object.fromEntries(
@@ -131,25 +139,31 @@ export function calculate_v2(
       base_weight: 0
     }])))
   const xElements = {...needElements}
-  const calcElements = getEmptyElements()
+  const calcElements = prevElements;
 
   for (let f of fertilizers) {
     let p = entries(f.elements)
       .filter(v => v[1])
-      .sort((a, b) => xElements[a[0]] / a[1]  - xElements[b[0]] / b[1])
+      .sort((a, b) =>
+        (xElements[a[0]] / a[1]  - xElements[b[0]] / b[1])
+      )
+      .sort(([a], [b]) =>
+        ((ElementPriority as any)[b]||0) - ((ElementPriority as any)[a] || 0)
+      )
     let primaryElement = p.filter(([a]) => xElements[a] > 0 && needElements[a] > 0)?.[0]?.[0]
-    let skipFert = p.filter(([a]) => needElements[a] <= 0 && !ignoredElements[a]).length > 0
+    // Стараемся принять во внимание комплексные удобрения вроде акварина
+    let skipFert = p.filter(([a]) => needElements[a] <= 0 && !ignoredElements[a]).length === 1
     if (!primaryElement || skipFert) {
       continue
     }
 
     let m = Object.fromEntries(p)
     let weight = xElements[primaryElement] / (m[primaryElement] * 10)
-    weights[f.id].base_weight = round(weight, 3)
+    weights[f.id].base_weight = round(weight, precision > 3 ? precision : 3)
     weights[f.id].weight = round(weight * solution_volume * solution_concentration, precision)
     for (let [a, v] of p) {
       const e = weight * v * 10
-      calcElements[a] += round(e)
+      calcElements[a] += e
       xElements[a] -= e
     }
   }
@@ -166,7 +180,7 @@ export function calculate_v2(
   const totalScore = Math.round(100 / ((score_percent - (needElementsLength - ignored)) / (needElementsLength - ignored) + 1))
 
   const deltaElementsPairs = entries(calcElements).map(([k, v]) => {
-    return [k, round(needElements[k] - v, 1)]
+    return [k, round(needElements[k] - v || 0, 1)]
   })
   const deltaElements = Object.fromEntries(deltaElementsPairs)
 
@@ -190,6 +204,7 @@ export function calculate_v2(
 
 }
 
+// DEPRECATED
 export function calculate_v1(
   needElements: Elements,
   fertilizers: Fertilizer[],
@@ -201,9 +216,7 @@ export function calculate_v1(
   const {
     accuracy = 0.1,
     max_iterations = 25,
-    ignore_Ca = false,
-    ignore_Mg = false,
-    ignore_S = false,
+    ignore = {},
   } = options || {}
   const precision = countDecimals(accuracy)
   let weights: FertilizerWeights[] = fertilizers.map(v => ({
@@ -213,20 +226,11 @@ export function calculate_v1(
   }))
 
   let ignoredElements: Elements = getEmptyElements()
-  if (ignore_Ca) {
-    ignoredElements.Ca = 1
+  for (let [key, flag] of entries(ignore)) {
+    if (flag) {
+      ignoredElements[key] = 1
+    }
   }
-  if (ignore_Mg) {
-    ignoredElements.Mg = 1
-  }
-  if (ignore_S) {
-    ignoredElements.S = 1
-  }
-  // for (let [e, v] of entries(needElements)) {
-  //   if (v === 0) {
-  //     ignoredElements[e] = 1
-  //   }
-  // }
 
   let best_score = 1000000;
   let score;

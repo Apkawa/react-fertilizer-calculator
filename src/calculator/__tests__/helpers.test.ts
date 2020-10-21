@@ -1,8 +1,9 @@
-import {calculateNPKBalance, NPKBalance} from "../helpers";
+import {calculateNPKBalance, getEmptyElements, NPKBalance} from "../helpers";
 
 describe('calculateNPKBalance',() => {
   test('Check', () => {
     const result = calculateNPKBalance({
+      ...getEmptyElements(),
       NO3: 224,
       NH4: 14,
       P: 39,
@@ -20,7 +21,7 @@ describe('calculateNPKBalance',() => {
       "%NH4": 5.9,
       "N:K":0.90,
       "K:Ca": 1.32,
-      "Ca:Mg": 5.56
+      "K:Mg": 7.33
     }
     expect(result).toEqual(e)
   })

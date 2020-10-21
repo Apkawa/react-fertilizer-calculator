@@ -1,4 +1,5 @@
 import {buildNPKFertilizer, normalizeFertilizer} from "../fertilizer";
+import {getEmptyElements} from "../helpers";
 
 
 test("Build NPK Fertilizer", () => {
@@ -40,6 +41,7 @@ describe("normalizeFertilizer", () => {
       }))
     expect(res).toEqual({
         elements: {
+          ...getEmptyElements(),
           "Ca": 0,
           "K": 31.54,
           "Mg": 2.4,
