@@ -12,6 +12,7 @@ import {StyledBalanceCell} from "../Options/Recipe";
 import {ResultFertilizerList} from "./ResultFertilizerList";
 import {useFertilizerSolutionGroup, usePPM} from "./hooks";
 import {ResultDilution} from "@/components/Calculator/Result/ResultDilution";
+import {round} from "@/utils";
 
 interface ResultProps {
 }
@@ -60,8 +61,8 @@ export const Result: FunctionComponent<ResultProps> = () => {
             k => <Element
               key={k}
               name={k}
-              value={elements[k]}
-              delta={deltaElements[k]}
+              value={round(elements[k])}
+              delta={round(deltaElements[k])}
             />
           )}
         </Flex>
@@ -72,7 +73,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
           <StyledBalanceCell name="%NH4" value={NPKBalance["%NH4"]}/>
           <StyledBalanceCell name="N:K" value={NPKBalance["N:K"]}/>
           <StyledBalanceCell name="K:Ca" value={NPKBalance["K:Ca"]}/>
-          <StyledBalanceCell name="Ca:Mg" value={NPKBalance["Ca:Mg"]}/>
+          <StyledBalanceCell name="K:Mg" value={NPKBalance["K:Mg"]}/>
         </Flex>
         <Heading fontSize={2}>
           Оценка: {getScoreDisplay(score)}

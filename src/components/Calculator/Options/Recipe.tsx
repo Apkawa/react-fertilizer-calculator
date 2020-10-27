@@ -11,7 +11,7 @@ import {Dropdown} from "@/components/ui/Dropdown/Dropdown";
 import {CalculatorState, Recipe as RecipeType} from "@/components/Calculator/types";
 import {useDispatch, useSelector} from "react-redux";
 import {recipePush, recipeRemove} from "@/components/Calculator/actions";
-import {Elements} from "@/calculator/types";
+import {Elements, NeedElements} from "@/calculator/types";
 import {calculateNPKBalance, getEmptyElements} from "@/calculator/helpers";
 
 
@@ -44,7 +44,7 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
     item && setRecipe(item.elements)
   }
 
-  const setRecipe = (elements: Elements) => {
+  const setRecipe = (elements: NeedElements) => {
     for (let [name, value] of Object.entries(elements)) {
       setValue(getRecipeFieldName(name), value)
     }
@@ -120,7 +120,7 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
           <StyledBalanceCell name="%NH4" value={NPKBalance["%NH4"]}/>
           <StyledBalanceCell name="N:K" value={NPKBalance["N:K"]}/>
           <StyledBalanceCell name="K:Ca" value={NPKBalance["K:Ca"]}/>
-          <StyledBalanceCell name="Ca:Mg" value={NPKBalance["Ca:Mg"]}/>
+          <StyledBalanceCell name="K:Mg" value={NPKBalance["K:Mg"]}/>
         </Flex>
       </Flex>
     </Card>

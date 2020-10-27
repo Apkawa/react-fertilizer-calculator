@@ -21,7 +21,8 @@ export function countDecimals(value: number): number {
   return value.toString().split(".")[1].length || 0;
 }
 
-type ToMapResult<T> = {[K in string]: T}
+type ToMapResult<T> = { [K in string]: T }
+
 export function toMap<T extends object>(list: T[], field: keyof T): ToMapResult<T> {
   const m: ToMapResult<T> = {}
   for (let i of list) {
@@ -34,7 +35,7 @@ export function toMap<T extends object>(list: T[], field: keyof T): ToMapResult<
 export function updateOrPush<T extends object>(list: T[], item: T, lookup: keyof T): T[] {
   const newList = [...list]
   let updated = false
-  for (let i=0; i< list.length; i++)  {
+  for (let i = 0; i < list.length; i++) {
     if (newList[i][lookup] === item[lookup]) {
       newList[i] = item
       updated = true
@@ -45,6 +46,4 @@ export function updateOrPush<T extends object>(list: T[], item: T, lookup: keyof
     newList.push(item)
   }
   return newList
-
-
 }

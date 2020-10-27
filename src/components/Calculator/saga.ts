@@ -16,9 +16,7 @@ export function* calculateStartSaga() {
     return
   }
   const {
-    ignore_Ca,
-    ignore_Mg,
-    ignore_S,
+    ignore,
     accuracy,
     solution_volume,
     solution_concentration,
@@ -29,9 +27,7 @@ export function* calculateStartSaga() {
     formValues.recipe,
     formValues.fertilizers.map(f => normalizeFertilizer(f)),
     {
-      ignore_Ca,
-      ignore_Mg,
-      ignore_S,
+      ignore,
       accuracy,
       solution_volume,
       solution_concentration,

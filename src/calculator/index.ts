@@ -52,7 +52,7 @@ export function sumFertilizers(fertilizers: Fertilizer[], portions: number[]): E
 }
 
 
-export function getScoreElement(needElements: Elements, currentElements: Elements): Elements {
+export function getScoreElement(needElements: NeedElements, currentElements: Elements): Elements {
   let pairs = entries(needElements).map(([key, value]) => {
     let curVal = currentElements[key]
     let score = 100
@@ -75,12 +75,12 @@ export function getScoreElement(needElements: Elements, currentElements: Element
 
 // Подбор оптимального количества путем пересортировки удобрений
 export function calculate_v3(
-  needElements: Elements,
+  needElements: NeedElements,
   fertilizers: Fertilizer[],
   options: CalculateOptions = {}
 ): CalculateResult {
 
-  let result: CalculateResult|null = null
+  let result: CalculateResult | null = null
   const time = new Date().getTime();
   let count = 0;
   for (let f of combination(fertilizers)) {
@@ -107,24 +107,25 @@ const ElementPriority = {
   'B': 1000,
 }
 
+
 // Алгоритм расчетов из https://github.com/siv237/HPG
 export function calculate_v2(
-  needElements: Elements,
+  needElements: NeedElements,
   fertilizers: Fertilizer[],
   options: CalculateOptions = {}
 ): CalculateResult {
   const {
     accuracy = 0.1,
     ignore = {},
-    solution_volume=1,
-    solution_concentration=1,
-    prevElements=getEmptyElements(),
+    solution_volume = 1,
+    solution_concentration = 1,
+    prevElements = getEmptyElements(),
   } = options || {}
   const precision = countDecimals(accuracy)
   let ignoredElements: Elements = getEmptyElements()
 
-  for (let [key, flag] of entries(ignore)) {
-    if (flag) {
+  for (let key of keys(ignoredElements)) {
+    if (ignore[key]) {
       ignoredElements[key] = 1
     }
     if (typeof needElements[key] == "undefined") {
@@ -145,26 +146,26 @@ export function calculate_v2(
     let p = entries(f.elements)
       .filter(v => v[1])
       .sort((a, b) =>
-        (xElements[a[0]] / a[1]  - xElements[b[0]] / b[1])
+        ((xElements[a[0]] || 0) / a[1] - (xElements[b[0]] || 0) / b[1])
       )
       .sort(([a], [b]) =>
-        ((ElementPriority as any)[b]||0) - ((ElementPriority as any)[a] || 0)
+        ((ElementPriority as any)[b] || 0) - ((ElementPriority as any)[a] || 0)
       )
-    let primaryElement = p.filter(([a]) => xElements[a] > 0 && needElements[a] > 0)?.[0]?.[0]
+    let primaryElement = p.filter(([a]) => (xElements[a] || 0) > 0 && (needElements[a] || 0) > 0)?.[0]?.[0]
     // Стараемся принять во внимание комплексные удобрения вроде акварина
-    let skipFert = p.filter(([a]) => needElements[a] <= 0 && !ignoredElements[a]).length === 1
+    let skipFert = p.filter(([a]) => (needElements[a] || 0) <= 0 && !ignoredElements[a]).length === 1
     if (!primaryElement || skipFert) {
       continue
     }
 
     let m = Object.fromEntries(p)
-    let weight = xElements[primaryElement] / (m[primaryElement] * 10)
+    let weight = (xElements[primaryElement] || 0) / (m[primaryElement] * 10)
     weights[f.id].base_weight = round(weight, precision > 3 ? precision : 3)
     weights[f.id].weight = round(weight * solution_volume * solution_concentration, precision)
     for (let [a, v] of p) {
       const e = weight * v * 10
-      calcElements[a] += e
-      xElements[a] -= e
+      calcElements[a] += round(e)
+      xElements[a] = (xElements[a] || 0) - e
     }
   }
   let score_el: Elements = getScoreElement(needElements, calcElements)
@@ -176,22 +177,22 @@ export function calculate_v2(
   const score_percent = sum(Object.values(score_el))
 
   let ignored = sum(values(ignoredElements));
-  const needElementsLength = keys(needElements).length
+  const needElementsLength = keys(ignoredElements).length
   const totalScore = Math.round(100 / ((score_percent - (needElementsLength - ignored)) / (needElementsLength - ignored) + 1))
 
   const deltaElementsPairs = entries(calcElements).map(([k, v]) => {
-    return [k, round(needElements[k] - v || 0, 1)]
+    return [k, round((needElements[k] || 0) - v || 0, 1)]
   })
   const deltaElements = Object.fromEntries(deltaElementsPairs)
 
-  return  {
+  return {
     fertilizers: values(weights)
-        .map(v => ({
-          ...v,
-          base_weight: round(v.base_weight, precision),
-          weight: round(v.weight, precision),
-        }))
-        .filter(v => v.weight),
+      .map(v => ({
+        ...v,
+        base_weight: round(v.base_weight, precision),
+        weight: round(v.weight, precision),
+      }))
+      .filter(v => v.weight),
     elements: calcElements,
     deltaElements,
     score: totalScore,

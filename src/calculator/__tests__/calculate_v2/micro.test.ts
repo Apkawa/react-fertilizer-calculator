@@ -18,7 +18,7 @@ const AK = normalizeFertilizer(buildNPKFertilizer("Акварин земляни
   Fe: 0.054, Zn: 0.014, Cu: 0.001, Mn: .042, Mo: .004, B: 0.02,
 }))
 
-describe("Calculate V2 Micro", () => {
+describe.skip("Calculate V2 Micro", () => {
   test("Simple calculation", () => {
     const result = calculate_v2({
         ...emptyElements,

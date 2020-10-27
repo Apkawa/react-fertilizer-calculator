@@ -11,9 +11,9 @@ export const IgnoreElement: FunctionComponent<IgnoreElementProps> = () => {
     <Card>
       <Flex flexDirection="column">
         <Heading fontSize={2}>Игнорировать</Heading>
-        <Checkbox name="ignore_Ca" label="Кальций" />
-        <Checkbox name="ignore_Mg" label="Магний" />
-        <Checkbox name="ignore_S" label="Сера" />
+        <Checkbox name="ignore.Ca" label="Кальций" />
+        <Checkbox name="ignore.Mg" label="Магний" />
+        <Checkbox name="ignore.S" label="Сера" />
       </Flex>
     </Card>
   )
