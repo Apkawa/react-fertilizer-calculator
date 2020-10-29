@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from "react";
 import {Flex} from "rebass";
-import {FERTILIZER_ELEMENT_NAMES} from "../../../calculator/constants";
+import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES} from "../../../calculator/constants";
 import {AddItemElementForm} from "./AddItemElementForm";
 import {buildNPKFertilizer, normalizeFertilizer} from "../../../calculator/fertilizer";
 import {Elements, FertilizerInfo} from "@/calculator/types";
@@ -40,7 +40,7 @@ export const AddItemFertilizerEditForm: FunctionComponent<AddItemFertilizerEditF
   return (
     <Flex>
       <Flex>
-        {FERTILIZER_ELEMENT_NAMES.map(el => (
+        {MACRO_ELEMENT_NAMES.map(el => (
           <AddItemElementForm
             disabled={!allowEdit}
             name={el}

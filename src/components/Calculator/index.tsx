@@ -1,15 +1,15 @@
 import React from "react";
 import {Box, Card, Flex, Heading, Text} from 'rebass'
 import {Restart} from "@styled-icons/remix-line/Restart"
+import {reduxForm, Form} from "redux-form";
+import {useDispatch, connect} from "react-redux";
 
 import FertilizerSelect from './FertilizerSelect'
 import {Options} from "./Options/Options";
 import {Result} from "./Result/Result";
-import {reduxForm} from "redux-form";
 import {CalculatorFormValues} from "./types";
 import {ReduxFormType} from "../ui/ReduxForm/types";
 import {REDUX_FORM_NAME} from "./constants";
-import {useDispatch} from "react-redux";
 import {calculateStart, fertilizerReset, recipeReset} from "./actions";
 import {ImportFertilizers} from "@/components/Calculator/ImportExport/ImportFertilizers";
 import {ExportFertilizers} from "@/components/Calculator/ImportExport/ExportFertilizers";
@@ -19,6 +19,7 @@ import {ExportRecipes} from "@/components/Calculator/ImportExport/ExportRecipes"
 import {ImportRecipes} from "@/components/Calculator/ImportExport/ImportRecipes";
 import {Recipe} from "@/components/Calculator/Options/Recipe";
 import {mobileStyles} from "@/components/ui/styled";
+import {RootState} from "@/redux/types";
 
 interface CalculatorProps {
 
@@ -38,7 +39,7 @@ const initialValues: CalculatorFormValues = {
 export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormValues> = ({handleSubmit}) => {
   const dispatch = useDispatch()
   return (
-    <form
+    <Form
       onSubmit={handleSubmit(() => {
         dispatch(calculateStart())
       })}
@@ -113,13 +114,20 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
           </Card>
         </Flex>
       </Flex>
-    </form>
+    </Form>
   )
 }
 
 
-export const Calculator = reduxForm<CalculatorFormValues>({
+const InitializerCalculator = reduxForm<CalculatorFormValues>({
   form: REDUX_FORM_NAME,
   initialValues,
   // enableReinitialize: true
 })(CalculatorContainer)
+
+const ReduxCalculator = connect((state: RootState) => (
+  {
+    initialValues: state.calculator?.calculationForm || initialValues
+  }))(InitializerCalculator)
+
+export default ReduxCalculator

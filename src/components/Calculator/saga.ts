@@ -1,13 +1,21 @@
-import {all, fork, put, select, takeLatest} from 'redux-saga/effects'
-import {actionTypes, getFormValues, stopSubmit} from "redux-form";
+import {all, call, fork, put, select, takeLatest} from 'redux-saga/effects'
+import {actionTypes, FormAction, getFormValues, stopSubmit} from "redux-form";
 import {CALCULATE_START, REDUX_FORM_NAME} from "./constants";
-import {calculateError, calculateStart, calculateSuccess} from "./actions";
+import {calculateError, calculateStart, calculateSuccess, storeCalculateForm} from "./actions";
 import {calculate_v3} from "@/calculator";
 import {CalculatorFormValues} from "./types";
 import {normalizeFertilizer} from "@/calculator/fertilizer";
 
-export function* calculateStartSaga() {
+export function* storeCalculateFormSaga() {
   const formValues: CalculatorFormValues = yield select(getFormValues(REDUX_FORM_NAME))
+  yield put(storeCalculateForm(formValues))
+  yield put(calculateStart())
+}
+
+export function* calculateStartSaga() {
+  const formValues: CalculatorFormValues = yield select(
+    state => state.calculator.calculationForm
+  )
   if (!formValues.fertilizers.length) {
     yield put(stopSubmit(REDUX_FORM_NAME, {
       fertilizers: {_error: "Need fertilizers!"}
@@ -33,9 +41,7 @@ export function* calculateStartSaga() {
       solution_concentration,
     }
   )
-
   yield put(calculateSuccess(result))
-
 }
 
 export function* calculatorSagaWatcher() {
@@ -50,14 +56,16 @@ export function* calculatorFormChangeWatcher() {
       actionTypes.ARRAY_PUSH,
       actionTypes.ARRAY_REMOVE
     ],
-    function* () {
-      yield put(calculateStart())
+    function* (action: FormAction) {
+      if (action.meta.form === REDUX_FORM_NAME) {
+        yield call(storeCalculateFormSaga)
+      }
     });
 }
 
 export default function* calculatorRootSaga() {
   yield all([
     fork(calculatorSagaWatcher),
-    fork(calculatorFormChangeWatcher)
+    fork(calculatorFormChangeWatcher),
   ]);
 }

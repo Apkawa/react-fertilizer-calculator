@@ -55,6 +55,26 @@ describe("normalizeFertilizer", () => {
     )
   })
 
+  test("convert FertilizerInfo.npk to element Fertilizer", () => {
+    const res = normalizeFertilizer({id: "Valagro 3:11:38",
+        npk: {NO3: 3, P: 11, K: 38, Ca: 0, Mg: 4,}}
+        )
+    expect(res).toEqual({
+        elements: {
+          ...getEmptyElements(),
+          "Ca": 0,
+          "K": 31.54,
+          "Mg": 2.4,
+          "NO3": 3,
+          "NH4": 0,
+          "P": 4.84,
+          S: 0,
+        },
+        "id": "Valagro 3:11:38",
+      }
+    )
+  })
+
 
   test('Fertilizer formula to raw NPK', () => {
     const result = normalizeFertilizer({

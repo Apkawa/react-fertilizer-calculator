@@ -3,31 +3,38 @@ import {Field as ReduxField} from "redux-form";
 
 import {Input as RebassInput, InputProps as RebassInputProps} from "@rebass/forms";
 import {ReduxFormComponentType, WrapperInputType} from "./types";
+import styled from "styled-components";
 
 interface InputProps extends RebassInputProps {
+  label?: string
 }
 
-const WrappedInput: WrapperInputType<InputProps> = ({input, label, type = "text", ...props}: any) =>
-  <RebassInput  {...props}
+export const StyledInput = styled(RebassInput)`
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`
+
+export const WrappedInput: WrapperInputType<InputProps> = ({input, label, type = "text", ...props}: any) =>
+  <StyledInput  {...props}
                 {...input}
-                sx={{
-                  ...input.sx,
-                  '::-webkit-inner-spin-button': {
-                    '-webkit-appearance': 'none',
-                    margin: 0,
-                  },
-                  '::-webkit-outer-spin-button': {
-                    '-webkit-appearance': 'none',
-                    margin: 0,
-                  }
-                }}
                 type={type}
+                lang="en-US"
                 placeholder={label}
   />
 
 
 // TODO вывести тип
-export const Input: ReduxFormComponentType<InputProps> = ({name, ...props}) => {
+export const Input: ReduxFormComponentType<InputProps> = (
+  {
+    name,
+    ...props
+  }) => {
 
   return (
     <ReduxField

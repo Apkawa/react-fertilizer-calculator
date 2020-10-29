@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {CalculatorFormValues, CalculatorState} from "../types";
 import {getFormValues} from "redux-form";
 import {REDUX_FORM_NAME} from "../constants";
-import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
+import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES} from "@/calculator/constants";
 import {Element} from "../FertilizerSelect/SelectedListItem";
 import styled from "styled-components";
 import {calculateNPKBalance, getEmptyElements, ppmToEC} from "@/calculator/helpers";
@@ -57,7 +57,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
     <Card>
       <Flex alignItems="center" flexDirection="column">
         <Flex>
-          {elements && FERTILIZER_ELEMENT_NAMES.map(
+          {elements && MACRO_ELEMENT_NAMES.map(
             k => <Element
               key={k}
               name={k}

@@ -33,10 +33,9 @@ export function buildNPKFertilizer(id: string, npk: NPKElements): FertilizerInfo
   }
 }
 
-// Расчет состава удобрения в чистые элементы
-export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass = true): Fertilizer {
+export function compositionToNPKElements(composition: FertilizerComposition[]): Elements {
   const elements: Elements = getEmptyElements()
-  for (let comp of fertilizerInfo.composition) {
+  for (let comp of composition) {
     let atomCounts = parseMolecule(comp.formula)
     let massParts = calculateMassParts(atomCounts)
     for (let [atom, mass] of entries(massParts)) {
@@ -59,6 +58,43 @@ export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass 
         }
       }
     }
+  }
+  return elements
+}
+
+/**
+ * Конвертация чистых элементов в NPK оксиды
+ * @param {Elements} elements - чистые элементы
+ */
+export function elementsToNPK(elements: Elements): Elements {
+  const e = entries(elements).map(([atom, val]) => {
+    const oxide: string = (NPKOxides as any)[atom] || atom
+    const massParts = calculateMassParts(parseMolecule(oxide))
+    const skipElements = massParts.hasOwnProperty("N") || massParts.hasOwnProperty("S")
+    const elementMassPart = massParts[atom as AtomNameType]
+    if (!skipElements && elementMassPart) {
+      const k = round(sum(values(massParts)) / elementMassPart, 2)
+      val = round(val * k, 2)
+    }
+    return [atom, val]
+  })
+  return Object.fromEntries(e)
+}
+
+/**
+ * Расчет состава удобрения в чистые элементы
+ * @param {FertilizerInfo} fertilizerInfo
+ * @param convertMass - преобразовать ли в чистые элементы
+ * @return {Fertilizer}
+ */
+export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass = true): Fertilizer {
+  let elements: Elements = getEmptyElements()
+  let composition = fertilizerInfo.composition;
+  if (fertilizerInfo.npk) {
+    composition = buildNPKFertilizer(fertilizerInfo.id, fertilizerInfo.npk).composition
+  }
+  if (composition) {
+    elements = compositionToNPKElements(composition)
   }
   if (!convertMass) {
     // Оксиды нужны только для отображения.

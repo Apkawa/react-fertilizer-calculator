@@ -1,6 +1,8 @@
 import React, {FunctionComponent} from 'react'
 import {Provider} from 'react-redux'
 import {HashRouter as Router, Route, Switch} from 'react-router-dom'
+
+
 import {ThemeProvider} from 'theme-ui'
 
 
@@ -9,6 +11,7 @@ import {Box, Flex, Text} from "rebass";
 import {defaultTheme} from "./themes";
 import {ForkMeOnGitHub} from "./components/ui/ForkMeOnGitHub";
 import {ColorModeToggle} from "./components/ColorModeToggle";
+import {TabMenu} from "@/components/TabMenu";
 
 
 type RootProps = {
@@ -16,7 +19,6 @@ type RootProps = {
 }
 
 const Root: FunctionComponent<RootProps> = ({store}) => {
-
   return (
     <Provider store={store}>
       <ThemeProvider theme={defaultTheme}>
@@ -28,20 +30,29 @@ const Root: FunctionComponent<RootProps> = ({store}) => {
           </Box>
           <ForkMeOnGitHub/>
         </Flex>
-
         <Flex flexDirection='column' margin={2}>
           <Box flex={1}>
             <Router>
-              <Switch>
-                <Route exact path="/" component={pages.Calculator}/>
-                <Route path={
-                  [
-                    "/formula/:formula?/:percent?",
-                  ]} component={pages.ChemFormula}/>
-                <Route path="/example" component={pages.Example}/>
-                <Route path="/help" component={pages.Help}/>
-                <Route path="*" component={pages.NotFound}/>
-              </Switch>
+              <TabMenu/>
+
+              <Flex sx={
+                {
+                  justifyContent: 'center'
+                }
+              }>
+                <Box width='936px'>
+                  <Switch>
+                    <Route path={
+                      [
+                        "/formula/:formula?/:percent?",
+                      ]} component={pages.ChemFormula}/>
+                    <Route path="/example" component={pages.Example}/>
+                    <Route path="/help" component={pages.Help}/>
+                    <Route path="/" component={pages.Calculator}/>
+                    <Route path="*" component={pages.NotFound}/>
+                  </Switch>
+                </Box>
+              </Flex>
             </Router>
           </Box>
           <Flex justifyContent={"flex-end"} marginTop="auto" flex={1}>

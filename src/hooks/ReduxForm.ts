@@ -1,19 +1,21 @@
 import {useContext} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {change, getFormValues, ReduxFormContext} from "redux-form";
+import {change, FormContext, getFormValues, ReduxFormContext} from "redux-form";
 
-export function useReduxForm(): {form: string} {
+export function useReduxForm(): FormContext {
   return useContext(ReduxFormContext)
 }
 
+export function useFormName(): string {
+  return useReduxForm().form
+}
 
-export function useFormValues<FormValues=object>(): [FormValues, (name: string, value: any) => void] {
-  const { form } = useReduxForm()
+export function useFormValues<FormValues=object>(formName: string): [FormValues, (name: string, value: any) => void] {
   const dispatch = useDispatch()
-  const values = useSelector(state => getFormValues(form)(state)) as FormValues
+  const values = useSelector(state => getFormValues(formName)(state)) as FormValues
 
   const setValue = (name: string, value: any) => {
-    dispatch(change(form, name, value))
+    dispatch(change(formName, name, value))
   }
   return [
     values,

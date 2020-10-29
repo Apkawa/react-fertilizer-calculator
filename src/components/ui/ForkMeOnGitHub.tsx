@@ -47,7 +47,7 @@ const StyledForkMeOnGithub = styled.span`
         width: 200px;
         overflow: hidden;
         height: 200px;
-        z-index: 9999;
+        z-index: 100;
     }
 
     &>a {

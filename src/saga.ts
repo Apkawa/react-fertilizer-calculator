@@ -1,12 +1,14 @@
-import {all} from 'redux-saga/effects'
+import {all, fork} from 'redux-saga/effects'
 import calculatorRootSaga from "./components/Calculator/saga";
+import fertilizerManagerRootSaga from './components/Calculator/FertilizerManager/saga';
 
 type AnySagaGenerator = Generator<any, any, any>;
 
 const sagas: (() => AnySagaGenerator)[] = [
-  calculatorRootSaga
+  calculatorRootSaga,
+  fertilizerManagerRootSaga,
 ]
 
 export default function* rootSaga() {
-  yield all(sagas.map(s => s()))
+  yield all(sagas.map(s => fork(s)))
 }

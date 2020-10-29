@@ -1,6 +1,8 @@
 import React, {FunctionComponent, useEffect, useState} from "react";
 import {Flex} from "rebass";
 import {Input} from "@rebass/forms";
+import {number} from "@/components/ui/ReduxForm/normalizers";
+import {StyledInput} from "@/components/ui/ReduxForm/Input";
 
 interface RecipeElementFormProps {
   name: string,
@@ -21,7 +23,7 @@ export const AddItemElementForm: FunctionComponent<RecipeElementFormProps> = (pr
   }, [props.value])
 
   const onChange = (value: string) => {
-    const v = parseInt(value)
+    const v = parseFloat(value)
     setValue(v)
   }
 
@@ -34,9 +36,11 @@ export const AddItemElementForm: FunctionComponent<RecipeElementFormProps> = (pr
       <label style={{textAlign: 'center'}}>
         {name}
       </label>
-      <Input
-        maxLength={2}
-        pattern="^\d+$"
+      <StyledInput
+        type="number"
+        step="0.1"
+        min="0"
+        max="100"
         autoComplete="off"
         width="3rem"
         value={value.toString()}

@@ -3,8 +3,8 @@ import {Box, Card, Flex, Heading, Text} from "rebass";
 import {Broom} from '@styled-icons/fa-solid/Broom'
 import {Save} from '@styled-icons/boxicons-regular/Save'
 import {getRecipeFieldName, RecipeElementForm} from "./RecipeElementForm";
-import {useFormValues} from "@/hooks/ReduxForm";
-import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
+import {useFormName, useFormValues} from "@/hooks/ReduxForm";
+import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES} from "@/calculator/constants";
 
 import {IconButton} from "@/components/ui/IconButton";
 import {Dropdown} from "@/components/ui/Dropdown/Dropdown";
@@ -32,7 +32,7 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
     recipes = [],
   } = useSelector<any>(state => state.calculator) as CalculatorState
 
-  const [values, setValue] = useFormValues()
+  const [values, setValue] = useFormValues(useFormName())
   const [selected, setSelected] = useState<RecipeType | undefined>(recipes?.[0])
 
   const dispatch = useDispatch()
@@ -111,7 +111,7 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
         </Flex>
         <Flex justifyContent="space-between">
           {
-            FERTILIZER_ELEMENT_NAMES.map(n => <RecipeElementForm name={n}/>)
+            MACRO_ELEMENT_NAMES.map(n => <RecipeElementForm name={n}/>)
           }
         </Flex>
         <Flex justifyContent="space-around">

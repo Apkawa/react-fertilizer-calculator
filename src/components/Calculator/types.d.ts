@@ -10,7 +10,6 @@ export interface CalculatorFormValues {
   solution_concentration: number,
   recipe: NeedElements,
   fertilizers: FertilizerInfo[],
-
   dilution_enabled: boolean,
   dilution_volume: number,
   dilution_concentration: number,
@@ -20,6 +19,7 @@ export interface CalculatorFormValues {
 }
 
 export interface CalculatorState {
+  readonly calculationForm: CalculatorFormValues | null,
   readonly result: CalculateResult | null,
   readonly process: boolean,
   readonly error: boolean,

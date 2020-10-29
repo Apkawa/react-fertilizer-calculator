@@ -41,7 +41,12 @@ export interface FertilizerComposition {
 
 export interface FertilizerInfo {
   id: string,
-  composition: FertilizerComposition[],
+  // TODO
+  name?: string,
+  npk?: NPKElements,
+  composition?: FertilizerComposition[],
+  solution_density?: number
+
 }
 
 export type NPKElements = {

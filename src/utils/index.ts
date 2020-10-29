@@ -47,3 +47,8 @@ export function updateOrPush<T extends object>(list: T[], item: T, lookup: keyof
   }
   return newList
 }
+
+
+export function equal(t1: any, t2: any): boolean {
+  return JSON.stringify(t1) === JSON.stringify(t2)
+}

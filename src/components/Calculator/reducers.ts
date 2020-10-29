@@ -6,6 +6,7 @@ import {DEFAULT_RECIPES} from "./constants/recipes";
 import {updateOrPush} from "@/utils";
 
 const initialState: CalculatorState = {
+  calculationForm: null,
   result: null,
   process: false,
   error: false,
@@ -16,6 +17,8 @@ const initialState: CalculatorState = {
 
 export const reducer = (state: CalculatorState = initialState, action: ActionTypes): CalculatorState => {
   switch (action.type) {
+    case ActionNames.STORE_CALCULATE_FORM:
+      return {...state, calculationForm: action.form}
     case ActionNames.CALCULATE_START:
       return {...state, process: true}
     case ActionNames.CALCULATE_SUCCESS:
@@ -30,6 +33,8 @@ export const reducer = (state: CalculatorState = initialState, action: ActionTyp
       }
     case ActionNames.FERTILIZERS_REMOVE:
       return {...state, fertilizers: state.fertilizers.filter(f => action.payload.id !== f.id)}
+    case ActionNames.FERTILIZERS_SET:
+      return {...state, fertilizers: action.payload}
     case ActionNames.FERTILIZERS_RESET:
       return {...state, fertilizers: [...defaultFertilizers]}
 
