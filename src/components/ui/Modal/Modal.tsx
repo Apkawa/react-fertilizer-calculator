@@ -1,6 +1,6 @@
 import React, {ReactNode, useEffect, useState} from "react";
 import {ModalContainer} from "@/components/ui/Modal/ModalContainer";
-import {Box, Flex} from "rebass";
+import {Box, Flex, Heading} from "rebass";
 import {Icon} from "@/components/ui/Icon";
 import {Cross} from "@styled-icons/entypo/Cross";
 
@@ -15,6 +15,7 @@ interface ModalProps {
   opened?: boolean,
   onClose?: () => void,
   button?: RenderCb,
+  title?: string,
   container: RenderCb,
 }
 
@@ -47,7 +48,8 @@ export function Modal(props: ModalProps) {
     <>
       {button && button(renderCbProps)}
       {closed ? null : <ModalContainer>
-        <Flex justifyContent='flex-end'>
+        <Flex justifyContent='space-between'>
+          <Heading fontSize={2}>{props.title}</Heading>
           <Icon component={Cross} onClick={modalActions.close}/>
         </Flex>
         <Box>

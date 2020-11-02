@@ -9,7 +9,6 @@ import {fertilizerPush, fertilizerSet} from "@/components/Calculator/actions";
 import {Modal, ModalActions} from "@/components/ui/Modal/Modal";
 import {IconButton} from "@/components/ui/IconButton";
 import {Plus} from "@styled-icons/boxicons-regular/Plus";
-import {Edit} from "@styled-icons/fa-regular/Edit";
 import {AddEdit, getInitialValues} from "@/components/Calculator/FertilizerManager/AddEdit";
 import {useFormValues} from "@/hooks/ReduxForm";
 import {AddEditFormType} from "@/components/Calculator/FertilizerManager/types";

@@ -1,30 +1,28 @@
 import {entries, round, sum} from "../utils";
 import {IONIC_STRENGTH} from "./constants";
-import {FertilizerWeights} from "@/calculator/index";
-import {Elements, MacroElements, MicroElements} from "@/calculator/types";
+import {FertilizerWeights} from './index';
+import {Elements, MacroElements, MicroElements} from "./types";
+import {ElementsMatrixType, getProfileRatioMatrix} from "./profile";
 
 export interface NPKBalance {
   anions: number,
   cations: number,
   ion_balance: number,
-  'N:K': number,
-  'K:Ca': number,
-  'K:Mg': number,
+  ratio: ElementsMatrixType,
   '%NH4': number,
   EC: number
 }
 
 
 export function calculateNPKBalance(npk: Elements): NPKBalance {
+  const ratio = getProfileRatioMatrix(npk)
   const result: NPKBalance = {
     anions: -0,
     cations: 0,
     ion_balance: 0,
+    ratio,
     // TODO build matrix
-    'N:K': (npk.NH4 + npk.NO3) / npk.K,
-    'K:Ca': npk.K / npk.Ca,
-    'K:Mg': npk.K / npk.Mg,
-    '%NH4': round((npk.NH4 / (npk.NH4 + npk.NO3)) * 100, 1),
+    '%NH4': round((npk.NH4 / npk.NO3) * 100, 1),
     EC: 0,
   }
   for (let [el, w] of entries(npk)) {
@@ -45,6 +43,10 @@ export function calculateNPKBalance(npk: Elements): NPKBalance {
   result.EC = 0.095 * result.cations + 0.19
 
   entries(result).forEach(([k, v]) => {
+    if (k === "ratio") {
+      return
+    }
+    v = v as number
     if (!isFinite(v)) {
       v = 0
     }

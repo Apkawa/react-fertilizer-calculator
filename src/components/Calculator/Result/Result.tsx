@@ -66,14 +66,13 @@ export const Result: FunctionComponent<ResultProps> = () => {
             />
           )}
         </Flex>
-
         <Flex justifyContent="space-around">
           <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
           <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
           <StyledBalanceCell name="%NH4" value={NPKBalance["%NH4"]}/>
-          <StyledBalanceCell name="N:K" value={NPKBalance["N:K"]}/>
-          <StyledBalanceCell name="K:Ca" value={NPKBalance["K:Ca"]}/>
-          <StyledBalanceCell name="K:Mg" value={NPKBalance["K:Mg"]}/>
+          <StyledBalanceCell name="K:Mg" value={NPKBalance.ratio.K.Mg}/>
+          <StyledBalanceCell name="K:Ca" value={NPKBalance.ratio.K.Ca}/>
+          <StyledBalanceCell name="Ca:N" value={NPKBalance.ratio.Ca.N}/>
         </Flex>
         <Heading fontSize={2}>
           Оценка: {getScoreDisplay(score)}

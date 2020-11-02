@@ -1,7 +1,8 @@
 import React, {FunctionComponent, useState} from "react";
-import {Box, Card, Flex, Heading, Text} from "rebass";
+import {Box, Button, Card, Flex, Heading, Text} from "rebass";
 import {Broom} from '@styled-icons/fa-solid/Broom'
 import {Save} from '@styled-icons/boxicons-regular/Save'
+import {Tune} from '@styled-icons/material-sharp/Tune'
 import {getRecipeFieldName, RecipeElementForm} from "./RecipeElementForm";
 import {useFormName, useFormValues} from "@/hooks/ReduxForm";
 import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES} from "@/calculator/constants";
@@ -13,6 +14,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {recipePush, recipeRemove} from "@/components/Calculator/actions";
 import {Elements, NeedElements} from "@/calculator/types";
 import {calculateNPKBalance, getEmptyElements} from "@/calculator/helpers";
+import {Modal, ModalActions} from "@/components/ui/Modal/Modal";
+import {RecipeTuneForm} from "@/components/Calculator/Options/RecipeTuneForm";
 
 
 export const StyledBalanceCell: FunctionComponent<{name:string, value: number}> = (props) => {
@@ -59,6 +62,10 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
       .map(el => [el, selected?.elements[el] || 0])) as unknown as Elements
     setSelected({name: value, elements: zeroValues})
   }
+  const onChangeProfile = (modal: ModalActions) => {
+    modal.close()
+  }
+
   const onAddHandler = () => {
     if (!selected) {
       return
@@ -115,12 +122,30 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
           }
         </Flex>
         <Flex justifyContent="space-around">
+          <Modal
+            title="Настройка профиля"
+            button={({modal}) => (
+              <IconButton
+              marginRight={1}
+              component={Tune}
+              onClick={modal.open}
+              />
+            )}
+            container={({modal}) => (
+              <>
+                <RecipeTuneForm/>
+                <Flex justifyContent="flex-end">
+                  <Button type="button" onClick={() => onChangeProfile(modal)}>Save</Button>
+                </Flex>
+              </>
+            )}
+          />
           <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
           <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
           <StyledBalanceCell name="%NH4" value={NPKBalance["%NH4"]}/>
-          <StyledBalanceCell name="N:K" value={NPKBalance["N:K"]}/>
-          <StyledBalanceCell name="K:Ca" value={NPKBalance["K:Ca"]}/>
-          <StyledBalanceCell name="K:Mg" value={NPKBalance["K:Mg"]}/>
+          <StyledBalanceCell name="K:Mg" value={NPKBalance.ratio.K.Mg}/>
+          <StyledBalanceCell name="K:Ca" value={NPKBalance.ratio.K.Ca}/>
+          <StyledBalanceCell name="Ca:N" value={NPKBalance.ratio.Ca.N}/>
         </Flex>
       </Flex>
     </Card>

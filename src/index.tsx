@@ -7,7 +7,6 @@ import Root from './Root'
 import {store} from "./redux";
 
 
-
 ReactDOM.render(
   <React.StrictMode>
     <Root store={store}/>

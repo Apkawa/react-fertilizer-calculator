@@ -1,8 +1,8 @@
 import React from "react";
 import {Box, Card, Flex, Heading, Text} from 'rebass'
 import {Restart} from "@styled-icons/remix-line/Restart"
-import {reduxForm, Form} from "redux-form";
-import {useDispatch, connect} from "react-redux";
+import {Form, reduxForm} from "redux-form";
+import {connect, useDispatch} from "react-redux";
 
 import FertilizerSelect from './FertilizerSelect'
 import {Options} from "./Options/Options";

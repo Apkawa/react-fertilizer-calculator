@@ -4,7 +4,7 @@ import {Input} from "@rebass/forms";
 import {parseMolecule} from "@/calculator/chem";
 import {Elements} from "@/calculator/types";
 import {normalizeFertilizer} from "@/calculator/fertilizer";
-import {useParams, useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {entries, round, sum, values} from "@/utils";
 import {ATOMIC_MASS, AtomNameType, FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 

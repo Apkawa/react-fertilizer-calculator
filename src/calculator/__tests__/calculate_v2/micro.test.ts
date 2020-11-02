@@ -1,4 +1,4 @@
-import {calculate_v2, calculate_v3} from "../../index";
+import {calculate_v2} from "../../index";
 import {buildNPKFertilizer, normalizeFertilizer} from "../../fertilizer";
 import {getEmptyElements, getFillElementsByType} from "../../helpers";
 

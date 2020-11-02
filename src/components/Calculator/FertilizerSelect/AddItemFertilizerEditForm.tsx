@@ -2,7 +2,7 @@ import React, {FunctionComponent, useEffect, useState} from "react";
 import {Flex} from "rebass";
 import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES} from "../../../calculator/constants";
 import {AddItemElementForm} from "./AddItemElementForm";
-import {buildNPKFertilizer, normalizeFertilizer} from "../../../calculator/fertilizer";
+import {normalizeFertilizer} from "../../../calculator/fertilizer";
 import {Elements, FertilizerInfo} from "@/calculator/types";
 
 interface AddItemFertilizerEditFormProps {
@@ -18,7 +18,6 @@ export const getElements = (f: FertilizerInfo) => {
 export const AddItemFertilizerEditForm: FunctionComponent<AddItemFertilizerEditFormProps> = (props) => {
   const {
     fertilizer,
-    allowEdit=true
   } = props
 
   const [elements, setElements] = useState<Elements|undefined>(fertilizer && getElements(fertilizer))
