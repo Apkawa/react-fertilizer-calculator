@@ -4,11 +4,11 @@ import {CalculatorState} from "@/components/Calculator/types";
 import {Button, Flex} from "rebass";
 import {ReactSortable} from "react-sortablejs";
 
-
 import {Item} from "./Item";
-import {fertilizerPush, fertilizerRemove, fertilizerSet} from "@/components/Calculator/actions";
+import {fertilizerPush, fertilizerSet} from "@/components/Calculator/actions";
 import {Modal, ModalActions} from "@/components/ui/Modal/Modal";
 import {IconButton} from "@/components/ui/IconButton";
+import {Plus} from "@styled-icons/boxicons-regular/Plus";
 import {Edit} from "@styled-icons/fa-regular/Edit";
 import {AddEdit, getInitialValues} from "@/components/Calculator/FertilizerManager/AddEdit";
 import {useFormValues} from "@/hooks/ReduxForm";
@@ -52,7 +52,7 @@ export function List(props: ListProps) {
             <IconButton
               padding={1}
               alignSelf="center"
-              component={Edit}
+              component={Plus}
               backgroundColor={'primary'}
               onClick={modal.open}
             />

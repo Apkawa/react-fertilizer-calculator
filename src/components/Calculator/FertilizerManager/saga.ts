@@ -1,7 +1,6 @@
-import {all, call, fork, select, takeLatest, put} from "redux-saga/effects";
+import {all, call, fork, put, select, takeLatest} from "redux-saga/effects";
 import {actionTypes, change, FormAction, getFormValues} from "redux-form";
 import {FERTILIZER_EDIT_FORM_NAME} from "./constants";
-import {CalculatorFormValues} from "@/components/Calculator/types";
 import {AddEditFormType} from "@/components/Calculator/FertilizerManager/types";
 import {normalizeFertilizer} from "@/calculator/fertilizer";
 import {equal} from "@/utils";

@@ -66,7 +66,7 @@ export function compositionToNPKElements(composition: FertilizerComposition[]): 
  * Конвертация чистых элементов в NPK оксиды
  * @param {Elements} elements - чистые элементы
  */
-export function elementsToNPK(elements: Elements): Elements {
+export function elementsToNPK(elements: NPKElements): Elements {
   const e = entries(elements).map(([atom, val]) => {
     const oxide: string = (NPKOxides as any)[atom] || atom
     const massParts = calculateMassParts(parseMolecule(oxide))
@@ -98,20 +98,7 @@ export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass 
   }
   if (!convertMass) {
     // Оксиды нужны только для отображения.
-    keys(elements).forEach(atom => {
-      const oxide: string = (NPKOxides as any)[atom] || atom
-      const massParts = calculateMassParts(parseMolecule(oxide))
-      if (massParts.hasOwnProperty("N") || massParts.hasOwnProperty("S")) {
-
-        // ничего не делаем, азот не переводим в оксиды
-        return
-      }
-      const elementMassPart = massParts[atom as AtomNameType]
-      if (elementMassPart) {
-        const k = round(sum(values(massParts)) / elementMassPart, 2)
-        elements[atom] = round(elements[atom] * k, 2)
-      }
-    })
+    elements = elementsToNPK(elements)
   }
   return {
     id: fertilizerInfo.id,

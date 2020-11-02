@@ -1,5 +1,4 @@
 import React from "react";
-import {useLocation} from "react-router-dom";
 import {NavTab, RoutedTabs} from "react-router-tabs";
 
 import {Flex} from "rebass";
@@ -8,7 +7,6 @@ interface TabMenuProps {
 }
 
 export function TabMenu(props: TabMenuProps) {
-    const location = useLocation()
     return (
         <>
             <RoutedTabs

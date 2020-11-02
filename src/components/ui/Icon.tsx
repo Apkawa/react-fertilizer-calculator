@@ -1,4 +1,4 @@
-import React, {forwardRef, MouseEventHandler, useEffect, useState} from "react";
+import React, {forwardRef, useEffect, useState} from "react";
 import {Box, BoxProps} from "rebass";
 import {EmotionIcon} from '@emotion-icons/emotion-icon'
 

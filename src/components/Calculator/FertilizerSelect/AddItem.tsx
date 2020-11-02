@@ -22,38 +22,20 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
     fertilizers,
   } = useSelector<any>(state => state.calculator) as CalculatorState
   const [selected, setSelected] = useState<FertilizerInfo | undefined>(fertilizers[0])
-  const [creating, setCreating] = useState(false)
-
-  const dispatch = useDispatch()
-
 
   const onChangeHandler = (item: FertilizerInfo | null) => {
     item && setSelected(item)
-    setCreating(false)
   }
 
   const onChangeFertilizerElements = (item: FertilizerInfo) =>{
     setSelected(item)
-    setCreating(true)
   }
 
-  const onEditHandler = (value: string) => {
-    const newFertilizer = buildNPKFertilizer(value, selected ? getElements(selected) : {})
-    setSelected(newFertilizer)
-  }
   const onAddHandler = () => {
     if (!selected) {
       return
     }
-    let fertilizer = buildNPKFertilizer(selected.id, getElements(selected))
-    onAdd(fertilizer)
-    if (creating) {
-      dispatch(fertilizerPush(selected))
-    }
-    setCreating(false)
-  }
-  const onRemoveItemHandler = (item: FertilizerInfo) => {
-    dispatch(fertilizerRemove(item))
+    onAdd(selected)
   }
   return (
     <Card>
@@ -64,17 +46,11 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
               value={selected}
               items={fertilizers}
               onChange={onChangeHandler}
-              onEdit={onEditHandler}
               renderItem={({item}) => (
                 <Flex flex={1} justifyContent="space-between">
                   <Box>
                     {item.id}
                   </Box>
-                  <button onClick={event => {
-                    event.stopPropagation()
-                    onRemoveItemHandler(item)
-                  }}>-
-                  </button>
                 </Flex>
               )}
               renderValue={item => item?.id || ""}

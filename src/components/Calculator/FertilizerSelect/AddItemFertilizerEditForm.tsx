@@ -27,10 +27,7 @@ export const AddItemFertilizerEditForm: FunctionComponent<AddItemFertilizerEditF
     if (!elements || !fertilizer){
       return
     }
-    const newElements: Elements = {...elements, [el]: val}
-    const newFertilizer = buildNPKFertilizer(fertilizer.id, newElements)
-    setElements(newElements)
-    props.onChange(newFertilizer)
+    props.onChange(fertilizer)
   }
 
   useEffect(() => {
@@ -42,7 +39,7 @@ export const AddItemFertilizerEditForm: FunctionComponent<AddItemFertilizerEditF
       <Flex>
         {MACRO_ELEMENT_NAMES.map(el => (
           <AddItemElementForm
-            disabled={!allowEdit}
+            disabled={true}
             name={el}
             value={elements?.[el]||0}
             onChange={v => onChangeHandler(el, v)}

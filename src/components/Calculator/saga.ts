@@ -4,7 +4,6 @@ import {CALCULATE_START, REDUX_FORM_NAME} from "./constants";
 import {calculateError, calculateStart, calculateSuccess, storeCalculateForm} from "./actions";
 import {calculate_v3} from "@/calculator";
 import {CalculatorFormValues} from "./types";
-import {normalizeFertilizer} from "@/calculator/fertilizer";
 
 export function* storeCalculateFormSaga() {
   const formValues: CalculatorFormValues = yield select(getFormValues(REDUX_FORM_NAME))
@@ -33,7 +32,7 @@ export function* calculateStartSaga() {
   // Тут замораживается UI из за вычислений. нужно либо оптимизировать либо использовать WebWorker
   const result = calculate_v3(
     formValues.recipe,
-    formValues.fertilizers.map(f => normalizeFertilizer(f)),
+    formValues.fertilizers,
     {
       ignore,
       accuracy,

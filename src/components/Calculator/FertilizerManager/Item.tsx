@@ -12,7 +12,7 @@ import {Trash} from "@styled-icons/fa-solid/Trash";
 import {Element} from "../FertilizerSelect/SelectedListItem";
 import {AddEdit, getInitialValues} from './AddEdit';
 import {Modal, ModalActions} from "@/components/ui/Modal/Modal";
-import {useFormName, useFormValues} from "@/hooks/ReduxForm";
+import {useFormValues} from "@/hooks/ReduxForm";
 import {FERTILIZER_EDIT_FORM_NAME} from "@/components/Calculator/FertilizerManager/constants";
 import {useDispatch} from "react-redux";
 import {fertilizerPush, fertilizerRemove} from "@/components/Calculator/actions";
@@ -43,6 +43,7 @@ export function Item(props: ItemProps) {
     if (formValues.solution_density_enable) {
       f.solution_density = formValues.solution_density
     }
+    console.log(formValues)
     dispatch(fertilizerPush(f))
     modal.close()
   }
@@ -52,7 +53,7 @@ export function Item(props: ItemProps) {
         <Flex justifyContent={'space-between'} alignItems="center">
           <Box flex={1}>
             <Text flex={1}>
-              {fertilizer.id}
+              {fertilizer.id} {fertilizer.solution_density && `[жидкий ${fertilizer.solution_density} г/л]`}
             </Text>
             <Flex>
               {

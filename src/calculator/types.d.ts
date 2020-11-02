@@ -46,7 +46,6 @@ export interface FertilizerInfo {
   npk?: NPKElements,
   composition?: FertilizerComposition[],
   solution_density?: number
-
 }
 
 export type NPKElements = {

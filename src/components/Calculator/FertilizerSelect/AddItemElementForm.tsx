@@ -1,7 +1,5 @@
 import React, {FunctionComponent, useEffect, useState} from "react";
 import {Flex} from "rebass";
-import {Input} from "@rebass/forms";
-import {number} from "@/components/ui/ReduxForm/normalizers";
 import {StyledInput} from "@/components/ui/ReduxForm/Input";
 
 interface RecipeElementFormProps {

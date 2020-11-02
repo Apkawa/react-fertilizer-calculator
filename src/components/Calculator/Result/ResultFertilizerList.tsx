@@ -20,7 +20,11 @@ export function ResultFertilizerList(props: ResultFertilizerListProps) {
             {fertilizers.map(f => {
                 return (
                   <li key={f.id}>
-                      {round(f.weight, countDecimals(accuracy))}г {f.id}
+                      {round(f.weight, countDecimals(accuracy))}г
+                      &nbsp;
+                      {f.volume && `(${f.volume} мл)`}
+                      &nbsp;
+                      {f.id}
                   </li>
                 )
             })}

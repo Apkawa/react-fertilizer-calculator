@@ -1,8 +1,9 @@
 import {combination, product} from "./itertools";
 import {countDecimals, entries, keys, round, sum, values} from "../utils";
 import {FERTILIZER_ELEMENT_NAMES} from "./constants";
-import {Elements, Fertilizer, NeedElements} from "./types";
+import {Elements, Fertilizer, FertilizerInfo, NeedElements} from "./types";
 import {getEmptyElements} from "./helpers";
+import {normalizeFertilizer} from "./fertilizer";
 
 
 export interface FertilizerWeights {
@@ -10,6 +11,8 @@ export interface FertilizerWeights {
   // г/л
   weight: number
   base_weight: number,
+  // Если удобрение в жидком виде, в мл
+  volume?: number | null,
 }
 
 export interface CalculateResult {
@@ -76,7 +79,7 @@ export function getScoreElement(needElements: NeedElements, currentElements: Ele
 // Подбор оптимального количества путем пересортировки удобрений
 export function calculate_v3(
   needElements: NeedElements,
-  fertilizers: Fertilizer[],
+  fertilizers: FertilizerInfo[],
   options: CalculateOptions = {}
 ): CalculateResult {
 
@@ -111,7 +114,7 @@ const ElementPriority = {
 // Алгоритм расчетов из https://github.com/siv237/HPG
 export function calculate_v2(
   needElements: NeedElements,
-  fertilizers: Fertilizer[],
+  fertilizers: FertilizerInfo[],
   options: CalculateOptions = {}
 ): CalculateResult {
   const {
@@ -133,16 +136,19 @@ export function calculate_v2(
     }
   }
 
+  const fertilizerMap = Object.fromEntries(fertilizers.map(f => [f.id, f]))
+  const normalizedFertilizers = fertilizers.map(f => normalizeFertilizer(f));
   let weights: { [K: string]: FertilizerWeights } = Object.fromEntries(
     fertilizers.map(v => ([v.id, {
       id: v.id,
       weight: 0,
-      base_weight: 0
+      base_weight: 0,
+      volume: null,
     }])))
   const xElements = {...needElements}
   const calcElements = prevElements;
 
-  for (let f of fertilizers) {
+  for (let f of normalizedFertilizers) {
     let p = entries(f.elements)
       .filter(v => v[1])
       .sort((a, b) =>
@@ -160,8 +166,12 @@ export function calculate_v2(
 
     let m = Object.fromEntries(p)
     let weight = (xElements[primaryElement] || 0) / (m[primaryElement] * 10)
+    let fInfo = fertilizerMap[f.id]
     weights[f.id].base_weight = round(weight, precision > 3 ? precision : 3)
     weights[f.id].weight = round(weight * solution_volume * solution_concentration, precision)
+    if (fInfo.solution_density) {
+      weights[f.id].volume = round(( weights[f.id].weight * 1000 ) / fInfo.solution_density, precision)
+    }
     for (let [a, v] of p) {
       const e = weight * v * 10
       calcElements[a] += round(e)

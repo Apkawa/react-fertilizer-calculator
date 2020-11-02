@@ -1,5 +1,5 @@
 import React from "react";
-import {HashRouter as Router, Link, Route, Switch, useLocation} from "react-router-dom";
+import {HashRouter as Router, Route, Switch} from "react-router-dom";
 import loadable from "@loadable/component";
 
 const components = {

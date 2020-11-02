@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Button, Flex, Text} from "rebass";
+import {Box, Flex, Text} from "rebass";
 
 import {FieldArray, Form, reduxForm} from 'redux-form'
 import {ReduxFormType} from "@/components/ui/ReduxForm/types";
@@ -34,7 +34,10 @@ export function getInitialValues(f: FertilizerInfo): AddEditFormType {
   if (f.composition) {
     formData.npk = normalizeFertilizer(f, false).elements
     formData.composition_enable = true
-  } else {
+  }
+  if (f.solution_density) {
+    formData.solution_density = f.solution_density
+    formData.solution_density_enable = true
   }
   return formData
 }
