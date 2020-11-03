@@ -55,7 +55,7 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
             label={el}
             value={recipe[el]}
             onChange={val => onChangeRecipe(el, val)}
-            step={1}
+            step={0.1}
           />
         ))}
         <RecipeInput name={'EC'} label={"EC"} value={EC} onChange={onChangeEC}/>
@@ -93,7 +93,7 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
                   {el === el2 ? 1 : (
                     <RecipeInput
                       name={`${el}:${el2}`}
-                      value={ratio[el][el2]}
+                      value={round(ratio[el][el2], 2)}
                       onChange={value => onChangeRatio(el, el2, value)}
                     />
                   )}

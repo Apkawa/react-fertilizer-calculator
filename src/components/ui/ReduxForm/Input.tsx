@@ -10,14 +10,12 @@ interface InputProps extends RebassInputProps {
 }
 
 export const StyledInput = styled(RebassInput)`
-  ::-webkit-inner-spin-button {
+  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
-  ::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+  -moz-appearance: textfield;
+
 `
 
 export const WrappedInput: WrapperInputType<InputProps> = ({input, label, type = "text", ...props}: any) =>
