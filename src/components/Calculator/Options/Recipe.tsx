@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useState} from "react";
-import {Box, Button, Card, Flex, Heading, Text} from "rebass";
+import {Box, Card, Flex, Heading, Text} from "rebass";
 import {Broom} from '@styled-icons/fa-solid/Broom'
 import {Save} from '@styled-icons/boxicons-regular/Save'
 import {Tune} from '@styled-icons/material-sharp/Tune'
@@ -14,8 +14,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {recipePush, recipeRemove} from "@/components/Calculator/actions";
 import {Elements, NeedElements} from "@/calculator/types";
 import {calculateNPKBalance, getEmptyElements} from "@/calculator/helpers";
-import {Modal, ModalActions} from "@/components/ui/Modal/Modal";
+import {Modal} from "@/components/ui/Modal/Modal";
 import {RecipeTuneForm} from "@/components/Calculator/Options/RecipeTuneForm";
+import {round} from "@/utils";
 
 
 export const StyledBalanceCell: FunctionComponent<{name:string, value: number}> = (props) => {
@@ -139,7 +140,7 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
           />
           <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
           <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
-          <StyledBalanceCell name="%NH4" value={NPKBalance.ratio.NH4.NO3 * 100}/>
+          <StyledBalanceCell name="%NH4" value={round(NPKBalance.ratio.NH4.NO3 * 100, 1)}/>
           <StyledBalanceCell name="K:Mg" value={NPKBalance.ratio.K.Mg}/>
           <StyledBalanceCell name="K:Ca" value={NPKBalance.ratio.K.Ca}/>
           <StyledBalanceCell name="Ca:N" value={NPKBalance.ratio.Ca.N}/>

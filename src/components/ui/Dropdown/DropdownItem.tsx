@@ -1,6 +1,8 @@
 import React, {FunctionComponent, useContext} from "react";
 import {Box, Flex} from "rebass";
+// import styled from '@emotion/styled'
 import {DropdownContext} from "./context";
+import styled, {css} from "styled-components";
 
 interface DropdownItemProps<T> {
   value: T,
@@ -38,6 +40,15 @@ const ItemContainer: FunctionComponent = ({
 
 }
 
+const StyledItemBox = styled(Box)`
+  ${props => props.disabled 
+    && css`
+      pointer-events: none;
+      opacity: 0.4;
+  `}
+
+`
+
 export function DropdownItem<T>(props: DropdownItemProps<T>) {
   const {value, index} = props;
   const ctx = useContext(DropdownContext);
@@ -56,10 +67,13 @@ export function DropdownItem<T>(props: DropdownItemProps<T>) {
   }
 
   return (
-    <Box onClick={onItemClickHandler}>
+    <StyledItemBox
+      onClick={onItemClickHandler}
+      disabled={ctx.checkDisabledItem && ctx.checkDisabledItem(value)}
+    >
       <ItemContainer>
         {renderItem()}
       </ItemContainer>
-    </Box>
+    </StyledItemBox>
   )
 }

@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import {ChevronDownSquare} from '@emotion-icons/boxicons-solid/ChevronDownSquare'
 import {DropdownList} from "./DropdownList";
 import {DropdownContext, DropdownContextInterface} from "./context";
-import {ItemType, RenderItemCallback, RenderValueCallback} from "./types";
+import {ItemCallback, ItemType, RenderItemCallback, RenderValueCallback} from "./types";
 
 const IconDown = styled(ChevronDownSquare)`
   color: ${(props: any) => props.theme.colors.text};
@@ -20,8 +20,9 @@ const IconDown = styled(ChevronDownSquare)`
 export interface DropdownProps<T> {
   value?: ItemType<T>,
   items: T[],
-  renderValue?: RenderValueCallback<T>
-  renderItem?: RenderItemCallback<T>
+  renderValue?: RenderValueCallback<T>,
+  renderItem?: RenderItemCallback<T>,
+  checkDisabledItem?: ItemCallback<T,  boolean>,
 
   onEdit?: (value: string) => void,
   onChange?: (item: ItemType<T>) => void,
@@ -91,6 +92,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
   const context: DropdownContextInterface<T> = {
     onItemClick: onClickItemHandler,
     renderItem: props.renderItem,
+    checkDisabledItem: props.checkDisabledItem,
   }
 
   return (

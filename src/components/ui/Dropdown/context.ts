@@ -1,10 +1,11 @@
 import React, {Context} from "react";
-import {RenderItemCallback} from "./types";
+import {ItemCallback, RenderItemCallback} from "./types";
 
 // TODO  сделать генерик
 export interface DropdownContextInterface<T=any> {
-  onItemClick?: (item: T) => void,
+  onItemClick?: ItemCallback<T>,
   renderItem?: RenderItemCallback<T>
+  checkDisabledItem?: ItemCallback<T,  boolean>,
 }
 
 export type DropdownContext<T> = Context<DropdownContextInterface<T>>

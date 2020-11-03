@@ -19,7 +19,14 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
   const {
     fertilizers,
   } = useSelector<any>(state => state.calculator) as CalculatorState
+  const {
+    calculationForm,
+  } = useSelector<any>(state => state.calculator) as CalculatorState
+
   const [selected, setSelected] = useState<FertilizerInfo | undefined>(fertilizers[0])
+
+  const selectedFertilizers = calculationForm?.fertilizers || [];
+  const fertilizersIDs = selectedFertilizers.map(f => f?.id)
 
   const onChangeHandler = (item: FertilizerInfo | null) => {
     item && setSelected(item)
@@ -44,6 +51,7 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
               value={selected}
               items={fertilizers}
               onChange={onChangeHandler}
+              checkDisabledItem={item => fertilizersIDs.includes(item?.id || "")}
               renderItem={({item}) => (
                 <Flex flex={1} justifyContent="space-between">
                   <Box>

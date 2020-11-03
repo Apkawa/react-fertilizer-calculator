@@ -1,9 +1,10 @@
 import React, {ChangeEvent, useState} from "react";
+import {Box, Button, Flex} from "rebass";
+
 import {useFormName, useFormValues} from "@/hooks/ReduxForm";
 import {CalculatorFormValues} from "@/components/Calculator/types";
-import {Box, Button, Flex} from "rebass";
 import {calculateNPKBalance} from '@/calculator/helpers';
-import {Elements, NeedElements, NPKElements} from "@/calculator/types";
+import {Elements, NeedElements} from "@/calculator/types";
 import {decimal} from "@/components/ui/ReduxForm/normalizers";
 import {MACRO_ELEMENT_NAMES} from "@/calculator/constants";
 import {StyledInput} from "@/components/ui/ReduxForm/Input";
