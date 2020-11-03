@@ -139,7 +139,7 @@ function RecipeInput(props: RecipeInputProps) {
     <Flex flexDirection="column"
           justifyContent="center"
           alignItems="center"
-          maxWidth='4rem'
+          maxWidth='6rem'
     >
       {label ?
         <Box style={{textAlign: 'center'}}>
@@ -156,7 +156,8 @@ function RecipeInput(props: RecipeInputProps) {
         min="0"
         max="999"
         autoComplete="off"
-        maxWidth="4rem"
+        maxWidth="6rem"
+        lang="en-US"
         style={{
           textAlign: "center"
         }}
