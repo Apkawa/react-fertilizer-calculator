@@ -1,26 +1,31 @@
 import {Elements, NPKElements} from "./types";
 import {entries, round} from "../utils";
-import {ATOMIC_MASS} from "./constants";
+import {ATOMIC_MASS, MACRO_ELEMENT_NAMES} from "./constants";
+import {extract_percent} from "./helpers";
 
-export const ALLOWED_ELEMENT_IN_MATRIX = ["N", "P", "K", "Ca", "Mg", "S"]
+export const ALLOWED_ELEMENT_IN_MATRIX = ["N", ...MACRO_ELEMENT_NAMES]
+export type ALLOWED_ELEMENT_IN_MATRIX = typeof ALLOWED_ELEMENT_IN_MATRIX[number]
 
 type ElementInMatrix<T = number> = {
-  [K in typeof ALLOWED_ELEMENT_IN_MATRIX[number]]: T
+  [K in ALLOWED_ELEMENT_IN_MATRIX]: T
 }
 
-export type ElementsMatrixType = ElementInMatrix<ElementInMatrix>
+
+export interface ElementsMatrixType extends ElementInMatrix<ElementInMatrix> {
+}
 
 export interface ProfileInfo {
-  elements_matrix: ElementsMatrixType
-  '%NH4': number,
+  ratio: ElementsMatrixType
   anions: number,
   cations: number,
   ion_balance: number,
   EC: number
 }
 
-export interface ChangeProfileOptions extends Partial<Omit<ProfileInfo, 'elements_matrix'>> {
-  elements_matrix: Partial<ElementsMatrixType>
+export interface ChangeProfileOptions {
+  ratio: Partial<ElementInMatrix<Partial<ElementInMatrix>>>,
+  EC: number,
+
 }
 
 export interface ChangeProfileResult {
@@ -40,18 +45,11 @@ export interface ChangeProfileResult {
 export function getProfileRatioMatrix(npk: NPKElements): ElementsMatrixType {
   let elMap: ElementInMatrix = {}
   for (let [El, ppm] of entries(npk)) {
-    let name: typeof El | "N" = El
-    if (El === 'NH4') {
-      continue
-    }
-    if (El === 'NO3') {
-      name = 'N'
-      ppm = ppm + (npk['NH4'] || 0)
-    }
-    if (ALLOWED_ELEMENT_IN_MATRIX.includes(name)) {
-      elMap[name] = ppm
+    if (ALLOWED_ELEMENT_IN_MATRIX.includes(El)) {
+      elMap[El] = ppm
     }
   }
+  elMap.N = (npk.NH4 || 0) + (npk.NO3 || 0)
   return Object.fromEntries(entries(elMap).map(
     ([el, ppm]) =>
       [el, Object.fromEntries(entries(elMap).map(
@@ -66,6 +64,40 @@ export function getProfileRatioMatrix(npk: NPKElements): ElementsMatrixType {
       )]
     )
   )
+}
+
+type PartialElementsMatrix = {
+  [K in keyof ElementInMatrix]?: ElementInMatrix
+}
+export function convertProfileWithRatio(
+  npk: NPKElements,
+  ratio: PartialElementsMatrix): NPKElements {
+  const newNPK: NPKElements = {...npk}
+  const N = (newNPK.NO3 || 0) + (newNPK.NH4 || 0)
+  const v = getProfileRatioMatrix(npk)
+  for (let [el1, toEls] of entries(ratio)) {
+    for (let [el2, r] of entries(toEls)) {
+      if (el1 === el2) {
+        continue
+      }
+      let f = (v: number, r: number) => v * r
+      if (el1 === "N") {
+        let _N = f((newNPK[el2 as MACRO_ELEMENT_NAMES] || 0), r)
+        newNPK.NH4 = extract_percent(_N, v.NH4.NO3)
+        newNPK.NO3 = _N - newNPK.NH4
+      } else {
+        let elM = newNPK[el2 as MACRO_ELEMENT_NAMES] || 0
+        if (el2 === 'N') {
+          elM = N
+        }
+        newNPK[el1 as MACRO_ELEMENT_NAMES] = elM * r
+      }
+    }
+  }
+  return Object.fromEntries(entries(newNPK)
+    .map(([el, v]) => (
+      [el, round(v, 1)]
+    )))
 }
 
 /**
@@ -104,15 +136,19 @@ export function convertProfileWithEC(npk: NPKElements, EC: number): NPKElements 
     + 2 * rMg * molN * molCa * molK
     + rK * molN * molCa * molMg
   );
-  const N = round(rN * r);
-  const NH4 = round(rNH4 * r);
+  const N = rN * r;
+  const NH4 = extract_percent(N, v.NH4.NO3)
 
-  return {
+  let newNpk = {
     ...npk,
     NH4,
-    NO3 : round(N - NH4),
-    K : round(rK * r),
-    Ca : round(rCa * r),
-    Mg : round(rMg * r),
+    NO3 : N - NH4,
+    K : rK * r,
+    Ca : rCa * r,
+    Mg : rMg * r,
   }
+  return Object.fromEntries(entries(newNpk)
+    .map(([el, v]) => (
+      [el, round(v, 1)]
+    )))
 }

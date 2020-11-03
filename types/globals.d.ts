@@ -4,6 +4,7 @@ interface Object {
 declare const __COMMIT_HASH__: string
 declare const __COMMIT_DATE__: string
 declare const __VERSION__: string
+declare const __COMMIT_REF_NAME__: string
 
 
 declare module "!!raw-loader!*" {

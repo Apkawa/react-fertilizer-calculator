@@ -9,7 +9,6 @@ export interface NPKBalance {
   cations: number,
   ion_balance: number,
   ratio: ElementsMatrixType,
-  '%NH4': number,
   EC: number
 }
 
@@ -21,8 +20,6 @@ export function calculateNPKBalance(npk: Elements): NPKBalance {
     cations: 0,
     ion_balance: 0,
     ratio,
-    // TODO build matrix
-    '%NH4': round((npk.NH4 / npk.NO3) * 100, 1),
     EC: 0,
   }
   for (let [el, w] of entries(npk)) {
@@ -89,4 +86,14 @@ export function calculatePPM(
 // ppm (мг/л) в EC (мСм/см).  k - коэфициент преобразования
 export function ppmToEC(ppm: number, k: number=1.0): number {
   return round(ppm * (1 / k)) / 1000
+}
+
+/**
+ *
+ * @param value
+ * @param percent 0.0 to 1.0
+ */
+export function extract_percent(value: number, percent: number): number {
+  return value - (value / (1 + percent))
+
 }

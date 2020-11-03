@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
@@ -21,11 +25,16 @@ jobs:
           yarn test -- --watchAll=false --all
           yarn lint
           yarn build
-      - name: Deploy to GitHub Pages
+      - name: Deploy to Github Pages
         if: success()
-        uses: crazy-max/ghaction-github-pages@v2
+        uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
-          target_branch: gh-pages
-          build_dir: build/
-        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: build # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
+          TARGET_FOLDER: ${{ steps.extract_branch.outputs.branch }}
+
+
+
+

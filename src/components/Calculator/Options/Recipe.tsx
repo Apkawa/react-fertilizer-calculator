@@ -62,9 +62,6 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
       .map(el => [el, selected?.elements[el] || 0])) as unknown as Elements
     setSelected({name: value, elements: zeroValues})
   }
-  const onChangeProfile = (modal: ModalActions) => {
-    modal.close()
-  }
 
   const onAddHandler = () => {
     if (!selected) {
@@ -133,16 +130,16 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
             )}
             container={({modal}) => (
               <>
-                <RecipeTuneForm/>
-                <Flex justifyContent="flex-end">
-                  <Button type="button" onClick={() => onChangeProfile(modal)}>Save</Button>
-                </Flex>
+                <RecipeTuneForm
+                  modal={modal}
+                  onSave={setRecipe}
+                />
               </>
             )}
           />
           <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
           <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
-          <StyledBalanceCell name="%NH4" value={NPKBalance["%NH4"]}/>
+          <StyledBalanceCell name="%NH4" value={NPKBalance.ratio.NH4.NO3 * 100}/>
           <StyledBalanceCell name="K:Mg" value={NPKBalance.ratio.K.Mg}/>
           <StyledBalanceCell name="K:Ca" value={NPKBalance.ratio.K.Ca}/>
           <StyledBalanceCell name="Ca:N" value={NPKBalance.ratio.Ca.N}/>

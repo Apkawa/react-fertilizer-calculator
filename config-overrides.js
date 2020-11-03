@@ -10,14 +10,15 @@ const esModules = [
 ]
 
 function getBuildInfo() {
-  let [ commitHash, isoDate ] = require('child_process')
-    .execSync("git show --no-patch --no-notes --pretty='%h;%cI' HEAD")
+  let [ commitHash, isoDate, ref_name ] = require('child_process')
+    .execSync("git show --no-patch --no-notes --pretty='%h;%cI;%D' HEAD")
     .toString().trim().split(";");
 
   return {
     commitHash,
     isoDate,
-    version: packageJson.version
+    version: packageJson.version,
+    refName: ref_name.match('HEAD -> (.+)')[1]
   }
 
 }
@@ -35,7 +36,8 @@ module.exports = {
       new webpack.DefinePlugin({
         __COMMIT_HASH__: JSON.stringify(info.commitHash),
         __VERSION__: JSON.stringify(info.version),
-        __COMMIT_DATE__: JSON.stringify(info.isoDate)
+        __COMMIT_DATE__: JSON.stringify(info.isoDate),
+        __COMMIT_REF_NAME__: JSON.stringify(info.refName)
       })
     ]
     config.module.rules.push(

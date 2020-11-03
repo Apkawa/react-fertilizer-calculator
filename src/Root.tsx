@@ -57,7 +57,7 @@ const Root: FunctionComponent<RootProps> = ({store}) => {
           </Box>
           <Flex justifyContent={"flex-end"} marginTop="auto" flex={1}>
             <Text fontSize={1}>
-              {__VERSION__} {__COMMIT_HASH__} [{__COMMIT_DATE__}]
+              {__VERSION__}-{__COMMIT_REF_NAME__} {__COMMIT_HASH__} [{__COMMIT_DATE__}]
             </Text>
           </Flex>
         </Flex>
