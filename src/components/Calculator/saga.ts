@@ -1,14 +1,14 @@
 import {all, call, fork, put, select, takeLatest} from 'redux-saga/effects'
 import {actionTypes, FormAction, getFormValues, stopSubmit} from "redux-form";
 import {CALCULATE_START, REDUX_FORM_NAME} from "./constants";
-import {calculateError, calculateStart, calculateSuccess, storeCalculateForm} from "./actions";
+import {calculateError, calculateSuccess, storeCalculateForm} from "./actions";
 import {calculate_v3} from "@/calculator";
 import {CalculatorFormValues} from "./types";
 
 export function* storeCalculateFormSaga() {
   const formValues: CalculatorFormValues = yield select(getFormValues(REDUX_FORM_NAME))
   yield put(storeCalculateForm(formValues))
-  yield put(calculateStart())
+  // yield put(calculateStart())
 }
 
 export function* calculateStartSaga() {
