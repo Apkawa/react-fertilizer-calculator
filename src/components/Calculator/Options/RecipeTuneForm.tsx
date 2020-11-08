@@ -35,10 +35,11 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
     setEC(val)
   }
   const onChangeRatio = (El1: ALLOWED_ELEMENT_IN_MATRIX, El2: ALLOWED_ELEMENT_IN_MATRIX, val: number) => {
-    let currentEC = EC
-    let newNpk = convertProfileWithRatio(recipe, {[El1]: {[El2]: val}})
-    newNpk = convertProfileWithEC(newNpk, currentEC)
-    setRecipe(newNpk)
+    if (val) {
+      let newNpk = convertProfileWithRatio(recipe, {[El1]: {[El2]: val}})
+      newNpk = convertProfileWithEC(newNpk, EC)
+      setRecipe(newNpk)
+    }
     setRatio({...ratio, [El1]: {...ratio[El1], [El2]: val}})
   }
 
@@ -66,7 +67,7 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
         <RecipeInput
           name={'NH4'}
           label={"%NH4"}
-          value={round(recipeInfo.ratio.NH4.NO3 * 100, 1)}
+          value={round(ratio.NH4.NO3 * 100, 1)}
           step={0.1}
           onChange={v => onChangeRatio('NH4', 'NO3', v / 100)}
         />
