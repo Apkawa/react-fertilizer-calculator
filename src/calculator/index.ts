@@ -13,6 +13,8 @@ export interface FertilizerWeights {
   base_weight: number,
   // Если удобрение в жидком виде, в мл
   volume?: number | null,
+  // Если задана плотность
+  liquid_weight?: number | null,
 }
 
 export interface CalculateResult {
@@ -169,9 +171,14 @@ export function calculate_v2(
     let fInfo = fertilizerMap[f.id]
     weights[f.id].base_weight = round(weight, precision > 3 ? precision : 3)
     weights[f.id].weight = round(weight * solution_volume * solution_concentration, precision)
-    if (fInfo.solution_density) {
-      weights[f.id].volume = round(( weights[f.id].weight * 1000 ) / fInfo.solution_density, precision)
+    if (fInfo.solution_concentration) {
+      weights[f.id].volume = round((weights[f.id].weight * 1000) / fInfo.solution_concentration, precision)
     }
+    let volume = weights[f.id].volume
+    if (fInfo.solution_density && volume) {
+      weights[f.id].liquid_weight = round(volume * (fInfo.solution_density / 1000), precision)
+    }
+
     for (let [a, v] of p) {
       const e = weight * v * 10
       calcElements[a] += round(e)

@@ -13,7 +13,6 @@ function* updateFertilizerForm() {
       false
     ).elements
     if (!equal(formValues.npk, npk)) {
-      console.log(formValues.npk,npk)
       yield put(change(FERTILIZER_EDIT_FORM_NAME, 'npk', npk))
     }
     if (!formValues.composition?.length) {

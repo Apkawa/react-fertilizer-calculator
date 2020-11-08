@@ -15,7 +15,8 @@ import {AddEditFormType} from "./types";
 import {Checkbox} from "@/components/ui/ReduxForm/Checkbox";
 import {AddEditCompositionList} from "@/components/Calculator/FertilizerManager/AddEditCompositionList";
 import {useFormName, useFormValues} from "@/hooks/ReduxForm";
-import {decimal} from "@/components/ui/ReduxForm/normalizers";
+import {decimal, number} from "@/components/ui/ReduxForm/normalizers";
+import {Label} from "@rebass/forms";
 
 interface AddEditProps {
   fertilizer?: FertilizerInfo,
@@ -35,8 +36,9 @@ export function getInitialValues(f: FertilizerInfo): AddEditFormType {
     formData.npk = normalizeFertilizer(f, false).elements
     formData.composition_enable = true
   }
-  if (f.solution_density) {
-    formData.solution_density = f.solution_density
+  if (f.solution_concentration) {
+    formData.solution_concentration = f.solution_concentration
+    formData.solution_density = f.solution_density || 1000
     formData.solution_density_enable = true
   }
   return formData
@@ -89,18 +91,39 @@ const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
             />
           </Box>
           {formValues.solution_density_enable ?
-            <Flex alignItems="flex-end">
-              <Input
-                name="solution_density"
-                type="number"
-                step="0.1"
-                min="0"
-                max="1000"
-                normalize={decimal}
-                width='4rem'
-                marginRight={2}
-              />
-              <Text sx={{whiteSpace: 'nowrap'}}>г/л</Text>
+            <Flex flexDirection="column">
+              <Flex alignItems="flex-end">
+                <Label flexDirection="column">
+                  Концетрация
+                  <Input
+                    name="solution_concentration"
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    max="3000"
+                    normalize={decimal}
+                    width='5em'
+                    marginRight={2}
+                  />
+                  <Text sx={{whiteSpace: 'nowrap'}}>г/л</Text>
+                </Label>
+              </Flex>
+              <Flex alignItems="flex-end">
+                <Label  flexDirection="column">
+                  Плотность
+                  <Input
+                    name="solution_density"
+                    type="number"
+                    step="1"
+                    min="800"
+                    max="3000"
+                    normalize={number}
+                    width='5em'
+                    marginRight={2}
+                  />
+                </Label>
+                <Text sx={{whiteSpace: 'nowrap'}}>г/л</Text>
+              </Flex>
             </Flex>
             : null}
         </Flex>

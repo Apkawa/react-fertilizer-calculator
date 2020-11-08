@@ -10,6 +10,7 @@ interface ResultFertilizerListProps {
     fertilizers: FertilizerWeights[],
 }
 
+
 export function ResultFertilizerList(props: ResultFertilizerListProps) {
     const {fertilizers} = props
     const {
@@ -22,7 +23,7 @@ export function ResultFertilizerList(props: ResultFertilizerListProps) {
                   <li key={f.id}>
                       {round(f.weight, countDecimals(accuracy))}г
                       &nbsp;
-                      {f.volume && `(${f.volume} мл)`}
+                      <span title="Объем или вес раствора">{f.volume && `(${f.volume} мл, ${f.liquid_weight}г)`}</span>
                       &nbsp;
                       {f.id}
                   </li>

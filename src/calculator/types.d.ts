@@ -45,7 +45,11 @@ export interface FertilizerInfo {
   name?: string,
   npk?: NPKElements,
   composition?: FertilizerComposition[],
+  // Концентрация, г/л
+  solution_concentration?: number,
+  // Плотность, г/л
   solution_density?: number
+
 }
 
 export type NPKElements = {

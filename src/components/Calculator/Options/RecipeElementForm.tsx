@@ -26,7 +26,7 @@ export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = (pro
       <Input
         name={getRecipeFieldName(name)}
         type="number"
-        step="1"
+        step="0.1"
         min="0"
         max="999"
         autoComplete="off"

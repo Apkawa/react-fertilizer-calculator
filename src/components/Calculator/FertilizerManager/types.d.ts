@@ -1,11 +1,7 @@
-import {FertilizerComposition, NPKElements} from "@/calculator/types";
+import {FertilizerComposition, FertilizerInfo, NPKElements} from "@/calculator/types";
 
 
-export interface AddEditFormType {
-  id: string,
-  npk?: NPKElements,
+export interface AddEditFormType extends FertilizerInfo {
   composition_enable?: boolean,
-  composition?: FertilizerComposition[],
   solution_density_enable?: boolean,
-  solution_density?: number,
 }

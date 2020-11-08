@@ -161,7 +161,7 @@ describe("Calculate V2", () => {
       },
       [
         // В HPG вносятся чистые элементы а не соли
-        {id: "Кальций азотнокислый", npk: elementsToNPK({ Ca: 16.972, NO3: 11.863}), solution_density: 600},
+        {id: "Кальций азотнокислый", npk: elementsToNPK({ Ca: 16.972, NO3: 11.863}), solution_density: 1285, solution_concentration: 600},
         {id: "Калий азотнокислый", npk: elementsToNPK({K: 38.672, NO3: 13.854})},
         {id: "Нитрат аммония", npk: elementsToNPK({NO3: 17.499, NH4: 17.499})},
         {id: "Магний сернокислый", npk: elementsToNPK({Mg: 9.861, S: 13.01})},
@@ -183,6 +183,7 @@ describe("Calculate V2", () => {
           "id": "Кальций азотнокислый",
           "weight": 11.77,
           "volume": 19.62,
+          'liquid_weight': 25.21,
         },
         {
           "base_weight": 0.11,

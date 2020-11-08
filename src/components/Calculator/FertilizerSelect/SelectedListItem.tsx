@@ -6,6 +6,7 @@ import {normalizeFertilizer} from "@/calculator/fertilizer";
 import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 import {IconButton} from "../../ui/IconButton";
 import {round} from "@/utils";
+import {FertilizerWeights} from "@/calculator";
 
 interface ElementProps {
   name: string,
@@ -29,11 +30,11 @@ export const Element: FunctionComponent<ElementProps> = (props) => {
 interface SelectedListItemProps {
   item: FertilizerType,
   onRemove: () => void,
-  needWeight?: number,
+  weight?: FertilizerWeights,
 }
 
 
-export const SelectedListItem: FunctionComponent<SelectedListItemProps> = ({item, onRemove, needWeight}) => {
+export const SelectedListItem: FunctionComponent<SelectedListItemProps> = ({item, onRemove, weight}) => {
   const normalizedFertilizer = normalizeFertilizer(item, false)
   return (
     <Card width={'auto'}>
@@ -61,9 +62,17 @@ export const SelectedListItem: FunctionComponent<SelectedListItemProps> = ({item
         </Box>
         <Flex>
           <Flex alignItems="center" justifyContent="center" margin={1}>
-            <Text textAlign="center" minWidth="3em">
-              {needWeight || 0}
-            </Text>
+            {weight ? (
+              <Text textAlign="center" minWidth="3em">
+                {weight.weight}г
+                {weight.volume ? (
+                  <>
+                    <br/>
+                    <span title="Объем или вес раствора">{weight.volume && `${weight.volume} мл, ${weight.liquid_weight}г`}</span>
+                  </>
+                ) : null}
+              </Text>
+            ): null}
           </Flex>
           <IconButton
             padding={1}
