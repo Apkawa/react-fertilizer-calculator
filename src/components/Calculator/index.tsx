@@ -14,7 +14,7 @@ import {calculateStart, fertilizerReset, recipeReset} from "./actions";
 import {ImportFertilizers} from "@/components/Calculator/ImportExport/ImportFertilizers";
 import {ExportFertilizers} from "@/components/Calculator/ImportExport/ExportFertilizers";
 import {IconButton} from "@/components/ui/IconButton";
-import {DEFAULT_RECIPES} from "@/components/Calculator/constants/recipes";
+import {DEFAULT_MICRO_RECIPE, DEFAULT_RECIPES} from "@/components/Calculator/constants/recipes";
 import {ExportRecipes} from "@/components/Calculator/ImportExport/ExportRecipes";
 import {ImportRecipes} from "@/components/Calculator/ImportExport/ImportRecipes";
 import {Recipe} from "@/components/Calculator/Options/Recipe";
@@ -29,7 +29,7 @@ const initialValues: CalculatorFormValues = {
   accuracy: 0.2,
   solution_volume: 1,
   solution_concentration: 100,
-  recipe: DEFAULT_RECIPES[0].elements,
+  recipe: {...DEFAULT_RECIPES[0].elements, ...DEFAULT_MICRO_RECIPE},
   fertilizers: [],
 
   dilution_enabled: false,
@@ -122,12 +122,16 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
 const InitializerCalculator = reduxForm<CalculatorFormValues>({
   form: REDUX_FORM_NAME,
   initialValues,
-  // enableReinitialize: true
+  enableReinitialize: true
 })(CalculatorContainer)
 
-const ReduxCalculator = connect((state: RootState) => (
-  {
-    initialValues: state.calculator?.calculationForm || initialValues
-  }))(InitializerCalculator)
+const ReduxCalculator = connect((state: RootState) => {
+  const formValues: CalculatorFormValues = (state.calculator?.calculationForm || initialValues)
+  return {
+    initialValues: {
+      ...formValues,
+      recipe: {...DEFAULT_MICRO_RECIPE, ...formValues.recipe}
+    }
+  }})(InitializerCalculator)
 
 export default ReduxCalculator

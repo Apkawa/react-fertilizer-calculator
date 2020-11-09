@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {CalculatorFormValues, CalculatorState} from "../types";
 import {getFormValues} from "redux-form";
 import {REDUX_FORM_NAME} from "../constants";
-import {MACRO_ELEMENT_NAMES} from "@/calculator/constants";
+import {MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "@/calculator/constants";
 import {Element} from "../FertilizerSelect/SelectedListItem";
 import styled from "styled-components";
 import {calculateNPKBalance, getEmptyElements, ppmToEC} from "@/calculator/helpers";
@@ -55,14 +55,24 @@ export const Result: FunctionComponent<ResultProps> = () => {
 
   return (
     <Card>
-      <Flex alignItems="center" flexDirection="column">
-        <Flex>
+      <Flex alignItems="center" flexDirection="column" width="100%">
+        <Flex justifyContent="space-around" width="100%">
           {elements && MACRO_ELEMENT_NAMES.map(
             k => <Element
               key={k}
               name={k}
               value={round(elements[k])}
               delta={round(deltaElements[k])}
+            />
+          )}
+        </Flex>
+        <Flex justifyContent="space-around" width="100%">
+          {elements && MICRO_ELEMENT_NAMES.map(
+            k => <Element
+              key={k}
+              name={k}
+              value={round(elements[k] * 1000)}
+              delta={round(deltaElements[k] * 1000)}
             />
           )}
         </Flex>

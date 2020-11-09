@@ -1,4 +1,14 @@
 import {Recipe} from "@/components/Calculator/types";
+import {NeedElements} from "@/calculator/types";
+
+export const DEFAULT_MICRO_RECIPE: NeedElements = {
+  Fe: 4500 / 1000,
+  Mn: 636 / 1000,
+  B: 636 / 1000,
+  Zn: 384 / 1000,
+  Cu: 69 / 1000,
+  Mo: 69 / 1000,
+}
 
 export const DEFAULT_RECIPES: Recipe[] = [
   {

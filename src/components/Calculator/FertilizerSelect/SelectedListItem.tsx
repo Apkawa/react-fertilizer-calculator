@@ -21,7 +21,7 @@ export const Element: FunctionComponent<ElementProps> = (props) => {
       <Flex flexDirection='column' alignItems={'center'}>
         <Box>{name}</Box>
         <Box>{round(value, 1)}</Box>
-        {typeof delta !== "undefined"? <Box>{delta}</Box>: null}
+        {typeof delta !== "undefined" ? <Box>{delta}</Box> : null}
       </Flex>
     </Box>
   )
@@ -68,11 +68,12 @@ export const SelectedListItem: FunctionComponent<SelectedListItemProps> = ({item
                 {weight.volume ? (
                   <>
                     <br/>
-                    <span title="Объем или вес раствора">{weight.volume && `${weight.volume} мл, ${weight.liquid_weight}г`}</span>
+                    <span
+                      title="Объем или вес раствора">{weight.volume && `${weight.volume} мл${weight.liquid_weight? `, ${weight.liquid_weight}г`:''}`}</span>
                   </>
                 ) : null}
               </Text>
-            ): null}
+            ) : null}
           </Flex>
           <IconButton
             padding={1}

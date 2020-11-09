@@ -4,6 +4,7 @@ import {CALCULATE_START, REDUX_FORM_NAME} from "./constants";
 import {calculateError, calculateSuccess, storeCalculateForm} from "./actions";
 import {calculate_v3} from "@/calculator";
 import {CalculatorFormValues} from "./types";
+import {getFillElementsByType} from "@/calculator/helpers";
 
 export function* storeCalculateFormSaga() {
   const formValues: CalculatorFormValues = yield select(getFormValues(REDUX_FORM_NAME))
@@ -34,7 +35,7 @@ export function* calculateStartSaga() {
     formValues.recipe,
     formValues.fertilizers,
     {
-      ignore,
+      ignore: {...ignore, ...getFillElementsByType(true).micro},
       accuracy,
       solution_volume,
       solution_concentration,

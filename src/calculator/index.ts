@@ -1,6 +1,6 @@
 import {combination, product} from "./itertools";
 import {countDecimals, entries, keys, round, sum, values} from "../utils";
-import {FERTILIZER_ELEMENT_NAMES} from "./constants";
+import {FERTILIZER_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "./constants";
 import {Elements, Fertilizer, FertilizerInfo, NeedElements} from "./types";
 import {getEmptyElements} from "./helpers";
 import {normalizeFertilizer} from "./fertilizer";
@@ -112,7 +112,6 @@ const ElementPriority = {
   'B': 1000,
 }
 
-
 // Алгоритм расчетов из https://github.com/siv237/HPG
 export function calculate_v2(
   needElements: NeedElements,
@@ -181,7 +180,13 @@ export function calculate_v2(
 
     for (let [a, v] of p) {
       const e = weight * v * 10
-      calcElements[a] += round(e)
+      // Плавающая точность. повышаем точность в случае микроэлементов, при выводе домножить до 1000
+      let elementPrecision = countDecimals(needElements[a] || 0)
+      if (MICRO_ELEMENT_NAMES.includes(a as MICRO_ELEMENT_NAMES)) {
+        // Принудительно повышаем точность для микроэлементов
+        elementPrecision = 4
+      }
+      calcElements[a] += round(e, elementPrecision)
       xElements[a] = (xElements[a] || 0) - e
     }
   }
@@ -198,7 +203,12 @@ export function calculate_v2(
   const totalScore = Math.round(100 / ((score_percent - (needElementsLength - ignored)) / (needElementsLength - ignored) + 1))
 
   const deltaElementsPairs = entries(calcElements).map(([k, v]) => {
-    return [k, round((needElements[k] || 0) - v || 0, 1)]
+    let dv = round((needElements[k] || 0) - v || 0, 1)
+    if (!dv) {
+      // удаляем знак у нуля
+      dv = 0
+    }
+    return [k, dv]
   })
   const deltaElements = Object.fromEntries(deltaElementsPairs)
 

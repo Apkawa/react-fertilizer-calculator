@@ -27,22 +27,22 @@ describe("Calculate V2", () => {
       "deltaElements": {
         ...emptyElements,
         "Ca": 0,
-        "K": -0.3,
-        "Mg": -0.1,
-        "NH4": 0.5,
+        "K": 0.2,
+        "Mg": 0,
+        "NH4": 0,
         "NO3": 1,
         "P": 0,
-        "S": 0.2
+        "S": 0
       },
       "elements": {
         ...emptyElements,
         "Ca": 139,
-        "K": 280,
-        "Mg": 56,
-        "NH4": 4,
+        "K": 279.48,
+        "Mg": 55.93,
+        "NH4": 4.47,
         "NO3": 134,
         "P": 45,
-        "S": 127
+        "S": 127.22
       },
       "fertilizers": [
         {"base_weight": 0.547, "id": "Магний сернокислый", "weight": 0.547, "volume": null},
@@ -52,7 +52,7 @@ describe("Calculate V2", () => {
         {"base_weight": 0.245, "id": "Калий азотнокислый", "weight": 0.245, "volume": null},
         {"base_weight": 0.29, "id": "Калий сернокислый", "weight": 0.29, "volume": null}
       ],
-      "score": 98,
+      "score": 100,
       "stats": {
         "count": 0,
         "time": 0

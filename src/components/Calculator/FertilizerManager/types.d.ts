@@ -1,4 +1,4 @@
-import {FertilizerComposition, FertilizerInfo, NPKElements} from "@/calculator/types";
+import {FertilizerInfo} from "@/calculator/types";
 
 
 export interface AddEditFormType extends FertilizerInfo {

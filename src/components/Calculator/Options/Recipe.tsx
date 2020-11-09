@@ -55,7 +55,6 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
   }
   const resetRecipe = () => {
     let zeroValues = Object.fromEntries(FERTILIZER_ELEMENT_NAMES.map(el => [el, 0])) as unknown as Elements
-
     setRecipe(zeroValues)
   }
   const onEditHandler = (value: string) => {

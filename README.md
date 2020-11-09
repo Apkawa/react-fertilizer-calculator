@@ -4,7 +4,12 @@
 
 https://apkawa.github.io/react-fertilizer-calculator/
 
-базируется на логике из http://chile-forum.ru/index.php/topic,2699.0.html
+базируется на логике других калькуляторов:
+
+* http://chile-forum.ru/index.php/topic,2699.0.html
+* [siv237/HPG](https://github.com/siv237/HPG)
+
+# Справка 
 
 * [Описание методики расчетов](src/docs/technique.md)
 * [Краткая справка](src/docs/how_to_use.md)
@@ -44,7 +49,7 @@ https://apkawa.github.io/react-fertilizer-calculator/
         * [x] S (Сера)
     * [x] Оптимизация расчетов. Была использована модель из (HPG)[https://github.com/siv237/HPG]
     * [x] Расчет концетратов и разбавления
-    * [ ] Фиксация содержания фосфора при любом ppm
+    * [x] Фиксация содержания фосфора при любом ppm
         т.е. при ppm 1 и ppm 2 фосфор всегда равен 40
     
 * [x] Справка
@@ -60,7 +65,7 @@ https://apkawa.github.io/react-fertilizer-calculator/
     * [ ] модели jupyter по расчетам
     * [ ] справка по гидропонике
 * [ ] Расчет себестоимости растворов
-* [ ] Микроэлементы/хелаты
+* [x] Микроэлементы/хелаты
 * [ ] Экспорт/импорт всей конфигурации в различные форматы
     * [ ] Yaml
     * [ ] json

@@ -6,7 +6,7 @@ import {CalculatorFormValues} from "@/components/Calculator/types";
 import {calculateNPKBalance} from '@/calculator/helpers';
 import {Elements, NeedElements} from "@/calculator/types";
 import {decimal} from "@/components/ui/ReduxForm/normalizers";
-import {MACRO_ELEMENT_NAMES} from "@/calculator/constants";
+import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "@/calculator/constants";
 import {StyledInput} from "@/components/ui/ReduxForm/Input";
 import {ALLOWED_ELEMENT_IN_MATRIX, convertProfileWithEC, convertProfileWithRatio} from "@/calculator/profile";
 import {StyledBalanceCell} from "@/components/Calculator/Options/Recipe";
@@ -27,7 +27,7 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
   const [ratio, setRatio] = useState(recipeInfo.ratio)
   const [EC, setEC] = useState(recipeInfo.EC)
 
-  const onChangeRecipe = (el: MACRO_ELEMENT_NAMES, value: number) => {
+  const onChangeRecipe = (el: FERTILIZER_ELEMENT_NAMES, value: number) => {
     setRecipe({...recipe, [el]: value})
   }
   const onChangeEC = (val: number) => {
@@ -107,7 +107,19 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
           </tbody>
         </table>
       </Flex>
-      <Flex justifyContent="flex-end">
+      <Flex justifyContent="space-around">
+        {MICRO_ELEMENT_NAMES.map(el => (
+          <RecipeInput
+            name={el}
+            label={el}
+            value={(recipe[el] || 0) * 1000}
+            onChange={val => onChangeRecipe(el, val / 1000)}
+            step={1}
+          />
+        ))}
+      </Flex>
+      <Flex justifyContent="space-between">
+        <Button type="button" onClick={props.modal.close}>Cancel</Button>
         <Button type="button" onClick={onSaveHandler}>Save</Button>
       </Flex>
     </Flex>
@@ -155,7 +167,7 @@ function RecipeInput(props: RecipeInputProps) {
         type="number"
         step={step.toString()}
         min="0"
-        max="999"
+        max="9999"
         autoComplete="off"
         maxWidth="6rem"
         lang="en-US"
