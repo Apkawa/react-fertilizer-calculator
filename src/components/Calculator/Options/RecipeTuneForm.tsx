@@ -94,7 +94,7 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
                   {el === el2 ? 1 : (
                     <RecipeInput
                       name={`${el}:${el2}`}
-                      value={round(ratio[el][el2], 2)}
+                      value={round(ratio?.[el]?.[el2] || 0, 2)}
                       onChange={value => onChangeRatio(el, el2, value)}
                     />
                   )}

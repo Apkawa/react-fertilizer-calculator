@@ -41,6 +41,7 @@ describe("Calculate V2 Micro", () => {
       "deltaElements": {
         "B": 0,
         "Ca": -2,
+        "Cl": 0,
         "Co": 0,
         "Cu": -0.7,
         "Fe": -1.3,
@@ -58,6 +59,7 @@ describe("Calculate V2 Micro", () => {
       "elements": {
         "B": 0.714,
         "Ca": 2,
+        "Cl": 0,
         "Co": 0,
         "Cu": 0.7277,
         "Fe": 5.2726,
@@ -95,6 +97,7 @@ describe("Calculate V2 Micro", () => {
       "deltaElements": {
         "B": 0,
         "Ca": 170,
+        "Cl": 0,
         "Co": 0,
         "Cu": 0,
         "Fe": -0.1,
@@ -112,6 +115,7 @@ describe("Calculate V2 Micro", () => {
       "elements": {
         "B": 0.0231,
         "Ca": 0,
+        "Cl": 0,
         "Co": 0,
         "Cu": 0,
         "Fe": 0.0579,

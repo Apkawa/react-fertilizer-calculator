@@ -121,7 +121,7 @@ export const ATOMIC_MASS = {
 }
 export type AtomNameType = keyof ATOMIC_MASS
 export type ATOMIC_MASS = typeof ATOMIC_MASS;
-export const MACRO_ELEMENT_NAMES = ["NO3", "NH4", "P", "K", "Ca", "Mg", "S"] as const
+export const MACRO_ELEMENT_NAMES = ["NO3", "NH4", "P", "K", "Ca", "Mg", "S", "Cl"] as const
 export type MACRO_ELEMENT_NAMES = typeof MACRO_ELEMENT_NAMES[number]
 export const MICRO_ELEMENT_NAMES = ['Fe', 'Mn', 'B', 'Zn', 'Cu', 'Mo', 'Co', 'Si'] as const
 export type MICRO_ELEMENT_NAMES = typeof MICRO_ELEMENT_NAMES[number]

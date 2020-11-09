@@ -56,7 +56,7 @@ export function calculateNPKBalance(npk: Elements): NPKBalance {
 export function getFillElementsByType<T>(value:T) : {macro: MacroElements<T>, micro: MicroElements<T>} {
   return {
     macro: {
-      NO3: value, NH4: value, P: value, K: value, Ca: value, Mg: value, S: value,
+      NO3: value, NH4: value, P: value, K: value, Ca: value, Mg: value, S: value, Cl: value,
     },
     micro: {
       Fe: value, Mn: value, B: value, Zn: value, Cu: value, Mo: value, Co: value, Si: value,

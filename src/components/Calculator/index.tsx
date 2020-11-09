@@ -29,9 +29,8 @@ const initialValues: CalculatorFormValues = {
   accuracy: 0.2,
   solution_volume: 1,
   solution_concentration: 100,
-  recipe: {...DEFAULT_RECIPES[0].elements, ...DEFAULT_MICRO_RECIPE},
+  recipe: {...DEFAULT_RECIPES[0].elements, ...DEFAULT_MICRO_RECIPE, Cl: 0},
   fertilizers: [],
-
   dilution_enabled: false,
   dilution_volume: 20,
   dilution_concentration: 1,
@@ -130,7 +129,7 @@ const ReduxCalculator = connect((state: RootState) => {
   return {
     initialValues: {
       ...formValues,
-      recipe: {...DEFAULT_MICRO_RECIPE, ...formValues.recipe}
+      recipe: {Cl: 0, ...DEFAULT_MICRO_RECIPE, ...formValues.recipe}
     }
   }})(InitializerCalculator)
 

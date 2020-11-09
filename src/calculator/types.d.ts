@@ -5,7 +5,8 @@ export interface MacroElements<T=number> {
   K: T,
   Ca: T,
   Mg: T,
-  S: T
+  S: T,
+  Cl: T,
 }
 
 export interface MicroElements<T=number> {

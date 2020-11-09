@@ -10,7 +10,6 @@ type ElementInMatrix<T = number> = {
   [K in ALLOWED_ELEMENT_IN_MATRIX]: T
 }
 
-
 export interface ElementsMatrixType extends ElementInMatrix<ElementInMatrix> {
 }
 
@@ -58,7 +57,7 @@ export function getProfileRatioMatrix(npk: NPKElements): ElementsMatrixType {
           if (!isFinite(r)) {
             r = 0
           }
-          return [el2, el === el2 ? 1: r]
+          return [el2, el === el2 ? 1 : r]
         }
         )
       )]
@@ -69,6 +68,7 @@ export function getProfileRatioMatrix(npk: NPKElements): ElementsMatrixType {
 type PartialElementsMatrix = {
   [K in keyof ElementInMatrix]?: ElementInMatrix
 }
+
 export function convertProfileWithRatio(
   npk: NPKElements,
   ratio: PartialElementsMatrix): NPKElements {
@@ -120,7 +120,7 @@ export function convertProfileWithEC(npk: NPKElements, EC: number): NPKElements 
   const rMg = (v.K.Ca * v.K.N) / (
     v.K.Ca * v.K.N + v.K.Mg * v.K.N + v.K.Mg * v.K.Ca + v.K.Mg * v.K.Ca * v.K.N
   );
-  const vNH4NO3 = (npk.NH4 || 0) / ((npk.NH4|| 0) + (npk.NO3||0))
+  const vNH4NO3 = (npk.NH4 || 0) / ((npk.NH4 || 0) + (npk.NO3 || 0))
   const rNH4 = (rN * vNH4NO3) / (1 + vNH4NO3);
 
   const molN = ATOMIC_MASS.N
@@ -142,10 +142,10 @@ export function convertProfileWithEC(npk: NPKElements, EC: number): NPKElements 
   let newNpk = {
     ...npk,
     NH4,
-    NO3 : N - NH4,
-    K : rK * r,
-    Ca : rCa * r,
-    Mg : rMg * r,
+    NO3: N - NH4,
+    K: rK * r,
+    Ca: rCa * r,
+    Mg: rMg * r,
   }
   return Object.fromEntries(entries(newNpk)
     .map(([el, v]) => (
