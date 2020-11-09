@@ -20,6 +20,7 @@ const useModalRoot = () => {
 }
 
 const StyledOverlay = styled(Flex)`
+  overflow-y: auto;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -29,6 +30,11 @@ const StyledOverlay = styled(Flex)`
   align-items: center;
   background-color: rgba(255, 255, 255, 0.5);
   z-index: 999;
+  
+  // Mobile
+  @media screen and (max-height: 500px), screen and (max-width: 500px) {
+    align-items: initial;
+  }
 `
 
 export function ModalContainer(props: ModalContainerProps) {
@@ -48,7 +54,7 @@ export function ModalContainer(props: ModalContainerProps) {
         </style>
       </Helmet>
       <StyledOverlay>
-        <Card backgroundColor='#fff'>
+        <Card backgroundColor='#fff' height="max-content">
           {children}
         </Card>
       </StyledOverlay>
