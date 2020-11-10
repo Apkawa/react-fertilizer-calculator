@@ -41,7 +41,7 @@ export function Sidebar(props: SidebarProps) {
     if (d && closed) {
       setClose(false)
     }
-  }, [windowSize, closed, docked])
+  }, [windowSize, closed, props.docked])
 
   useEffect(() => {
     setClose(!opened)
