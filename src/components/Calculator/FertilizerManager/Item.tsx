@@ -10,7 +10,7 @@ import {Edit} from "@styled-icons/fa-regular/Edit"
 import {Trash} from "@styled-icons/fa-solid/Trash";
 
 import {Element} from "../FertilizerSelect/SelectedListItem";
-import {AddEdit, getInitialValues} from './AddEdit';
+import {AddEdit, formToFertilizer, getInitialValues} from './AddEdit';
 import {Modal, ModalActions} from "@/components/ui/Modal/Modal";
 import {useFormValues} from "@/hooks/ReduxForm";
 import {FERTILIZER_EDIT_FORM_NAME} from "@/components/Calculator/FertilizerManager/constants";
@@ -31,20 +31,7 @@ export function Item(props: ItemProps) {
     dispatch(fertilizerRemove(fertilizer))
   }
   const onSave = (modal: ModalActions) => {
-    const f: FertilizerInfo = {
-      id: fertilizer.id,
-      name: formValues.id,
-    }
-    if (formValues.composition_enable) {
-      f.composition = formValues.composition
-    } else {
-      f.npk = formValues.npk
-    }
-    if (formValues.solution_density_enable) {
-      f.solution_density = formValues.solution_density
-      f.solution_concentration = formValues.solution_concentration
-    }
-    dispatch(fertilizerPush(f))
+    dispatch(fertilizerPush(formToFertilizer(formValues)))
     modal.close()
   }
   return (

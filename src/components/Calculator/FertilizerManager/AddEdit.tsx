@@ -44,6 +44,23 @@ export function getInitialValues(f: FertilizerInfo): AddEditFormType {
   return formData
 }
 
+export function formToFertilizer(formValues: AddEditFormType): FertilizerInfo {
+  const f: FertilizerInfo = {
+    id: formValues.id,
+    name: formValues.name,
+  }
+  if (formValues.composition_enable) {
+    f.composition = formValues.composition
+  } else {
+    f.npk = formValues.npk
+  }
+  if (formValues.solution_density_enable) {
+    f.solution_density = formValues.solution_density
+    f.solution_concentration = formValues.solution_concentration
+  }
+  return f
+}
+
 const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
   const formValues = useFormValues<AddEditFormType>(useFormName())[0]
 
@@ -109,7 +126,7 @@ const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
                 </Label>
               </Flex>
               <Flex alignItems="flex-end">
-                <Label  flexDirection="column">
+                <Label flexDirection="column">
                   Плотность
                   <Input
                     name="solution_density"

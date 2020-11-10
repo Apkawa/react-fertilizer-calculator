@@ -9,11 +9,10 @@ import {fertilizerPush, fertilizerSet} from "@/components/Calculator/actions";
 import {Modal, ModalActions} from "@/components/ui/Modal/Modal";
 import {IconButton} from "@/components/ui/IconButton";
 import {Plus} from "@styled-icons/boxicons-regular/Plus";
-import {AddEdit, getInitialValues} from "@/components/Calculator/FertilizerManager/AddEdit";
+import {AddEdit, formToFertilizer, getInitialValues} from "@/components/Calculator/FertilizerManager/AddEdit";
 import {useFormValues} from "@/hooks/ReduxForm";
 import {AddEditFormType} from "@/components/Calculator/FertilizerManager/types";
 import {FERTILIZER_EDIT_FORM_NAME} from "@/components/Calculator/FertilizerManager/constants";
-import {FertilizerInfo} from "@/calculator/types";
 
 interface ListProps {
 }
@@ -26,21 +25,8 @@ export function List(props: ListProps) {
   const dispatch = useDispatch()
 
   function onAdd(modal: ModalActions) {
-    const f: FertilizerInfo = {
-      id: formValues.id,
-      name: formValues.id,
-    }
-    if (formValues.composition_enable) {
-      f.composition = formValues.composition
-    } else {
-      f.npk = formValues.npk
-    }
-    if (formValues.solution_density_enable) {
-      f.solution_density = formValues.solution_density
-    }
-    dispatch(fertilizerPush(f))
+    dispatch(fertilizerPush(formToFertilizer(formValues)))
     modal.close()
-
   }
 
   return (
