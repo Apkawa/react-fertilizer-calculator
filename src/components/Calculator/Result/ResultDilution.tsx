@@ -46,7 +46,7 @@ export function ResultDilution(props: DilutionResultProps) {
         <Heading fontSize={2}>Разбавление</Heading>
           <ul>
             {dilution.map(d => (
-              <li>Раствор {d.id} - {d.volume}л</li>
+              <li>Раствор {d.id} - {d.volume < 1 ? `${d.volume * 1000}мл`: `${d.volume}л` }</li>
             ))}
             <li>
               Долить до {dilution_volume}л

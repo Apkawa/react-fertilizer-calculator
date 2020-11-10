@@ -32,15 +32,12 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
     item && setSelected(item)
   }
 
-  const onChangeFertilizerElements = (item: FertilizerInfo) =>{
+  const onChangeFertilizerElements = (item: FertilizerInfo) => {
     setSelected(item)
   }
 
-  const onAddHandler = () => {
-    if (!selected) {
-      return
-    }
-    onAdd(selected)
+  const onAddHandler = (item: FertilizerInfo) => {
+    onAdd(item)
   }
   return (
     <Card>
@@ -57,20 +54,19 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
                   <Box>
                     {item.id}
                   </Box>
+                  <IconButton
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      onAddHandler(item)
+                    }}
+                    component={Plus}
+                  />
                 </Flex>
               )}
               renderValue={item => item?.id || ""}
             />
           </Box>
-          <IconButton
-            onClick={onAddHandler}
-            component={Plus}/>
-
         </Flex>
-        <AddItemFertilizerEditForm
-          fertilizer={selected}
-          onChange={onChangeFertilizerElements}
-        />
       </Flex>
 
     </Card>

@@ -58,6 +58,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
   return (
     <Card>
       <Flex alignItems="center" flexDirection="column" width="100%">
+        <Heading fontSize={2}>Результат расчета</Heading>
         <Flex justifyContent="space-around" width="100%">
           {elements && MACRO_ELEMENT_NAMES.map(
             k => <Element

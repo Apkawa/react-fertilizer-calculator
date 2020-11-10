@@ -111,7 +111,7 @@ const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
             <Flex flexDirection="column">
               <Flex alignItems="flex-end">
                 <Label flexDirection="column">
-                  Концетрация
+                  Концентрация
                   <Input
                     name="solution_concentration"
                     type="number"

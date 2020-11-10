@@ -20,10 +20,10 @@ export function TabMenu(props: TabMenuProps) {
         activeTabClassName="active"
       >
         <Flex flexDirection="column">
-          <NavTab exact to="/">Calculate</NavTab>
-          <NavTab to="/fertilizers">Fertilizers</NavTab>
-          <NavTab to="/formula/">Formula</NavTab>
-          <NavTab to="/help">Help</NavTab>
+          <NavTab exact to="/">Калькулятор</NavTab>
+          <NavTab to="/fertilizers">Удобрения</NavTab>
+          <NavTab to="/formula/">Парсер формул</NavTab>
+          <NavTab to="/help">Справка</NavTab>
         </Flex>
       </RoutedTabs>
       <ColorModeToggle/>

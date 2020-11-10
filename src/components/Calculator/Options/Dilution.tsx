@@ -19,7 +19,7 @@ export const Dilution: FunctionComponent<DilutionProps> = () => {
   } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues
   return (
     <Card>
-      <Checkbox name="dilution_enabled" label="Разбавление концетрата"/>
+      <Checkbox name="dilution_enabled" label="Разбавление концентрата"/>
       <Flex flexDirection="column" style={{display: dilution_enabled? "flex" : "none"}}>
         <Flex alignItems="center" justifyContent="space-between">
           <Label htmlFor="dilution_volume">Объем, л</Label>
