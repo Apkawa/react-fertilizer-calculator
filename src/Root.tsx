@@ -11,7 +11,8 @@ import {Box, Flex, Text} from "rebass";
 import {defaultTheme} from "./themes";
 import {ForkMeOnGitHub} from "./components/ui/ForkMeOnGitHub";
 import {ColorModeToggle} from "./components/ColorModeToggle";
-import {TabMenu} from "@/components/TabMenu";
+import {TabMenu} from "@/components/ui/TabMenu/TabMenu";
+import {Sidebar} from "@/components/ui/Sidebar/Sidebar";
 
 
 type RootProps = {
@@ -22,19 +23,17 @@ const Root: FunctionComponent<RootProps> = ({store}) => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={defaultTheme}>
-        <Flex justifyContent="space-between">
-          <Box
-            padding={3}
-          >
-            <ColorModeToggle/>
-          </Box>
-          <ForkMeOnGitHub/>
-        </Flex>
-        <Flex flexDirection='column' margin={2}>
-          <Box flex={1}>
-            <Router>
+        <Router>
+          <Flex justifyContent="space-between">
+            <Box
+              padding={1}
+            >
               <TabMenu/>
-
+            </Box>
+            <ForkMeOnGitHub/>
+          </Flex>
+          <Flex flexDirection='column' margin={2}>
+            <Box flex={1}>
               <Flex sx={
                 {
                   justifyContent: 'center'
@@ -53,14 +52,14 @@ const Root: FunctionComponent<RootProps> = ({store}) => {
                   </Switch>
                 </Box>
               </Flex>
-            </Router>
-          </Box>
-          <Flex justifyContent={"flex-end"} marginTop="auto" flex={1}>
-            <Text fontSize={1}>
-              {__VERSION__}-{__COMMIT_REF_NAME__} {__COMMIT_HASH__} [{__COMMIT_DATE__}]
-            </Text>
+            </Box>
+            <Flex justifyContent={"flex-end"} marginTop="auto" flex={1}>
+              <Text fontSize={1}>
+                {__VERSION__}-{__COMMIT_REF_NAME__} {__COMMIT_HASH__} [{__COMMIT_DATE__}]
+              </Text>
+            </Flex>
           </Flex>
-        </Flex>
+        </Router>
       </ThemeProvider>
     </Provider>
   )

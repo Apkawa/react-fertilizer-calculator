@@ -12,7 +12,7 @@ import {StyledBalanceCell} from "../Options/Recipe";
 import {ResultFertilizerList} from "./ResultFertilizerList";
 import {useFertilizerSolutionGroup, usePPM} from "./hooks";
 import {ResultDilution} from "@/components/Calculator/Result/ResultDilution";
-import {round} from "@/utils";
+import {round, sum} from "@/utils";
 
 interface ResultProps {
 }
@@ -53,6 +53,8 @@ export const Result: FunctionComponent<ResultProps> = () => {
   const deltaElements = result?.deltaElements || getEmptyElements()
   const NPKBalance = calculateNPKBalance(elements)
 
+  const liquidFertilizersVolume = round(sum((result?.fertilizers || []).map(f => f.volume || 0)), 1)
+
   return (
     <Card>
       <Flex alignItems="center" flexDirection="column" width="100%">
@@ -90,7 +92,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
 
         <Text fontSize={6}>{`${score || 0}%`}</Text>
         <StyledList>
-          <li>{solution_volume}л воды</li>
+          <li>Для {solution_volume}л раствора</li>
           {fertilizerWeightGroups.map(([g, f_weights]) =>
             (<li>
                 <b> Раствор {g} </b>
@@ -100,6 +102,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
               </li>
             )
           )}
+          <li>Долить {(solution_volume * 1000) - liquidFertilizersVolume} мл воды до {solution_volume}л</li>
           <li title="Или минерализация, в мг/л">
             <b>TDS:</b> {ppm} ppm; <b>EC:</b> {ppmToEC(ppm, 1)} мСм/см
           </li>
