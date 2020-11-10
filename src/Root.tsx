@@ -10,9 +10,7 @@ import pages from './pages'
 import {Box, Flex, Text} from "rebass";
 import {defaultTheme} from "./themes";
 import {ForkMeOnGitHub} from "./components/ui/ForkMeOnGitHub";
-import {ColorModeToggle} from "./components/ColorModeToggle";
 import {TabMenu} from "@/components/ui/TabMenu/TabMenu";
-import {Sidebar} from "@/components/ui/Sidebar/Sidebar";
 
 
 type RootProps = {

@@ -4,7 +4,6 @@ import {Card, Flex} from "rebass";
 import styled from '@emotion/styled'
 import {Helmet} from "react-helmet";
 import {SidebarActions} from "@/components/ui/Sidebar/Sidebar";
-import {on} from "cluster";
 
 
 interface SidebarContainerProps {

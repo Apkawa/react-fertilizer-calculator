@@ -4,7 +4,6 @@ import {Icon} from "@/components/ui/Icon";
 import {Menu} from "@styled-icons/boxicons-regular/Menu"
 import {Cross} from "@styled-icons/entypo/Cross";
 import {SidebarContainer} from "@/components/ui/Sidebar/SidebarContainer";
-import {number} from "@/components/ui/ReduxForm/normalizers";
 import {useWindowSize} from "@/hooks/screen";
 
 export interface SidebarActions {
