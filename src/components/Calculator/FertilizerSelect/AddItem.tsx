@@ -6,7 +6,6 @@ import {Plus} from "@styled-icons/boxicons-regular/Plus"
 
 import {useSelector} from "react-redux";
 import {CalculatorState} from "../types";
-import {AddItemFertilizerEditForm} from "./AddItemFertilizerEditForm";
 import {IconButton} from "@/components/ui/IconButton";
 import {FertilizerInfo} from "@/calculator/types";
 
@@ -32,9 +31,6 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
     item && setSelected(item)
   }
 
-  const onChangeFertilizerElements = (item: FertilizerInfo) => {
-    setSelected(item)
-  }
 
   const onAddHandler = (item: FertilizerInfo) => {
     onAdd(item)
