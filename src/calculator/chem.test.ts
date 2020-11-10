@@ -64,4 +64,9 @@ describe("Parse nitrates", () => {
     const res = parseNitrates('(NH4)2SO4 + (NH4)2HPO4 + K2SO4')
     expect(res).toEqual({NH4: 4, NO3: 0})
   })
+  test("(NH2)2CO",() => {
+    // Учитываем мочевину как NH4
+    const res = parseNitrates('(NH2)2CO')
+    expect(res).toEqual({NH4: 2, NO3: 0})
+  })
 })

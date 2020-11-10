@@ -22,20 +22,28 @@ export function parseMolecule(formula: string): DecomposedChemFormula {
 
 export function parseNitrates(formula: string): ParsedNitrateType {
   const nitrates: ParsedNitrateType = {"NH4": 0, "NO3": 0}
-  const re = /NH4|NO3/g
+  const re = /NH4|NO3|NH2/g
   for (let s of findSubgroups(formula)) {
-
-    if (nitrates.hasOwnProperty(s.formula)) {
-      nitrates[s.formula as keyof typeof nitrates] += s.count
+    let subFormula = s.formula
+    if (subFormula === 'NH2') {
+      subFormula = 'NH4'
+    }
+    if (nitrates.hasOwnProperty(subFormula)) {
+      nitrates[subFormula as keyof typeof nitrates] += s.count
       continue
     }
-    if (s.formula !== formula) {
-      for (let [n, c] of entries(parseNitrates(s.formula))) {
+    if (subFormula !== formula) {
+      for (let [n, c] of entries(parseNitrates(subFormula))) {
         (nitrates as ParsedNitrateType)[n] += c
       }
     } else {
-      for (let r of s.formula.matchAll(re)) {
-        (nitrates as ParsedNitrateType)[r[0] as keyof ParsedNitrateType] += s.count
+      for (let r of subFormula.matchAll(re)) {
+        let nType = r[0];
+        // Для мочевины, она соответствует аммонийному азоту
+        if (nType === 'NH2') {
+          nType = 'NH4'
+        }
+        (nitrates as ParsedNitrateType)[nType as keyof ParsedNitrateType] += s.count
       }
     }
   }
