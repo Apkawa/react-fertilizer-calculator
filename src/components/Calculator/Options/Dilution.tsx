@@ -45,7 +45,7 @@ export const Dilution: FunctionComponent<DilutionProps> = () => {
             type="number"
             step="0.1"
             min="0"
-            max="999"
+            max="2000"
             normalize={decimal}
             style={{
               textAlign: "center"
