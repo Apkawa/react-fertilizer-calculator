@@ -10,16 +10,16 @@ import {Result} from "./Result/Result";
 import {CalculatorFormValues} from "./types";
 import {ReduxFormType} from "../ui/ReduxForm/types";
 import {REDUX_FORM_NAME} from "./constants";
-import {calculateStart, fertilizerReset, recipeReset} from "./actions";
-import {ImportFertilizers} from "@/components/Calculator/ImportExport/ImportFertilizers";
-import {ExportFertilizers} from "@/components/Calculator/ImportExport/ExportFertilizers";
+import {calculateStart, recipeReset} from "./actions";
 import {IconButton} from "@/components/ui/IconButton";
 import {DEFAULT_MICRO_RECIPE, DEFAULT_RECIPES} from "@/components/Calculator/constants/recipes";
-import {ExportRecipes} from "@/components/Calculator/ImportExport/ExportRecipes";
-import {ImportRecipes} from "@/components/Calculator/ImportExport/ImportRecipes";
+import {ExportRecipes} from "./ImportExport/ExportRecipes";
+import {ImportRecipes} from "./ImportExport/ImportRecipes";
 import {Recipe} from "@/components/Calculator/Options/Recipe";
 import {mobileStyles} from "@/components/ui/styled";
 import {RootState} from "@/redux/types";
+import {ExportState} from "./ImportExport/ExportState";
+import {ImportState} from "./ImportExport/ImportState";
 
 interface CalculatorProps {
 
@@ -73,25 +73,6 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
             <Heading fontSize={2}>Импорт/Экспорт</Heading>
             <Flex flexDirection="column" p={3}>
               <Flex alignItems='center'
-                    paddingBottom={2}
-                    justifyContent="space-between"
-                    flexWrap="wrap"
-              >
-                <Text>Удобрения</Text>
-                <Box sx={{
-                  "&>*": {
-                    marginLeft: 1
-                  }
-                }}>
-                  <ImportFertilizers/>
-                  <ExportFertilizers/>
-                  <IconButton
-                    component={Restart}
-                    onClick={() => dispatch(fertilizerReset())}
-                  />
-                </Box>
-              </Flex>
-              <Flex alignItems='center'
                     justifyContent="space-between"
                     flexWrap="wrap"
               >
@@ -107,6 +88,20 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
                     component={Restart}
                     onClick={() => dispatch(recipeReset())}
                   />
+                </Box>
+              </Flex>
+              <Flex alignItems='center'
+                    justifyContent="space-between"
+                    flexWrap="wrap"
+              >
+                <Text>Настройки</Text>
+                <Box sx={{
+                  "&>*": {
+                    marginLeft: 1
+                  }
+                }}>
+                  <ImportState/>
+                  <ExportState/>
                 </Box>
               </Flex>
             </Flex>

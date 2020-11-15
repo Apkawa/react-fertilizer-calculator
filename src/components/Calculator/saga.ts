@@ -1,10 +1,20 @@
 import {all, call, fork, put, select, takeLatest} from 'redux-saga/effects'
 import {actionTypes, FormAction, getFormValues, stopSubmit} from "redux-form";
-import {CALCULATE_START, REDUX_FORM_NAME} from "./constants";
-import {calculateError, calculateSuccess, storeCalculateForm} from "./actions";
+import {CALCULATE_START, LOAD_STATE_START, REDUX_FORM_NAME} from "./constants";
+import {calculateError, calculateSuccess, loadStateStart, loadStateSuccess, storeCalculateForm} from "./actions";
 import {calculate_v3} from "@/calculator";
 import {CalculatorFormValues} from "./types";
 import {getFillElementsByType} from "@/calculator/helpers";
+
+export function* loadCalculatorStateSaga(action: ReturnType<typeof loadStateStart>) {
+  // Здесь будет валидация и конвертация между несовместимыми версиями
+  const state = action.payload
+
+  yield put(loadStateSuccess({
+    ...state.calculator
+  }))
+}
+
 
 export function* storeCalculateFormSaga() {
   const formValues: CalculatorFormValues = yield select(getFormValues(REDUX_FORM_NAME))
@@ -44,6 +54,10 @@ export function* calculateStartSaga() {
   yield put(calculateSuccess(result))
 }
 
+export function* loadStateSagaWatcher() {
+  yield takeLatest(LOAD_STATE_START, loadCalculatorStateSaga);
+}
+
 export function* calculatorSagaWatcher() {
   yield takeLatest(CALCULATE_START, calculateStartSaga);
 }
@@ -67,5 +81,6 @@ export default function* calculatorRootSaga() {
   yield all([
     fork(calculatorSagaWatcher),
     fork(calculatorFormChangeWatcher),
+    fork(loadStateSagaWatcher)
   ]);
 }

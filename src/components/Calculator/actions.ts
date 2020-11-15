@@ -1,7 +1,8 @@
 import * as ActionNames from "./constants";
 import {CalculateResult} from "@/calculator";
-import {CalculatorFormValues, Recipe} from "@/components/Calculator/types";
+import {CalculatorFormValues, CalculatorState, Recipe} from "@/components/Calculator/types";
 import {FertilizerInfo} from "@/calculator/types";
+import {ExportStateJSON} from "@/components/Calculator/ImportExport/ExportState";
 
 export const storeCalculateForm = (form: CalculatorFormValues) => ({
   type: ActionNames.STORE_CALCULATE_FORM,
@@ -55,4 +56,14 @@ export const recipeReset = () => ({
   type: ActionNames.RECIPE_RESET,
 })
 
+export const loadStateStart = (payload: ExportStateJSON) => ({
+  type: ActionNames.LOAD_STATE_START,
+  payload
+})
+
+// Commit state
+export const loadStateSuccess = (payload: Partial<CalculatorState>) => ({
+  type: ActionNames.LOAD_STATE_SUCCESS,
+  payload
+})
 

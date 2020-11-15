@@ -44,7 +44,11 @@ export const reducer = (state: CalculatorState = initialState, action: ActionTyp
       return {...state, recipes: state.recipes.filter(f => action.payload.name !== f.name)}
     case ActionNames.RECIPE_RESET:
       return {...state, recipes: [...DEFAULT_RECIPES]}
-
+    case ActionNames.LOAD_STATE_START:
+      // Noop
+      return {...state}
+    case ActionNames.LOAD_STATE_SUCCESS:
+      return {...state, ...action.payload}
     default:
       return assertNever<CalculatorState>(state, action)
   }
