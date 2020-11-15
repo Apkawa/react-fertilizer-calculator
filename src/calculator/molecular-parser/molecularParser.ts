@@ -63,6 +63,7 @@ export const findSubgroups = function (formula: string): SubgroupType[] {
     } else if (/[*+]/.test(ch)) {
       if (level === 0 && currentFormula) {
         pushSubgroup();
+        finishingNestedSubgroup = false
       }
       if (level > 0) {
         currentFormula += ch
@@ -73,11 +74,16 @@ export const findSubgroups = function (formula: string): SubgroupType[] {
       if (finishingNestedSubgroup) {
         currentCount += ch;
       } else {
-        if (i === 0) {
+        if (!currentFormula) {
+          // Maybe like as 6H2O
           currentCount += ch
-          continue
+        } else {
+          if (i === 0) {
+            currentCount += ch
+            continue
+          }
+          currentFormula += ch;
         }
-        currentFormula += ch;
       }
     }
   }

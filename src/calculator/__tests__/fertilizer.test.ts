@@ -43,11 +43,11 @@ describe("normalizeFertilizer", () => {
         elements: {
           ...getEmptyElements(),
           "Ca": 0,
-          "K": 31.54,
-          "Mg": 2.4,
+          "K": 31.55,
+          "Mg": 2.41,
           "NO3": 3,
           "NH4": 0,
-          "P": 4.84,
+          "P": 4.8,
           S: 0,
         },
         "id": "Valagro 3:11:38",
@@ -63,11 +63,11 @@ describe("normalizeFertilizer", () => {
         elements: {
           ...getEmptyElements(),
           "Ca": 0,
-          "K": 31.54,
-          "Mg": 2.4,
+          "K": 31.55,
+          "Mg": 2.41,
           "NO3": 3,
           "NH4": 0,
-          "P": 4.84,
+          "P": 4.8,
           S: 0,
         },
         "id": "Valagro 3:11:38",
@@ -85,8 +85,8 @@ describe("normalizeFertilizer", () => {
     }, true)
     expect(result).toMatchObject({
       elements: {
-        K: 39,
-        NO3: 14,
+        K: 38.67,
+        NO3: 13.85,
         S: 0,
       }
     })
@@ -96,7 +96,7 @@ describe("normalizeFertilizer", () => {
     , true)
     expect(result).toMatchObject({
       elements: {
-        Mg: 10.02,
+        Mg: 10.07,
         S: 13.5,
       }
     })
@@ -112,8 +112,8 @@ describe("normalizeFertilizer", () => {
     }, true)
     expect(result).toMatchObject({
       elements: {
-        K: 39,
-        NO3: 14
+        K: 38.68,
+        NO3: 13.86
       }
     })
   })
@@ -128,8 +128,8 @@ describe("normalizeFertilizer", () => {
     }, false)
     expect(result).toMatchObject({
       elements: {
-        K: 46.8,
-        NO3: 14
+        K: 46.4,
+        NO3: 13.85
       }
     })
   })
@@ -153,8 +153,8 @@ describe("normalizeFertilizer", () => {
       ]
     }, true)
     expect(result.elements).toMatchObject({
-      Mg: 9.8,
-      S: 12.74,
+      Mg: 9.66,
+      S: 12.75,
     })
   })
 })

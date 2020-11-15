@@ -49,12 +49,12 @@ describe("Calculate", () => {
         "NO3": 196,
         "NH4": 0,
         "P": 58,
-        "K": 378,
-        "Ca": 170,
+        "K": 379,
+        "Ca": 172,
         "Mg": 29,
         S: 0
       },
-      "score": 79,
+      "score": 80,
     })
   })
   test("Ignore Ca, Mg", () => {

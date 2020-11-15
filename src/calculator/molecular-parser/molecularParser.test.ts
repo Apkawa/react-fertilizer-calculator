@@ -88,7 +88,7 @@ describe('molecularParser', function () {
           "formula": "(NH4)2HPO4+K2SO4"
         }
       ],
-      'MgSO4*7H2O': [{"count": 1, "formula": "MgSO4"}, {"count": 1, "formula": "7H2O"}],
+      'MgSO4*7H2O': [{"count": 1, "formula": "MgSO4"}, {"count": 7, "formula": "H2O"}],
       '7H2O': [{"count": 7, "formula": "H2O"}]
     }
 
@@ -190,5 +190,16 @@ describe('molecularParser', function () {
         'Mg': 1, S: 1, H: 14, O: 4 + 7
       })
     });
+    it('issue parse Mg(NO3)2*6H2O', () => {
+      let f = 'Mg(NO3)2*6H2O'
+      expect(Parser.findSubgroups(f)).toEqual([{"count": 1, "formula": "Mg"}, {
+        "count": 2,
+        "formula": "NO3"
+      }, {"count": 6, "formula": "H2O"}])
+      expect(Parser.decomposeFormula(f)).toEqual({
+        'Mg': 1, N: 2, H: 12, O: 6 + 6
+      })
+
+    })
   });
 });

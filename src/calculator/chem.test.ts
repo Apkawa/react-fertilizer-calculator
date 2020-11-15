@@ -1,5 +1,6 @@
 import {calculateMassParts, parseMolecule, parseNitrates} from "./chem";
 import {AtomNameType} from "./constants";
+import {entries} from "../utils";
 
 describe("parseMolecule", () => {
   test('H2O', () => {
@@ -23,11 +24,15 @@ describe("parseMolecule", () => {
 describe("calculateMassParts", () => {
   test('CaO', () => {
     const result = calculateMassParts({Ca: 1, O: 1,})
-    expect(result).toEqual({Ca: 0.71, O: 0.29})
+    for (let [a, m] of entries({Ca: 0.71, O: 0.29})) {
+      expect(result[a]).toBeCloseTo(m)
+    }
   })
   test('Ca(NO3)2 * 4H2O', () => {
     const result = calculateMassParts({Ca: 1, N: 2, O: 10, H: 8})
-    expect(result).toEqual({Ca: 0.17, N: 0.12, O: 0.68, H: 0.03})
+    for (let [a, m] of entries({Ca: 0.17, N: 0.12, O: 0.68, H: 0.03})) {
+      expect(result[a]).toBeCloseTo(m)
+    }
   })
   test('Check mass parts', () => {
     const formulas = {
@@ -41,7 +46,7 @@ describe("calculateMassParts", () => {
     }
     for (let [f, [mass, atom]] of Object.entries(formulas)) {
       const result = calculateMassParts(parseMolecule(f))
-      expect(result[atom as AtomNameType]).toEqual(mass)
+      expect(result[atom as AtomNameType]).toBeCloseTo(mass as number, 2)
 
     }
   })

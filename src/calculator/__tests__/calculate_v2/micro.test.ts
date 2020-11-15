@@ -40,7 +40,7 @@ describe("Calculate V2 Micro", () => {
     expect(result).toEqual({
       "deltaElements": {
         "B": 0,
-        "Ca": -2,
+        "Ca": -3,
         "Cl": 0,
         "Co": 0,
         "Cu": -0.7,
@@ -58,7 +58,7 @@ describe("Calculate V2 Micro", () => {
       },
       "elements": {
         "B": 0.714,
-        "Ca": 2,
+        "Ca": 3,
         "Cl": 0,
         "Co": 0,
         "Cu": 0.7277,

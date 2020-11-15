@@ -1,4 +1,4 @@
-import {entries, round, sum, values} from "../utils";
+import {entries, sum, values} from "../utils";
 import {ATOMIC_MASS, AtomNameType} from "./constants";
 import {decomposeFormula, findSubgroups} from './molecular-parser/molecularParser';
 
@@ -59,7 +59,7 @@ export function calculateMassParts(formula: DecomposedChemFormula): DecomposedCh
 
   const totalMass = sum(values(atomMasses))
   return Object.fromEntries(
-    entries(atomMasses).map(([atom, mass]) => [atom, round(mass / totalMass, 2)])
+    entries(atomMasses).map(([atom, mass]) => [atom, mass / totalMass])
   ) as DecomposedChemFormula
 }
 
