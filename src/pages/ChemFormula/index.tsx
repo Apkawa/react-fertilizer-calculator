@@ -1,36 +1,40 @@
 import React, {useEffect, useState} from "react";
 import {Box, Flex, Heading} from "rebass";
 import {Input} from "@rebass/forms";
-import {parseMolecule} from "@/calculator/chem";
+import {calculateMassParts, parseMolecule} from "@/calculator/chem";
 import {Elements} from "@/calculator/types";
 import {normalizeFertilizer} from "@/calculator/fertilizer";
 import {useHistory, useParams} from "react-router-dom";
 import {entries, round, sum, values} from "@/utils";
 import {ATOMIC_MASS, AtomNameType, FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 
-type DecomposedChemFormula = {
+type DecomposedChemFormulaInfo = {
   [Atom in AtomNameType]?: {
     count: number,
     mass: number,
-    totalMass: number
+    totalMass: number,
+    massPart: number,
   }
 }
 
 interface Result {
   formula: string,
-  decomposed_formula: DecomposedChemFormula,
+  decomposed_formula: DecomposedChemFormulaInfo,
   oxide_npk: Elements,
   npk: Elements,
 }
 
 function parseFormula(formula: string, percent = 100): Result {
   const f = {id: '', composition: [{formula, percent}]}
-  const p = entries(parseMolecule(formula)).map(([a, c]) =>
-    [a, {count: c, mass: ATOMIC_MASS[a], totalMass: c * ATOMIC_MASS[a]}]
+  const molecule = parseMolecule(formula)
+  const massParts = calculateMassParts(molecule)
+  const p = entries(molecule).map(([a, c]) =>
+    [a, {count: c, mass: ATOMIC_MASS[a], totalMass: c * ATOMIC_MASS[a], massPart: massParts[a]}]
   )
+  const decomposed_formula: DecomposedChemFormulaInfo = Object.fromEntries(p)
   return {
     formula,
-    decomposed_formula: Object.fromEntries(p),
+    decomposed_formula,
     oxide_npk: normalizeFertilizer(f, false).elements,
     npk: normalizeFertilizer(f, true).elements,
   }
@@ -103,6 +107,7 @@ export default () => {
                   <th>Масса</th>
                   <th>Количество</th>
                   <th>Сумма</th>
+                  <th>Массовая доля</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -112,6 +117,7 @@ export default () => {
                     <td>{c.mass}</td>
                     <td>{c.count}</td>
                     <td>{round(c.totalMass,2)}</td>
+                    <td>{round(c.massPart * 100,2)}</td>
                   </tr>
                 ))}
                 <tr>
