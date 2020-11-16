@@ -22,16 +22,15 @@ export default () => {
   const [concentration, setConcentration] = useState<number | null>(params.concentration ? parseFloat(params.concentration) : null)
 
   const onChangeFormula = (v: string|null) => {
-
     setValue(v)
     if (v && DATA_KEYS.includes(v as DATA_KEYS) && density) {
-      const c = round(getConcentrationFromDensity(value as DATA_KEYS, density), 1)
+      const c = round(getConcentrationFromDensity(v as DATA_KEYS, density), 1)
       if (c !== concentration) {
         setConcentration(c)
       }
     }
-
   }
+
 
   const onChangeConcentration = (v: string) => {
     const c = parseFloat(v)
