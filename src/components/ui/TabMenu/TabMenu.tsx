@@ -23,6 +23,7 @@ export function TabMenu(props: TabMenuProps) {
           <NavTab exact to="/">Калькулятор</NavTab>
           <NavTab to="/fertilizers">Удобрения</NavTab>
           <NavTab to="/formula/">Парсер формул</NavTab>
+          <NavTab to="/density/">Плотность</NavTab>
           <NavTab to="/help">Справка</NavTab>
         </Flex>
       </RoutedTabs>

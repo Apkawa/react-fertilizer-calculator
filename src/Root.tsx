@@ -43,6 +43,10 @@ const Root: FunctionComponent<RootProps> = ({store}) => {
                       [
                         "/formula/:formula?/:percent?",
                       ]} component={pages.ChemFormula}/>
+                    <Route path={
+                      [
+                        "/density/:formula?/:concentration?/:density?/",
+                      ]} component={pages.DensityCalculator}/>
                     <Route path="/example" component={pages.Example}/>
                     <Route path="/help" component={pages.Help}/>
                     <Route path="/" component={pages.Calculator}/>
