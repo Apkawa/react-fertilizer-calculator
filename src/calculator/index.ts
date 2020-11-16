@@ -109,6 +109,7 @@ export function calculate_v3(
 
 const ElementPriority = {
   'NH4': 1000,
+  'P': 1000,
   'B': 1000,
 }
 
