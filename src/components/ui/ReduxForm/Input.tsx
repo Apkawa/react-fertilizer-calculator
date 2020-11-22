@@ -1,25 +1,17 @@
 import React from "react";
 import {Field as ReduxField} from "redux-form";
 
-import {Input as RebassInput, InputProps as RebassInputProps} from "@rebass/forms";
+import {Input as RebassInput, InputProps as RebassInputProps} from "../RebassWidgets";
 import {ReduxFormComponentType, WrapperInputType} from "./types";
-import styled from "styled-components";
 
 interface InputProps extends RebassInputProps {
   label?: string
 }
 
-export const StyledInput = styled(RebassInput)`
-  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  -moz-appearance: textfield;
-
-`
+export const StyledInput = RebassInput
 
 export const WrappedInput: WrapperInputType<InputProps> = ({input, label, type = "text", ...props}: any) =>
-  <StyledInput  {...props}
+  <RebassInput  {...props}
                 {...input}
                 type={type}
                 lang="en-US"

@@ -7,7 +7,7 @@ import {calculateNPKBalance} from '@/calculator/helpers';
 import {Elements, NeedElements} from "@/calculator/types";
 import {decimal} from "@/components/ui/ReduxForm/normalizers";
 import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "@/calculator/constants";
-import {StyledInput} from "@/components/ui/ReduxForm/Input";
+import {NumberInput as StyledInput} from "@/components/ui/RebassWidgets/Number";
 import {ALLOWED_ELEMENT_IN_MATRIX, convertProfileWithEC, convertProfileWithRatio} from "@/calculator/profile";
 import {StyledBalanceCell} from "@/components/Calculator/Options/Recipe";
 import {round} from "@/utils";
