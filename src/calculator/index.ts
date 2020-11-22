@@ -110,7 +110,7 @@ export function calculate_v3(
 const ElementPriority = {
   'NH4': 1000,
   'P': 1000,
-  'B': 1000,
+  'B': 2000,
 }
 
 // Алгоритм расчетов из https://github.com/siv237/HPG

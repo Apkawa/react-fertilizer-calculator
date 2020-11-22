@@ -135,4 +135,36 @@ describe("Calculate V2 Micro", () => {
       "stats": {"count": 0, "time": 0}
     })
   })
+  test("Ставим основной приоритет по бору если комплекс с NH4 и Бором", () => {
+    const result = calculate_v2({
+        ...emptyElements,
+        NO3: 200, NH4: 14, P: 50, K: 200, Ca: 170, Mg: 50, S: 0,
+        Fe: 4000 / 1000,
+        Mn: 636 / 1000,
+        B: 714 / 1000,
+        Zn: 384 / 1000,
+        Cu: 69 / 1000,
+        Mo: 69 / 1000,
+      },
+      [{...AquaMix,  npk: {...AquaMix.npk, NH4: 15}}],
+      {
+        accuracy: 0.001,
+        ignore: {
+          ...getFillElementsByType(true).micro,
+          S: true
+        }
+      }
+    )
+    expect(result).toMatchObject({
+      "deltaElements": {
+        "B": 0,
+        "NH4": -7,
+      },
+      "elements": {
+        "B": 0.714,
+        "NH4": 21,
+      },
+    })
+  })
+
 })
