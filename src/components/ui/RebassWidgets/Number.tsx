@@ -1,10 +1,7 @@
-import React, {ChangeEvent, FC, useEffect, useRef, useState} from "react";
+import React, {FC, useEffect, useRef, useState} from "react";
 import {Input as RebassInput, InputProps as RebassInputProps} from "@rebass/forms";
-import {Box, Flex} from "rebass";
+import {Flex} from "rebass";
 import styled from "styled-components";
-import FocusLock from 'react-focus-lock';
-
-import {BlurAction} from "redux-form";
 import {countDecimals, round} from "@/utils";
 
 interface InputProps extends RebassInputProps {
@@ -71,7 +68,7 @@ export const NumberInput: FC<InputProps> = (props: any) => {
   }
 
   useEffect(() => {
-    if (value != props.value) {
+    if (value !== props.value) {
       setValue(props.value)
     }
   }, [props.value, value])
