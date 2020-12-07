@@ -7,6 +7,7 @@ import {updateOrPush} from "@/utils";
 
 const initialState: CalculatorState = {
   calculationForm: null,
+  toppingUpResult: null,
   result: null,
   process: false,
   error: false,
@@ -25,6 +26,8 @@ export const reducer = (state: CalculatorState = initialState, action: ActionTyp
       return {...state, process: false, result: action.result}
     case ActionNames.CALCULATE_ERROR:
       return {...state, process: false, error: true}
+    case ActionNames.TOPPING_UP_SUCCESS:
+      return {...state, toppingUpResult: action.result}
 
     case ActionNames.FERTILIZERS_PUSH:
       return {

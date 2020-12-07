@@ -4,6 +4,7 @@ import {IgnoreElement} from "./IgnoreElement";
 import {Accuracy} from "./Accuracy";
 import {Solution} from "./Solution";
 import {Dilution} from "./Dilution";
+import {ToppingUp} from "./ToppingUp";
 
 interface OptionsProps {
 }
@@ -17,6 +18,9 @@ export const Options: ComponentType<OptionsProps> = () => {
       </Box>
       <Box my={2}>
         <Solution/>
+      </Box>
+      <Box my={2}>
+        <ToppingUp/>
       </Box>
       <Box my={2}>
         <Dilution/>

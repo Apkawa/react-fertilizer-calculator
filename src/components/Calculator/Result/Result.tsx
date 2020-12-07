@@ -7,10 +7,10 @@ import {REDUX_FORM_NAME} from "../constants";
 import {MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "@/calculator/constants";
 import {Element} from "../FertilizerSelect/SelectedListItem";
 import styled from "styled-components";
-import {calculateNPKBalance, getEmptyElements, ppmToEC} from "@/calculator/helpers";
+import {calculateNPKBalance, getEmptyElements} from "@/calculator/helpers";
 import {StyledBalanceCell} from "../Options/Recipe";
 import {ResultFertilizerList} from "./ResultFertilizerList";
-import {useFertilizerSolutionGroup, usePPM} from "./hooks";
+import {useFertilizerSolutionGroup} from "./hooks";
 import {ResultDilution} from "@/components/Calculator/Result/ResultDilution";
 import {round, sum} from "@/utils";
 
@@ -45,7 +45,6 @@ export const Result: FunctionComponent<ResultProps> = () => {
     solution_volume,
   } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues
 
-  const ppm = usePPM()
   const fertilizerWeightGroups = useFertilizerSolutionGroup()
 
   const score = result?.score || 0
@@ -53,7 +52,9 @@ export const Result: FunctionComponent<ResultProps> = () => {
   const deltaElements = result?.deltaElements || getEmptyElements()
   const NPKBalance = calculateNPKBalance(elements)
 
-  const liquidFertilizersVolume = round(sum((result?.fertilizers || []).map(f => f.volume || 0)), 1)
+  // const liquidFertilizersVolume = round(sum((result?.fertilizers || []).map(f => f.volume || 0)), 1)
+  const totalWeight =round(sum((result?.fertilizers || []).map(f => f.weight || 0)), 2)
+
 
   return (
     <Card>
@@ -103,10 +104,8 @@ export const Result: FunctionComponent<ResultProps> = () => {
               </li>
             )
           )}
-          <li>Долить {(solution_volume * 1000) - liquidFertilizersVolume} мл воды до {solution_volume}л</li>
-          <li title="Или минерализация, в мг/л">
-            <b>TDS:</b> {ppm} ppm; <b>EC:</b> {ppmToEC(ppm, 1)} мСм/см
-          </li>
+          <li>Всего солей: {totalWeight} г.</li>
+          <li>Концентрация солей: {round(totalWeight/solution_volume,2)} г/л</li>
         </StyledList>
         <ResultDilution/>
         {result?.stats &&

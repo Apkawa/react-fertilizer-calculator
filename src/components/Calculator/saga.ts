@@ -1,10 +1,18 @@
 import {all, call, fork, put, select, takeLatest} from 'redux-saga/effects'
-import {actionTypes, FormAction, getFormValues, stopSubmit} from "redux-form";
+import {actionTypes, change, FormAction, getFormValues, stopSubmit} from "redux-form";
 import {CALCULATE_START, LOAD_STATE_START, REDUX_FORM_NAME} from "./constants";
-import {calculateError, calculateSuccess, loadStateStart, loadStateSuccess, storeCalculateForm} from "./actions";
+import {
+  calculateError, calculateStart,
+  calculateSuccess,
+  loadStateStart,
+  loadStateSuccess,
+  storeCalculateForm,
+  toppingUpSuccess
+} from "./actions";
 import {calculate_v3} from "@/calculator";
 import {CalculatorFormValues} from "./types";
-import {getFillElementsByType} from "@/calculator/helpers";
+import {calculateNPKBalance, calculateToppingUp, getEmptyElements, getFillElementsByType} from "@/calculator/helpers";
+import {round} from "@/utils";
 
 export function* loadCalculatorStateSaga(action: ReturnType<typeof loadStateStart>) {
   // Здесь будет валидация и конвертация между несовместимыми версиями
@@ -38,7 +46,10 @@ export function* calculateStartSaga() {
     accuracy,
     solution_volume,
     solution_concentration,
+    topping_up_enabled,
+    topping_up,
   } = formValues
+
 
   // Тут замораживается UI из за вычислений. нужно либо оптимизировать либо использовать WebWorker
   const result = calculate_v3(
@@ -51,6 +62,35 @@ export function* calculateStartSaga() {
       solution_concentration,
     }
   )
+  if (topping_up_enabled && topping_up) {
+    const toppingUpResult = yield select(
+      state => state.calculator.toppingUpResult
+    )
+    let tRes = calculateToppingUp({
+      currentSolution: topping_up.currentSolution,
+      newSolution: {
+        ...topping_up.newSolution,
+        EC: calculateNPKBalance({...getEmptyElements(), ...formValues.recipe}).EC
+      }
+    });
+    yield put(toppingUpSuccess(tRes))
+    let doRecalculate = false
+    if (tRes.volume !== solution_volume) {
+      yield put(change(REDUX_FORM_NAME, 'solution_volume', tRes.volume))
+      doRecalculate = true
+    }
+    if (tRes.concentration !== solution_concentration) {
+      yield put(change(REDUX_FORM_NAME, 'solution_concentration', tRes.concentration))
+      doRecalculate = true
+    }
+    if (tRes.volume !== toppingUpResult.volume || tRes.concentration !== toppingUpResult.concentration) {
+      doRecalculate = true
+    }
+    if (doRecalculate) {
+      yield put(calculateStart())
+    }
+
+  }
   yield put(calculateSuccess(result))
 }
 

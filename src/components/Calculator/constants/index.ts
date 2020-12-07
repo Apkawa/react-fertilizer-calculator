@@ -20,3 +20,6 @@ export const RECIPE_RESET = 'RECIPE_RESET' as const
 export const LOAD_STATE_START = 'LOAD_STATE_START' as const
 export const LOAD_STATE_SUCCESS = 'LOAD_STATE_SUCCESS' as const
 export const LOAD_STATE_ERROR = 'LOAD_STATE_ERROR' as const
+
+
+export const TOPPING_UP_SUCCESS = 'TOPPING_UP_SUCCESS' as const

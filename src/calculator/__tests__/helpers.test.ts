@@ -1,4 +1,4 @@
-import {calculateNPKBalance, getEmptyElements, NPKBalance} from "../helpers";
+import {calculateNPKBalance, calculateToppingUp, getEmptyElements, NPKBalance} from "../helpers";
 
 describe('calculateNPKBalance', () => {
   test('Check', () => {
@@ -41,5 +41,30 @@ describe('calculateNPKBalance', () => {
       }
     }
     expect(result).toEqual(e)
+  })
+})
+
+
+describe('calculateToppingUp', () => {
+  test('Generic', () => {
+    let result = calculateToppingUp({
+      newSolution: {
+        volume: 25,
+        EC: 1.95,
+      },
+      currentSolution: {
+        volume: 20,
+        EC: 0.6,
+        profileEC: 0.75,
+        profileSaltsConcentration: 0.68
+      }
+    })
+    expect(result).toEqual({
+      "EC": 7.35,
+      "concentration": 3.33,
+      "weight": 33.32,
+      "volume": 5,
+    })
+
   })
 })

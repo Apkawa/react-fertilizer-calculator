@@ -3,6 +3,7 @@ import {CalculateResult} from "@/calculator";
 import {CalculatorFormValues, CalculatorState, Recipe} from "@/components/Calculator/types";
 import {FertilizerInfo} from "@/calculator/types";
 import {ExportStateJSON} from "@/components/Calculator/ImportExport/ExportState";
+import {CalculateToppingUpResult} from "@/calculator/helpers";
 
 export const storeCalculateForm = (form: CalculatorFormValues) => ({
   type: ActionNames.STORE_CALCULATE_FORM,
@@ -67,3 +68,8 @@ export const loadStateSuccess = (payload: Partial<CalculatorState>) => ({
   payload
 })
 
+
+export const toppingUpSuccess = (result: CalculateToppingUpResult) => ({
+  type: ActionNames.TOPPING_UP_SUCCESS,
+  result
+} as const)
