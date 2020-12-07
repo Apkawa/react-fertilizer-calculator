@@ -2,7 +2,8 @@ import {all, call, fork, put, select, takeLatest} from 'redux-saga/effects'
 import {actionTypes, change, FormAction, getFormValues, stopSubmit} from "redux-form";
 import {CALCULATE_START, LOAD_STATE_START, REDUX_FORM_NAME} from "./constants";
 import {
-  calculateError, calculateStart,
+  calculateError,
+  calculateStart,
   calculateSuccess,
   loadStateStart,
   loadStateSuccess,
@@ -12,7 +13,6 @@ import {
 import {calculate_v3} from "@/calculator";
 import {CalculatorFormValues} from "./types";
 import {calculateNPKBalance, calculateToppingUp, getEmptyElements, getFillElementsByType} from "@/calculator/helpers";
-import {round} from "@/utils";
 
 export function* loadCalculatorStateSaga(action: ReturnType<typeof loadStateStart>) {
   // Здесь будет валидация и конвертация между несовместимыми версиями
