@@ -230,4 +230,15 @@ describe("Calculate V2", () => {
       "score": 100,
     })
   })
+  test("Игнорирование серы исправляет профиль по магнию", () => {
+    const result = calculate_v3({
+        NO3: 200, NH4: 20, P: 40, K: 180, Ca: 200, Mg: 50, S: 46,
+      },
+      [
+        {id: "Магний сернокислый", npk: elementsToNPK({Mg: 9.861, S: 13.01})},
+      ],
+      {accuracy: 0.01, solution_volume: 10, ignore: {S: true}}
+    )
+    expect(result.deltaElements.Mg).toEqual(0)
+  })
 })

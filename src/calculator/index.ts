@@ -2,7 +2,7 @@ import {combination, product} from "./itertools";
 import {countDecimals, entries, keys, round, sum, values} from "../utils";
 import {FERTILIZER_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "./constants";
 import {Elements, Fertilizer, FertilizerInfo, NeedElements} from "./types";
-import {getEmptyElements} from "./helpers";
+import {getEmptyElements, getFillElementsByType} from "./helpers";
 import {normalizeFertilizer} from "./fertilizer";
 
 
@@ -107,10 +107,10 @@ export function calculate_v3(
 
 }
 
-const ElementPriority = {
-  'NH4': 1000,
-  'P': 1000,
-  'B': 2000,
+const ElementPriority: Partial<NeedElements> = {
+  'NH4': 2000,
+  'P': 2000,
+  'B': 4000,
 }
 
 // Алгоритм расчетов из https://github.com/siv237/HPG
@@ -128,7 +128,12 @@ export function calculate_v2(
   } = options || {}
   const precision = countDecimals(accuracy)
   let ignoredElements: Elements = getEmptyElements()
-
+  let _priority_fill = getFillElementsByType(1000)
+  let _priority = {
+    ..._priority_fill.macro,
+    ..._priority_fill.micro,
+    ...ElementPriority
+  }
   for (let key of keys(ignoredElements)) {
     if (ignore[key]) {
       ignoredElements[key] = 1
@@ -136,7 +141,12 @@ export function calculate_v2(
     if (typeof needElements[key] == "undefined") {
       ignoredElements[key] = 1
     }
+    // Понижаем приоритет если игнорируется
+    if (_priority?.[key] && ignoredElements[key]) {
+      _priority[key] = (_priority[key] || 0) - 1000
+    }
   }
+
 
   const fertilizerMap = Object.fromEntries(fertilizers.map(f => [f.id, f]))
   const normalizedFertilizers = fertilizers.map(f => normalizeFertilizer(f));
@@ -152,13 +162,17 @@ export function calculate_v2(
 
   for (let f of normalizedFertilizers) {
     let p = entries(f.elements)
+      // Удаляем нулевой вес
       .filter(v => v[1])
-      .sort((a, b) =>
-        ((xElements[a[0]] || 0) / a[1] - (xElements[b[0]] || 0) / b[1])
+      .sort((a, b) => {
+          let cmp1 = ((_priority?.[b[0]] || 0) - (_priority?.[a[0]] || 0))
+          let cmp2 = (
+            ((xElements[a[0]] || 0) / a[1] - (xElements[b[0]] || 0) / b[1])
+          )
+          return cmp1 + cmp2
+        }
       )
-      .sort(([a], [b]) =>
-        ((ElementPriority as any)[b] || 0) - ((ElementPriority as any)[a] || 0)
-      )
+
     let primaryElement = p.filter(([a]) => (xElements[a] || 0) > 0 && (needElements[a] || 0) > 0)?.[0]?.[0]
     // Стараемся принять во внимание комплексные удобрения вроде акварина
     let skipFert = p.filter(([a]) => (needElements[a] || 0) <= 0 && !ignoredElements[a]).length === 1
