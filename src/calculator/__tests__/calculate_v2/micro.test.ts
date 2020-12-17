@@ -167,4 +167,27 @@ describe("Calculate V2 Micro", () => {
     })
   })
 
+  test("Не пытаемся покрыть микрой макро", () => {
+    const result = calculate_v2({
+        ...emptyElements,
+        NO3: 200, NH4: 14, P: 50, K: 200, Ca: 170, Mg: 50, S: 0,
+        Fe: 4000 / 1000,
+        Mn: 636 / 1000,
+        B: 714 / 1000,
+        Zn: 384 / 1000,
+        Cu: 69 / 1000,
+        Mo: 69 / 1000,
+      },
+      [{id: "Аммоний молибденовокислый 4х-водный", composition: [{formula: "(NH4)6Mo7O24*4H2O", percent: 100.3}]}],
+      {
+        accuracy: 0.001,
+        ignore: {
+          ...getFillElementsByType(true).micro,
+          S: true
+        }
+      }
+    )
+    expect(result).toMatchObject({deltaElements: {Mo: 0}})
+  })
+
 })

@@ -110,7 +110,7 @@ export function calculate_v3(
 const ElementPriority: Partial<NeedElements> = {
   'NH4': 2000,
   'P': 2000,
-  'B': 4000,
+  'B': 5000,
 }
 
 // Алгоритм расчетов из https://github.com/siv237/HPG
@@ -128,10 +128,9 @@ export function calculate_v2(
   } = options || {}
   const precision = countDecimals(accuracy)
   let ignoredElements: Elements = getEmptyElements()
-  let _priority_fill = getFillElementsByType(1000)
   let _priority = {
-    ..._priority_fill.macro,
-    ..._priority_fill.micro,
+    ...getFillElementsByType(1000).macro,
+    ...getFillElementsByType(3000).micro,
     ...ElementPriority
   }
   for (let key of keys(ignoredElements)) {
