@@ -1,5 +1,6 @@
-import {buildNPKFertilizer, normalizeFertilizer} from "../fertilizer";
+import {buildFertilizerFromSolution, buildNPKFertilizer, normalizeFertilizer} from "../fertilizer";
 import {getEmptyElements} from "../helpers";
+import {calculate_v2} from "../index";
 
 
 test("Build NPK Fertilizer", () => {
@@ -56,9 +57,11 @@ describe("normalizeFertilizer", () => {
   })
 
   test("convert FertilizerInfo.npk to element Fertilizer", () => {
-    const res = normalizeFertilizer({id: "Valagro 3:11:38",
-        npk: {NO3: 3, P: 11, K: 38, Ca: 0, Mg: 4,}}
-        )
+    const res = normalizeFertilizer({
+        id: "Valagro 3:11:38",
+        npk: {NO3: 3, P: 11, K: 38, Ca: 0, Mg: 4,}
+      }
+    )
     expect(res).toEqual({
         elements: {
           ...getEmptyElements(),
@@ -93,7 +96,7 @@ describe("normalizeFertilizer", () => {
   })
   test('raw NPK сульфат магния', () => {
     const result = normalizeFertilizer(buildNPKFertilizer("сульфат магния", {Mg: 16.7, S: 13.5})
-    , true)
+      , true)
     expect(result).toMatchObject({
       elements: {
         Mg: 10.07,
@@ -156,5 +159,69 @@ describe("normalizeFertilizer", () => {
       Mg: 9.66,
       S: 12.75,
     })
+  })
+
+  test("Сохранение комплексного удобрения buildFertilizerFromSolution", () => {
+    const fertilizers = [
+      {"id": "Хелат Fe", "npk": {"Fe": 11},},
+      {"id": "Хелат Mn", "npk": {"Mn": 13},},
+      {"id": "Хелат Cu", "npk": {"Cu": 15}},
+      {"id": "Хелат Zn", "npk": {"Zn": 15},},
+      {"id": "Метаборат калия", "npk": {"B": 10.1, "K": 44},},
+    ]
+    const solution_volume = 0.5
+    const result = calculate_v2({
+        Fe: 4000 / 1000,
+        Mn: 600 / 1000,
+        B: 600 / 1000,
+        Zn: 600 / 1000,
+        Cu: 50 / 1000,
+        Mo: 50 / 1000,
+      },
+      fertilizers,
+      {
+        solution_volume,
+        solution_concentration: 1000,
+        accuracy: 0.001,
+        ignore: {
+          S: true
+        }
+      }
+    )
+    expect(result).toMatchObject({deltaElements: {B: 0}})
+
+    const complexFertilizer = buildFertilizerFromSolution("Micro", {
+      fertilizers,
+      fertilizer_weights: result.fertilizers,
+      volume: solution_volume
+    })
+    expect(complexFertilizer).toEqual({
+      "id": "Micro",
+      "npk": {"B": 1.17, "Cu": 0.1, "Fe": 7.8, "K": 5.08, "Mn": 1.17, "Zn": 1.17},
+      "solution_concentration": 51.254
+    })
+
+    const result2 = calculate_v2({
+        Fe: 4000 / 1000,
+        Mn: 600 / 1000,
+        B: 600 / 1000,
+        Zn: 600 / 1000,
+        Cu: 50 / 1000,
+        Mo: 50 / 1000,
+      },
+      [complexFertilizer],
+      {
+        solution_volume: 10,
+        solution_concentration: 1,
+        accuracy: 0.001,
+        ignore: {
+          S: true
+        }
+      }
+    )
+
+    expect(result2).toMatchObject({deltaElements: {B: 0}})
+    expect(result2.fertilizers[0]).toMatchObject({volume: 10.009})
+
   })
 })

@@ -44,9 +44,12 @@ export interface FertilizerInfo {
   id: string,
   // TODO
   name?: string,
+  // TODO обеспечить типами то что совместно npk и composition использовать нельзя
+  // Оксидный NPK
   npk?: NPKElements,
+  // Состав, в виде формулы
   composition?: FertilizerComposition[],
-  // Концентрация, г/л
+  // Концентрация солей, г/л
   solution_concentration?: number,
   // Плотность, г/л
   solution_density?: number

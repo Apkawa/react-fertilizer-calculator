@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from "react";
-import {Card, Flex, Heading, Text} from "rebass";
-import {useSelector} from "react-redux";
+import {Button, Card, Flex, Heading, Text} from "rebass";
+import {useDispatch, useSelector} from "react-redux";
 import {CalculatorFormValues, CalculatorState} from "../types";
 import {getFormValues} from "redux-form";
 import {REDUX_FORM_NAME} from "../constants";
@@ -13,6 +13,15 @@ import {ResultFertilizerList} from "./ResultFertilizerList";
 import {useFertilizerSolutionGroup} from "./hooks";
 import {ResultDilution} from "@/components/Calculator/Result/ResultDilution";
 import {round, sum} from "@/utils";
+import {Modal, ModalActions} from "@/components/ui/Modal/Modal";
+import {IconButton} from "@/components/ui/IconButton";
+import {AddEdit, formToFertilizer, getInitialValues} from "@/components/Calculator/FertilizerManager/AddEdit";
+import {Save} from "@styled-icons/fa-regular/Save";
+import {buildFertilizerFromSolution} from "@/calculator/fertilizer";
+import {fertilizerPush} from "@/components/Calculator/actions";
+import {useFormValues} from "@/hooks/ReduxForm";
+import {AddEditFormType} from "@/components/Calculator/FertilizerManager/types";
+import {FERTILIZER_EDIT_FORM_NAME} from "@/components/Calculator/FertilizerManager/constants";
 
 interface ResultProps {
 }
@@ -38,6 +47,7 @@ function getScoreDisplay(score: number): string {
 
 export const Result: FunctionComponent<ResultProps> = () => {
   const {
+    fertilizers,
     result,
   } = useSelector<any>(state => state.calculator) as CalculatorState
 
@@ -55,6 +65,18 @@ export const Result: FunctionComponent<ResultProps> = () => {
   // const liquidFertilizersVolume = round(sum((result?.fertilizers || []).map(f => f.volume || 0)), 1)
   const totalWeight =round(sum((result?.fertilizers || []).map(f => f.weight || 0)), 2)
 
+
+  const [formValues] = useFormValues<AddEditFormType>(FERTILIZER_EDIT_FORM_NAME)
+  const dispatch = useDispatch()
+  const onSave = (modal: ModalActions) => {
+    dispatch(fertilizerPush(formToFertilizer(formValues)))
+    modal.close()
+  }
+  const complexFertilizer = buildFertilizerFromSolution("", {
+    fertilizers,
+    fertilizer_weights: result?.fertilizers || [],
+    volume: solution_volume,
+  })
 
   return (
     <Card>
@@ -97,7 +119,9 @@ export const Result: FunctionComponent<ResultProps> = () => {
           <li>Для {solution_volume}л раствора</li>
           {fertilizerWeightGroups.map(([g, f_weights]) =>
             (<li>
-                <b> Раствор {g} </b>
+                <b>
+                    Раствор {g}
+                </b>
                 <ul>
                   <ResultFertilizerList fertilizers={f_weights}/>
                 </ul>
@@ -107,6 +131,31 @@ export const Result: FunctionComponent<ResultProps> = () => {
           <li>Всего солей: {totalWeight} г.</li>
           <li>Концентрация солей: {round(totalWeight/solution_volume,2)} г/л</li>
         </StyledList>
+        {result?.fertilizers?
+          <Flex>
+            <Modal
+              button={({modal}) => (
+                <IconButton
+                  padding={1}
+                  alignSelf="center"
+                  component={Save}
+                  backgroundColor={'primary'}
+                  onClick={modal.open}
+                >Сохранить комплекс</IconButton>
+              )}
+              container={({modal}) => (
+                <>
+                  <AddEdit
+                    initialValues={getInitialValues(complexFertilizer)}
+                  />
+                  <Flex justifyContent="flex-end">
+                    <Button type="button" onClick={() => onSave(modal)}>Save</Button>
+                  </Flex>
+                </>
+              )}
+            />
+          </Flex>
+        : null}
         <ResultDilution/>
         {result?.stats &&
         <Text>

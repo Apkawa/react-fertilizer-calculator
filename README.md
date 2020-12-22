@@ -88,3 +88,4 @@ https://apkawa.github.io/react-fertilizer-calculator/
 * https://floragrowing.com/ru/encyclopedia/sostavlenie-i-prigotovlenie-pitatelnogo-rastvora
 * http://www.ponics.ru/2009/10/table_for_hydro/
 * http://forum.ponics.ru/index.php?topic=2533.0
+

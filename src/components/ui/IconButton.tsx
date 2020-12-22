@@ -30,12 +30,16 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         setSize(buttonRef.current?.offsetWidth || 0)
       }
     }, [buttonRef, setSize, size])
-
+    let marginRight = 0;
+    if (children) {
+      marginRight = 2;
+    }
     return (
       <Button type="button" {...extraProps} ref={buttonRef}>
         <IconComponent
           color={theme.colors?.background}
           size={containerSize}
+          style={{marginRight}}
         />
         {children}
       </Button>

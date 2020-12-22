@@ -3,6 +3,7 @@ import {calculateMassParts, parseMolecule, parseNitrates} from "./chem";
 import {AtomNameType} from "./constants";
 import {getEmptyElements} from "./helpers";
 import {Elements, Fertilizer, FertilizerComposition, FertilizerInfo, NPKElements} from "@/calculator/types";
+import {FertilizerWeights} from "@/calculator/index";
 
 const NPKOxides = {
   NO3: 'NO3',
@@ -107,3 +108,47 @@ export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass 
 
 }
 
+
+export interface BuildFertilizerFromSolutionOptions {
+  fertilizers: FertilizerInfo[],
+  fertilizer_weights: FertilizerWeights[],
+  // По умолчанию - 1л
+  volume?: number | null,
+}
+
+/*
+  Создание комплексного удобрения из расчета.
+  Таким образом можно учитывать заранее намешанные концентраты
+ */
+export function buildFertilizerFromSolution(id: string, options: BuildFertilizerFromSolutionOptions): FertilizerInfo {
+  const _fertsWeights = Object.fromEntries(options.fertilizer_weights.map(f => [f.id, f]))
+  const totalWeight = sum(options.fertilizer_weights.map(f => f.weight))
+  const totalWeightPerElements = getEmptyElements()
+  let newNpk: NPKElements = {};
+
+  for (let f of options.fertilizers) {
+    if (!_fertsWeights?.[f.id]) {
+      continue
+    }
+    const f_weight = _fertsWeights?.[f.id]
+    const nf = normalizeFertilizer(f)
+    for (let [_el, _el_percent] of entries(nf.elements)) {
+      if (_el_percent > 0) {
+        totalWeightPerElements[_el] += f_weight.weight * (_el_percent / 100)
+      }
+    }
+  }
+
+  for (let [el, el_weight] of entries(totalWeightPerElements)) {
+    if (el_weight > 0) {
+      newNpk[el] = (el_weight * 100) / totalWeight
+    }
+  }
+
+  const newFertilizer: FertilizerInfo = {
+    id,
+    npk: elementsToNPK(newNpk),
+    solution_concentration: totalWeight / (options.volume || 1)
+  }
+  return newFertilizer;
+}
