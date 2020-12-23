@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const packageJson = require('./package.json');
 const { InjectManifest } = require('workbox-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
+
 
 const { rewireWorkboxGenerate, defaultGenerateConfig } = require('react-app-rewire-workbox');
 const path = require('path');
@@ -34,11 +36,18 @@ module.exports = {
     config.plugins = [
       ...config.plugins,
       new webpack.DefinePlugin({
+        __PUBLIC_PATH__: config.output.publicPath,
         __COMMIT_HASH__: JSON.stringify(info.commitHash),
         __VERSION__: JSON.stringify(info.version),
         __COMMIT_DATE__: JSON.stringify(info.isoDate),
         __COMMIT_REF_NAME__: JSON.stringify(info.refName)
-      })
+      }),
+      new CopyPlugin({
+        patterns: [
+          {from:'docs/**/*.{jpg,png,jpeg}', context: 'src/'}
+          ]
+      }),
+
     ]
     config.module.rules.push(
       {

@@ -15,7 +15,13 @@ const HELP_PAGES = [
     path: '/technique',
     name: 'Методика расчета',
     lazy: () => import("!!raw-loader!../../docs/technique.md").then(m => m.default)
-  }
+  },
+  {
+    path: '/chelates',
+    name: 'Изготовление хелатов',
+    lazy: () => import("!!raw-loader!../../docs/chelates/README.md").then(m => m.default)
+  },
+
 ]
 
 
@@ -23,7 +29,7 @@ interface HelpProps {
 }
 
 export const Help: FunctionComponent<HelpProps> = () => {
-  let { path, url } = useRouteMatch();
+  let {path, url} = useRouteMatch();
 
 
   return (
@@ -49,7 +55,14 @@ export const Help: FunctionComponent<HelpProps> = () => {
             <Route exact path={path + p.path}>
               <LazyPromise<string>
                 lazy={p.lazy}
-                component={({result}) => <ReactMarkdown source={result || ""}/>}
+                component={({result}) => (
+                  <ReactMarkdown
+                    source={result || ""}
+                    transformImageUri={uri =>
+                      uri.startsWith("http") ? uri : `./docs/${p.path}/${uri}`
+                    }
+                  />
+                )}
               />
             </Route>
           )}
