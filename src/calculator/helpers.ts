@@ -36,7 +36,7 @@ export function calculateNPKBalance(npk: Elements): NPKBalance {
     }
     result.ion_balance += st
   }
-  // TODO понять что за магические числа
+  // Формула Зоневельда
   result.EC = 0.095 * result.cations + 0.19
 
   entries(result).forEach(([k, v]) => {
