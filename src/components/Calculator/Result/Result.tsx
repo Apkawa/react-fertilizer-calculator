@@ -32,19 +32,6 @@ const StyledList = styled.ul`
   }
 `
 
-function getScoreDisplay(score: number): string {
-  let score_display = "Не соответствует";
-  if (score >= 95) score_display = "Идеально";
-  if (score >= 90 && score < 95) score_display = "Отлично";
-  if (score >= 85 && score < 90) score_display = "Очень хорошо";
-  if (score >= 80 && score < 85) score_display = "Хорошо";
-  if (score >= 70 && score < 80) score_display = "Средне";
-  if (score >= 60 && score < 70) score_display = "Плохо";
-  if (score >= 40 && score < 60) score_display = "Ужасно";
-  return score_display
-}
-
-
 export const Result: FunctionComponent<ResultProps> = () => {
   const {
     fertilizers,
@@ -57,7 +44,6 @@ export const Result: FunctionComponent<ResultProps> = () => {
 
   const fertilizerWeightGroups = useFertilizerSolutionGroup()
 
-  const score = result?.score || 0
   const elements = result?.elements || getEmptyElements()
   const deltaElements = result?.deltaElements || getEmptyElements()
   const NPKBalance = calculateNPKBalance(elements)
@@ -106,15 +92,10 @@ export const Result: FunctionComponent<ResultProps> = () => {
           <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
           <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
           <StyledBalanceCell name="%NH4" value={round((NPKBalance.ratio?.NH4?.NO3 || 0) * 100, 1)}/>
-          <StyledBalanceCell name="K:Mg" value={NPKBalance.ratio.K.Mg}/>
+          <StyledBalanceCell name="K:N" value={NPKBalance.ratio.K.N}/>
           <StyledBalanceCell name="K:Ca" value={NPKBalance.ratio.K.Ca}/>
-          <StyledBalanceCell name="Ca:N" value={NPKBalance.ratio.Ca.N}/>
+          <StyledBalanceCell name="K:Mg" value={NPKBalance.ratio.K.Mg}/>
         </Flex>
-        <Heading fontSize={2}>
-          Оценка: {getScoreDisplay(score)}
-        </Heading>
-
-        <Text fontSize={6}>{`${score || 0}%`}</Text>
         <StyledList>
           <li>Для {solution_volume}л раствора</li>
           {fertilizerWeightGroups.map(([g, f_weights]) =>

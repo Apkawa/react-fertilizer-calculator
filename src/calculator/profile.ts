@@ -107,8 +107,9 @@ export function convertProfileWithRatio(
  * @return new NPK
  */
 export function convertProfileWithEC(npk: NPKElements, EC: number): NPKElements {
-
+  // Конвертация профиля по формуле Зоневельда
   const v = getProfileRatioMatrix(npk)
+
   // TODO понять и отрефакторить эту магию
   const rN = (v.K.Mg * v.K.Ca) / (
     v.K.Ca * v.K.N + v.K.Mg * v.K.N + v.K.Mg * v.K.Ca + v.K.Mg * v.K.Ca * v.K.N
@@ -147,6 +148,7 @@ export function convertProfileWithEC(npk: NPKElements, EC: number): NPKElements 
     Ca: rCa * r,
     Mg: rMg * r,
   }
+  // TODO ионный баланс
   return Object.fromEntries(entries(newNpk)
     .map(([el, v]) => (
       [el, round(v, 1)]

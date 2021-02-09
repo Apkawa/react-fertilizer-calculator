@@ -10,9 +10,9 @@ import {
   storeCalculateForm,
   toppingUpSuccess
 } from "./actions";
-import {calculate_v3} from "@/calculator";
+import {calculate_v4} from "@/calculator";
 import {CalculatorFormValues} from "./types";
-import {calculateNPKBalance, calculateToppingUp, getEmptyElements, getFillElementsByType} from "@/calculator/helpers";
+import {calculateNPKBalance, calculateToppingUp, getEmptyElements} from "@/calculator/helpers";
 
 export function* loadCalculatorStateSaga(action: ReturnType<typeof loadStateStart>) {
   // Здесь будет валидация и конвертация между несовместимыми версиями
@@ -52,11 +52,11 @@ export function* calculateStartSaga() {
 
 
   // Тут замораживается UI из за вычислений. нужно либо оптимизировать либо использовать WebWorker
-  const result = calculate_v3(
+  const result = calculate_v4(
     formValues.recipe,
     formValues.fertilizers,
     {
-      ignore: {...ignore, ...getFillElementsByType(true).micro},
+      ignore: {...ignore},
       accuracy,
       solution_volume,
       solution_concentration,

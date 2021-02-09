@@ -1,6 +1,6 @@
 import {combination, product} from "./itertools";
 import {countDecimals, entries, keys, round, sum, values} from "../utils";
-import {FERTILIZER_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "./constants";
+import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "./constants";
 import {Elements, Fertilizer, FertilizerInfo, NeedElements} from "./types";
 import {getEmptyElements, getFillElementsByType} from "./helpers";
 import {normalizeFertilizer} from "./fertilizer";
@@ -78,6 +78,57 @@ export function getScoreElement(needElements: NeedElements, currentElements: Ele
   return Object.fromEntries(pairs)
 }
 
+// Оптимизация подбора путем разделения удобрений на макро и микро
+export function calculate_v4(
+  needElements: NeedElements,
+  fertilizers: FertilizerInfo[],
+  options: CalculateOptions = {}
+): CalculateResult {
+
+  let macroFertilizers = fertilizers.filter(f => !MICRO_ELEMENT_NAMES.filter(n => f.npk?.[n]).length)
+  let microFertilizers = fertilizers.filter(f => MICRO_ELEMENT_NAMES.filter(n => f.npk?.[n]).length)
+
+  let microResult = calculate_v3(needElements, microFertilizers,
+    {...options, ignore: {...options.ignore, ...getFillElementsByType(true).macro}})
+
+  MACRO_ELEMENT_NAMES.forEach(e => {
+    needElements[e] = needElements?.[e] || 0 - microResult.elements[e]
+  })
+
+  let macroResult = calculate_v3(needElements, macroFertilizers,
+    {...options, ignore: {...options.ignore, ...getFillElementsByType(true).micro}})
+
+
+  let elementsEntries = entries(macroResult.elements).map(([e, v]) => [e, v + microResult.elements[e]])
+  let elements = Object.fromEntries(elementsEntries)
+  let deltaElements = FERTILIZER_ELEMENT_NAMES.map((e) => [e, (needElements[e]||0) - elements[e]])
+
+  let scores = []
+  if (macroFertilizers.length > 0) {
+    scores.push(macroResult.score)
+  }
+  if (microFertilizers.length > 0) {
+    scores.push(microResult.score)
+  }
+
+  let result: CalculateResult = {
+    fertilizers: [
+      ...macroResult.fertilizers,
+      ...microResult.fertilizers
+    ],
+    elements,
+    deltaElements: Object.fromEntries(deltaElements),
+    score: round(sum(scores) / scores.length,1),
+    stats: {
+      time: macroResult.stats.time + microResult.stats.time,
+      count: macroResult.stats.count + microResult.stats.count,
+    }
+
+  }
+
+  return result
+}
+
 // Подбор оптимального количества путем пересортировки удобрений
 export function calculate_v3(
   needElements: NeedElements,
@@ -89,10 +140,17 @@ export function calculate_v3(
   const time = new Date().getTime();
   let count = 0;
   for (let f of combination(fertilizers)) {
+    if (count > 3000) {
+      // Решение скорее всего не существует, таймаут
+      break
+    }
     const r = calculate_v2(needElements, f, options)
     if (!result) {
       result = r
       continue
+    }
+    if (result.score >= 100) {
+      break
     }
     if (result.score < r.score) {
       result = r
@@ -214,7 +272,7 @@ export function calculate_v2(
 
   let ignored = sum(values(ignoredElements));
   const needElementsLength = keys(ignoredElements).length
-  const totalScore = Math.round(100 / ((score_percent - (needElementsLength - ignored)) / (needElementsLength - ignored) + 1))
+  const totalScore = round(100 / ((score_percent - (needElementsLength - ignored)) / (needElementsLength - ignored) + 1), 2)
 
   const deltaElementsPairs = entries(calcElements).map(([k, v]) => {
     let dv = round((needElements[k] || 0) - v || 0, 1)
@@ -236,7 +294,7 @@ export function calculate_v2(
       .filter(v => v.weight),
     elements: calcElements,
     deltaElements,
-    score: totalScore,
+    score: totalScore || 0,
     stats: {
       count: 0,
       time: 0,
@@ -248,7 +306,7 @@ export function calculate_v2(
 
 // DEPRECATED
 export function calculate_v1(
-  needElements: Elements,
+  needElements: NeedElements,
   fertilizers: Fertilizer[],
   options: CalculateOptions = {},
 ): CalculateResult {
@@ -349,7 +407,7 @@ export function calculate_v1(
   }
 
   const deltaElementsPairs = entries(calculatedElements).map(([k, v]) => {
-    return [k, needElements[k] - v]
+    return [k, needElements?.[k] || 0 - v]
   })
   const deltaElements = Object.fromEntries(deltaElementsPairs)
 

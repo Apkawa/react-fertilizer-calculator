@@ -140,9 +140,9 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
           <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
           <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
           <StyledBalanceCell name="%NH4" value={round(NPKBalance.ratio.NH4.NO3 * 100, 1)}/>
-          <StyledBalanceCell name="K:Mg" value={NPKBalance.ratio.K.Mg}/>
+          <StyledBalanceCell name="K:N" value={NPKBalance.ratio.K.N}/>
           <StyledBalanceCell name="K:Ca" value={NPKBalance.ratio.K.Ca}/>
-          <StyledBalanceCell name="Ca:N" value={NPKBalance.ratio.Ca.N}/>
+          <StyledBalanceCell name="K:Mg" value={NPKBalance.ratio.K.Mg}/>
         </Flex>
       </Flex>
     </Card>

@@ -75,7 +75,7 @@ describe("Calculate V2 Micro", () => {
         "Zn": 0.7277
       },
       "fertilizers": [{"base_weight": 0.137, "id": "Аквамикс", "volume": 23.826, "weight": 0.137}],
-      "score": 26,
+      "score": 26.21,
       "stats": {"count": 0, "time": 0}
     })
   })
@@ -131,7 +131,7 @@ describe("Calculate V2 Micro", () => {
         "Zn": 0.0116
       },
       "fertilizers": [{"base_weight": 0.116, "id": "Акварин земляничный", "volume": null, "weight": 0.116}],
-      "score": 3,
+      "score": 3.32,
       "stats": {"count": 0, "time": 0}
     })
   })
