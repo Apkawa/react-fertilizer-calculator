@@ -3,7 +3,7 @@ import {Box, Button, Flex} from "rebass";
 
 import {useFormName, useFormValues} from "@/hooks/ReduxForm";
 import {CalculatorFormValues} from "@/components/Calculator/types";
-import {calculateNPKBalance} from '@/calculator/helpers';
+import {getNPKDetailInfo} from '@/calculator/helpers';
 import {Elements, NeedElements} from "@/calculator/types";
 import {decimal} from "@/components/ui/ReduxForm/normalizers";
 import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "@/calculator/constants";
@@ -31,17 +31,16 @@ const BLOCKING_CELLS = ["N:Ca", "Ca:N", "Ca:K", "Ca:Mg", "Mg:K", "Mg:Ca"]
 export function RecipeTuneForm(props: RecipeTuneFormProps) {
   const formValue = useFormValues<CalculatorFormValues>(useFormName())[0]
   const [recipe, setRecipe] = useState(formValue.recipe)
-  const recipeInfo = calculateNPKBalance(recipe as Elements)
+  const recipeInfo = getNPKDetailInfo(recipe as Elements)
   const [ratio, setRatio] = useState(recipeInfo.ratio)
   const [EC, setEC] = useState(recipeInfo.EC)
 
   const onChangeRecipe = (el: FERTILIZER_ELEMENT_NAMES, value: number) => {
     let newRecipe = {...recipe, [el]: value}
-    if (el == 'S') {
+    if (el === 'S') {
       newRecipe.Ca = fixIonicBalanceByCa(newRecipe)
     } else {
       newRecipe.S = fixIonicBalanceByS(newRecipe)
-
     }
     setRecipe(newRecipe)
     setEC(calculateEC(newRecipe))

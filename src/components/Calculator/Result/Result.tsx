@@ -7,7 +7,7 @@ import {REDUX_FORM_NAME} from "../constants";
 import {MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "@/calculator/constants";
 import {Element} from "../FertilizerSelect/SelectedListItem";
 import styled from "styled-components";
-import {calculateNPKBalance, getEmptyElements} from "@/calculator/helpers";
+import {getNPKDetailInfo, getEmptyElements} from "@/calculator/helpers";
 import {StyledBalanceCell} from "../Options/Recipe";
 import {ResultFertilizerList} from "./ResultFertilizerList";
 import {useFertilizerSolutionGroup} from "./hooks";
@@ -46,7 +46,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
 
   const elements = result?.elements || getEmptyElements()
   const deltaElements = result?.deltaElements || getEmptyElements()
-  const NPKBalance = calculateNPKBalance(elements)
+  const NPKBalance = getNPKDetailInfo(elements)
 
   // const liquidFertilizersVolume = round(sum((result?.fertilizers || []).map(f => f.volume || 0)), 1)
   const totalWeight =round(sum((result?.fertilizers || []).map(f => f.weight || 0)), 2)

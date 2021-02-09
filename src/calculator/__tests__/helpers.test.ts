@@ -1,8 +1,7 @@
-import {calculateNPKBalance, calculateToppingUp, getEmptyElements, NPKBalance} from "../helpers";
+import {getNPKDetailInfo, calculateToppingUp, getEmptyElements, NPKBalance} from "../helpers";
 
-describe('calculateNPKBalance', () => {
-  test('Check', () => {
-    const result = calculateNPKBalance({
+  test('getNPKDetailInfo', () => {
+    const result = getNPKDetailInfo({
       ...getEmptyElements(),
       NO3: 224,
       NH4: 14,
@@ -13,9 +12,6 @@ describe('calculateNPKBalance', () => {
       S: 56,
     })
     const e: NPKBalance = {
-      // 20,69	-20,74	-0,050	2,16	5,9%	0,90	1,32	5,56
-      cations: 20.69,
-      anions: -20.74,
       ion_balance: -0.050,
       EC: 2.16,
       "ratio": {
@@ -42,7 +38,6 @@ describe('calculateNPKBalance', () => {
     }
     expect(result).toEqual(e)
   })
-})
 
 
 describe('calculateToppingUp', () => {

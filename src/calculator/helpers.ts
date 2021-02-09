@@ -1,43 +1,23 @@
 import {entries, round, sum} from "../utils";
-import {IONIC_STRENGTH} from "./constants";
 import {FertilizerWeights} from './index';
 import {Elements, MacroElements, MicroElements} from "./types";
-import {ElementsMatrixType, getProfileRatioMatrix} from "./profile";
+import {calculateEC, calculateIonicBalance, ElementsMatrixType, getProfileRatioMatrix} from "./profile";
 
 export interface NPKBalance {
-  anions: number,
-  cations: number,
   ion_balance: number,
   ratio: ElementsMatrixType,
   EC: number
 }
 
 
-export function calculateNPKBalance(npk: Elements): NPKBalance {
+export function getNPKDetailInfo(npk: Elements): NPKBalance {
   const ratio = getProfileRatioMatrix(npk)
   const result: NPKBalance = {
-    anions: -0,
-    cations: 0,
-    ion_balance: 0,
+    ion_balance: calculateIonicBalance(npk),
     ratio,
-    EC: 0,
+    EC: calculateEC(npk),
   }
-  for (let [el, w] of entries(npk)) {
-    let ionS = 0
-    if (el in IONIC_STRENGTH) {
-      // TODO починить тип
-      ionS = (IONIC_STRENGTH as any)[el] || 0
-    }
-    const st = w * ionS
-    if (Math.sign(st) < 0) {
-      result.anions += st
-    } else {
-      result.cations += st
-    }
-    result.ion_balance += st
-  }
-  // Формула Зоневельда
-  result.EC = 0.095 * result.cations + 0.19
+  result.EC = calculateEC(npk)
 
   entries(result).forEach(([k, v]) => {
     if (k === "ratio") {

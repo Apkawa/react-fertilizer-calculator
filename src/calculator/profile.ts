@@ -1,6 +1,6 @@
 import {Elements, NPKElements} from "./types";
 import {entries, round} from "../utils";
-import {ATOMIC_MASS, MACRO_ELEMENT_NAMES, IONIC_STRENGTH} from "./constants";
+import {ATOMIC_MASS, MACRO_ELEMENT_NAMES} from "./constants";
 import {extract_percent} from "./helpers";
 
 export const ALLOWED_ELEMENT_IN_MATRIX = ["N", ...MACRO_ELEMENT_NAMES]

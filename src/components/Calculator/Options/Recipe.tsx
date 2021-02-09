@@ -13,7 +13,7 @@ import {CalculatorState, Recipe as RecipeType} from "@/components/Calculator/typ
 import {useDispatch, useSelector} from "react-redux";
 import {recipePush, recipeRemove} from "@/components/Calculator/actions";
 import {Elements, NeedElements} from "@/calculator/types";
-import {calculateNPKBalance, getEmptyElements} from "@/calculator/helpers";
+import {getNPKDetailInfo, getEmptyElements} from "@/calculator/helpers";
 import {Modal} from "@/components/ui/Modal/Modal";
 import {RecipeTuneForm} from "@/components/Calculator/Options/RecipeTuneForm";
 import {round} from "@/utils";
@@ -41,7 +41,7 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
 
   const dispatch = useDispatch()
 
-  const NPKBalance = calculateNPKBalance(values.recipe || getEmptyElements())
+  const NPKBalance = getNPKDetailInfo(values.recipe || getEmptyElements())
 
   const onChangeHandler = (item: RecipeType | null) => {
     item && setSelected(item)

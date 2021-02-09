@@ -12,7 +12,7 @@ import {
 } from "./actions";
 import {calculate_v4} from "@/calculator";
 import {CalculatorFormValues} from "./types";
-import {calculateNPKBalance, calculateToppingUp, getEmptyElements} from "@/calculator/helpers";
+import {getNPKDetailInfo, calculateToppingUp, getEmptyElements} from "@/calculator/helpers";
 
 export function* loadCalculatorStateSaga(action: ReturnType<typeof loadStateStart>) {
   // Здесь будет валидация и конвертация между несовместимыми версиями
@@ -70,7 +70,7 @@ export function* calculateStartSaga() {
       currentSolution: topping_up.currentSolution,
       newSolution: {
         ...topping_up.newSolution,
-        EC: calculateNPKBalance({...getEmptyElements(), ...formValues.recipe}).EC
+        EC: getNPKDetailInfo({...getEmptyElements(), ...formValues.recipe}).EC
       }
     });
     yield put(toppingUpSuccess(tRes))
