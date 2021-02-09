@@ -1,6 +1,6 @@
 import {Elements, NPKElements} from "./types";
 import {entries, round} from "../utils";
-import {ATOMIC_MASS, MACRO_ELEMENT_NAMES} from "./constants";
+import {ATOMIC_MASS, MACRO_ELEMENT_NAMES, IONIC_STRENGTH} from "./constants";
 import {extract_percent} from "./helpers";
 
 export const ALLOWED_ELEMENT_IN_MATRIX = ["N", ...MACRO_ELEMENT_NAMES]
@@ -36,8 +36,125 @@ export interface ChangeProfileResult {
 //
 // }
 
+interface ProfileCationsAnionsResult {
+  cations: number,
+  anions: number,
+}
+
+export function profileCationsAnions(npk: NPKElements): ProfileCationsAnionsResult {
+  const cations = (
+    ((npk.NH4 || 0) / ATOMIC_MASS.N)
+    + ((npk.K || 0) / ATOMIC_MASS.K)
+    + ((2 * (npk.Ca || 0)) / ATOMIC_MASS.Ca)
+    + ((2 * (npk.Mg || 0)) / ATOMIC_MASS.Mg)
+  )
+  const anions = (
+    ((npk.NO3 || 0) / ATOMIC_MASS.N)
+    + ((npk.P || 0) / ATOMIC_MASS.P)
+    + ((2 * (npk.S || 0)) / ATOMIC_MASS.S)
+    + ((npk.Cl || 0) / ATOMIC_MASS.Cl)
+  )
+
+  return {
+    cations,
+    anions
+  }
+}
+
 /**
- * Расчет соотношений N/K и тд
+ * Расчет ЕС профиля по формуле Зоневельд
+ * @param npk
+ */
+export function calculateEC(npk: NPKElements): number {
+  const cations = profileCationsAnions(npk).cations
+  return round((0.095 * cations) + 0.19, 3)
+}
+
+/**
+ * Расчет ионного баланса
+ * @param npk
+ */
+export function calculateIonicBalance(npk: NPKElements): number {
+  const cat_an = profileCationsAnions(npk)
+  return round(cat_an.cations - cat_an.anions, 3)
+
+}
+
+/**
+ * Нормализация ионного баланса по сере
+ * @param npk
+ */
+export function fixIonicBalanceByS(npk: NPKElements): number {
+  const M_NH4 = ATOMIC_MASS.N;
+  const M_NO3 = ATOMIC_MASS.N;
+  const M_P = ATOMIC_MASS.P;
+  const M_K = ATOMIC_MASS.K;
+  const M_Ca = ATOMIC_MASS.Ca;
+  const M_Mg = ATOMIC_MASS.Mg;
+  const M_S = ATOMIC_MASS.S;
+  const M_Cl = ATOMIC_MASS.Cl;
+
+  const m_NH4 = npk.NH4 || 0;
+  const m_NO3 = npk.NO3 || 0;
+  const m_P = npk.P || 0;
+  const m_K = npk.K || 0;
+  const m_Ca = npk.Ca || 0;
+  const m_Mg = npk.Mg || 0;
+  const m_Cl = npk.Cl || 0;
+
+  // Формула получена путем обратного решения формулы ионного баланса
+  const mS = (
+    (
+      -M_Ca * M_Cl * M_K * M_Mg * M_NH4 * M_NO3 * M_S * m_P
+      - M_Ca * M_Cl * M_K * M_Mg * M_NH4 * M_P * M_S * m_NO3
+      + M_Ca * M_Cl * M_K * M_Mg * M_NO3 * M_P * M_S * m_NH4
+      + 2 * M_Ca * M_Cl * M_K * M_NH4 * M_NO3 * M_P * M_S * m_Mg
+      + M_Ca * M_Cl * M_Mg * M_NH4 * M_NO3 * M_P * M_S * m_K
+      - M_Ca * M_K * M_Mg * M_NH4 * M_NO3 * M_P * M_S * m_Cl
+      + 2 * M_Cl * M_K * M_Mg * M_NH4 * M_NO3 * M_P * M_S * m_Ca
+    ) / (2 * M_Ca * M_Cl * M_K * M_Mg * M_NH4 * M_NO3 * M_P)
+  )
+  return round(mS, 3)
+}
+
+/**
+ * Нормализация ионного баланса по кальцию
+ * @param npk
+ */
+export function fixIonicBalanceByCa(npk: NPKElements): number {
+  const M_NH4 = ATOMIC_MASS.N;
+  const M_NO3 = ATOMIC_MASS.N;
+  const M_P = ATOMIC_MASS.P;
+  const M_K = ATOMIC_MASS.K;
+  const M_Ca = ATOMIC_MASS.Ca;
+  const M_Mg = ATOMIC_MASS.Mg;
+  const M_S = ATOMIC_MASS.S;
+  const M_Cl = ATOMIC_MASS.Cl;
+
+  const m_NH4 = npk.NH4 || 0;
+  const m_NO3 = npk.NO3 || 0;
+  const m_P = npk.P || 0;
+  const m_K = npk.K || 0;
+  const m_Mg = npk.Mg || 0;
+  const m_S = npk.S || 0;
+  const m_Cl = npk.Cl || 0;
+
+  // Формула получена путем обратного решения формулы ионного баланса
+  const mCa = (
+    (2 * M_Ca * M_Cl * M_K * M_Mg * M_NH4 * M_NO3 * M_P * m_S
+      + M_Ca * M_Cl * M_K * M_Mg * M_NH4 * M_NO3 * M_S * m_P
+      + M_Ca * M_Cl * M_K * M_Mg * M_NH4 * M_P * M_S * m_NO3
+      - M_Ca * M_Cl * M_K * M_Mg * M_NO3 * M_P * M_S * m_NH4
+      - 2 * M_Ca * M_Cl * M_K * M_NH4 * M_NO3 * M_P * M_S * m_Mg
+      - M_Ca * M_Cl * M_Mg * M_NH4 * M_NO3 * M_P * M_S * m_K
+      + M_Ca * M_K * M_Mg * M_NH4 * M_NO3 * M_P * M_S * m_Cl
+    ) / (2 * M_Cl * M_K * M_Mg * M_NH4 * M_NO3 * M_P * M_S)
+  )
+  return round(mCa, 3)
+}
+
+/**
+ * Расчет матрицы соотношений
  * @param npk
  * @return ElementsMatrixType
  */
@@ -72,15 +189,17 @@ type PartialElementsMatrix = {
 export function convertProfileWithRatio(
   npk: NPKElements,
   ratio: PartialElementsMatrix): NPKElements {
-  const newNPK: NPKElements = {...npk}
-  const N = (newNPK.NO3 || 0) + (newNPK.NH4 || 0)
+  const EC = calculateEC(npk)
   const v = getProfileRatioMatrix(npk)
+
+  let newNPK: NPKElements = {...npk}
   for (let [el1, toEls] of entries(ratio)) {
     for (let [el2, r] of entries(toEls)) {
       if (el1 === el2) {
         continue
       }
       let f = (v: number, r: number) => v * r
+      v[el1][el2] = r
       if (el1 === "N") {
         let _N = f((newNPK[el2 as MACRO_ELEMENT_NAMES] || 0), r)
         newNPK.NH4 = extract_percent(_N, v.NH4.NO3)
@@ -88,12 +207,14 @@ export function convertProfileWithRatio(
       } else {
         let elM = newNPK[el2 as MACRO_ELEMENT_NAMES] || 0
         if (el2 === 'N') {
-          elM = N
+          elM = (newNPK.NO3 || 0) + (newNPK.NH4 || 0)
         }
         newNPK[el1 as MACRO_ELEMENT_NAMES] = elM * r
       }
     }
   }
+
+  newNPK = convertProfileWithEC(newNPK, EC, v)
   return Object.fromEntries(entries(newNPK)
     .map(([el, v]) => (
       [el, round(v, 1)]
@@ -106,49 +227,51 @@ export function convertProfileWithRatio(
  * @param EC new EC
  * @return new NPK
  */
-export function convertProfileWithEC(npk: NPKElements, EC: number): NPKElements {
+export function convertProfileWithEC(npk: NPKElements, EC: number, ratio?: ElementsMatrixType): NPKElements {
   // Конвертация профиля по формуле Зоневельда
-  const v = getProfileRatioMatrix(npk)
 
-  // TODO понять и отрефакторить эту магию
-  const rN = (v.K.Mg * v.K.Ca) / (
-    v.K.Ca * v.K.N + v.K.Mg * v.K.N + v.K.Mg * v.K.Ca + v.K.Mg * v.K.Ca * v.K.N
-  );
-  const rK = (v.K.N * v.K.Mg * v.K.Ca) / (
-    v.K.Ca * v.K.N + v.K.Mg * v.K.N + v.K.Mg * v.K.Ca + v.K.Mg * v.K.Ca * v.K.N);
-  const rCa = (v.K.Mg * v.K.N) / (
-    v.K.Ca * v.K.N + v.K.Mg * v.K.N + v.K.Mg * v.K.Ca + v.K.Mg * v.K.Ca * v.K.N);
-  const rMg = (v.K.Ca * v.K.N) / (
-    v.K.Ca * v.K.N + v.K.Mg * v.K.N + v.K.Mg * v.K.Ca + v.K.Mg * v.K.Ca * v.K.N
-  );
-  const vNH4NO3 = (npk.NH4 || 0) / ((npk.NH4 || 0) + (npk.NO3 || 0))
-  const rNH4 = (rN * vNH4NO3) / (1 + vNH4NO3);
+  const v = ratio || getProfileRatioMatrix(npk)
 
-  const molN = ATOMIC_MASS.N
-  // const molP = ATOMIC_MASS.P
-  const molK = ATOMIC_MASS.K
-  const molCa = ATOMIC_MASS.Ca
-  const molMg = ATOMIC_MASS.Mg
+  const K_KN = v.K.N
+  const K_KMg = v.K.Mg
+  const K_KCa = v.K.Ca
+  const K_NH4NO3 = v.NH4.NO3
+
+  const r_N = K_KCa*K_KMg/(K_KCa*K_KMg*K_KN + K_KCa*K_KMg + K_KCa*K_KN + K_KMg*K_KN)
+  const r_NH4 = (K_NH4NO3 * r_N) / (K_NH4NO3 + 1)
+  const r_NO3 = r_N / (K_NH4NO3 + 1)
+
+  const r_K = K_KCa * K_KMg * K_KN / ((K_KCa * K_KMg * K_KN) + (K_KCa * K_KMg) + (K_KCa * K_KN + K_KMg * K_KN))
+  const r_Ca = K_KMg * K_KN / (K_KCa * K_KMg * K_KN + K_KCa * K_KMg + K_KCa * K_KN + K_KMg * K_KN)
+  const r_Mg = K_KCa * K_KN / (K_KCa * K_KMg * K_KN + K_KCa * K_KMg + K_KCa * K_KN + K_KMg * K_KN)
+
+  const M_NH4 = ATOMIC_MASS.N;
+  const M_K = ATOMIC_MASS.K;
+  const M_Ca = ATOMIC_MASS.Ca;
+  const M_Mg = ATOMIC_MASS.Mg;
+
+  const m_NH4 = r_NH4;
+  const m_K = r_K;
+  const m_Ca = r_Ca;
+  const m_Mg = r_Mg;
 
   const r = (
-    0.10526315789473684211 * molN * molCa * molMg * molK * (100 * EC - 19)) / (
-    rNH4 * molCa * molMg * molK
-    + 2 * rCa * molN * molMg * molK
-    + 2 * rMg * molN * molCa * molK
-    + rK * molN * molCa * molMg
-  );
-  const N = rN * r;
-  const NH4 = extract_percent(N, v.NH4.NO3)
+    (200.0 * EC * M_Ca * M_K * M_Mg * M_NH4 - 38.0 * M_Ca * M_K * M_Mg * M_NH4)
+    / (19.0 * M_Ca * M_K * M_Mg * m_NH4 + 38.0 * M_Ca * M_K * M_NH4 * m_Mg
+      + 19.0 * M_Ca * M_Mg * M_NH4 * m_K + 38.0 * M_K * M_Mg * M_NH4 * m_Ca)
+  )
 
   let newNpk = {
     ...npk,
-    NH4,
-    NO3: N - NH4,
-    K: rK * r,
-    Ca: rCa * r,
-    Mg: rMg * r,
+    NH4: r_NH4 * r,
+    NO3: r_NO3 * r,
+    K: r_K * r,
+    Ca: r_Ca * r,
+    Mg: r_Mg * r,
   }
-  // TODO ионный баланс
+  // Пересчет ионного баланса по сере
+  newNpk.S = fixIonicBalanceByS(newNpk)
+
   return Object.fromEntries(entries(newNpk)
     .map(([el, v]) => (
       [el, round(v, 1)]
