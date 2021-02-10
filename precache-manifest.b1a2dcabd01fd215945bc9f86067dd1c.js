@@ -12,22 +12,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "./docs/chelates/EDTA_make_3.jpg"
   },
   {
-    "revision": "96982367da743b74de5c020ec15af92e",
+    "revision": "7b5b78039e8ab8be54134c197c777213",
     "url": "./index.html"
-  },
-  {
-    "url": "./precache-manifest.a72683369fe1f77d3353f231242f16b9.js"
-  },
-  {
-    "revision": "1896a352fa77f7a9c527ec9815bcb11c",
-    "url": "./service-worker.js"
   },
   {
     "revision": "c50f18e67660d8d258e2",
     "url": "./static/css/9.050523cc.chunk.css"
   },
   {
-    "revision": "19ee4b2ba0449ea5a956",
+    "revision": "d910bc2116982bd16254",
     "url": "./static/css/main.95846660.chunk.css"
   },
   {
@@ -83,8 +76,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "./static/js/4.bb0dbb1e.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7ea624f279ae3f3d037f",
-    "url": "./static/js/5.86e2e17c.chunk.js"
+    "revision": "44baaa9cf7777f4bc7d4",
+    "url": "./static/js/5.13a465d8.chunk.js"
   },
   {
     "revision": "8aac3e75dc118fb81d95",
@@ -107,12 +100,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "./static/js/9.ed3e24cb.chunk.js"
   },
   {
-    "revision": "19ee4b2ba0449ea5a956",
-    "url": "./static/js/main.b4fa33c3.chunk.js"
+    "revision": "d910bc2116982bd16254",
+    "url": "./static/js/main.030e7f90.chunk.js"
   },
   {
-    "revision": "871fd561d2672b3c7225",
-    "url": "./static/js/runtime-main.9c137d2c.js"
+    "revision": "76a80fd6d8cb55c03aa4",
+    "url": "./static/js/runtime-main.63d939d2.js"
   },
   {
     "revision": "5d5d9eefa31e5e13a6610d9fa7a283bb",
