@@ -4,6 +4,7 @@
 
 https://apkawa.github.io/react-fertilizer-calculator/
 
+
 базируется на логике других калькуляторов:
 
 * http://chile-forum.ru/index.php/topic,2699.0.html
@@ -79,6 +80,10 @@ https://apkawa.github.io/react-fertilizer-calculator/
 * [ ] Апи миксера (автоматическое смешивание концентратов)
     * [ ] Документация
 
+# Поддержка
+
+* [@telegram](https://t.me/fertilizer_calculator_support)
+* [Issues](https://github.com/Apkawa/react-fertilizer-calculator/issues)
 
 # Полезная информация
 
@@ -88,4 +93,6 @@ https://apkawa.github.io/react-fertilizer-calculator/
 * https://floragrowing.com/ru/encyclopedia/sostavlenie-i-prigotovlenie-pitatelnogo-rastvora
 * http://www.ponics.ru/2009/10/table_for_hydro/
 * http://forum.ponics.ru/index.php?topic=2533.0
+
+
 
