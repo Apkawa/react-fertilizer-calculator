@@ -4,8 +4,7 @@ import {Cross} from "@styled-icons/entypo/Cross"
 import {FertilizerType} from "./types";
 import {normalizeFertilizer} from "@/calculator/fertilizer";
 import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
-import {IconButton} from "../../ui/IconButton";
-import {round} from "@/utils";
+import {IconButton} from "@/components/ui/IconButton";
 import {FertilizerWeights} from "@/calculator";
 
 interface ElementProps {
