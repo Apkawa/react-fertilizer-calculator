@@ -30,7 +30,7 @@ export function buildNPKFertilizer(id: string, npk: NPKElements): FertilizerInfo
     )
   return {
     id,
-    composition
+    composition,
   }
 }
 
@@ -55,7 +55,7 @@ export function compositionToNPKElements(composition: FertilizerComposition[]): 
             percent = comp.percent;
           }
           percent *= (k / totalSubAtoms)
-          elements[a as keyof Elements] += round(percent * mass, 2)
+          elements[a as keyof Elements] += round(percent * mass, 3)
         }
       }
     }
@@ -74,8 +74,8 @@ export function elementsToNPK(elements: NPKElements): Elements {
     const skipElements = massParts.hasOwnProperty("N") || massParts.hasOwnProperty("S")
     const elementMassPart = massParts[atom as AtomNameType]
     if (!skipElements && elementMassPart) {
-      const k = round(sum(values(massParts)) / elementMassPart, 2)
-      val = round(val * k, 2)
+      const k = round(sum(values(massParts)) / elementMassPart, 3)
+      val = round(val * k, 3)
     }
     return [atom, val]
   })

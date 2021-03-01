@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {Box, Button, Flex} from "rebass";
 
 import {useFormName, useFormValues} from "@/hooks/ReduxForm";
@@ -15,8 +15,10 @@ import {
   fixIonicBalanceByCa, fixIonicBalanceByS, getProfileRatioMatrix
 } from "@/calculator/profile";
 import {StyledBalanceCell} from "@/components/Calculator/Options/Recipe";
-import {round} from "@/utils";
+import {entries, round} from "@/utils";
 import {ModalActions} from "@/components/ui/Modal/Modal";
+import {Input} from "@rebass/forms";
+import {HPGFormat} from "@/components/Calculator/ImportExport/format/hpg";
 
 interface RecipeTuneFormProps {
   modal: ModalActions,
@@ -34,6 +36,8 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
   const recipeInfo = getNPKDetailInfo(recipe as Elements)
   const [ratio, setRatio] = useState(recipeInfo.ratio)
   const [EC, setEC] = useState(recipeInfo.EC)
+
+  const [profileString, setProfileString] = useState(HPGFormat.stringifyProfile(formValue.recipe))
 
   const onChangeRecipe = (el: FERTILIZER_ELEMENT_NAMES, value: number) => {
     let newRecipe = {...recipe, [el]: value}
@@ -69,6 +73,22 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
     props.onSave(recipe)
     props.modal.close()
   }
+
+  function onChangeProfileString(s: string) {
+    let npk = HPGFormat.parseProfileString(s)
+    if (entries(npk).length) {
+      setProfileString(s)
+      setRecipe(npk)
+    } else {
+      // Reset
+      setProfileString(HPGFormat.stringifyProfile(recipe))
+    }
+  }
+
+  useEffect(() => {
+    setProfileString(HPGFormat.stringifyProfile(recipe))
+  }, [recipe])
+
   return (
     <Flex flexDirection={'column'}>
       <Flex>
@@ -137,6 +157,12 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
             step={1}
           />
         ))}
+      </Flex>
+      <Flex marginY={2}>
+        <Input value={profileString}
+               onChange={e => setProfileString(e.target.value)}
+               onBlur={e => onChangeProfileString(e.target.value)}
+        />
       </Flex>
       <Flex justifyContent="space-between">
         <Button type="button" onClick={props.modal.close}>Cancel</Button>

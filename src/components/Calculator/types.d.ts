@@ -11,11 +11,12 @@ export interface CalculatorFormValues {
   solution_concentration: number,
   recipe: NeedElements,
   fertilizers: FertilizerInfo[],
-  dilution_enabled: boolean,
-  dilution_volume: number,
-  dilution_concentration: number,
 
-  topping_up_enabled: boolean,
+  dilution_enabled?: boolean,
+  dilution_volume?: number,
+  dilution_concentration?: number,
+
+  topping_up_enabled?: boolean,
   topping_up?: CalculateToppingUpOptions,
   ignore?: {
     [K in FERTILIZER_ELEMENT_NAMES]?: boolean

@@ -16,7 +16,7 @@ interface ElementProps {
 export const Element: FunctionComponent<ElementProps> = (props) => {
   const {name, value, delta} = props
   return (
-    <Box bg={name} flex={1} mx="2px" px={1} color={'black'} minWidth="2.1em" maxWidth="3em" fontSize={1}>
+    <Box bg={name} flex={1} mx="2px" px={1} color={'black'} minWidth="2.1em" maxWidth="4em" fontSize={1}>
       <Flex flexDirection='column' alignItems={'center'}>
         <Box>{name}</Box>
         <Box>{value}</Box>

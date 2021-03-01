@@ -4,17 +4,9 @@ import {IconButton} from "@/components/ui/IconButton";
 import {useSelector} from "react-redux";
 import {CalculatorState} from "@/components/Calculator/types";
 import {saveData} from "@/utils/downloads";
+import {ExportStateType} from "@/components/Calculator/ImportExport/format/types";
 
 interface ExportRecipesProps {
-}
-
-export interface ExportStateJSON {
-  meta: {
-    version: string,
-    ref: string,
-    created: string
-  },
-  calculator: Pick<CalculatorState, 'calculationForm' | 'result' | 'fertilizers' | 'recipes'>
 }
 
 export function ExportState(props: ExportRecipesProps) {
@@ -26,7 +18,7 @@ export function ExportState(props: ExportRecipesProps) {
   } = useSelector<any>(state => state.calculator) as CalculatorState
   const doExport = () => {
     const created = new Date().toISOString()
-    const state: ExportStateJSON = {
+    const state: ExportStateType = {
       meta: {
         version: __VERSION__,
         ref: __COMMIT_HASH__,
@@ -44,7 +36,9 @@ export function ExportState(props: ExportRecipesProps) {
   }
   return (
     <>
-      <IconButton onClick={doExport} component={Export}/>
+      <IconButton onClick={doExport} component={Export}
+                  title={"Экспорт настроек"}
+      />
     </>
   )
 }

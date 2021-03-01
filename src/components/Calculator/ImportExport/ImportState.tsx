@@ -3,10 +3,12 @@ import {Import} from "@styled-icons/boxicons-regular/Import"
 import {IconButton} from "@/components/ui/IconButton";
 import {useDispatch} from "react-redux";
 import {loadStateStart} from "@/components/Calculator/actions";
-import {ExportStateJSON} from "@/components/Calculator/ImportExport/ExportState";
+import {ExportStateType} from "@/components/Calculator/ImportExport/format/types";
+import {ACCEPT_FORMATS, FORMATS_MAP} from "@/components/Calculator/ImportExport/format";
 
 interface ImportStateProps {
 }
+
 
 
 export function ImportState(props: ImportStateProps) {
@@ -23,12 +25,13 @@ export function ImportState(props: ImportStateProps) {
     }
   }, [buttonRef, size.width])
 
-  const loadData = (json: string) => {
-    // TODO validate
-    const p = JSON.parse(json) as ExportStateJSON
-
-    dispatch(loadStateStart(p))
-
+  const loadData = (file: File, data: string) => {
+    let ext = '.' + file.name.split('.').pop()
+    if (FORMATS_MAP[ext]) {
+      const f = new FORMATS_MAP[ext]
+      const p = f.import(data)
+      dispatch(loadStateStart(p))
+    }
   }
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +43,7 @@ export function ImportState(props: ImportStateProps) {
     let reader = new FileReader();
     reader.onload = () => {
       console.log(reader.result)
-      loadData(reader.result as string)
+      loadData(file, reader.result as string)
 
     }
     reader.readAsText(file)
@@ -56,7 +59,7 @@ export function ImportState(props: ImportStateProps) {
         component={Import}
       >
         <input type="file"
-               accept="text/json, .json"
+               accept={ACCEPT_FORMATS}
                onChange={event => handleOnChange(event)}
                style={{
                  top: 0,
@@ -65,6 +68,7 @@ export function ImportState(props: ImportStateProps) {
                  opacity: 0,
                  ...size,
                }}
+               title={"Импорт настроек"}
         />
       </IconButton>
     </>

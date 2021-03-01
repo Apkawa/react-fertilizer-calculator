@@ -11,7 +11,8 @@ interface IconButtonProps extends
   component: EmotionIcon,
   disabled?: boolean,
   onClick?: MouseEventHandler<HTMLButtonElement>,
-  size?: number | string
+  size?: number | string,
+  title?: string
 }
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(

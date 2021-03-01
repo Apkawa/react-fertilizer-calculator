@@ -21,6 +21,14 @@ export function countDecimals(value: number): number {
   return value.toString().split(".")[1].length || 0;
 }
 
+export function tryParseFloat(value: string): number | string {
+  let v = parseFloat(value)
+  if (!isNaN(v)) {
+    return v
+  }
+  return value
+}
+
 type ToMapResult<T> = { [K in string]: T }
 
 export function toMap<T extends object>(list: T[], field: keyof T): ToMapResult<T> {

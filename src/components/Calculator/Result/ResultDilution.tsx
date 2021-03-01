@@ -14,10 +14,10 @@ interface DilutionResultProps {
 
 export function ResultDilution(props: DilutionResultProps) {
   const {
-    solution_concentration,
     dilution_enabled,
-    dilution_volume,
-    dilution_concentration,
+    solution_concentration=1,
+    dilution_volume=1,
+    dilution_concentration=1,
   } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues
 
   const fertilizerWeightGroups = useFertilizerSolutionGroup()

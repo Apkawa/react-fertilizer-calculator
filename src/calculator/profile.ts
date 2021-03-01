@@ -277,3 +277,5 @@ export function convertProfileWithEC(npk: NPKElements, EC: number, ratio?: Eleme
       [el, round(v, 1)]
     )))
 }
+
+

@@ -64,21 +64,24 @@ https://apkawa.github.io/react-fertilizer-calculator/
 
 * [ ] вывод отчета и его печать
 * [ ] Документация
-    * [ ] модели jupyter по расчетам
+    * [x] модели jupyter по расчетам
     * [ ] справка по гидропонике
-* [ ] Таблицы и миникалькулятор плотности раствора
+* [x] Таблицы и миникалькулятор плотности раствора
 * [ ] Расчет себестоимости растворов
 * [x] Микроэлементы/хелаты
 * [ ] Экспорт/импорт всей конфигурации в различные форматы
+    * [x] json
     * [ ] Yaml
-    * [ ] json
     * [ ] xlsx [SheetJS](https://github.com/SheetJS/sheetjs)
-    
-
-## При необходимости
-
+    * [ ] HPG формат
 * [ ] Апи миксера (автоматическое смешивание концентратов)
     * [ ] Документация
+    
+
+# Поддержка
+
+* [@telegram](https://t.me/fertilizer_calculator_support)
+* [Issues](https://github.com/Apkawa/react-fertilizer-calculator/issues)
 
 # Поддержка
 
