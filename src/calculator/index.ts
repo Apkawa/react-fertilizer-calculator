@@ -84,9 +84,9 @@ export function calculate_v4(
   fertilizers: FertilizerInfo[],
   options: CalculateOptions = {}
 ): CalculateResult {
-
-  let macroFertilizers = fertilizers.filter(f => !MICRO_ELEMENT_NAMES.filter(n => f.npk?.[n]).length)
-  let microFertilizers = fertilizers.filter(f => MICRO_ELEMENT_NAMES.filter(n => f.npk?.[n]).length)
+  let nFertilizers = Object.fromEntries(fertilizers.map(f => [f.id, normalizeFertilizer(f)]))
+  let macroFertilizers = fertilizers.filter(f => !MICRO_ELEMENT_NAMES.filter(n => nFertilizers[f.id].elements[n]).length)
+  let microFertilizers = fertilizers.filter(f => MICRO_ELEMENT_NAMES.filter(n => nFertilizers[f.id].elements[n]).length)
 
   let microResult = calculate_v3(needElements, microFertilizers,
     {...options, ignore: {...options.ignore, ...getFillElementsByType(true).macro}})
@@ -120,7 +120,7 @@ export function calculate_v4(
     deltaElements: Object.fromEntries(deltaElements),
     score: round(sum(scores) / scores.length,1),
     stats: {
-      time: macroResult.stats.time + microResult.stats.time,
+      time: round(macroResult.stats.time + microResult.stats.time, 3),
       count: macroResult.stats.count + microResult.stats.count,
     }
 
@@ -240,7 +240,7 @@ export function calculate_v2(
     let m = Object.fromEntries(p)
     let weight = (xElements[primaryElement] || 0) / (m[primaryElement] * 10)
     let fInfo = fertilizerMap[f.id]
-    weights[f.id].base_weight = round(weight, precision > 3 ? precision : 3)
+    weights[f.id].base_weight = round(weight, 4)
     weights[f.id].weight = round(weight * solution_volume * solution_concentration, precision)
     if (fInfo.solution_concentration) {
       weights[f.id].volume = round((weights[f.id].weight * 1000) / fInfo.solution_concentration, precision)
