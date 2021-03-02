@@ -35,6 +35,7 @@ const initialValues: CalculatorFormValues = {
   dilution_volume: 20,
   dilution_concentration: 1,
   topping_up_enabled: false,
+  mixerOptions: {}
 }
 export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormValues> = ({handleSubmit}) => {
   const dispatch = useDispatch()

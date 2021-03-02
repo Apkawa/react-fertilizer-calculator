@@ -6,7 +6,6 @@ import {ReduxFormType} from "@/components/ui/ReduxForm/types";
 import {Input} from "@/components/ui/ReduxForm/Input";
 import {normalizeFertilizer} from "@/calculator/fertilizer";
 import {MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "@/calculator/constants";
-import {FertilizerInfo} from "@/calculator/types";
 
 import {AddItemElementForm} from "./AddItemElementForm";
 
@@ -17,6 +16,7 @@ import {AddEditCompositionList} from "@/components/Calculator/FertilizerManager/
 import {useFormName, useFormValues} from "@/hooks/ReduxForm";
 import {decimal, number} from "@/components/ui/ReduxForm/normalizers";
 import {Label} from "@rebass/forms";
+import {FertilizerInfo} from "@/components/Calculator/types";
 
 interface AddEditProps {
   fertilizer?: FertilizerInfo,
@@ -27,11 +27,8 @@ export const getElements = (f: FertilizerInfo) => {
 }
 
 export function getInitialValues(f: FertilizerInfo): AddEditFormType {
-  let formData: AddEditFormType = {
-    id: f.id,
-    npk: f.npk,
-    composition: f.composition,
-  }
+  let formData: AddEditFormType = {...f}
+
   if (f.composition) {
     formData.npk = normalizeFertilizer(f, false).elements
     formData.composition_enable = true
@@ -45,18 +42,21 @@ export function getInitialValues(f: FertilizerInfo): AddEditFormType {
 }
 
 export function formToFertilizer(formValues: AddEditFormType): FertilizerInfo {
-  const f: FertilizerInfo = {
-    id: formValues.id,
-    name: formValues.name,
-  }
-  if (formValues.composition_enable) {
-    f.composition = formValues.composition
+
+  const {
+    composition_enable, composition, npk,
+    solution_density_enable, solution_density, solution_concentration,
+    ..._f
+  } = formValues
+  const f: FertilizerInfo = _f
+  if (composition_enable) {
+    f.composition = composition
   } else {
-    f.npk = formValues.npk
+    f.npk = npk
   }
-  if (formValues.solution_density_enable) {
-    f.solution_density = formValues.solution_density
-    f.solution_concentration = formValues.solution_concentration
+  if (solution_density_enable) {
+    f.solution_density = solution_density
+    f.solution_concentration = solution_concentration
   }
   return f
 }
@@ -143,6 +143,21 @@ const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
               </Flex>
             </Flex>
             : null}
+        </Flex>
+        <Flex>
+            <Label flexDirection="column">
+              Миксер, номер помпы
+              <Input
+                name="pump_number"
+                type="number"
+                step="1"
+                min="1"
+                max="16"
+                required={false}
+                normalize={number}
+                maxWidth={'3em'}
+              />
+            </Label>
         </Flex>
       </Flex>
     </Form>

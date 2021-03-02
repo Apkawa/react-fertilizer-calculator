@@ -7,7 +7,6 @@ import {Plus} from "@styled-icons/boxicons-regular/Plus"
 import {useSelector} from "react-redux";
 import {CalculatorState} from "../types";
 import {IconButton} from "@/components/ui/IconButton";
-import {FertilizerInfo} from "@/calculator/types";
 
 interface AddItemProps {
   onAdd: (item: FertilizerType) => void
@@ -22,17 +21,17 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
     calculationForm,
   } = useSelector<any>(state => state.calculator) as CalculatorState
 
-  const [selected, setSelected] = useState<FertilizerInfo | undefined>(fertilizers[0])
+  const [selected, setSelected] = useState<FertilizerType | undefined>(fertilizers[0])
 
   const selectedFertilizers = calculationForm?.fertilizers || [];
   const fertilizersIDs = selectedFertilizers.map(f => f?.id)
 
-  const onChangeHandler = (item: FertilizerInfo | null) => {
+  const onChangeHandler = (item: FertilizerType | null) => {
     item && setSelected(item)
   }
 
 
-  const onAddHandler = (item: FertilizerInfo) => {
+  const onAddHandler = (item: FertilizerType) => {
     onAdd(item)
   }
   return (
@@ -40,7 +39,7 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
       <Flex flexDirection="column">
         <Flex justifyContent="space-between">
           <Box flex={1} pr={2}>
-            <Dropdown<FertilizerInfo>
+            <Dropdown<FertilizerType>
               value={selected}
               items={fertilizers}
               onChange={onChangeHandler}

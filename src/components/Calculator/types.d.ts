@@ -1,9 +1,17 @@
 import {InferValuesTypes} from "@/redux-helpers/types";
 import * as actions from "./actions";
 import {CalculateResult} from "@/calculator";
-import {FertilizerInfo, NeedElements} from "@/calculator/types";
+import {FertilizerInfo as _FertilizerInfo, NeedElements} from "@/calculator/types";
 import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 import {CalculateToppingUpOptions, CalculateToppingUpResult} from "@/calculator/helpers";
+
+export interface FertilizerInfo extends _FertilizerInfo {
+  pump_number?: number
+}
+
+export interface MixerOptions {
+  url?: string
+}
 
 export interface CalculatorFormValues {
   accuracy: number,
@@ -20,7 +28,8 @@ export interface CalculatorFormValues {
   topping_up?: CalculateToppingUpOptions,
   ignore?: {
     [K in FERTILIZER_ELEMENT_NAMES]?: boolean
-  }
+  },
+  mixerOptions: MixerOptions
 }
 
 export interface CalculatorState {

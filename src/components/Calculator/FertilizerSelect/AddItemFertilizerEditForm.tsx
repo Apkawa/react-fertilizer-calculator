@@ -3,7 +3,8 @@ import {Flex} from "rebass";
 import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES} from "../../../calculator/constants";
 import {AddItemElementForm} from "./AddItemElementForm";
 import {normalizeFertilizer} from "../../../calculator/fertilizer";
-import {Elements, FertilizerInfo} from "@/calculator/types";
+import {Elements} from "@/calculator/types";
+import {FertilizerInfo} from "@/components/Calculator/types";
 
 interface AddItemFertilizerEditFormProps {
   fertilizer?: FertilizerInfo,

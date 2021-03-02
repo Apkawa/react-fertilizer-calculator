@@ -1,5 +1,4 @@
 import React from "react";
-import {FertilizerInfo} from "@/calculator/types";
 import {Box, Button, Card, Flex, Text} from "rebass";
 
 import {normalizeFertilizer} from "@/calculator/fertilizer";
@@ -17,6 +16,7 @@ import {FERTILIZER_EDIT_FORM_NAME} from "@/components/Calculator/FertilizerManag
 import {useDispatch} from "react-redux";
 import {fertilizerPush, fertilizerRemove} from "@/components/Calculator/actions";
 import {AddEditFormType} from "@/components/Calculator/FertilizerManager/types";
+import {FertilizerInfo} from "@/components/Calculator/types";
 
 interface ItemProps {
   fertilizer: FertilizerInfo
@@ -40,7 +40,9 @@ export function Item(props: ItemProps) {
         <Flex justifyContent={'space-between'} alignItems="center">
           <Box flex={1}>
             <Text flex={1}>
-              {fertilizer.id} {fertilizer.solution_concentration && `[жидкий ${fertilizer.solution_concentration} г/л]`}
+              {fertilizer.id} &nbsp;
+              {fertilizer.solution_concentration && `[жидкий ${fertilizer.solution_concentration} г/л]`} &nbsp;
+              <span title={"Номер помпы в миксере"}>{fertilizer.pump_number && `p${fertilizer.pump_number}`}</span> &nbsp;
             </Text>
             <Flex>
               {

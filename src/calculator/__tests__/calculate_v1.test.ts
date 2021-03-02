@@ -18,7 +18,8 @@ const defaultFertilizers: FertilizerInfo[] = [
   buildNPKFertilizer("Нитрат калия", {NO3: 14, K: 46})
 ]
 
-describe("Calculate", () => {
+// Disable unactual test
+describe.skip("Calculate", () => {
   test("Simple ", () => {
     const result = calculate_v1({
         NO3: 200,

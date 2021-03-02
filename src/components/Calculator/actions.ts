@@ -1,7 +1,6 @@
 import * as ActionNames from "./constants";
 import {CalculateResult} from "@/calculator";
-import {CalculatorFormValues, CalculatorState, Recipe} from "@/components/Calculator/types";
-import {FertilizerInfo} from "@/calculator/types";
+import {CalculatorFormValues, CalculatorState, FertilizerInfo, Recipe} from "@/components/Calculator/types";
 import {CalculateToppingUpResult} from "@/calculator/helpers";
 import {ExportStateType} from "@/components/Calculator/ImportExport/format/types";
 

@@ -1,4 +1,3 @@
-import {JSONFormat} from "./json";
 import {ExportStateType} from "./types";
 import {HPGFormat} from "./hpg";
 import {NPKElements} from "../../../../calculator/types";
@@ -178,6 +177,7 @@ let _fertilizers = [
       "Ca": 28.422,
       "NO3": 14.2
     },
+    "pump_number": 1,
     "solution_concentration": 493,
     "solution_density": 1281
   },
@@ -187,6 +187,7 @@ let _fertilizers = [
       "K": 45.745,
       "NO3": 13.6
     },
+    "pump_number": 2,
     "solution_concentration": 250,
     "solution_density": 1141.8999999999999
   },
@@ -196,6 +197,7 @@ let _fertilizers = [
       "NH4": 17.4,
       "NO3": 17.4
     },
+    "pump_number": 3,
     "solution_concentration": 336.6,
     "solution_density": 1104
   },
@@ -205,6 +207,7 @@ let _fertilizers = [
       "Mg": 16.883,
       "S": 13.434
     },
+    "pump_number": 4,
     "solution_concentration": 250,
     "solution_density": 1119
   },
@@ -214,6 +217,7 @@ let _fertilizers = [
       "K": 32.933,
       "P": 49.602
     },
+    "pump_number": 5,
     "solution_concentration": 200,
     "solution_density": 1125.3
   },
@@ -223,6 +227,7 @@ let _fertilizers = [
       "K": 50.141,
       "S": 17.063
     },
+    "pump_number": 6,
     "solution_concentration": 100,
     "solution_density": 1075
   },
@@ -319,7 +324,7 @@ const EXPECT_STATE: ExportStateType = {
       "dilution_concentration": 1,
       "dilution_enabled": true,
       "dilution_volume": 17,
-      "fertilizers": _fertilizers.filter(f => f.id != 'MgNO3'),
+      "fertilizers": _fertilizers.filter(f => f.id !== 'MgNO3'),
       "recipe": {
         "B": 0.5,
         "Ca": 166.83,
@@ -338,16 +343,13 @@ const EXPECT_STATE: ExportStateType = {
         "Si": 0,
         "Zn": 0.269
       },
+      "mixerOptions": {
+        "url": "mixer-esp32.local",
+      },
       "solution_concentration": 34,
       "solution_volume": 0.5
-    },
-    "fertilizers": _fertilizers,
-    "recipes": [],
-    "result": null
-  },
-  "meta": {
-    "created": "",
-    "ref": "",
-    "version": "Hydroponic Profile Generator 0.213 https://github.com/siv237/HPG"
+    }, "fertilizers": _fertilizers, "recipes": [], "result": null
+  }, "meta": {
+    "created": "", "ref": "", "version": "Hydroponic Profile Generator 0.213 https://github.com/siv237/HPG"
   }
 }

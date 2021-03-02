@@ -7,7 +7,7 @@ import {REDUX_FORM_NAME} from "../constants";
 import {MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "@/calculator/constants";
 import {Element} from "../FertilizerSelect/SelectedListItem";
 import styled from "styled-components";
-import {getNPKDetailInfo, getEmptyElements} from "@/calculator/helpers";
+import {getEmptyElements, getNPKDetailInfo} from "@/calculator/helpers";
 import {StyledBalanceCell} from "../Options/Recipe";
 import {ResultFertilizerList} from "./ResultFertilizerList";
 import {useFertilizerSolutionGroup} from "./hooks";
@@ -15,13 +15,18 @@ import {ResultDilution} from "@/components/Calculator/Result/ResultDilution";
 import {round, sum} from "@/utils";
 import {Modal, ModalActions} from "@/components/ui/Modal/Modal";
 import {IconButton} from "@/components/ui/IconButton";
-import {AddEdit, formToFertilizer, getInitialValues} from "@/components/Calculator/FertilizerManager/AddEdit";
+import {
+  AddEdit as FertilizerAddEditForm,
+  formToFertilizer,
+  getInitialValues
+} from "@/components/Calculator/FertilizerManager/AddEdit";
 import {Save} from "@styled-icons/fa-regular/Save";
 import {buildFertilizerFromSolution} from "@/calculator/fertilizer";
 import {fertilizerPush} from "@/components/Calculator/actions";
 import {useFormValues} from "@/hooks/ReduxForm";
 import {AddEditFormType} from "@/components/Calculator/FertilizerManager/types";
 import {FERTILIZER_EDIT_FORM_NAME} from "@/components/Calculator/FertilizerManager/constants";
+import {MixerModal} from "@/components/Calculator/Mixer/Mixer";
 
 interface ResultProps {
 }
@@ -49,7 +54,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
   const NPKBalance = getNPKDetailInfo(elements)
 
   // const liquidFertilizersVolume = round(sum((result?.fertilizers || []).map(f => f.volume || 0)), 1)
-  const totalWeight =round(sum((result?.fertilizers || []).map(f => f.weight || 0)), 2)
+  const totalWeight = round(sum((result?.fertilizers || []).map(f => f.weight || 0)), 2)
 
 
   const [formValues] = useFormValues<AddEditFormType>(FERTILIZER_EDIT_FORM_NAME)
@@ -101,7 +106,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
           {fertilizerWeightGroups.map(([g, f_weights]) =>
             (<li>
                 <b>
-                    Раствор {g}
+                  Раствор {g}
                 </b>
                 <ul>
                   <ResultFertilizerList fertilizers={f_weights}/>
@@ -110,39 +115,45 @@ export const Result: FunctionComponent<ResultProps> = () => {
             )
           )}
           <li>Всего солей: {totalWeight} г.</li>
-          <li>Концентрация солей: {round(totalWeight/solution_volume,2)} г/л</li>
+          <li>Концентрация солей: {round(totalWeight / solution_volume, 2)} г/л</li>
         </StyledList>
-        {result?.fertilizers?
-          <Flex>
-            <Modal
-              button={({modal}) => (
-                <IconButton
-                  padding={1}
-                  alignSelf="center"
-                  component={Save}
-                  backgroundColor={'primary'}
-                  onClick={modal.open}
-                >Сохранить комплекс</IconButton>
-              )}
-              container={({modal}) => (
-                <>
-                  <AddEdit
-                    initialValues={getInitialValues(complexFertilizer)}
-                  />
-                  <Flex justifyContent="flex-end">
-                    <Button type="button" onClick={() => onSave(modal)}>Save</Button>
-                  </Flex>
-                </>
-              )}
-            />
-          </Flex>
-        : null}
         <ResultDilution/>
         {result?.stats &&
         <Text>
           Обработано вариантов: {result?.stats.count} Время: {result?.stats.time} сек
         </Text>
         }
+        <Flex>
+
+          {result?.fertilizers ?
+            <Flex>
+              <Modal
+                button={({modal}) => (
+                  <IconButton
+                    padding={1}
+                    alignSelf="center"
+                    component={Save}
+                    backgroundColor={'primary'}
+                    onClick={modal.open}
+                  >Сохранить комплекс</IconButton>
+                )}
+                container={({modal}) => (
+                  <>
+                    <FertilizerAddEditForm
+                      initialValues={getInitialValues(complexFertilizer)}
+                    />
+                    <Flex justifyContent="flex-end">
+                      <Button type="button" onClick={() => onSave(modal)}>Save</Button>
+                    </Flex>
+                  </>
+                )}
+              />
+            </Flex>
+            : null}
+          <Flex>
+            <MixerModal/>
+          </Flex>
+        </Flex>
       </Flex>
     </Card>
   )

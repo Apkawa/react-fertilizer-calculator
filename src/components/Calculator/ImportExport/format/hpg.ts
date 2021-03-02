@@ -1,9 +1,10 @@
 import {BaseFormat} from "./base";
 import {ExportStateType} from "./types";
-import {FertilizerInfo, NPKElements} from "../../../../calculator/types";
+import {NPKElements} from "../../../../calculator/types";
 import {FERTILIZER_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from '../../../../calculator/constants';
 import {buildNPKFertilizer, elementsToNPK, normalizeFertilizer} from "../../../../calculator/fertilizer";
 import {entries, tryParseFloat} from "../../../../utils";
+import {FertilizerInfo} from "../../types";
 
 const FERTILIZERS = [
   "CaNO3", "KNO3", "NH4NO3", "MgSO4", "KH2PO4", "K2SO4", "MgNO3", "CaCl2",
@@ -28,32 +29,41 @@ export class HPGFormat extends BaseFormat {
         id: f,
         npk,
         solution_density: parsed[`gml${f}`] * 1000,
-        solution_concentration: parsed[`gl${f}`]
+        solution_concentration: parsed[`gl${f}`],
+      }
+      let pump_number = parseFloat(parsed[`m${f}`].match(/\d+/)) || undefined
+      if (pump_number) {
+        fInfo.pump_number = pump_number
       }
       fertilizers.push(fInfo)
     }
     // Micro
     let microNPK = Object.fromEntries(MICRO_ELEMENT_NAMES.map(e => [e, parsed[`d${e}`]]))
     if (parsed.chkComplex === "TRUE") {
-      const fInfo = buildNPKFertilizer('Микро', microNPK)
+      const fInfo: FertilizerInfo = buildNPKFertilizer('Микро', microNPK)
       fInfo.solution_density = parsed['gmlCmplx']
       fInfo.solution_concentration = parsed['glCmplx']
+      let pump_number = parseFloat(parsed[`mCmplx`].match(/\d+/))
+      if (pump_number) {
+        fInfo.pump_number = pump_number
+      }
       fertilizers.push(fInfo)
     } else {
       for (let e of MICRO_ELEMENT_NAMES) {
         if (!microNPK[e]) {
           continue
         }
-        const fInfo = buildNPKFertilizer(e, {[e]: microNPK[e] || 0})
+        const fInfo: FertilizerInfo = buildNPKFertilizer(e, {[e]: microNPK[e] || 0})
         fInfo.solution_density = parsed[`gl${e}`]
         fInfo.solution_concentration = parsed[`gl${e}`]
+        let pump_number = parseFloat(parsed[`m${e}`].match(/\d+/)) || undefined
+        if (pump_number) {
+          fInfo.pump_number = pump_number
+        }
         fertilizers.push(fInfo)
       }
     }
     return fertilizers
-  }
-
-  buildNPK(parsed: any) {
   }
 
   import(string: string): ExportStateType {
@@ -94,6 +104,9 @@ export class HPGFormat extends BaseFormat {
             }
             return true
           }),
+          mixerOptions: {
+            url: parsed.addrMixer
+          },
         },
         result: null,
         fertilizers,
