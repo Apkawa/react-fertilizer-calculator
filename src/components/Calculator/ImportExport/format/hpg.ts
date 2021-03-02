@@ -34,7 +34,7 @@ export class HPGFormat extends BaseFormat {
     }
     // Micro
     let microNPK = Object.fromEntries(MICRO_ELEMENT_NAMES.map(e => [e, parsed[`d${e}`]]))
-    if (parsed.chkComplex == "TRUE") {
+    if (parsed.chkComplex === "TRUE") {
       const fInfo = buildNPKFertilizer('Микро', microNPK)
       fInfo.solution_density = parsed['gmlCmplx']
       fInfo.solution_concentration = parsed['glCmplx']
@@ -111,7 +111,7 @@ export class HPGFormat extends BaseFormat {
       e = e.trim()
       if (e) {
         let pair = e.split('=')
-        if (pair.length == 2 && FERTILIZER_ELEMENT_NAMES.includes(pair[0].trim() as FERTILIZER_ELEMENT_NAMES)) {
+        if (pair.length === 2 && FERTILIZER_ELEMENT_NAMES.includes(pair[0].trim() as FERTILIZER_ELEMENT_NAMES)) {
           elements[pair[0] as FERTILIZER_ELEMENT_NAMES] = parseFloat(pair[1])
         }
       }

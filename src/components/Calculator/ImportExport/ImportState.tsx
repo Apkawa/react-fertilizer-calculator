@@ -3,7 +3,6 @@ import {Import} from "@styled-icons/boxicons-regular/Import"
 import {IconButton} from "@/components/ui/IconButton";
 import {useDispatch} from "react-redux";
 import {loadStateStart} from "@/components/Calculator/actions";
-import {ExportStateType} from "@/components/Calculator/ImportExport/format/types";
 import {ACCEPT_FORMATS, FORMATS_MAP} from "@/components/Calculator/ImportExport/format";
 
 interface ImportStateProps {
@@ -28,7 +27,7 @@ export function ImportState(props: ImportStateProps) {
   const loadData = (file: File, data: string) => {
     let ext = '.' + file.name.split('.').pop()
     if (FORMATS_MAP[ext]) {
-      const f = new FORMATS_MAP[ext]
+      const f = new FORMATS_MAP[ext]()
       const p = f.import(data)
       dispatch(loadStateStart(p))
     }

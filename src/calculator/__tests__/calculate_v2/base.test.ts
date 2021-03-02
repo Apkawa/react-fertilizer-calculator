@@ -28,29 +28,29 @@ describe("Calculate V2", () => {
       "deltaElements": {
         ...emptyElements,
         "Ca": 0,
-        "K": 0.5,
+        "K": 0,
         "Mg": 0,
         "NH4": 0,
         "NO3": 1,
         "P": 0,
-        "S": 0
+        "S": 0.1
       },
       "elements": {
         ...emptyElements,
         "Ca": 139,
-        "K": 279.14,
+        "K": 279.67,
         "Mg": 55.93,
         "NH4": 4.47,
         "NO3": 134,
         "P": 45,
-        "S": 127.22
+        "S": 127.11
       },
       "fertilizers": [
         {"base_weight": 0.548, "id": "Магний сернокислый", "volume": null, "weight": 0.548}, {
           "base_weight": 0.207,
           "id": "Калий фосфорнокислый",
           "volume": null,
-          "weight": 0.207
+          "weight": 0.206
         }, {"base_weight": 0.819, "id": "Кальций азотнокислый", "volume": null, "weight": 0.819}, {
           "base_weight": 0.026,
           "id": "Нитрат аммония",
@@ -63,7 +63,7 @@ describe("Calculate V2", () => {
           "weight": 0.289
         }
       ],
-      "score": 99.87,
+      "score": 99.88,
       "stats": {
         "count": 0,
         "time": 0
@@ -197,42 +197,47 @@ describe("calculate V3", () => {
       "elements": {
         "Ca": 200, "K": 180, "Mg": 50, "NH4": 20, "NO3": 200, "P": 40, "S": 73
       },
-      "fertilizers": [
-        {
-          "base_weight": 1.18,
-          "id": "Кальций азотнокислый",
-          "weight": 11.78,
-          "volume": 19.63,
-          'liquid_weight': 25.22,
-        },
-        {
-          "base_weight": 0.11,
-          "id": "Нитрат аммония",
-          "weight": 1.14
-        },
-        {
-          "base_weight": 0.29,
-          "id": "Калий азотнокислый",
-          "weight": 2.91
-        },
-        {
-          "base_weight": 0.18,
-          "id": "Калий фосфорнокислый",
-          "weight": 1.76
-        },
-        {
-          "base_weight": 0.04,
-          "id": "Калий сернокислый",
-          "weight": 0.39
-        },
-        {
-          "base_weight": 0.51,
-          "id": "Магний сернокислый",
-          "weight": 5.06
-        },
-      ],
       "score": 100,
     })
+    expect(result.fertilizers).toEqual([
+      {
+        "base_weight": 1.18,
+        "id": "Кальций азотнокислый",
+        "liquid_weight": 25.25,
+        "volume": 19.65,
+        "weight": 11.79
+      },
+      {
+        "base_weight": 0.11,
+        "id": "Нитрат аммония",
+        "volume": null,
+        "weight": 1.14
+      },
+      {
+        "base_weight": 0.29,
+        "id": "Калий азотнокислый",
+        "volume": null,
+        "weight": 2.9
+      },
+      {
+        "base_weight": 0.51,
+        "id": "Магний сернокислый",
+        "volume": null,
+        "weight": 5.07
+      },
+      {
+        "base_weight": 0.18,
+        "id": "Калий фосфорнокислый",
+        "volume": null,
+        "weight": 1.76
+      },
+      {
+        "base_weight": 0.04,
+        "id": "Калий сернокислый",
+        "volume": null,
+        "weight": 0.38
+      }
+    ])
   })
   test("Игнорирование серы исправляет профиль по магнию", () => {
     const result = calculate_v3({
@@ -276,42 +281,47 @@ describe("calculate_v4", () => {
       "elements": {
         "Ca": 200, "K": 180, "Mg": 50, "NH4": 20, "NO3": 200, "P": 40, "S": 73
       },
-      "fertilizers": [
-        {
-          "base_weight": 1.18,
-          "id": "Кальций азотнокислый",
-          "weight": 11.78,
-          "volume": 19.63,
-          'liquid_weight': 25.22,
-        },
-        {
-          "base_weight": 0.11,
-          "id": "Нитрат аммония",
-          "weight": 1.14
-        },
-        {
-          "base_weight": 0.29,
-          "id": "Калий азотнокислый",
-          "weight": 2.91
-        },
-        {
-          "base_weight": 0.18,
-          "id": "Калий фосфорнокислый",
-          "weight": 1.76
-        },
-        {
-          "base_weight": 0.04,
-          "id": "Калий сернокислый",
-          "weight": 0.39
-        },
-        {
-          "base_weight": 0.51,
-          "id": "Магний сернокислый",
-          "weight": 5.06
-        },
-      ],
       "score": 100,
     })
+    expect(result.fertilizers).toEqual([
+      {
+        "base_weight": 1.18,
+        "id": "Кальций азотнокислый",
+        "liquid_weight": 25.25,
+        "volume": 19.65,
+        "weight": 11.79
+      },
+      {
+        "base_weight": 0.11,
+        "id": "Нитрат аммония",
+        "volume": null,
+        "weight": 1.14
+      },
+      {
+        "base_weight": 0.29,
+        "id": "Калий азотнокислый",
+        "volume": null,
+        "weight": 2.9
+      },
+      {
+        "base_weight": 0.51,
+        "id": "Магний сернокислый",
+        "volume": null,
+        "weight": 5.07
+      },
+      {
+        "base_weight": 0.18,
+        "id": "Калий фосфорнокислый",
+        "volume": null,
+        "weight": 1.76
+      },
+      {
+        "base_weight": 0.04,
+        "id": "Калий сернокислый",
+        "volume": null,
+        "weight": 0.38
+      }
+    ])
   })
   test("Расчет макро и микро", () => {
     const AquaMix: FertilizerInfo = {
@@ -352,52 +362,52 @@ describe("calculate_v4", () => {
       "elements": {
         "Ca": 203, "K": 180, "Mg": 50, "NH4": 20, "NO3": 200, "P": 40, "S": 73
       },
-      "fertilizers": [
-        {
-          "base_weight": 1.18,
-          "id": "Кальций азотнокислый",
-          "weight": 11.78,
-          "volume": 19.63,
-          'liquid_weight': 25.22,
-        },
-        {
-          "base_weight": 0.11,
-          "id": "Нитрат аммония",
-          "volume": null,
-          "weight": 1.14
-        },
-        {
-          "base_weight": 0.29,
-          "id": "Калий азотнокислый",
-          "volume": null,
-          "weight": 2.91
-        },
-        {
-          "base_weight": 0.18,
-          "id": "Калий фосфорнокислый",
-          "volume": null,
-          "weight": 1.76
-        },
-        {
-          "base_weight": 0.04,
-          "id": "Калий сернокислый",
-          "volume": null,
-          "weight": 0.39
-        },
-        {
-          "base_weight": 0.51,
-          "id": "Магний сернокислый",
-          "volume": null,
-          "weight": 5.06
-        },
-        {
-          "base_weight": 0.14,
-          "id": "Аквамикс",
-          "volume": 238.26,
-          "weight": 1.37,
-        },
-      ],
       "score": 63.1,
     })
+    expect(result.fertilizers).toEqual([
+      {
+        "base_weight": 1.18,
+        "id": "Кальций азотнокислый",
+        "liquid_weight": 25.25,
+        "volume": 19.65,
+        "weight": 11.79
+      },
+      {
+        "base_weight": 0.11,
+        "id": "Нитрат аммония",
+        "volume": null,
+        "weight": 1.14
+      },
+      {
+        "base_weight": 0.29,
+        "id": "Калий азотнокислый",
+        "volume": null,
+        "weight": 2.9
+      },
+      {
+        "base_weight": 0.51,
+        "id": "Магний сернокислый",
+        "volume": null,
+        "weight": 5.07
+      },
+      {
+        "base_weight": 0.18,
+        "id": "Калий фосфорнокислый",
+        "volume": null,
+        "weight": 1.76
+      },
+      {
+        "base_weight": 0.04,
+        "id": "Калий сернокислый",
+        "volume": null,
+        "weight": 0.38
+      },
+      {
+        "base_weight": 0.14,
+        "id": "Аквамикс",
+        "volume": 238.26,
+        "weight": 1.37
+      }
+    ])
   })
 })

@@ -44,11 +44,11 @@ describe("normalizeFertilizer", () => {
         elements: {
           ...getEmptyElements(),
           "Ca": 0,
-          "K": 31.55,
-          "Mg": 2.41,
+          "K": 31.546,
+          "Mg": 2.412,
           "NO3": 3,
           "NH4": 0,
-          "P": 4.8,
+          "P": 4.801,
           S: 0,
         },
         "id": "Valagro 3:11:38",
@@ -66,11 +66,11 @@ describe("normalizeFertilizer", () => {
         elements: {
           ...getEmptyElements(),
           "Ca": 0,
-          "K": 31.55,
-          "Mg": 2.41,
+          "K": 31.546,
+          "Mg": 2.412,
           "NO3": 3,
           "NH4": 0,
-          "P": 4.8,
+          "P": 4.801,
           S: 0,
         },
         "id": "Valagro 3:11:38",
@@ -88,8 +88,8 @@ describe("normalizeFertilizer", () => {
     }, true)
     expect(result).toMatchObject({
       elements: {
-        K: 38.67,
-        NO3: 13.85,
+        K: 38.672,
+        NO3: 13.854,
         S: 0,
       }
     })
@@ -99,7 +99,7 @@ describe("normalizeFertilizer", () => {
       , true)
     expect(result).toMatchObject({
       elements: {
-        Mg: 10.07,
+        Mg: 10.071,
         S: 13.5,
       }
     })
@@ -113,10 +113,18 @@ describe("normalizeFertilizer", () => {
         {formula: "KNO3", percent: 100 - 35}
       ]
     }, true)
+
+    const result2 = normalizeFertilizer({
+      id: "Нитрат калия",
+      composition: [
+        {formula: "KNO3", percent: 100}
+      ]
+    }, true)
+    expect(result).toEqual(result2)
     expect(result).toMatchObject({
       elements: {
-        K: 38.68,
-        NO3: 13.86
+        K: 38.672,
+        NO3: 13.854
       }
     })
   })
@@ -131,8 +139,8 @@ describe("normalizeFertilizer", () => {
     }, false)
     expect(result).toMatchObject({
       elements: {
-        K: 46.4,
-        NO3: 13.85
+        K: 46.6,
+        NO3: 13.854
       }
     })
   })
@@ -144,8 +152,8 @@ describe("normalizeFertilizer", () => {
       ]
     }, false)
     expect(result.elements).toMatchObject({
-      NO3: 17.15,
-      NH4: 17.15,
+      NO3: 17.149,
+      NH4: 17.149,
     })
   })
   test('Сульфат магния  to raw NPK', () => {
@@ -156,8 +164,8 @@ describe("normalizeFertilizer", () => {
       ]
     }, true)
     expect(result.elements).toMatchObject({
-      Mg: 9.66,
-      S: 12.75,
+      Mg: 9.664,
+      S: 12.749,
     })
   })
 
@@ -197,7 +205,14 @@ describe("normalizeFertilizer", () => {
     })
     expect(complexFertilizer).toEqual({
       "id": "Micro",
-      "npk": {"B": 1.17, "Cu": 0.1, "Fe": 7.8, "K": 5.08, "Mn": 1.17, "Zn": 1.17},
+      "npk": {
+        "B": 1.171,
+        "Cu": 0.098,
+        "Fe": 7.804,
+        "K": 5.101,
+        "Mn": 1.171,
+        "Zn": 1.171
+      },
       "solution_concentration": 51.254
     })
 
@@ -221,7 +236,8 @@ describe("normalizeFertilizer", () => {
     )
 
     expect(result2).toMatchObject({deltaElements: {B: 0}})
-    expect(result2.fertilizers[0]).toMatchObject({volume: 10.009})
+    // TODO разобраться с точностью
+    expect(result2.fertilizers[0]).toMatchObject({volume: 9.989})
 
   })
 })

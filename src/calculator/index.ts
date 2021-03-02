@@ -10,6 +10,7 @@ export interface FertilizerWeights {
   id: string,
   // г/л
   weight: number
+  // TODO удалить
   base_weight: number,
   // Если удобрение в жидком виде, в мл
   volume?: number | null,

@@ -55,9 +55,14 @@ export function compositionToNPKElements(composition: FertilizerComposition[]): 
             percent = comp.percent;
           }
           percent *= (k / totalSubAtoms)
-          elements[a as keyof Elements] += round(percent * mass, 3)
+          elements[a as keyof Elements] += percent * mass
         }
       }
+    }
+  }
+  for (let k of keys(elements)) {
+    if (elements[k]) {
+      elements[k] = round(elements[k], 3)
     }
   }
   return elements
@@ -67,15 +72,15 @@ export function compositionToNPKElements(composition: FertilizerComposition[]): 
  * Конвертация чистых элементов в NPK оксиды
  * @param {Elements} elements - чистые элементы
  */
-export function elementsToNPK(elements: NPKElements): Elements {
+export function elementsToNPK(elements: NPKElements, precision = 3): Elements {
   const e = entries(elements).map(([atom, val]) => {
     const oxide: string = (NPKOxides as any)[atom] || atom
     const massParts = calculateMassParts(parseMolecule(oxide))
     const skipElements = massParts.hasOwnProperty("N") || massParts.hasOwnProperty("S")
     const elementMassPart = massParts[atom as AtomNameType]
     if (!skipElements && elementMassPart) {
-      const k = round(sum(values(massParts)) / elementMassPart, 3)
-      val = round(val * k, 3)
+      const k = round(sum(values(massParts)) / elementMassPart, precision)
+      val = round(val * k, precision)
     }
     return [atom, val]
   })
@@ -147,7 +152,7 @@ export function buildFertilizerFromSolution(id: string, options: BuildFertilizer
 
   const newFertilizer: FertilizerInfo = {
     id,
-    npk: elementsToNPK(newNpk),
+    npk: elementsToNPK(newNpk, 3),
     solution_concentration: totalWeight / (options.volume || 1)
   }
   return newFertilizer;
