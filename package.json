@@ -42,7 +42,7 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "types": "typesync && yarn",
-    "lint": "eslint --ext js,ts,tsx src",
+    "lint": "eslint --ext js,ts,tsx --max-warnings=0 src",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'"
   },
   "husky": {

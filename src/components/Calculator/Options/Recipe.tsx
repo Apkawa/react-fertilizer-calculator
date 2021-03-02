@@ -17,6 +17,7 @@ import {getNPKDetailInfo, getEmptyElements} from "@/calculator/helpers";
 import {Modal} from "@/components/ui/Modal/Modal";
 import {RecipeTuneForm} from "@/components/Calculator/Options/RecipeTuneForm";
 import {round} from "@/utils";
+import {DEFAULT_MICRO_RECIPE} from "@/components/Calculator/constants/recipes";
 
 
 export const StyledBalanceCell: FunctionComponent<{name:string, value: number}> = (props) => {
@@ -45,7 +46,7 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
 
   const onChangeHandler = (item: RecipeType | null) => {
     item && setSelected(item)
-    item && setRecipe(item.elements)
+    item && setRecipe({...DEFAULT_MICRO_RECIPE, ...item.elements})
   }
 
   const setRecipe = (elements: NeedElements) => {
