@@ -4,8 +4,6 @@ import {Flex} from "rebass";
 import {Form, reduxForm} from 'redux-form'
 import {ReduxFormType} from "@/components/ui/ReduxForm/types";
 import {Input} from "@/components/ui/ReduxForm/Input";
-
-import {useFormName, useFormValues} from "@/hooks/ReduxForm";
 import {FertilizerInfo, MixerOptions} from "@/components/Calculator/types";
 
 interface AddEditProps {
@@ -17,7 +15,6 @@ export interface MixerFormType extends MixerOptions {
 
 
 const AddEditForm: ReduxFormType<AddEditProps, MixerFormType> = (props) => {
-  // const formValues = useFormValues<MixerFormType>(useFormName())[0]
 
   return (
     <Form>
