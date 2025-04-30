@@ -5,6 +5,7 @@ import {FERTILIZER_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from '../../../../calcula
 import {buildNPKFertilizer, elementsToNPK, normalizeFertilizer} from "../../../../calculator/fertilizer";
 import {entries, tryParseFloat} from "../../../../utils";
 import {FertilizerInfo} from "../../types";
+import {normalizeConcentration} from "../../../../calculator/dilution";
 
 const FERTILIZERS = [
   "CaNO3", "KNO3", "NH4NO3", "MgSO4", "KH2PO4", "K2SO4", "MgNO3", "CaCl2",
@@ -90,10 +91,10 @@ export class HPGFormat extends BaseFormat {
         calculationForm: {
           recipe: npk,
           solution_volume: parsed.tAml / 1000,
-          solution_concentration: (solution_volume * 1000) / parsed.tAml,
+          solution_concentration: normalizeConcentration((solution_volume * 1000) / parsed.tAml),
           dilution_enabled: true,
           dilution_volume: solution_volume,
-          dilution_concentration: 1,
+          dilution_concentration: normalizeConcentration(1),
           accuracy: 0.01,
           fertilizers: fertilizers.filter(f => {
             if (f.id === 'K2SO4') {

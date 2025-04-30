@@ -1,6 +1,7 @@
 import {ExportStateType} from "./types";
 import {HPGFormat} from "./hpg";
 import {NPKElements} from "../../../../calculator/types";
+import {normalizeConcentration} from "../../../../calculator/dilution";
 
 
 describe("HPG", () => {
@@ -321,7 +322,7 @@ const EXPECT_STATE: ExportStateType = {
   "calculator": {
     "calculationForm": {
       "accuracy": 0.01,
-      "dilution_concentration": 1,
+      "dilution_concentration": normalizeConcentration(1),
       "dilution_enabled": true,
       "dilution_volume": 17,
       "fertilizers": _fertilizers.filter(f => f.id !== 'MgNO3'),
@@ -346,7 +347,7 @@ const EXPECT_STATE: ExportStateType = {
       "mixerOptions": {
         "url": "mixer-esp32.local",
       },
-      "solution_concentration": 34,
+      "solution_concentration": normalizeConcentration(34),
       "solution_volume": 0.5
     }, "fertilizers": _fertilizers, "recipes": [], "result": null
   }, "meta": {

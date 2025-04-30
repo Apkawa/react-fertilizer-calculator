@@ -4,6 +4,7 @@ import {CalculateResult} from "@/calculator";
 import {FertilizerInfo as _FertilizerInfo, NeedElements} from "@/calculator/types";
 import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 import {CalculateToppingUpOptions, CalculateToppingUpResult} from "@/calculator/helpers";
+import {Concentration} from "@/calculator/dilution";
 
 export interface FertilizerInfo extends _FertilizerInfo {
   pump_number?: number
@@ -16,13 +17,13 @@ export interface MixerOptions {
 export interface CalculatorFormValues {
   accuracy: number,
   solution_volume: number,
-  solution_concentration: number,
+  solution_concentration: Concentration,
   recipe: NeedElements,
   fertilizers: FertilizerInfo[],
 
   dilution_enabled?: boolean,
   dilution_volume?: number,
-  dilution_concentration?: number,
+  dilution_concentration: Concentration,
 
   topping_up_enabled?: boolean,
   topping_up?: CalculateToppingUpOptions,

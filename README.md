@@ -15,15 +15,6 @@ https://apkawa.github.io/react-fertilizer-calculator/
 * [Описание методики расчетов](src/docs/technique.md)
 * [Краткая справка](src/docs/how_to_use.md)
 
-# Технологии
-
-* typescript
-* react
-* react-router
-* styled-components
-* redux
-* redux-forms
-* redux-saga
 
 
 # TODO

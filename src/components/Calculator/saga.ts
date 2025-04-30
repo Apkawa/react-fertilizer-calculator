@@ -12,7 +12,7 @@ import {
 } from "./actions";
 import {calculate_v4} from "@/calculator";
 import {CalculatorFormValues} from "./types";
-import {getNPKDetailInfo, calculateToppingUp, getEmptyElements} from "@/calculator/helpers";
+import {calculateToppingUp, getEmptyElements, getNPKDetailInfo} from "@/calculator/helpers";
 
 export function* loadCalculatorStateSaga(action: ReturnType<typeof loadStateStart>) {
   // Здесь будет валидация и конвертация между несовместимыми версиями
@@ -26,6 +26,7 @@ export function* loadCalculatorStateSaga(action: ReturnType<typeof loadStateStar
 
 export function* storeCalculateFormSaga() {
   const formValues: CalculatorFormValues = yield select(getFormValues(REDUX_FORM_NAME))
+
   yield put(storeCalculateForm(formValues))
   // yield put(calculateStart())
 }
@@ -34,6 +35,7 @@ export function* calculateStartSaga() {
   const formValues: CalculatorFormValues = yield select(
     state => state.calculator.calculationForm
   )
+
   if (!formValues.fertilizers.length) {
     yield put(stopSubmit(REDUX_FORM_NAME, {
       fertilizers: {_error: "Need fertilizers!"}
@@ -79,7 +81,7 @@ export function* calculateStartSaga() {
       yield put(change(REDUX_FORM_NAME, 'solution_volume', tRes.volume))
       doRecalculate = true
     }
-    if (tRes.concentration !== solution_concentration) {
+    if (tRes.concentration !== solution_concentration.k) {
       yield put(change(REDUX_FORM_NAME, 'solution_concentration', tRes.concentration))
       doRecalculate = true
     }

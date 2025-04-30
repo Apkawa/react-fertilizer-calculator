@@ -1,5 +1,5 @@
 import React from "react";
-import {dilution_solution, DilutionResult} from "@/calculator/dilution";
+import {dilution_solution, DilutionResult, normalizeConcentration} from "@/calculator/dilution";
 import {useSelector} from "react-redux";
 import {getFormValues} from "redux-form";
 import {REDUX_FORM_NAME} from "@/components/Calculator/constants";
@@ -15,9 +15,9 @@ interface DilutionResultProps {
 export function ResultDilution(props: DilutionResultProps) {
   const {
     dilution_enabled,
-    solution_concentration=1,
-    dilution_volume=1,
-    dilution_concentration=1,
+    solution_concentration= normalizeConcentration(1),
+    solution_volume = 1,
+    dilution_concentration = normalizeConcentration(1),
   } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues
 
   const fertilizerWeightGroups = useFertilizerSolutionGroup()
@@ -27,17 +27,19 @@ export function ResultDilution(props: DilutionResultProps) {
     return null
   }
 
-  ppm = round((dilution_concentration * ppm) / solution_concentration)
+  const dilution_con = normalizeConcentration(dilution_concentration)
+
+  const newPpm = round((dilution_con.k * ppm) / solution_concentration.k)
 
   let dilution: DilutionResult[] | null = null
 
   dilution = dilution_solution({
     id: "Total",
-    volume: dilution_volume,
-    concentration: dilution_concentration,
+    volume: solution_volume,
+    concentration: solution_concentration,
   }, fertilizerWeightGroups.map(([g]) => (
     {
-      id: g, concentration: solution_concentration
+      id: g, concentration: dilution_con
     })))
 
   return (
@@ -49,10 +51,10 @@ export function ResultDilution(props: DilutionResultProps) {
               <li>Раствор {d.id} - {d.volume < 1 ? `${d.volume * 1000}мл`: `${d.volume}л` }</li>
             ))}
             <li>
-              Долить до {dilution_volume}л
+              Долить до {solution_volume}л
             </li>
             <li>
-              <b>TDS:</b> {ppm} ppm; <b>EC:</b> {ppmToEC(ppm, 1)} мСм/см
+              <b>TDS:</b> {newPpm} ppm; <b>EC:</b> {ppmToEC(newPpm, 1)} мСм/см
             </li>
           </ul>
       </Flex>

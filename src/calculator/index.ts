@@ -4,6 +4,7 @@ import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from
 import {Elements, Fertilizer, FertilizerInfo, NeedElements} from "./types";
 import {getEmptyElements, getFillElementsByType} from "./helpers";
 import {normalizeFertilizer} from "./fertilizer";
+import {Concentration, normalizeConcentration} from "./dilution";
 
 
 export interface FertilizerWeights {
@@ -38,7 +39,7 @@ export interface CalculateOptions {
   max_iterations?: number,
   ignore?: IgnoreElements,
   solution_volume?: number,
-  solution_concentration?: number,
+  solution_concentration?: Concentration|number,
   // Необходимо для расчета с использованием предыдущих данных,
   // например, после расчета микроэлементов добавляются макроэлементы и надо их как то учитывать и наоборот
   prevElements?: Elements,
@@ -242,7 +243,8 @@ export function calculate_v2(
     let weight = (xElements[primaryElement] || 0) / (m[primaryElement] * 10)
     let fInfo = fertilizerMap[f.id]
     weights[f.id].base_weight = round(weight, 4)
-    weights[f.id].weight = round(weight * solution_volume * solution_concentration, precision)
+    const s_k = normalizeConcentration(solution_concentration)
+    weights[f.id].weight = round(weight * solution_volume * s_k.k, precision)
     if (fInfo.solution_concentration) {
       weights[f.id].volume = round((weights[f.id].weight * 1000) / fInfo.solution_concentration, precision)
     }

@@ -20,6 +20,7 @@ import {mobileStyles} from "@/components/ui/styled";
 import {RootState} from "@/redux/types";
 import {ExportState} from "./ImportExport/ExportState";
 import {ImportState} from "./ImportExport/ImportState";
+import {normalizeConcentration} from "@/calculator/dilution";
 
 interface CalculatorProps {
 
@@ -28,12 +29,11 @@ interface CalculatorProps {
 const initialValues: CalculatorFormValues = {
   accuracy: 0.2,
   solution_volume: 1,
-  solution_concentration: 100,
+  solution_concentration: normalizeConcentration(100),
   recipe: {...DEFAULT_RECIPES[0].elements, ...DEFAULT_MICRO_RECIPE, Cl: 0},
   fertilizers: [],
   dilution_enabled: false,
-  dilution_volume: 20,
-  dilution_concentration: 1,
+  dilution_concentration: normalizeConcentration(1),
   topping_up_enabled: false,
   mixerOptions: {}
 }

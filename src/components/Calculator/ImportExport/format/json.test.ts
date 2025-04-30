@@ -1,5 +1,6 @@
 import {JSONFormat} from "./json";
 import {ExportStateType} from "./types";
+import {normalizeConcentration} from "../../../../calculator/dilution";
 
 
 describe("Json", () => {
@@ -25,7 +26,7 @@ export const EXAMPLE_STATE: ExportStateType = {
     "calculationForm": {
       "accuracy": 0.01,
       "solution_volume": 5,
-      "solution_concentration": 1,
+      "solution_concentration": normalizeConcentration(1),
       "recipe": {
         "Cl": 0,
         "Fe": 1.5,
@@ -50,7 +51,7 @@ export const EXAMPLE_STATE: ExportStateType = {
       }],
       "dilution_enabled": false,
       "dilution_volume": 5,
-      "dilution_concentration": 1,
+      "dilution_concentration": normalizeConcentration(1),
       "ignore": {"S": true},
       "topping_up_enabled": false,
       "topping_up": {
