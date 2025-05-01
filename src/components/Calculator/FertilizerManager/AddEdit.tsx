@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Flex, Text} from "rebass";
 
-import {FieldArray, Form, reduxForm} from 'redux-form'
+import {change, FieldArray, Form, reduxForm} from 'redux-form'
 import {ReduxFormType} from "@/components/ui/ReduxForm/types";
 import {Input} from "@/components/ui/ReduxForm/Input";
 import {normalizeFertilizer} from "@/calculator/fertilizer";
@@ -17,6 +17,8 @@ import {useFormName, useFormValues} from "@/hooks/ReduxForm";
 import {decimal, number} from "@/components/ui/ReduxForm/normalizers";
 import {Label} from "@rebass/forms";
 import {FertilizerInfo} from "@/components/Calculator/types";
+import {AddEditNPKString} from "@/components/Calculator/FertilizerManager/AddEditNPKString";
+import {useDispatch} from "react-redux";
 
 interface AddEditProps {
   fertilizer?: FertilizerInfo,
@@ -42,7 +44,6 @@ export function getInitialValues(f: FertilizerInfo): AddEditFormType {
 }
 
 export function formToFertilizer(formValues: AddEditFormType): FertilizerInfo {
-
   const {
     composition_enable, composition, npk,
     solution_density_enable, solution_density, solution_concentration,
@@ -62,7 +63,9 @@ export function formToFertilizer(formValues: AddEditFormType): FertilizerInfo {
 }
 
 const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
-  const formValues = useFormValues<AddEditFormType>(useFormName())[0]
+  const formName = useFormName();
+  const formValues = useFormValues<AddEditFormType>(formName)[0]
+  const dispatch = useDispatch()
 
   return (
     <Form>
@@ -90,6 +93,14 @@ const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
             />
           ))}
         </Flex>
+        <Flex>
+          <AddEditNPKString
+            npk={formValues.npk}
+            onChange={(npk) => {
+              dispatch(change(formName, 'npk', npk))
+            }}/>
+        </Flex>
+
         <Flex>
           <Checkbox name="composition_enable" label="Формула"/>
         </Flex>
@@ -145,19 +156,19 @@ const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
             : null}
         </Flex>
         <Flex>
-            <Label flexDirection="column">
-              Миксер, номер помпы
-              <Input
-                name="pump_number"
-                type="number"
-                step="1"
-                min="1"
-                max="16"
-                required={false}
-                normalize={number}
-                maxWidth={'3em'}
-              />
-            </Label>
+          <Label flexDirection="column">
+            Миксер, номер помпы
+            <Input
+              name="pump_number"
+              type="number"
+              step="1"
+              min="1"
+              max="16"
+              required={false}
+              normalize={number}
+              maxWidth={'3em'}
+            />
+          </Label>
         </Flex>
       </Flex>
     </Form>

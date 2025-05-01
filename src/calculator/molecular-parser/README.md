@@ -15,3 +15,5 @@ var crazyCounts = Parser.decomposeFormula('(CH3)16(Tc(H2O)3CO(BrFe3(ReCl)3(SO4)2
 ```
 
 
+Copy from https://github.com/jagill/node-molecular-parser/ and adopted for typescript
+(c) James Gill (https://github.com/jagill)

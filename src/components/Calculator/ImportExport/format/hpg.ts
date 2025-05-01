@@ -118,24 +118,37 @@ export class HPGFormat extends BaseFormat {
     return state;
   }
 
-  static parseProfileString(profile: string): NPKElements {
-    const elements: NPKElements = {}
+  static parseProfileStringToObject(profile: string): { [key: string]: number } {
+    const elements: { [key: string]: number } = {}
 
     for (let e of profile.split(' ')) {
       e = e.trim()
       if (e) {
         let pair = e.split('=')
-        if (pair.length === 2 && FERTILIZER_ELEMENT_NAMES.includes(pair[0].trim() as FERTILIZER_ELEMENT_NAMES)) {
-          elements[pair[0] as FERTILIZER_ELEMENT_NAMES] = parseFloat(pair[1])
+        if (pair.length === 2) {
+          elements[pair[0].trim()] = parseFloat(pair[1].replace(",", '.'))
         }
       }
     }
     return elements
   }
 
-  static stringifyProfile(npk: NPKElements): string {
+  static parseProfileString(profile: string): NPKElements {
+    const elements: NPKElements = {}
 
-    let s = FERTILIZER_ELEMENT_NAMES.map(e => typeof npk[e] != "undefined" && `${e}=${npk[e]}`).filter(e => e).join(' ')
+    const p = HPGFormat.parseProfileStringToObject(profile)
+    for (const [k, v] of Object.entries(p)) {
+      if (FERTILIZER_ELEMENT_NAMES.includes(k as FERTILIZER_ELEMENT_NAMES)) {
+        elements[k as FERTILIZER_ELEMENT_NAMES] = v
+      }
+    }
+    return elements
+  }
+
+  static stringifyProfile(npk: NPKElements): string {
+    let s = FERTILIZER_ELEMENT_NAMES.map(
+      e => typeof npk[e] != "undefined" && `${e}=${npk[e]}`)
+      .filter(e => e).join(' ')
     return `N=${(npk.NO3 || 0) + (npk.NH4 || 0)} ${s}`
   }
 }

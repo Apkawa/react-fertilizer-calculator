@@ -15,7 +15,7 @@ export const WrappedInput: WrapperInputType<InputProps> = ({input, label, type =
                 {...input}
                 type={type}
                 lang="en-US"
-                placeholder={label}
+                placeholder={props.placeholder || label}
   />
 
 

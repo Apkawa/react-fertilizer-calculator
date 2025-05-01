@@ -1,18 +1,9 @@
 import {entries, keys, round, sum, values} from "../utils";
 import {calculateMassParts, parseMolecule, parseNitrates} from "./chem";
-import {AtomNameType} from "./constants";
+import {AtomNameType, NPKOxides} from "./constants";
 import {getEmptyElements} from "./helpers";
 import {Elements, Fertilizer, FertilizerComposition, FertilizerInfo, NPKElements} from "@/calculator/types";
 import {FertilizerWeights} from "@/calculator/index";
-
-export const NPKOxides = {
-  NO3: 'NO3',
-  NH4: 'NH4',
-  P: 'P2O5',
-  K: 'K2O',
-  Ca: 'CaO',
-  Mg: 'MgO',
-}
 
 /**
  * Создается удобрения по npk элементов
@@ -44,7 +35,7 @@ export function buildNPKFertilizer(id: string, npk: NPKElements): FertilizerInfo
  * @param composition
  * @return Elements - npk чистых элементов, не оксидов!
  */
-export function compositionToNPKElements(composition: FertilizerComposition[]): Elements {
+export function compositionToElements(composition: FertilizerComposition[]): Elements {
   const elements: Elements = getEmptyElements()
   for (let comp of composition) {
     let atomCounts = parseMolecule(comp.formula)
@@ -83,7 +74,7 @@ export function compositionToNPKElements(composition: FertilizerComposition[]): 
  * @param {Elements} elements - чистые элементы
  * @param precision
  */
-export function elementsToNPK(elements: NPKElements, precision = 3): Elements {
+export function elementsToNPK(elements: Partial<Elements>, precision = 3): NPKElements {
   const e = entries(elements).map(([atom, val]) => {
     const oxide: string = (NPKOxides as any)[atom] || atom
     const massParts = calculateMassParts(parseMolecule(oxide))
@@ -111,11 +102,11 @@ export function normalizeFertilizer(fertilizerInfo: FertilizerInfo, convertMass 
     composition = buildNPKFertilizer(fertilizerInfo.id, fertilizerInfo.npk).composition
   }
   if (composition) {
-    elements = compositionToNPKElements(composition)
+    elements = compositionToElements(composition)
   }
   if (!convertMass) {
     // Оксиды нужны только для отображения.
-    elements = elementsToNPK(elements)
+    elements = elementsToNPK(elements) as Elements
   }
   return {
     id: fertilizerInfo.id,

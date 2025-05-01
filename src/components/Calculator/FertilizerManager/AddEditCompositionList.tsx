@@ -19,13 +19,14 @@ export const AddEditCompositionList: AddEditCompositionListType = (props) => {
       <Flex flexDirection="column">
         {fields.map((f, i) => (
           <Flex key={i} width="100%">
-            <Input name={`${f}.formula`} flex={2}/>
+            <Input name={`${f}.formula`} flex={2} placeholder={"NH4NO3"}/>
             <Input
               name={`${f}.percent`}
               type="number"
               step="0.1"
               min="0"
               max="100"
+              placeholder={"98"}
               normalize={decimal}
               flex={1}
             />

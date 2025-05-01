@@ -2,8 +2,8 @@ import React, {FunctionComponent} from "react";
 import {Flex} from "rebass";
 import {Input} from "@/components/ui/ReduxForm/Input";
 import {decimal} from "@/components/ui/ReduxForm/normalizers";
-import {NPKOxides} from "@/calculator/fertilizer";
 import {Elements} from "@/calculator/types";
+import {NPKOxides} from "@/calculator/constants";
 
 interface RecipeElementFormProps {
   name: keyof Elements,

@@ -142,3 +142,11 @@ export const IONIC_STRENGTH = {
   Na: 1 / ATOMIC_MASS["Na"],
 }
 
+export const NPKOxides = {
+  NO3: 'NO3',
+  NH4: 'NH4',
+  P: 'P2O5',
+  K: 'K2O',
+  Ca: 'CaO',
+  Mg: 'MgO',
+}

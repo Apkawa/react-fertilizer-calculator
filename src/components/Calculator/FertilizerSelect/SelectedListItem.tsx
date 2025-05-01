@@ -2,8 +2,8 @@ import React, {FunctionComponent} from "react";
 import {Box, Card, Flex, Text} from "rebass";
 import {Cross} from "@styled-icons/entypo/Cross"
 import {FertilizerType} from "./types";
-import {normalizeFertilizer, NPKOxides} from "@/calculator/fertilizer";
-import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
+import {normalizeFertilizer} from "@/calculator/fertilizer";
+import {FERTILIZER_ELEMENT_NAMES, NPKOxides} from "@/calculator/constants";
 import {IconButton} from "@/components/ui/IconButton";
 import {FertilizerWeights} from "@/calculator";
 import {Elements} from "@/calculator/types";
