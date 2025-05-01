@@ -5,7 +5,7 @@ import {getEmptyElements} from "./helpers";
 import {Elements, Fertilizer, FertilizerComposition, FertilizerInfo, NPKElements} from "@/calculator/types";
 import {FertilizerWeights} from "@/calculator/index";
 
-const NPKOxides = {
+export const NPKOxides = {
   NO3: 'NO3',
   NH4: 'NH4',
   P: 'P2O5',
@@ -14,6 +14,11 @@ const NPKOxides = {
   Mg: 'MgO',
 }
 
+/**
+ * Создается удобрения по npk элементов
+ * @param id удобрения
+ * @param npk удобрения, проценты даются для оксидов
+ */
 export function buildNPKFertilizer(id: string, npk: NPKElements): FertilizerInfo {
   const composition: FertilizerComposition[] = entries(npk)
     .filter(v => v[1] > 0)
@@ -34,6 +39,11 @@ export function buildNPKFertilizer(id: string, npk: NPKElements): FertilizerInfo
   }
 }
 
+/**
+ * Состав удобрения в NPK
+ * @param composition
+ * @return Elements - npk чистых элементов, не оксидов!
+ */
 export function compositionToNPKElements(composition: FertilizerComposition[]): Elements {
   const elements: Elements = getEmptyElements()
   for (let comp of composition) {
@@ -71,6 +81,7 @@ export function compositionToNPKElements(composition: FertilizerComposition[]): 
 /**
  * Конвертация чистых элементов в NPK оксиды
  * @param {Elements} elements - чистые элементы
+ * @param precision
  */
 export function elementsToNPK(elements: NPKElements, precision = 3): Elements {
   const e = entries(elements).map(([atom, val]) => {

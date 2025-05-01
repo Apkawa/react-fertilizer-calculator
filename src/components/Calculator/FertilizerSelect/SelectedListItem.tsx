@@ -2,23 +2,33 @@ import React, {FunctionComponent} from "react";
 import {Box, Card, Flex, Text} from "rebass";
 import {Cross} from "@styled-icons/entypo/Cross"
 import {FertilizerType} from "./types";
-import {normalizeFertilizer} from "@/calculator/fertilizer";
+import {normalizeFertilizer, NPKOxides} from "@/calculator/fertilizer";
 import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
 import {IconButton} from "@/components/ui/IconButton";
 import {FertilizerWeights} from "@/calculator";
+import {Elements} from "@/calculator/types";
 
 interface ElementProps {
-  name: string,
+  name: keyof Elements,
+  isOxide?: boolean,
   value: number,
   delta?: number,
 }
 
 export const Element: FunctionComponent<ElementProps> = (props) => {
-  const {name, value, delta} = props
+  const {name,
+    value,
+    delta,
+    isOxide
+  } = props
+  let displayName: string = name;
+  if (isOxide && NPKOxides.hasOwnProperty(name)) {
+    displayName = NPKOxides[name] as string
+  }
   return (
     <Box bg={name} flex={1} mx="2px" px={1} color={'black'} minWidth="2.1em" maxWidth="4em" fontSize={1}>
       <Flex flexDirection='column' alignItems={'center'}>
-        <Box>{name}</Box>
+        <Box>{displayName}</Box>
         <Box>{value}</Box>
         {typeof delta !== "undefined" ? <Box>{delta}</Box> : null}
       </Flex>
@@ -53,6 +63,7 @@ export const SelectedListItem: FunctionComponent<SelectedListItemProps> = ({item
                     name={name}
                     key={name}
                     value={v}
+                    isOxide
                   />
                 }
               )

@@ -186,6 +186,13 @@ type PartialElementsMatrix = {
   [K in keyof ElementInMatrix]?: ElementInMatrix
 }
 
+/**
+ * Конвертирование npk используя матрицу соотношений
+ * Смысл в том чтобы корректировать npk рецепта по соотношениям отдельных элементов K:N, K:Mg и тд
+ * Подробнее https://github.com/WEGA-project/WEGA-HPG/wiki#general-ppm
+ * @param npk
+ * @param ratio
+ */
 export function convertProfileWithRatio(
   npk: NPKElements,
   ratio: PartialElementsMatrix): NPKElements {
@@ -222,9 +229,11 @@ export function convertProfileWithRatio(
 }
 
 /**
+ * Обновления профиля по ЕС
  * Copied from siv237/HPG
  * @param npk
  * @param EC new EC
+ * @param ratio
  * @return new NPK
  */
 export function convertProfileWithEC(npk: NPKElements, EC: number, ratio?: ElementsMatrixType): NPKElements {

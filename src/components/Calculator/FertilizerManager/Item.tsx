@@ -55,6 +55,7 @@ export function Item(props: ItemProps) {
                       name={name}
                       key={name}
                       value={v}
+                      isOxide
                     />
                   }
                 )

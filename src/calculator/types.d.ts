@@ -20,10 +20,16 @@ export interface MicroElements<T=number> {
   Si: T,
 }
 
+/**
+ * NPK чистых элементов
+ */
 export interface Elements<T=number> extends MacroElements<T>, MicroElements<T> {
 
 }
 
+/**
+ * NPK рецепта чистых элементов
+ */
 export type NeedElements = {
   [E in keyof Elements]?: number
 }
@@ -33,13 +39,20 @@ export interface Fertilizer {
   elements: Elements
 }
 
+/**
+ * Состав удобрения
+ * В виде формулы и её содержанием в %
+ */
 export interface FertilizerComposition {
-  // As example:
+  // As example: K2P2O5
   formula: string,
   // 0-100%
   percent?: number,
 }
 
+/**
+ * Удобрение
+ */
 export interface FertilizerInfo {
   id: string,
   // TODO
@@ -56,6 +69,9 @@ export interface FertilizerInfo {
 
 }
 
+/**
+ * NPK оксидов
+ */
 export type NPKElements = {
   [El in keyof Elements]?: Elements[El]
 }
