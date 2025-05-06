@@ -90,7 +90,12 @@ export function calculate_v4(
   let macroFertilizers = fertilizers.filter(f => !MICRO_ELEMENT_NAMES.filter(n => nFertilizers[f.id].elements[n]).length)
   let microFertilizers = fertilizers.filter(f => MICRO_ELEMENT_NAMES.filter(n => nFertilizers[f.id].elements[n]).length)
 
-  let microResult = calculate_v3(needElements, microFertilizers,
+  const microNeedElements = Object.fromEntries(entries(needElements)
+    .filter(([el, v]) =>
+      // Если какой то микро равен нулю - это значит что его не указали и его игнорируем
+      MICRO_ELEMENT_NAMES.includes(el as MICRO_ELEMENT_NAMES) && v > 0)
+  ) as NeedElements
+  let microResult = calculate_v3(microNeedElements, microFertilizers,
     {...options, ignore: {...options.ignore, ...getFillElementsByType(true).macro}})
 
   MACRO_ELEMENT_NAMES.forEach(e => {
@@ -170,6 +175,7 @@ export function calculate_v3(
 const ElementPriority: Partial<NeedElements> = {
   'NH4': 2000,
   'P': 2000,
+  // Комплекс по бору
   'B': 5000,
 }
 

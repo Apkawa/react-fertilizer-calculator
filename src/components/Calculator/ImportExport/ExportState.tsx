@@ -4,7 +4,7 @@ import {IconButton} from "@/components/ui/IconButton";
 import {useSelector} from "react-redux";
 import {CalculatorState} from "@/components/Calculator/types";
 import {saveData} from "@/utils/downloads";
-import {ExportStateType} from "@/components/Calculator/ImportExport/format/types";
+import {ExportStateType} from "@/calculator/format/types";
 
 interface ExportRecipesProps {
 }

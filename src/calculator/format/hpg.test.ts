@@ -1,7 +1,7 @@
 import {ExportStateType} from "./types";
 import {HPGFormat} from "./hpg";
-import {NPKElements} from "../../../../calculator/types";
-import {normalizeConcentration} from "../../../../calculator/dilution";
+import {NPKElements} from "../types";
+import {normalizeConcentration} from "../dilution";
 
 
 describe("HPG", () => {

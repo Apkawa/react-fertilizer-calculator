@@ -30,9 +30,7 @@ export interface Elements<T=number> extends MacroElements<T>, MicroElements<T> {
 /**
  * NPK рецепта чистых элементов
  */
-export type NeedElements = {
-  [E in keyof Elements]?: number
-}
+export type NeedElements = Partial<Elements>
 
 export interface Fertilizer {
   id: string,

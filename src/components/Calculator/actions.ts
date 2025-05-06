@@ -2,7 +2,7 @@ import * as ActionNames from "./constants";
 import {CalculateResult} from "@/calculator";
 import {CalculatorFormValues, CalculatorState, FertilizerInfo, Recipe} from "@/components/Calculator/types";
 import {CalculateToppingUpResult} from "@/calculator/helpers";
-import {ExportStateType} from "@/components/Calculator/ImportExport/format/types";
+import {ExportStateType} from "@/calculator/format/types";
 
 export const storeCalculateForm = (form: CalculatorFormValues) => ({
   type: ActionNames.STORE_CALCULATE_FORM,

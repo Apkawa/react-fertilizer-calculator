@@ -3,6 +3,7 @@ export const entries = Object.entries as <T>(
   o: T
 ) => [Extract<keyof T, string>, Exclude<T[keyof T], undefined>][]
 
+
 export const values = Object.values as <T>(
   o: T
 ) => (Exclude<T[keyof T], undefined>)[]

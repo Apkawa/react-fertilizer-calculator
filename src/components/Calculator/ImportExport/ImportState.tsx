@@ -3,7 +3,7 @@ import {Import} from "@styled-icons/boxicons-regular/Import"
 import {IconButton} from "@/components/ui/IconButton";
 import {useDispatch} from "react-redux";
 import {loadStateStart} from "@/components/Calculator/actions";
-import {ACCEPT_FORMATS, FORMATS_MAP} from "@/components/Calculator/ImportExport/format";
+import {ACCEPT_FORMATS, FORMATS_MAP} from "@/calculator/format";
 
 interface ImportStateProps {
 }

@@ -1,11 +1,11 @@
 import {BaseFormat} from "./base";
 import {ExportStateType} from "./types";
-import {NPKElements} from "../../../../calculator/types";
-import {FERTILIZER_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from '../../../../calculator/constants';
-import {buildNPKFertilizer, elementsToNPK, normalizeFertilizer} from "../../../../calculator/fertilizer";
-import {entries, tryParseFloat} from "../../../../utils";
-import {FertilizerInfo} from "../../types";
-import {normalizeConcentration} from "../../../../calculator/dilution";
+import {NPKElements} from "../types";
+import {FERTILIZER_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from '../constants';
+import {buildNPKFertilizer, elementsToNPK, normalizeFertilizer} from "../fertilizer";
+import {entries, tryParseFloat} from "../../utils";
+import {FertilizerInfo} from "../../components/Calculator/types";
+import {normalizeConcentration} from "../dilution";
 
 const FERTILIZERS = [
   "CaNO3", "KNO3", "NH4NO3", "MgSO4", "KH2PO4", "K2SO4", "MgNO3", "CaCl2",

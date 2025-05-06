@@ -1,6 +1,6 @@
 import {JSONFormat} from "./json";
 import {ExportStateType} from "./types";
-import {normalizeConcentration} from "../../../../calculator/dilution";
+import {normalizeConcentration} from "../dilution";
 
 
 describe("Json", () => {

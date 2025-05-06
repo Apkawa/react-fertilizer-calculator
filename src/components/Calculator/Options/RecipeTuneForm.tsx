@@ -18,7 +18,7 @@ import {StyledBalanceCell} from "@/components/Calculator/Options/Recipe";
 import {entries, round} from "@/utils";
 import {ModalActions} from "@/components/ui/Modal/Modal";
 import {Input} from "@rebass/forms";
-import {HPGFormat} from "@/components/Calculator/ImportExport/format/hpg";
+import {HPGFormat} from "@/calculator/format/hpg";
 
 interface RecipeTuneFormProps {
   modal: ModalActions,

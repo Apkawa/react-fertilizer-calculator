@@ -1,7 +1,9 @@
 import {Elements, NPKElements} from "./types";
 import {entries, round} from "../utils";
-import {ATOMIC_MASS, MACRO_ELEMENT_NAMES} from "./constants";
+import {ATOMIC_MASS, FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES, NPKOxides} from "./constants";
 import {extract_percent} from "./helpers";
+import {HPGFormat} from "./format/hpg";
+import {compositionToElements, elementsToNPK} from "./fertilizer";
 
 export const ALLOWED_ELEMENT_IN_MATRIX = ["N", ...MACRO_ELEMENT_NAMES]
 export type ALLOWED_ELEMENT_IN_MATRIX = typeof ALLOWED_ELEMENT_IN_MATRIX[number]
@@ -288,3 +290,55 @@ export function convertProfileWithEC(npk: NPKElements, EC: number, ratio?: Eleme
 }
 
 
+/**
+ *
+ * @param profile string like `NO3=13.577 K2O=45.668 Fe=6`
+ * @return NPKElements
+ */
+export function parseProfileStringToNPK(profile: string): NPKElements {
+  const elements: Partial<Elements> = {}
+  const p = HPGFormat.parseProfileStringToObject(profile)
+  for (const [k, v] of Object.entries(p)) {
+    if (!Number.isFinite(v)) {
+      continue
+    }
+
+    if (FERTILIZER_ELEMENT_NAMES.includes(k as FERTILIZER_ELEMENT_NAMES)) {
+      elements[k as FERTILIZER_ELEMENT_NAMES] = v
+    } else {
+      // Может быть это какой то оксид. Может даже целое уравнение.
+      const npkEl = compositionToElements(
+        // Представим это как химическую формулу
+        [{percent: v, formula: k}])
+      for (const [_e, _p] of entries(npkEl)) {
+        if (_p) {
+          elements[_e] = (elements[_e] || 0) + _p
+        }
+      }
+    }
+  }
+  // Конвертируем в оксидную форму
+  return elementsToNPK(elements)
+}
+
+/**
+ *
+ * @param npk
+ * @returns string like `NO3=13.577 K2O=45.668 Fe=6`
+ */
+export function stringifyProfile(npk: NPKElements): string {
+  let s = FERTILIZER_ELEMENT_NAMES.map(
+    e => {
+      if (npk[e]) {
+        let n = e as string;
+        // Т.к. оперируем оксидами, то оксиды выводим как оксиды
+        if (NPKOxides.hasOwnProperty(e)) {
+          n = NPKOxides[e] as string
+        }
+        return `${n}=${npk[e]}`
+      }
+      return undefined
+    })
+    .filter(e => e).join(' ')
+  return `${s}`
+}
