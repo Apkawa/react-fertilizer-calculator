@@ -298,9 +298,14 @@ export function convertProfileWithEC(npk: NPKElements, EC: number, ratio?: Eleme
 export function parseProfileStringToNPK(profile: string): NPKElements {
   const elements: Partial<Elements> = {}
   const p = HPGFormat.parseProfileStringToObject(profile)
-  for (const [k, v] of Object.entries(p)) {
+  for (let [k, v] of Object.entries(p)) {
     if (!Number.isFinite(v)) {
       continue
+    }
+
+    // Частный случай, когда вводим N но подразумеваем NO3
+    if (k === "N") {
+      k = "NO3"
     }
 
     if (FERTILIZER_ELEMENT_NAMES.includes(k as FERTILIZER_ELEMENT_NAMES)) {
