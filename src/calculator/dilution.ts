@@ -87,13 +87,13 @@ export function normalizeConcentration(concentration: Partial<Concentration> | n
   if (typeof concentration == 'number') {
     return {
       k: concentration,
-      v_1: 1000 / concentration,
+      v_1: round(1000 / concentration, 2),
       v_2: 1000,
     }
   }
   if (concentration.v_1) {
     return {
-      k: (concentration.v_2 || 1000) / concentration.v_1,
+      k: round((concentration.v_2 || 1000) / concentration.v_1, 2),
       v_2: concentration.v_2 || 1000,
       v_1: concentration.v_1
     }
@@ -102,7 +102,7 @@ export function normalizeConcentration(concentration: Partial<Concentration> | n
     return {
       k: concentration.k,
       v_2: 1000,
-      v_1: 1000 / concentration.k
+      v_1: round(1000 / concentration.k, 2)
     }
   }
   throw Error("Invalid concentration")
