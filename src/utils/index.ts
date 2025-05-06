@@ -41,7 +41,7 @@ export function toMap<T extends object>(list: T[], field: keyof T): ToMapResult<
   return m
 }
 
-export function updateOrPush<T extends object>(list: T[], item: T, lookup: keyof T): T[] {
+export function update<T extends object>(list: T[], item: T, lookup: keyof T): [T[], boolean] {
   const newList = [...list]
   let updated = false
   for (let i = 0; i < list.length; i++) {
@@ -51,6 +51,11 @@ export function updateOrPush<T extends object>(list: T[], item: T, lookup: keyof
       break
     }
   }
+  return [newList, updated]
+}
+
+export function updateOrPush<T extends object>(list: T[], item: T, lookup: keyof T): T[] {
+  const [newList , updated] = update(list, item, lookup)
   if (!updated) {
     newList.push(item)
   }

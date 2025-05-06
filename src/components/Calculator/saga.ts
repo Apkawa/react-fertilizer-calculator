@@ -1,10 +1,10 @@
 import {all, call, fork, put, select, takeLatest} from 'redux-saga/effects'
 import {actionTypes, change, FormAction, getFormValues, stopSubmit} from "redux-form";
-import {CALCULATE_START, LOAD_STATE_START, REDUX_FORM_NAME} from "./constants";
+import {CALCULATE_START, FERTILIZERS_PUSH, LOAD_STATE_START, REDUX_FORM_NAME} from "./constants";
 import {
   calculateError,
   calculateStart,
-  calculateSuccess,
+  calculateSuccess, fertilizerPush,
   loadStateStart,
   loadStateSuccess,
   storeCalculateForm,
@@ -13,6 +13,7 @@ import {
 import {calculate_v4} from "@/calculator";
 import {CalculatorFormValues} from "./types";
 import {calculateToppingUp, getEmptyElements, getNPKDetailInfo} from "@/calculator/helpers";
+import {update} from "@/utils";
 
 export function* loadCalculatorStateSaga(action: ReturnType<typeof loadStateStart>) {
   // Здесь будет валидация и конвертация между несовместимыми версиями
@@ -96,6 +97,20 @@ export function* calculateStartSaga() {
   yield put(calculateSuccess(result))
 }
 
+function* fertilizerPushSaga(action: ReturnType<typeof fertilizerPush>) {
+  const formValues: CalculatorFormValues = yield select(
+    state => state.calculator.calculationForm
+  )
+  const [newFertilizers, updated] = update(formValues?.fertilizers || [], action.payload, "id")
+  if (updated) {
+    yield put(storeCalculateForm({...formValues, fertilizers: newFertilizers}))
+  }
+}
+
+export function* fertilizersPushWatcher() {
+  yield takeLatest(FERTILIZERS_PUSH, fertilizerPushSaga)
+}
+
 export function* loadStateSagaWatcher() {
   yield takeLatest(LOAD_STATE_START, loadCalculatorStateSaga);
 }
@@ -121,6 +136,7 @@ export function* calculatorFormChangeWatcher() {
 
 export default function* calculatorRootSaga() {
   yield all([
+    fork(fertilizersPushWatcher),
     fork(calculatorSagaWatcher),
     fork(calculatorFormChangeWatcher),
     fork(loadStateSagaWatcher)
