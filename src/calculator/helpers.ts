@@ -1,7 +1,8 @@
 import {entries, round, sum} from "../utils";
 import {FertilizerWeights} from './index';
 import {Elements, MacroElements, MicroElements} from "./types";
-import {calculateEC, calculateIonicBalance, ElementsMatrixType, getProfileRatioMatrix} from "./profile";
+import {calculateEC, calculateIonicBalance} from "./profile";
+import {ElementsMatrixType, getProfileRatioMatrix} from "./ratio";
 
 export interface NPKBalance {
   ion_balance: number,

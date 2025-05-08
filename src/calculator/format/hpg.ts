@@ -133,6 +133,18 @@ export class HPGFormat extends BaseFormat {
     return elements
   }
 
+  /**
+   * Заполняем 0 пропущенные значения
+   * @param npk
+   */
+  static fillNPKElements(npk: NPKElements): NPKElements {
+    const newNpk = {...npk}
+    for (let n of FERTILIZER_ELEMENT_NAMES) {
+      newNpk[n] = newNpk[n] || 0
+    }
+    return newNpk
+  }
+
   static parseProfileString(profile: string): NPKElements {
     const elements: NPKElements = {}
 
@@ -141,6 +153,9 @@ export class HPGFormat extends BaseFormat {
       if (FERTILIZER_ELEMENT_NAMES.includes(k as FERTILIZER_ELEMENT_NAMES)) {
         elements[k as FERTILIZER_ELEMENT_NAMES] = v
       }
+    }
+    if (p['N'] && !elements.NO3) {
+      elements.NO3 = p['N']
     }
     return elements
   }

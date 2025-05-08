@@ -9,16 +9,21 @@ import {decimal} from "@/components/ui/ReduxForm/normalizers";
 import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "@/calculator/constants";
 import {NumberInput as StyledInput} from "@/components/ui/RebassWidgets/Number";
 import {
-  ALLOWED_ELEMENT_IN_MATRIX, calculateEC,
+  calculateEC,
   convertProfileWithEC,
-  convertProfileWithRatio,
-  fixIonicBalanceByCa, fixIonicBalanceByS, getProfileRatioMatrix
+  fixIonicBalanceByCa, fixIonicBalanceByS
 } from "@/calculator/profile";
 import {StyledBalanceCell} from "@/components/Calculator/Options/Recipe";
 import {entries, round} from "@/utils";
 import {ModalActions} from "@/components/ui/Modal/Modal";
 import {Input} from "@rebass/forms";
 import {HPGFormat} from "@/calculator/format/hpg";
+import {
+  ALLOWED_ELEMENT_IN_MATRIX,
+  convertProfileWithRatio,
+  getMultiElementRatio,
+  getProfileRatioMatrix
+} from "@/calculator/ratio";
 
 interface RecipeTuneFormProps {
   modal: ModalActions,
@@ -91,8 +96,11 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
   function onChangeProfileString(s: string) {
     let npk = HPGFormat.parseProfileString(s)
     if (entries(npk).length) {
+      npk = HPGFormat.fillNPKElements(npk)
       setProfileString(s)
       setRecipe(npk)
+      setEC(calculateEC(npk))
+      setRatio(getProfileRatioMatrix(npk))
     } else {
       // Reset
       setProfileString(HPGFormat.stringifyProfile(recipe))
@@ -130,6 +138,8 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
         <StyledBalanceCell name="K:N" value={recipeInfo.ratio.K.N}/>
         <StyledBalanceCell name="K:Ca" value={recipeInfo.ratio.K.Ca}/>
         <StyledBalanceCell name="K:Mg" value={recipeInfo.ratio.K.Mg}/>
+        <StyledBalanceCell name="K:Ca:Mg"
+                           value={getMultiElementRatio(recipe, ['K', 'Ca', 'Mg']).display}/>
       </Flex>
       <Flex>
         <table>

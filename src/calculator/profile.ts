@@ -1,43 +1,32 @@
 import {Elements, NPKElements} from "./types";
 import {entries, round} from "../utils";
-import {ATOMIC_MASS, FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES, NPKOxides} from "./constants";
-import {extract_percent} from "./helpers";
+import {ATOMIC_MASS, FERTILIZER_ELEMENT_NAMES, NPKOxides} from "./constants";
 import {HPGFormat} from "./format/hpg";
 import {compositionToElements, elementsToNPK} from "./fertilizer";
+import {ElementsMatrixType, getProfileRatioMatrix} from "./ratio";
 
-export const ALLOWED_ELEMENT_IN_MATRIX = ["N", ...MACRO_ELEMENT_NAMES]
-export type ALLOWED_ELEMENT_IN_MATRIX = typeof ALLOWED_ELEMENT_IN_MATRIX[number]
+// export interface ProfileInfo {
+//   ratio: ElementsMatrixType
+//   anions: number,
+//   cations: number,
+//   ion_balance: number,
+//   EC: number
+// }
 
-type ElementInMatrix<T = number> = {
-  [K in ALLOWED_ELEMENT_IN_MATRIX]: T
-}
-
-export interface ElementsMatrixType extends ElementInMatrix<ElementInMatrix> {
-  //  ElementsMatrixType.N.K must be equal N / K
-}
-
-export interface ProfileInfo {
-  ratio: ElementsMatrixType
-  anions: number,
-  cations: number,
-  ion_balance: number,
-  EC: number
-}
-
-export interface ChangeProfileOptions {
-  ratio: Partial<ElementInMatrix<Partial<ElementInMatrix>>>,
-  EC: number,
-
-}
-
-export interface ChangeProfileResult {
-  npk: Elements,
-  info: ProfileInfo
-}
-
-// export function changeProfile(npk: Elements, options: ChangeProfileOptions): ChangeProfileResult {
+// export interface ChangeProfileOptions {
+//   ratio: Partial<ElementInMatrix<Partial<ElementInMatrix>>>,
+//   EC: number,
 //
 // }
+//
+// export interface ChangeProfileResult {
+//   npk: Elements,
+//   info: ProfileInfo
+// }
+//
+// // export function changeProfile(npk: Elements, options: ChangeProfileOptions): ChangeProfileResult {
+// //
+// // }
 
 interface ProfileCationsAnionsResult {
   cations: number,
@@ -154,88 +143,6 @@ export function fixIonicBalanceByCa(npk: NPKElements): number {
     ) / (2 * M_Cl * M_K * M_Mg * M_NH4 * M_NO3 * M_P * M_S)
   )
   return round(mCa, 3)
-}
-
-/**
- * Расчет матрицы соотношений
- * @param npk
- * @return ElementsMatrixType
- */
-export function getProfileRatioMatrix(npk: NPKElements): ElementsMatrixType {
-  let elMap: ElementInMatrix = {}
-  for (let [El, ppm] of entries(npk)) {
-    if (ALLOWED_ELEMENT_IN_MATRIX.includes(El)) {
-      elMap[El] = ppm
-    }
-  }
-  elMap.N = (npk.NH4 || 0) + (npk.NO3 || 0)
-  return Object.fromEntries(entries(elMap).map(
-      ([el, ppm]) =>
-        [el, Object.fromEntries(entries(elMap).map(
-            ([el2, ppm2]) => {
-              let r = 1;
-              if (el !== el2) {
-                if (ppm2 === 0) {
-                  r = 0
-                } else {
-                  r = round(ppm / ppm2, 3)
-                  if (!isFinite(r)) {
-                    r = 0
-                  }
-                }
-              }
-              return [el2, r]
-            }
-          )
-        )]
-    )
-  )
-}
-
-type PartialElementsMatrix = {
-  [K in keyof ElementInMatrix]?: ElementInMatrix
-}
-
-/**
- * Конвертирование npk используя матрицу соотношений
- * Смысл в том чтобы корректировать npk рецепта по соотношениям отдельных элементов K:N, K:Mg и тд
- * Подробнее https://github.com/WEGA-project/WEGA-HPG/wiki#general-ppm
- * @param npk
- * @param ratio
- */
-export function convertProfileWithRatio(
-  npk: NPKElements,
-  ratio: PartialElementsMatrix): NPKElements {
-  const EC = calculateEC(npk)
-  const v = getProfileRatioMatrix(npk)
-
-  let newNPK: NPKElements = {...npk}
-  for (let [el1, toEls] of entries(ratio)) {
-    for (let [el2, r] of entries(toEls)) {
-      if (el1 === el2) {
-        continue
-      }
-      let f = (v: number, r: number) => v * r
-      v[el1][el2] = r
-      if (el1 === "N") {
-        let _N = f((newNPK[el2 as MACRO_ELEMENT_NAMES] || 0), r)
-        newNPK.NH4 = extract_percent(_N, v.NH4.NO3)
-        newNPK.NO3 = _N - newNPK.NH4
-      } else {
-        let elM = newNPK[el2 as MACRO_ELEMENT_NAMES] || 0
-        if (el2 === 'N') {
-          elM = (newNPK.NO3 || 0) + (newNPK.NH4 || 0)
-        }
-        newNPK[el1 as MACRO_ELEMENT_NAMES] = elM * r
-      }
-    }
-  }
-
-  newNPK = convertProfileWithEC(newNPK, EC, v)
-  return Object.fromEntries(entries(newNPK)
-    .map(([el, v]) => (
-      [el, round(v, 1)]
-    )))
 }
 
 /**

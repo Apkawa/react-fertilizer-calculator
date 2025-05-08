@@ -2,10 +2,10 @@ import {
   calculateEC,
   calculateIonicBalance,
   convertProfileWithEC,
-  convertProfileWithRatio, fixIonicBalanceByCa, fixIonicBalanceByS,
-  getProfileRatioMatrix
+  fixIonicBalanceByCa, fixIonicBalanceByS
 } from "../profile";
 import {round} from "../../utils";
+import {convertProfileWithRatio, getProfileRatioMatrix} from "../ratio";
 
 describe("Calculate profile matrix", () => {
   test("Generic", () => {

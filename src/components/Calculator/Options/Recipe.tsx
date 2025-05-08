@@ -20,7 +20,7 @@ import {round} from "@/utils";
 import {DEFAULT_MICRO_RECIPE} from "@/components/Calculator/constants/recipes";
 
 
-export const StyledBalanceCell: FunctionComponent<{name:string, value: number}> = (props) => {
+export const StyledBalanceCell: FunctionComponent<{name:string, value: number|string}> = (props) => {
   return (
     <Flex flexDirection="column" m={1} alignItems="center">
       <Heading fontSize={1}>{props.name}</Heading>
