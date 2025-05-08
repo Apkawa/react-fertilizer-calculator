@@ -98,7 +98,6 @@ export const NumberInput: FC<InputProps> = (props: any) => {
         {...props}
         onFocus={onFocusHandler}
         onBlur={onBlurHandler}
-
         lang="en-US"
         value={value}
       />

@@ -27,8 +27,22 @@ interface RecipeTuneFormProps {
 
 const ELEMENT_IN_MATRIX = ALLOWED_ELEMENT_IN_MATRIX.filter(el => !["NH4", "NO3"].includes(el))
 
-const IMPORTANT_CELLS = ['K:N', 'K:Ca', 'K:Mg', "NH4:NO3", "P", "Cl", "EC"]
+const IMPORTANT_CELLS = ['K:N', 'K:Ca', 'K:Mg', "NH4:NO3", "P", "Cl", "EC", "B"]
 const BLOCKING_CELLS = ["N:Ca", "Ca:N", "Ca:K", "Ca:Mg", "Mg:K", "Mg:Ca"]
+
+const OPTIMAL_RATIO: { [key: string]: number[] } = {
+  'N:K': [1.5, 2.5],
+  'N:Ca': [1.0, 2.0],
+  'K:Ca': [2.0, 3.0],
+  'K:Mg': [3.0, 5.0],
+  'Ca:Mg': [4.0, 6.0],
+  "NH4:NO3": [5, 20],
+  "P": [30, 60],
+  "EC": [1.2, 3.5],
+  "B": [200, 500],
+  "Cl": [0, 20]
+}
+
 
 export function RecipeTuneForm(props: RecipeTuneFormProps) {
   const formValue = useFormValues<CalculatorFormValues>(useFormName())[0]
@@ -113,7 +127,7 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
           step={0.1}
           onChange={v => onChangeRatio('NH4', 'NO3', v / 100)}
         />
-        <StyledBalanceCell name="K:N" value={recipeInfo.ratio.Ca.N}/>
+        <StyledBalanceCell name="K:N" value={recipeInfo.ratio.K.N}/>
         <StyledBalanceCell name="K:Ca" value={recipeInfo.ratio.K.Ca}/>
         <StyledBalanceCell name="K:Mg" value={recipeInfo.ratio.K.Mg}/>
       </Flex>
@@ -133,9 +147,9 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
                 <td style={{textAlign: 'center'}}>
                   {el === el2 ? 1 : (
                     <RecipeInput
-                      name={`${el2}:${el}`}
-                      value={round(ratio?.[el2]?.[el] || 0, 2)}
-                      onChange={value => onChangeRatio(el2, el, value)}
+                      name={`${el}:${el2}`}
+                      value={round(ratio?.[el]?.[el2] || 0, 2)}
+                      onChange={value => onChangeRatio(el, el2, value)}
                     />
                   )}
                 </td>
@@ -195,6 +209,24 @@ function RecipeInput(props: RecipeInputProps) {
     }
   }
 
+  const isImportant = IMPORTANT_CELLS.includes(name)
+  const isBlocking = BLOCKING_CELLS.includes(name)
+  let title: string | undefined = undefined;
+  if (isImportant) {
+    title = "Основные соотношения."
+  }
+  if (isBlocking) {
+    title = "Блокирующие соотношения."
+  }
+  const [el1, el2] = name.split(":");
+  let ratio = OPTIMAL_RATIO[name] || OPTIMAL_RATIO[`${el2}:${el1}`]
+  if (ratio) {
+    if (!OPTIMAL_RATIO[name]) {
+      ratio = ratio.map(n => round(1/n, 1)).reverse()
+    }
+    title = `${title || ""} Оптимальный диапазон: ${ratio.join(' — ')}`
+  }
+
   return (
     <Flex flexDirection="column"
           justifyContent="center"
@@ -211,6 +243,7 @@ function RecipeInput(props: RecipeInputProps) {
         onChange={onChangeHandler}
         name={name}
         value={value}
+        title={title}
         type="number"
         step={step.toString()}
         min="0"
@@ -220,8 +253,8 @@ function RecipeInput(props: RecipeInputProps) {
         lang="en-US"
         style={{
           textAlign: "center",
-          backgroundColor: IMPORTANT_CELLS.includes(name) ? "#b3f7b8" : undefined,
-          color: BLOCKING_CELLS.includes(name) ? "red" : undefined,
+          backgroundColor: isImportant ? "#b3f7b8" : undefined,
+          color: isBlocking ? "red" : undefined,
           borderColor: "black",
         }}
       />

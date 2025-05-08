@@ -13,6 +13,7 @@ type ElementInMatrix<T = number> = {
 }
 
 export interface ElementsMatrixType extends ElementInMatrix<ElementInMatrix> {
+  //  ElementsMatrixType.N.K must be equal N / K
 }
 
 export interface ProfileInfo {
@@ -169,17 +170,24 @@ export function getProfileRatioMatrix(npk: NPKElements): ElementsMatrixType {
   }
   elMap.N = (npk.NH4 || 0) + (npk.NO3 || 0)
   return Object.fromEntries(entries(elMap).map(
-    ([el, ppm]) =>
-      [el, Object.fromEntries(entries(elMap).map(
-        ([el2, ppm2]) => {
-          let r = round(ppm / ppm2, 3)
-          if (!isFinite(r)) {
-            r = 0
-          }
-          return [el2, el === el2 ? 1 : r]
-        }
-        )
-      )]
+      ([el, ppm]) =>
+        [el, Object.fromEntries(entries(elMap).map(
+            ([el2, ppm2]) => {
+              let r = 1;
+              if (el !== el2) {
+                if (ppm2 === 0) {
+                  r = 0
+                } else {
+                  r = round(ppm / ppm2, 3)
+                  if (!isFinite(r)) {
+                    r = 0
+                  }
+                }
+              }
+              return [el2, r]
+            }
+          )
+        )]
     )
   )
 }
@@ -248,7 +256,7 @@ export function convertProfileWithEC(npk: NPKElements, EC: number, ratio?: Eleme
   const K_KCa = v.K.Ca
   const K_NH4NO3 = v.NH4.NO3
 
-  const r_N = K_KCa*K_KMg/(K_KCa*K_KMg*K_KN + K_KCa*K_KMg + K_KCa*K_KN + K_KMg*K_KN)
+  const r_N = K_KCa * K_KMg / (K_KCa * K_KMg * K_KN + K_KCa * K_KMg + K_KCa * K_KN + K_KMg * K_KN)
   const r_NH4 = (K_NH4NO3 * r_N) / (K_NH4NO3 + 1)
   const r_NO3 = r_N / (K_NH4NO3 + 1)
 

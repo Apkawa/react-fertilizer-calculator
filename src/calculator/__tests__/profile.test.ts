@@ -85,6 +85,18 @@ describe("Convert profile with EC", () => {
   })
 })
 
+describe("get profile ratio", () => {
+  test("P.K == P / K", () => {
+    const npk = {NO3: 200, NH4: 20, P: 40, K: 180, Ca: 200, Mg: 50, S: 73}
+    const ratio = getProfileRatioMatrix(npk)
+    // Пров
+    expect(round(ratio.P.K, 1)).toEqual(round(npk.P / npk.K, 1))
+    expect(round(ratio.K.P, 1)).toEqual(round(npk.K / npk.P, 1))
+    expect(round(ratio.K.K, 1)).toEqual(1)
+  })
+})
+
+
 describe("Convert profile with ratio", () => {
   test("Generic", () => {
     const npk = {NO3: 200, NH4: 20, P: 40, K: 180, Ca: 200, Mg: 50, S: 73,}
