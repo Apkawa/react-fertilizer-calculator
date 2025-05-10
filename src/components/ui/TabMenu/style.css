@@ -21,3 +21,12 @@
     border-bottom: 1px solid #fff;
     cursor: default;
 }
+
+.react-router-tabs ul {
+    list-style-type: none;
+}
+.react-router-tabs ul > li a {
+    width: 100%;
+}
+
+

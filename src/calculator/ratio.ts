@@ -149,3 +149,32 @@ export function getMultiRatio(arr: number[]): number[] {
     return round(n / base, 1)
   })
 }
+
+/**
+ * Пересчет значений к новому соотношению
+ * @param arr [50, 50, 50]
+ * @param ratio [2, 4, 1]
+ * @returns number[]. example [100, 200, 50]
+ */
+export function calculateByMultiRatio(arr: number[], ratio: number[]): number[] {
+  if (arr.length !== ratio.length) {
+    throw new Error("array size must be equal!")
+  }
+  const base = Math.min(...ratio)
+  const baseIndex = ratio.indexOf(base)
+  const basePart = arr[baseIndex] / base
+  return ratio.map(n => n * basePart)
+}
+
+export const OPTIMAL_RATIO: { [key: string]: number[] } = {
+  'K:N': [1.5, 2.5],
+  'N:Ca': [1.0, 2.0],
+  'K:Ca': [2.0, 3.0],
+  'K:Mg': [3.0, 5.0],
+  'Ca:Mg': [4.0, 6.0],
+  "NH4:NO3": [5, 20],
+  "P": [30, 60],
+  "EC": [1.2, 3.5],
+  "B": [200, 500],
+  "Cl": [0, 20]
+}

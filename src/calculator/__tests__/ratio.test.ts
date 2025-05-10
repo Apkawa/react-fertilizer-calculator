@@ -1,4 +1,4 @@
-import {getMultiRatio, getMultiElementRatio} from "../ratio";
+import {getMultiRatio, getMultiElementRatio, calculateByMultiRatio} from "../ratio";
 
 
 describe("getMultiRatio", () => {
@@ -20,6 +20,14 @@ describe("getMultiRatio", () => {
         "ratio": [2, 4.5, 1],
         "display": "2:4.5:1",
       })
+    // Пров
+  })
+})
+
+describe("calculateByMultiRatio", () => {
+  test("simple", () => {
+    expect(calculateByMultiRatio([50, 50, 50], [2, 4, 1])).toEqual([100, 200, 50])
+    expect(calculateByMultiRatio([200, 40, 50], [5, 2, 2])).toEqual([100, 40, 40])
     // Пров
   })
 })

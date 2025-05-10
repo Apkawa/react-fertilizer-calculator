@@ -94,7 +94,11 @@ export const Result: FunctionComponent<ResultProps> = () => {
           )}
         </Flex>
         <Flex justifyContent="space-around">
-          <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
+          <StyledBalanceCell
+            name="ΔΣ I"
+            value={NPKBalance.ion_balance}
+            title={"Ионный баланс, дб == 0±5%"}
+          />
           <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
           <StyledBalanceCell name="%NH4" value={round((NPKBalance.ratio?.NH4?.NO3 || 0) * 100, 1)}/>
           <StyledBalanceCell name="K:N" value={NPKBalance.ratio.K.N}/>

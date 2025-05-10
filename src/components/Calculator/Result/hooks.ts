@@ -14,14 +14,11 @@ export function usePPM() {
   const {
     solution_volume,
   } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues
-
   const fertilizerWeights = (result?.fertilizers || []).map(f => ({...f}))
-
   const ppm = calculatePPM(
     fertilizerWeights,
     solution_volume,
   );
-
   return ppm
 }
 

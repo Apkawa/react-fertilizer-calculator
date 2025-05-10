@@ -15,14 +15,24 @@ import {recipePush, recipeRemove} from "@/components/Calculator/actions";
 import {Elements, NeedElements} from "@/calculator/types";
 import {getNPKDetailInfo, getEmptyElements} from "@/calculator/helpers";
 import {Modal} from "@/components/ui/Modal/Modal";
-import {RecipeTuneForm} from "@/components/Calculator/Options/RecipeTuneForm";
+import {getOptimalRatioDisplay, RecipeTuneForm} from "@/components/Calculator/Options/RecipeTuneForm";
 import {round} from "@/utils";
 import {DEFAULT_MICRO_RECIPE} from "@/components/Calculator/constants/recipes";
 
+interface StyledBalanceCellProps {
+  name: string,
+  value: number|string,
+  title?: string,
+}
 
-export const StyledBalanceCell: FunctionComponent<{name:string, value: number|string}> = (props) => {
+
+
+export const StyledBalanceCell: FunctionComponent<StyledBalanceCellProps> = (props) => {
+  const ratio = getOptimalRatioDisplay(props.name)
+  let title = (`${props.title||""} ${ratio||""}`).trim()
+
   return (
-    <Flex flexDirection="column" m={1} alignItems="center">
+    <Flex flexDirection="column" m={1} title={title || undefined} alignItems="center">
       <Heading fontSize={1}>{props.name}</Heading>
       <Text>{props.value}</Text>
     </Flex>
@@ -138,7 +148,10 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
               </>
             )}
           />
-          <StyledBalanceCell name="ΔΣ I" value={NPKBalance.ion_balance}/>
+          <StyledBalanceCell name="ΔΣ I"
+                             value={NPKBalance.ion_balance}
+                             title={"Ионный баланс, дб == 0±5%"}
+          />
           <StyledBalanceCell name="EC" value={NPKBalance.EC}/>
           <StyledBalanceCell name="%NH4" value={round(NPKBalance.ratio.NH4.NO3 * 100, 1)}/>
           <StyledBalanceCell name="K:N" value={NPKBalance.ratio.K.N}/>

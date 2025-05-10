@@ -6,6 +6,8 @@ import {Sidebar} from "@/components/ui/Sidebar/Sidebar";
 import {ColorModeToggle} from "@/components/ColorModeToggle";
 
 import "./style.css"
+import { useHelpPagesList} from "@/pages/Help/pages";
+import {useRouteMatch} from "react-router-dom";
 
 interface TabMenuProps {
 }
@@ -24,10 +26,32 @@ export function TabMenu(props: TabMenuProps) {
           <NavTab to="/fertilizers">Удобрения</NavTab>
           <NavTab to="/formula/">Парсер формул</NavTab>
           <NavTab to="/density/">Плотность</NavTab>
-          <NavTab to="/help">Справка</NavTab>
+          <HelpPagesSubMenu />
         </Flex>
       </RoutedTabs>
       <ColorModeToggle/>
     </Sidebar>
+  )
+}
+
+
+export function HelpPagesSubMenu(props: {}) {
+  const match = useRouteMatch<{ slug: string }>({
+    path: "/help/:slug?",
+  });
+  const help_pages = useHelpPagesList()
+  return (
+    <>
+      <NavTab disabled to={""} isActive={() => !!match}>Справка</NavTab>
+      <ul>
+      {help_pages.map(p => (
+        <>
+          <li>
+            <NavTab to={p.path}>{p.name}</NavTab>
+          </li>
+        </>
+      ))}
+      </ul>
+    </>
   )
 }

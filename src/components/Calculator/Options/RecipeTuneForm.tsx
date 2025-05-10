@@ -8,11 +8,7 @@ import {Elements, NeedElements} from "@/calculator/types";
 import {decimal} from "@/components/ui/ReduxForm/normalizers";
 import {FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "@/calculator/constants";
 import {NumberInput as StyledInput} from "@/components/ui/RebassWidgets/Number";
-import {
-  calculateEC,
-  convertProfileWithEC,
-  fixIonicBalanceByCa, fixIonicBalanceByS
-} from "@/calculator/profile";
+import {calculateEC, convertProfileWithEC, fixIonicBalanceByCa, fixIonicBalanceByS} from "@/calculator/profile";
 import {StyledBalanceCell} from "@/components/Calculator/Options/Recipe";
 import {entries, round} from "@/utils";
 import {ModalActions} from "@/components/ui/Modal/Modal";
@@ -22,7 +18,8 @@ import {
   ALLOWED_ELEMENT_IN_MATRIX,
   convertProfileWithRatio,
   getMultiElementRatio,
-  getProfileRatioMatrix
+  getProfileRatioMatrix,
+  OPTIMAL_RATIO
 } from "@/calculator/ratio";
 
 interface RecipeTuneFormProps {
@@ -34,19 +31,6 @@ const ELEMENT_IN_MATRIX = ALLOWED_ELEMENT_IN_MATRIX.filter(el => !["NH4", "NO3"]
 
 const IMPORTANT_CELLS = ['K:N', 'K:Ca', 'K:Mg', "NH4:NO3", "P", "Cl", "EC", "B"]
 const BLOCKING_CELLS = ["N:Ca", "Ca:N", "Ca:K", "Ca:Mg", "Mg:K", "Mg:Ca"]
-
-const OPTIMAL_RATIO: { [key: string]: number[] } = {
-  'N:K': [1.5, 2.5],
-  'N:Ca': [1.0, 2.0],
-  'K:Ca': [2.0, 3.0],
-  'K:Mg': [3.0, 5.0],
-  'Ca:Mg': [4.0, 6.0],
-  "NH4:NO3": [5, 20],
-  "P": [30, 60],
-  "EC": [1.2, 3.5],
-  "B": [200, 500],
-  "Cl": [0, 20]
-}
 
 
 export function RecipeTuneForm(props: RecipeTuneFormProps) {
@@ -126,8 +110,14 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
         <RecipeInput name={'EC'} label={"EC"} value={EC} onChange={onChangeEC}/>
       </Flex>
       <Flex justifyContent="space-around">
-        <StyledBalanceCell name="ΔΣ I" value={recipeInfo.ion_balance}/>
-        <StyledBalanceCell name="EC" value={recipeInfo.EC}/>
+        <StyledBalanceCell name="ΔΣ I"
+                           value={recipeInfo.ion_balance}
+                           title={"Ионный баланс, должен быть около нуля"}
+        />
+        <StyledBalanceCell name="EC"
+                           value={recipeInfo.EC}
+                           title={"мСм/см"}
+        />
         <RecipeInput
           name={'NH4:NO3'}
           label={"%NH4"}
@@ -204,6 +194,18 @@ interface RecipeInputProps {
   step?: number,
 }
 
+export function getOptimalRatioDisplay(name: string): string| null {
+  const [el1, el2] = name.split(":");
+  let ratio = OPTIMAL_RATIO[name] || OPTIMAL_RATIO[`${el2}:${el1}`]
+  if (ratio) {
+    if (!OPTIMAL_RATIO[name]) {
+      ratio = ratio.map(n => round(1/n, 1)).reverse()
+    }
+    return `Оптимальный диапазон: ${ratio.join(' — ')}`
+  }
+  return null
+}
+
 
 function RecipeInput(props: RecipeInputProps) {
   const {
@@ -228,13 +230,9 @@ function RecipeInput(props: RecipeInputProps) {
   if (isBlocking) {
     title = "Блокирующие соотношения."
   }
-  const [el1, el2] = name.split(":");
-  let ratio = OPTIMAL_RATIO[name] || OPTIMAL_RATIO[`${el2}:${el1}`]
+  let ratio = getOptimalRatioDisplay(name)
   if (ratio) {
-    if (!OPTIMAL_RATIO[name]) {
-      ratio = ratio.map(n => round(1/n, 1)).reverse()
-    }
-    title = `${title || ""} Оптимальный диапазон: ${ratio.join(' — ')}`
+    title = `${title || ""} ${ratio}`
   }
 
   return (
