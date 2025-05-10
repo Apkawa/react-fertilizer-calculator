@@ -38,7 +38,7 @@
     "preversion": "yarn full-check",
     "full-check": "export NODE_OPTIONS=--openssl-legacy-provider && yarn test -- --watchAll=false --all && yarn lint && yarn build",
     "start": "export NODE_OPTIONS=--openssl-legacy-provider && PUBLIC_URL=./ react-app-rewired start",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider && cross-env PUBLIC_URL=./ MODE=production react-app-rewired build",
+    "build": "cross-env PUBLIC_URL=./ MODE=production react-app-rewired build",
     "test": "react-app-rewired test",
     "types": "typesync && yarn",
     "lint": "eslint --ext js,ts,tsx --max-warnings=0 src",
