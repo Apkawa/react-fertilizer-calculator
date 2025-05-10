@@ -3,12 +3,13 @@ import ReactMarkdown from "react-markdown";
 import {Box, Flex} from "rebass";
 import {Switch, useParams} from "react-router-dom";
 import {LazyPromise} from "@/components/LazyPromise";
-import {HELP_PAGE_MAP} from "@/pages/Help/pages";
+import {useHelpPageMap} from "@/pages/Help/pages";
 
 
 export const LazyHelpPage: FunctionComponent<{}> = () => {
   let {slug} = useParams()
-  const page = HELP_PAGE_MAP[slug || ""] || null
+  const pageMap = useHelpPageMap()
+  const page = pageMap[slug || ""] || null
 
   return (
     page && <LazyPromise<string>
@@ -16,8 +17,10 @@ export const LazyHelpPage: FunctionComponent<{}> = () => {
     component={({result}) => (
       <ReactMarkdown
         source={result || ""}
-        transformImageUri={uri =>
-          uri.startsWith("http") ? uri : `./docs/${page.path}/${uri}`
+        transformImageUri={uri => {
+          let s = page.slug.split('/')[0]
+          return uri.startsWith("http") ? uri : `./docs/${s}/${uri}`
+        }
         }
       />
     )}

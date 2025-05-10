@@ -4,10 +4,17 @@ export interface HelpPageType {
   name: string,
   slug: string,
   lazy: () => Promise<string>,
-
   active?: boolean,
   path?: string,
+  children?: HelpPageType[],
 }
+
+interface RequiredHelpPageType extends Required<HelpPageType> {
+  children: RequiredHelpPageType[]
+}
+
+export type HelpPageListType = RequiredHelpPageType[]
+export type HelpPageMapType = {[x: string]: RequiredHelpPageType}
 
 export const HELP_PAGES: HelpPageType[] = [
   {
@@ -18,7 +25,14 @@ export const HELP_PAGES: HelpPageType[] = [
   {
     slug: 'profile',
     name: 'Профиль элементов',
-    lazy: () => import("!!raw-loader!../../docs/profile.md").then(m => m.default)
+    lazy: () => import("!!raw-loader!../../docs/profile/README.md").then(m => m.default),
+    children: [
+      {
+        slug: 'example',
+        name: 'Примеры профилей',
+        lazy: () => import("!!raw-loader!../../docs/profile/example.md").then(m => m.default)
+      },
+    ]
   },
   {
     slug: 'technique',
@@ -34,19 +48,43 @@ export const HELP_PAGES: HelpPageType[] = [
 
 export const HELP_PAGE_MAP: { [x: string]: HelpPageType } = Object.fromEntries(HELP_PAGES.map(p => [p.slug, p]))
 
-function buildHelpPagesList(slug: string|null): Required<HelpPageType>[] {
-  return HELP_PAGES.map(p => {
-    return {
-      ...p,
-      active: p.slug === slug,
-      path: '/help/' + p.slug
-    }
-  })
+
+function buildHelpPagesList(slug: string | null): HelpPageListType {
+  const processPages = (pages: HelpPageType[], parentSlug: string): HelpPageListType => {
+    return pages.map(p => {
+      const _slug = [parentSlug, p.slug].filter(p => p).join("/")
+      return {
+        ...p,
+        slug: _slug,
+        children: p.children ? processPages(p.children, _slug) : [],
+        active: _slug === slug,
+        path: '/help/' + _slug,
+      }
+    })
+  }
+  return processPages(HELP_PAGES, '')
 }
 
-export function useHelpPagesList(): Required<HelpPageType>[] {
+export function useHelpPagesList(): HelpPageListType {
   const match = useRouteMatch<{ slug: string }>({
-    path: "/help/:slug?",
+    path: "/help/:slug*",
   });
   return buildHelpPagesList(match?.params?.slug || null)
+}
+
+export function useHelpPageMap(): HelpPageMapType  {
+  const pages = useHelpPagesList()
+  const pageMap: HelpPageMapType = {}
+  const pageMapBuildFunc = (_pages: HelpPageListType) => {
+    for (const p of _pages) {
+      pageMap[p.slug] = p
+      if (p.children.length) {
+        pageMapBuildFunc(p.children)
+      }
+    }
+  }
+
+  pageMapBuildFunc(pages)
+  return pageMap
+
 }

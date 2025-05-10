@@ -6,7 +6,7 @@ import {Sidebar} from "@/components/ui/Sidebar/Sidebar";
 import {ColorModeToggle} from "@/components/ColorModeToggle";
 
 import "./style.css"
-import { useHelpPagesList} from "@/pages/Help/pages";
+import {HelpPageListType, useHelpPagesList} from "@/pages/Help/pages";
 import {useRouteMatch} from "react-router-dom";
 
 interface TabMenuProps {
@@ -34,6 +34,21 @@ export function TabMenu(props: TabMenuProps) {
   )
 }
 
+export function RenderHelpPages(help_pages: HelpPageListType) {
+
+  return (<ul>
+    {help_pages.map(p => (
+      <>
+        <li>
+          <NavTab to={p.path}>{p.name}</NavTab>
+          {p.children.length? RenderHelpPages(p.children): null}
+        </li>
+      </>
+    ))}
+  </ul>
+  )
+
+}
 
 export function HelpPagesSubMenu(props: {}) {
   const match = useRouteMatch<{ slug: string }>({
@@ -43,15 +58,7 @@ export function HelpPagesSubMenu(props: {}) {
   return (
     <>
       <NavTab disabled to={""} isActive={() => !!match}>Справка</NavTab>
-      <ul>
-      {help_pages.map(p => (
-        <>
-          <li>
-            <NavTab to={p.path}>{p.name}</NavTab>
-          </li>
-        </>
-      ))}
-      </ul>
+      {RenderHelpPages(help_pages)}
     </>
   )
 }
