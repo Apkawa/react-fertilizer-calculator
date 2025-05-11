@@ -40,7 +40,7 @@ export function RenderHelpPages(help_pages: HelpPageListType) {
     {help_pages.map(p => (
       <>
         <li>
-          <NavTab to={p.path}>{p.name}</NavTab>
+          <NavTab to={p.path} exact>{p.name}</NavTab>
           {p.children.length? RenderHelpPages(p.children): null}
         </li>
       </>
