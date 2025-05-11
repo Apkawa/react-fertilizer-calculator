@@ -44,6 +44,19 @@ export const HELP_PAGES: HelpPageType[] = [
     name: 'Изготовление хелатов',
     lazy: () => import("!!raw-loader!../../docs/chelates/README.md").then(m => m.default)
   },
+  {
+    slug: 'safety',
+    name: 'Техника безопасности',
+    lazy: () => import("!!raw-loader!../../docs/safety/README.md").then(m => m.default),
+    children: [
+      {
+        slug: 'chem_table',
+        name: 'Таблица опасности веществ',
+        lazy: () => import("!!raw-loader!../../docs/safety/chem_table.md").then(m => m.default),
+      }
+
+    ]
+  },
 ]
 
 export const HELP_PAGE_MAP: { [x: string]: HelpPageType } = Object.fromEntries(HELP_PAGES.map(p => [p.slug, p]))

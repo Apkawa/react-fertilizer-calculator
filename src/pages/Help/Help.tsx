@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from "react";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from "react-markdown/with-html";
 import {Box, Flex} from "rebass";
 import {Switch, useParams} from "react-router-dom";
 import {LazyPromise} from "@/components/LazyPromise";
@@ -17,6 +17,7 @@ export const LazyHelpPage: FunctionComponent<{}> = () => {
     component={({result}) => (
       <ReactMarkdown
         source={result || ""}
+        escapeHtml={false}
         transformImageUri={uri => {
           let s = page.slug.split('/')[0]
           return uri.startsWith("http") ? uri : `./docs/${s}/${uri}`
