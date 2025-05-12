@@ -57,6 +57,11 @@ export const HELP_PAGES: HelpPageType[] = [
 
     ]
   },
+  {
+    slug: 'references',
+    name: 'Ссылки и литература',
+    lazy: () => import("!!raw-loader!../../docs/references.md").then(m => m.default)
+  },
 ]
 
 export const HELP_PAGE_MAP: { [x: string]: HelpPageType } = Object.fromEntries(HELP_PAGES.map(p => [p.slug, p]))
