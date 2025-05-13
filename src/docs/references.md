@@ -10,6 +10,7 @@
 * Бедриковская Н. П. - Гидропоника комнатных цветов, 1972
 * Минеев В.Г. Практикум по агрохимии
 * В.М. Леман Курс светокультуры растений
+* Л. П. Серякова - Метрологические условия и растения, 1971
 
 ### Факультатив для углубленного изучения
 
@@ -36,6 +37,7 @@
 * [Минеральное питание растений. Часть 1.3](https://www.youtube.com/watch?v=ZuyOtotOzlg)
 * [Харли Смит, все о минеральном питании растений](https://www.youtube.com/watch?v=ALJlTjWCCAU)
 * [Профиль питания для растений](https://www.youtube.com/watch?v=YB8UjCIxOs4)
+* [yt @MoleGarden](https://www.youtube.com/@MoleGarden)
 * [yt @Hoocho](https://www.youtube.com/@Hoocho)
 * [yt @KhangStarr](https://www.youtube.com/@KhangStarr) - в основном про перцы
 
@@ -43,6 +45,8 @@
 
 * [Основы/База для начинающего (ссылки)](https://telegra.ph/OsnovyBaza-dlya-nachinayushchego-01-10)
 * [tg @ponics_doc (Гидропоника документация)](https://t.me/ponics_doc)
+* [Заметки балконного выращивателя](https://alexandertokarev.ru/all/growing/)
+* [Выращиваем сверхострый чили и заставляем всех его есть by @Meklon](https://habr.com/ru/articles/527206/) - статья которая вдохновила меня на гидропонику
 * [en] [scienceinhydroponics.com](https://scienceinhydroponics.com/blog-archive) на сайте много полезной информации
   * [In-depth books to learn about hydroponics at an advanced level
     ](https://scienceinhydroponics.com/2020/07/in-depth-books-to-learn-about-hydroponics-at-an-advanced-level.html)

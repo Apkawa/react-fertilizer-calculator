@@ -58,6 +58,16 @@ export const HELP_PAGES: HelpPageType[] = [
     ]
   },
   {
+    slug: 'light',
+    name: 'Светокультура',
+    lazy: () => import("!!raw-loader!../../docs/light.md").then(m => m.default)
+  },
+  {
+    slug: 'builds',
+    name: 'Виды установок',
+    lazy: () => import("!!raw-loader!../../docs/builds/README.md").then(m => m.default)
+  },
+  {
     slug: 'references',
     name: 'Ссылки и литература',
     lazy: () => import("!!raw-loader!../../docs/references.md").then(m => m.default)
