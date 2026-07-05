@@ -50,6 +50,7 @@
 * [en] [scienceinhydroponics.com](https://scienceinhydroponics.com/blog-archive) на сайте много полезной информации
   * [In-depth books to learn about hydroponics at an advanced level
     ](https://scienceinhydroponics.com/2020/07/in-depth-books-to-learn-about-hydroponics-at-an-advanced-level.html)
+* [en] [ashs.org](https://journals.ashs.org/) - сельскохозяйственный научный журнал с открытым доступом к статьям. Некоторые исследования могут быть полезными.
 
 ## Сообщества
 
