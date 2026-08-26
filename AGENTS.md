@@ -4,7 +4,7 @@
 
 **fertilizer-calculator** — веб-PWA для расчёта питательных растворов (гидропоника/агро) и подбора дозировок удобрений по рецепту NPK/микроэлементов.
 
-- React 16 + TypeScript 3.7 (strict) на **Vite** (@vitejs/plugin-react, JSX classic runtime) + vite-plugin-pwa.
+- React 16 + TypeScript 7 (strict) на **Vite** (@vitejs/plugin-react, JSX classic runtime) + vite-plugin-pwa.
 - Состояние: **Redux + redux-form + redux-saga**, персист в `localStorage` (`reduxState`).
 - UI: **theme-ui / rebass** + styled-components. Роутинг: react-router (HashRouter) + `@loadable/component` (ленивые страницы).
 - Расчёты — чистая библиотека `src/calculator` (алгоритм из [siv237/HPG](https://github.com/siv237/HPG)), без зависимостей от UI.

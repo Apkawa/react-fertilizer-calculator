@@ -30,3 +30,6 @@ yarn-error.log*
 .pnpm-cache/
 .cache/
 tsconfig.tsbuildinfo
+
+# tsc incremental build state (не коммитим артефакты сборки)
+tsconfig.tsbuildinfo
