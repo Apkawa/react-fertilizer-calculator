@@ -41,14 +41,15 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `build: migrate from CRA to vite (config, pwa, ?raw)`
 
 ## Stage 2 — vitest migration
-- [ ] Add devDeps: vitest 4.x, jsdom 30.x, @testing-library/jest-dom 7.x; remove ts-jest, @types/jest
-- [ ] Configure vitest (config section or `vitest.config.ts`): jsdom environment, `setupFiles` → `setupTests.ts` (rewritten with `@testing-library/jest-dom/vitest`)
-- [ ] Red: run `pnpm test` → confirm suites load and run (expect previously-broken 16 to now execute)
-- [ ] Green: make all 17 suites pass (fix js-combinatorics ESM handling if needed — vitest reads ESM natively, expect no transform config)
-- [ ] Replace stale `src/__tests__/App.test.tsx` boilerplate with a real smoke render of `<App/>` (or remove it); keep `example.ts` as sanity test
-- [ ] Refactor: remove any leftover jest-specific config
+- [x] Add devDeps: vitest 4.1.11, jsdom 30.0.1, @testing-library/jest-dom 7.0.1; remove ts-jest, @types/jest (+ @types/testing-library__*)
+- [x] Configure vitest: `vitest.config.ts` = `mergeConfig(vite.config, {test})` — jsdom env, `globals: true`, `setupFiles: src/setupTests.ts` (rewritten with `@testing-library/jest-dom/vitest`); base config (alias `@/`, classic JSX, `define`) inherited
+- [x] Red → Green: `pnpm test` now runs **all 16 test files** (was 1/17 under jest/pnpm): **15 passed, 1 skipped** (pre-existing `describe.skip` in calculate_v1 — DEPRECATED), **70 tests passed, 5 skipped** (all skips are pre-existing intentional `test.skip`/`describe.skip` in sources)
+- [x] Fix `molecularParser.test.ts`: `const Parser = require('./molecularParser')` (CJS require — dead under vitest ESM) → `import * as Parser`
+- [x] Replace stale `src/__tests__/App.test.tsx` boilerplate ("learn react" — tested the CRA leftover page `pages/App`, which is **not routed** in Root) with a real smoke test: render `Root` + real redux store in jsdom; asserts app chrome (`Fork me on GitHub`), lazy-loaded Calculator mounted (`ΔΣ I`, `Результат расчета`), and build constants in the footer; 30 s timeout (lazy load)
+- [x] Bump `@testing-library/react` 9.5.0 → **12.1.5**: 9.x pins `@testing-library/dom@^6` (no `waitFor`/async utils) and its dist is unreadable by TS 3.7; 12.x is the line that explicitly peers `react <18` and ships dom 8
+- [x] Keep `example.ts` as sanity test; no leftover jest config (CRA-era jest was config-less: `package.json` had no jest block)
 
-**Criterion:** `pnpm test` (vitest) runs all suites green — including the 16 previously broken calculator suites.
+**Criterion:** `pnpm test` (vitest) runs all suites green — including the 16 previously broken calculator suites. — **done**: 15 passed | 1 skipped (pre-existing), 70 passed | 5 skipped.
 **Commit:** `test: migrate jest to vitest, repair broken suites`
 
 ## Stage 3 — Biome migration (lint + format)

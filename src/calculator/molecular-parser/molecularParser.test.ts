@@ -1,6 +1,5 @@
 import {ParsedMolecule, SubgroupType} from "./molecularParser";
-
-const Parser = require('./molecularParser');
+import * as Parser from './molecularParser';
 
 
 describe('molecularParser', function () {

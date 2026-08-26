@@ -2,4 +2,6 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom/extend-expect';
+//
+// (Vitest: импорт через субпуть /vitest; старый /extend-expect — для jest <= 27)
+import '@testing-library/jest-dom/vitest'
