@@ -1,8 +1,7 @@
-import {Input as RebassInput, InputProps as RebassInputProps} from "@rebass/forms";
+import { Input as RebassInput, type InputProps as RebassInputProps } from "@rebass/forms";
 import styled from "styled-components";
 
-
-export type InputProps = RebassInputProps
+export type InputProps = RebassInputProps;
 
 export const Input = styled(RebassInput)`
   ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
@@ -12,7 +11,4 @@ export const Input = styled(RebassInput)`
     height: 0;
   }
   -moz-appearance: textfield;
-`
-
-
-
+`;

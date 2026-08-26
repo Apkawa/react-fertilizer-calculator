@@ -5,12 +5,12 @@
  * плюс глобальный полифилл `Buffer` в браузер (старый webpack 4 встраивал его сам).
  */
 
-export type CsvRecord = Record<string, any>
-export type CsvOptions = Record<string, unknown>
+export type CsvRecord = Record<string, any>;
+export type CsvOptions = Record<string, unknown>;
 
 const disabled = (kind: string): never => {
-  throw new Error(`CSV: ${kind} временно отключён (миграция на Vite)`)
-}
+  throw new Error(`CSV: ${kind} временно отключён (миграция на Vite)`);
+};
 
-export const csvParse = (_csv: string, _options?: CsvOptions): CsvRecord[] => disabled('import')
-export const csvExport = (_rows: unknown[], _options?: CsvOptions): string => disabled('export')
+export const csvParse = (_csv: string, _options?: CsvOptions): CsvRecord[] => disabled("import");
+export const csvExport = (_rows: unknown[], _options?: CsvOptions): string => disabled("export");

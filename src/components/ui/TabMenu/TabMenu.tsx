@@ -1,64 +1,63 @@
 import React from "react";
-import {NavTab, RoutedTabs} from "react-router-tabs";
+import { NavTab, RoutedTabs } from "react-router-tabs";
 
-import {Flex} from "rebass";
-import {Sidebar} from "@/components/ui/Sidebar/Sidebar";
-import {ColorModeToggle} from "@/components/ColorModeToggle";
+import { Flex } from "rebass";
+import { ColorModeToggle } from "@/components/ColorModeToggle";
+import { Sidebar } from "@/components/ui/Sidebar/Sidebar";
 
-import "./style.css"
-import {HelpPageListType, useHelpPagesList} from "@/pages/Help/pages";
-import {useRouteMatch} from "react-router-dom";
+import "./style.css";
+import { useRouteMatch } from "react-router-dom";
+import { type HelpPageListType, useHelpPagesList } from "@/pages/Help/pages";
 
-interface TabMenuProps {
-}
-
+type TabMenuProps = {};
 
 export function TabMenu(props: TabMenuProps) {
   return (
     <Sidebar>
-      <RoutedTabs
-        startPathWith={''}
-        tabClassName="tab-link"
-        activeTabClassName="active"
-      >
+      <RoutedTabs startPathWith={""} tabClassName="tab-link" activeTabClassName="active">
         <Flex flexDirection="column">
-          <NavTab exact to="/">Калькулятор</NavTab>
+          <NavTab exact to="/">
+            Калькулятор
+          </NavTab>
           <NavTab to="/fertilizers">Удобрения</NavTab>
           <NavTab to="/formula/">Парсер формул</NavTab>
           <NavTab to="/density/">Плотность</NavTab>
           <HelpPagesSubMenu />
         </Flex>
       </RoutedTabs>
-      <ColorModeToggle/>
+      <ColorModeToggle />
     </Sidebar>
-  )
+  );
 }
 
 export function RenderHelpPages(help_pages: HelpPageListType) {
-
-  return (<ul>
-    {help_pages.map(p => (
-      <>
-        <li>
-          <NavTab to={p.path} exact>{p.name}</NavTab>
-          {p.children.length? RenderHelpPages(p.children): null}
-        </li>
-      </>
-    ))}
-  </ul>
-  )
-
+  return (
+    <ul>
+      {help_pages.map((p) => (
+        <>
+          <li>
+            <NavTab to={p.path} exact>
+              {p.name}
+            </NavTab>
+            {p.children.length ? RenderHelpPages(p.children) : null}
+          </li>
+        </>
+      ))}
+    </ul>
+  );
 }
 
 export function HelpPagesSubMenu(props: {}) {
   const match = useRouteMatch<{ slug: string }>({
     path: "/help/:slug?",
   });
-  const help_pages = useHelpPagesList()
+  const help_pages = useHelpPagesList();
   return (
     <>
-      <NavTab disabled to={""} isActive={() => !!match}>Справка</NavTab>
+      <NavTab disabled to={""} isActive={() => !!match}>
+        Справка
+      </NavTab>
       {RenderHelpPages(help_pages)}
     </>
-  )
+  );
 }

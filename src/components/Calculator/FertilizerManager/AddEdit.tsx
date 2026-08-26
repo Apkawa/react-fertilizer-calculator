@@ -1,124 +1,111 @@
+import { Label } from "@rebass/forms";
 import React from "react";
-import {Box, Flex, Text} from "rebass";
-
-import {change, FieldArray, Form, reduxForm} from 'redux-form'
-import {ReduxFormType} from "@/components/ui/ReduxForm/types";
-import {Input} from "@/components/ui/ReduxForm/Input";
-import {normalizeFertilizer} from "@/calculator/fertilizer";
-import {MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES} from "@/calculator/constants";
-
-import {AddItemElementForm} from "./AddItemElementForm";
-
-import {FERTILIZER_EDIT_FORM_NAME} from "./constants";
-import {AddEditFormType} from "./types";
-import {Checkbox} from "@/components/ui/ReduxForm/Checkbox";
-import {AddEditCompositionList} from "@/components/Calculator/FertilizerManager/AddEditCompositionList";
-import {useFormName, useFormValues} from "@/hooks/ReduxForm";
-import {decimal, number} from "@/components/ui/ReduxForm/normalizers";
-import {Label} from "@rebass/forms";
-import {FertilizerInfo} from "@/components/Calculator/types";
-import {AddEditNPKString} from "@/components/Calculator/FertilizerManager/AddEditNPKString";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
+import { Box, Flex, Text } from "rebass";
+import { change, FieldArray, Form, reduxForm } from "redux-form";
+import { MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES } from "@/calculator/constants";
+import { normalizeFertilizer } from "@/calculator/fertilizer";
+import { AddEditCompositionList } from "@/components/Calculator/FertilizerManager/AddEditCompositionList";
+import { AddEditNPKString } from "@/components/Calculator/FertilizerManager/AddEditNPKString";
+import type { FertilizerInfo } from "@/components/Calculator/types";
+import { Checkbox } from "@/components/ui/ReduxForm/Checkbox";
+import { Input } from "@/components/ui/ReduxForm/Input";
+import { decimal, number } from "@/components/ui/ReduxForm/normalizers";
+import type { ReduxFormType } from "@/components/ui/ReduxForm/types";
+import { useFormName, useFormValues } from "@/hooks/ReduxForm";
+import { AddItemElementForm } from "./AddItemElementForm";
+import { FERTILIZER_EDIT_FORM_NAME } from "./constants";
+import type { AddEditFormType } from "./types";
 
 interface AddEditProps {
-  fertilizer?: FertilizerInfo,
+  fertilizer?: FertilizerInfo;
 }
 
 export const getElements = (f: FertilizerInfo) => {
-  return normalizeFertilizer(f, false).elements
-}
+  return normalizeFertilizer(f, false).elements;
+};
 
 export function getInitialValues(f: FertilizerInfo): AddEditFormType {
-  let formData: AddEditFormType = {...f}
+  const formData: AddEditFormType = { ...f };
 
   if (f.composition) {
-    formData.npk = normalizeFertilizer(f, false).elements
-    formData.composition_enable = true
+    formData.npk = normalizeFertilizer(f, false).elements;
+    formData.composition_enable = true;
   }
   if (f.solution_concentration) {
-    formData.solution_concentration = f.solution_concentration
-    formData.solution_density = f.solution_density || 1000
-    formData.solution_density_enable = true
+    formData.solution_concentration = f.solution_concentration;
+    formData.solution_density = f.solution_density || 1000;
+    formData.solution_density_enable = true;
   }
-  return formData
+  return formData;
 }
 
 export function formToFertilizer(formValues: AddEditFormType): FertilizerInfo {
   const {
-    composition_enable, composition, npk,
-    solution_density_enable, solution_density, solution_concentration,
+    composition_enable,
+    composition,
+    npk,
+    solution_density_enable,
+    solution_density,
+    solution_concentration,
     ..._f
-  } = formValues
-  const f: FertilizerInfo = _f
+  } = formValues;
+  const f: FertilizerInfo = _f;
   if (composition_enable) {
-    f.composition = composition
+    f.composition = composition;
   } else {
-    f.npk = npk
+    f.npk = npk;
   }
   if (solution_density_enable) {
-    f.solution_density = solution_density
-    f.solution_concentration = solution_concentration
+    f.solution_density = solution_density;
+    f.solution_concentration = solution_concentration;
   }
-  return f
+  return f;
 }
 
 const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
   const formName = useFormName();
-  const formValues = useFormValues<AddEditFormType>(formName)[0]
-  const dispatch = useDispatch()
+  const formValues = useFormValues<AddEditFormType>(formName)[0];
+  const dispatch = useDispatch();
 
   return (
     <Form>
-      <Flex flexDirection='column'>
-        <Input name="id" title="Name" label="Name"/>
-        <Box>
-          Макроэлементы
-        </Box>
+      <Flex flexDirection="column">
+        <Input name="id" title="Name" label="Name" />
+        <Box>Макроэлементы</Box>
         <Flex>
-          {MACRO_ELEMENT_NAMES.map(el => (
-            <AddItemElementForm
-              name={el}
-              disabled={formValues.composition_enable}
-            />
+          {MACRO_ELEMENT_NAMES.map((el) => (
+            <AddItemElementForm name={el} disabled={formValues.composition_enable} />
           ))}
         </Flex>
-        <Box>
-          Микроэлементы
-        </Box>
+        <Box>Микроэлементы</Box>
         <Flex>
-          {MICRO_ELEMENT_NAMES.map(el => (
-            <AddItemElementForm
-              name={el}
-              disabled={formValues.composition_enable}
-            />
+          {MICRO_ELEMENT_NAMES.map((el) => (
+            <AddItemElementForm name={el} disabled={formValues.composition_enable} />
           ))}
         </Flex>
         <Flex>
           <AddEditNPKString
             npk={formValues.npk}
             onChange={(npk) => {
-              dispatch(change(formName, 'npk', npk))
-            }}/>
+              dispatch(change(formName, "npk", npk));
+            }}
+          />
         </Flex>
 
         <Flex>
-          <Checkbox name="composition_enable" label="Формула"/>
+          <Checkbox name="composition_enable" label="Формула" />
         </Flex>
-        {formValues.composition_enable ?
+        {formValues.composition_enable ? (
           <Flex>
-            <FieldArray<{}>
-              name="composition"
-              component={AddEditCompositionList}
-            />
-          </Flex> : null
-        }
-        <Flex alignItems='center'>
+            <FieldArray<{}> name="composition" component={AddEditCompositionList} />
+          </Flex>
+        ) : null}
+        <Flex alignItems="center">
           <Box width="auto" marginRight={2}>
-            <Checkbox
-              name="solution_density_enable" label="Раствор"
-            />
+            <Checkbox name="solution_density_enable" label="Раствор" />
           </Box>
-          {formValues.solution_density_enable ?
+          {formValues.solution_density_enable ? (
             <Flex flexDirection="column">
               <Flex alignItems="flex-end">
                 <Label flexDirection="column">
@@ -130,10 +117,10 @@ const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
                     min="0"
                     max="3000"
                     normalize={decimal}
-                    width='5em'
+                    width="5em"
                     marginRight={2}
                   />
-                  <Text sx={{whiteSpace: 'nowrap'}}>г/л</Text>
+                  <Text sx={{ whiteSpace: "nowrap" }}>г/л</Text>
                 </Label>
               </Flex>
               <Flex alignItems="flex-end">
@@ -146,14 +133,14 @@ const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
                     min="800"
                     max="3000"
                     normalize={number}
-                    width='5em'
+                    width="5em"
                     marginRight={2}
                   />
                 </Label>
-                <Text sx={{whiteSpace: 'nowrap'}}>г/л</Text>
+                <Text sx={{ whiteSpace: "nowrap" }}>г/л</Text>
               </Flex>
             </Flex>
-            : null}
+          ) : null}
         </Flex>
         <Flex>
           <Label flexDirection="column">
@@ -166,17 +153,16 @@ const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
               max="16"
               required={false}
               normalize={number}
-              maxWidth={'3em'}
+              maxWidth={"3em"}
             />
           </Label>
         </Flex>
       </Flex>
     </Form>
-  )
-}
-
+  );
+};
 
 export const AddEdit = reduxForm<AddEditFormType>({
   form: FERTILIZER_EDIT_FORM_NAME,
-  enableReinitialize: true
-})(AddEditForm)
+  enableReinitialize: true,
+})(AddEditForm);

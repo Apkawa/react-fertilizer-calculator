@@ -1,5 +1,5 @@
-import {List as FertilizerManager} from './List'
+import { List as FertilizerManager } from "./List";
 
-export {List as FertilizerManager} from './List'
+export { List as FertilizerManager } from "./List";
 
-export default FertilizerManager
+export default FertilizerManager;

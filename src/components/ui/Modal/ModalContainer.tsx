@@ -1,23 +1,22 @@
-import React, {ReactNode} from "react";
-import ReactDOM from 'react-dom'
-import {Card, Flex} from "rebass";
-import styled from '@emotion/styled'
-import {Helmet} from "react-helmet";
-
+import styled from "@emotion/styled";
+import React, { type ReactNode } from "react";
+import ReactDOM from "react-dom";
+import { Helmet } from "react-helmet";
+import { Card, Flex } from "rebass";
 
 interface ModalContainerProps {
-  children: ReactNode,
+  children: ReactNode;
 }
 
 const useModalRoot = () => {
-  let el = document.querySelector('#modal-root')
+  let el = document.querySelector("#modal-root");
   if (!el) {
-    el = document.createElement('div')
-    el.setAttribute('id', 'modal-root')
-    document.body.appendChild(el)
+    el = document.createElement("div");
+    el.setAttribute("id", "modal-root");
+    document.body.appendChild(el);
   }
-  return el
-}
+  return el;
+};
 
 const StyledOverlay = styled(Flex)`
   overflow-y: auto;
@@ -35,17 +34,15 @@ const StyledOverlay = styled(Flex)`
   @media screen and (max-height: 500px), screen and (max-width: 500px) {
     align-items: initial;
   }
-`
+`;
 
 export function ModalContainer(props: ModalContainerProps) {
-  const {
-    children,
-  } = props
-  const modalRoot = useModalRoot()
+  const { children } = props;
+  const modalRoot = useModalRoot();
   return ReactDOM.createPortal(
     <>
       <Helmet>
-        <style type='text/css'>
+        <style type="text/css">
           {`
           body {
             overflow: hidden;
@@ -54,10 +51,11 @@ export function ModalContainer(props: ModalContainerProps) {
         </style>
       </Helmet>
       <StyledOverlay>
-        <Card backgroundColor='#fff' height="max-content">
+        <Card backgroundColor="#fff" height="max-content">
           {children}
         </Card>
       </StyledOverlay>
-    </>
-    , modalRoot)
+    </>,
+    modalRoot,
+  );
 }

@@ -1,28 +1,19 @@
-import React, {FunctionComponent} from "react";
-import {Box, Flex} from "rebass";
-import {Input} from "@/components/ui/ReduxForm/Input";
-import {number} from "@/components/ui/ReduxForm/normalizers";
+import React, { type FunctionComponent } from "react";
+import { Box, Flex } from "rebass";
+import { Input } from "@/components/ui/ReduxForm/Input";
+import { number } from "@/components/ui/ReduxForm/normalizers";
 
 interface RecipeElementFormProps {
-  name: string,
+  name: string;
 }
 
-export const getRecipeFieldName = (name: string) => `recipe.${name}`
-
-
+export const getRecipeFieldName = (name: string) => `recipe.${name}`;
 
 export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = (props) => {
-  const {name} = props
+  const { name } = props;
   return (
-    <Flex flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          maxWidth='3rem'
-    >
-      <Box style={{textAlign: 'center'}}
-      >
-        {name}
-      </Box>
+    <Flex flexDirection="column" justifyContent="center" alignItems="center" maxWidth="3rem">
+      <Box style={{ textAlign: "center" }}>{name}</Box>
       <Input
         name={getRecipeFieldName(name)}
         type="number"
@@ -33,9 +24,9 @@ export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = (pro
         normalize={number}
         maxWidth="3rem"
         style={{
-          textAlign: "center"
+          textAlign: "center",
         }}
       />
     </Flex>
-  )
-}
+  );
+};

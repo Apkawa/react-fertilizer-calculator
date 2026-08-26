@@ -1,10 +1,7 @@
-import {JSONFormat} from "./json";
-import {HPGFormat} from "./hpg";
+import { HPGFormat } from "./hpg";
+import { JSONFormat } from "./json";
 
-export const FORMATS = [
-  JSONFormat,
-  HPGFormat
-]
+export const FORMATS = [JSONFormat, HPGFormat];
 
-export const FORMATS_MAP = Object.fromEntries(FORMATS.map(f => [f.ext, f]))
-export const ACCEPT_FORMATS = FORMATS.map(f => f.ext).join(', ')
+export const FORMATS_MAP = Object.fromEntries(FORMATS.map((f) => [f.ext, f]));
+export const ACCEPT_FORMATS = FORMATS.map((f) => f.ext).join(", ");

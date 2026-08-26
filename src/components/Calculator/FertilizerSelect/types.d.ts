@@ -1,7 +1,5 @@
-import {FertilizerInfo} from "@/components/Calculator/types";
-
+import { FertilizerInfo } from "@/components/Calculator/types";
 
 export interface FertilizerType extends FertilizerInfo {
-  needMass?: number
-
+  needMass?: number;
 }

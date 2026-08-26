@@ -2,11 +2,7 @@
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "downlevelIteration": true,
     "allowJs": true,
     "skipLibCheck": true,
@@ -21,11 +17,7 @@
     "noEmit": true,
     "jsx": "react"
   },
-  "files": [
-    "./types/globals.d.ts"
-  ],
+  "files": ["./types/globals.d.ts"],
   "moduleResolution": "node",
-  "include": [
-    "./src/**/*"
-  ]
+  "include": ["./src/**/*"]
 }

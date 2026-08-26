@@ -1,170 +1,172 @@
-import {ParsedMolecule, SubgroupType} from "./molecularParser";
-import * as Parser from './molecularParser';
+import type { ParsedMolecule, SubgroupType } from "./molecularParser";
+import * as Parser from "./molecularParser";
 
-
-describe('molecularParser', function () {
-  describe('findSubgroups', function () {
+describe("molecularParser", () => {
+  describe("findSubgroups", () => {
     const subgroupTestData: { [k: string]: SubgroupType[] } = {
       CH2O: [
         {
-          formula: 'CH2O',
-          count: 1
-        }
-      ],
-      'CH(CH3)3': [
-        {
-          formula: 'CH',
-          count: 1
-        },
-        {
-          formula: 'CH3',
-          count: 3
-        }
-      ],
-      'CH(CH3)2OH': [
-        {
-          formula: 'CH',
-          count: 1
-        },
-        {
-          formula: 'CH3',
-          count: 2
-        },
-        {
-          formula: 'OH',
-          count: 1
-        }
-      ],
-      '(NH4)2SO4': [
-        {
-          formula: 'NH4',
-          count: 2
-        },
-        {
-          formula: 'SO4',
-          count: 1
+          formula: "CH2O",
+          count: 1,
         },
       ],
-      'C6H2(NO2)3(CH3)3': [
+      "CH(CH3)3": [
         {
-          formula: 'C6H2',
-          count: 1
+          formula: "CH",
+          count: 1,
         },
         {
-          formula: 'NO2',
-          count: 3
-        },
-        {
-          formula: 'CH3',
-          count: 3
+          formula: "CH3",
+          count: 3,
         },
       ],
-      'Ca(NO3)2 * 4H2O': [
+      "CH(CH3)2OH": [
         {
-          "count": 1,
-          "formula": "Ca"
+          formula: "CH",
+          count: 1,
         },
         {
-          "count": 2,
-          "formula": "NO3"
+          formula: "CH3",
+          count: 2,
         },
         {
-          "count": 4,
-          "formula": "H2O"
-        }
+          formula: "OH",
+          count: 1,
+        },
       ],
-      '(NH4)2SO4 + (NH4)2HPO4 + K2SO4': [
+      "(NH4)2SO4": [
         {
-          "count": 2,
-          "formula": "NH4"
+          formula: "NH4",
+          count: 2,
         },
         {
-          "count": 1,
-          "formula": "SO4"
+          formula: "SO4",
+          count: 1,
         },
-        {
-          "count": 1,
-          "formula": "(NH4)2HPO4+K2SO4"
-        }
       ],
-      'MgSO4*7H2O': [{"count": 1, "formula": "MgSO4"}, {"count": 7, "formula": "H2O"}],
-      '7H2O': [{"count": 7, "formula": "H2O"}]
-    }
+      "C6H2(NO2)3(CH3)3": [
+        {
+          formula: "C6H2",
+          count: 1,
+        },
+        {
+          formula: "NO2",
+          count: 3,
+        },
+        {
+          formula: "CH3",
+          count: 3,
+        },
+      ],
+      "Ca(NO3)2 * 4H2O": [
+        {
+          count: 1,
+          formula: "Ca",
+        },
+        {
+          count: 2,
+          formula: "NO3",
+        },
+        {
+          count: 4,
+          formula: "H2O",
+        },
+      ],
+      "(NH4)2SO4 + (NH4)2HPO4 + K2SO4": [
+        {
+          count: 2,
+          formula: "NH4",
+        },
+        {
+          count: 1,
+          formula: "SO4",
+        },
+        {
+          count: 1,
+          formula: "(NH4)2HPO4+K2SO4",
+        },
+      ],
+      "MgSO4*7H2O": [
+        { count: 1, formula: "MgSO4" },
+        { count: 7, formula: "H2O" },
+      ],
+      "7H2O": [{ count: 7, formula: "H2O" }],
+    };
 
-    it('should parse easy formulae correctly.', function () {
-      for (let formula in subgroupTestData) {
-        const res = Parser.findSubgroups(formula)
+    it("should parse easy formulae correctly.", () => {
+      for (const formula in subgroupTestData) {
+        const res = Parser.findSubgroups(formula);
         expect(res).toEqual(subgroupTestData[formula]);
       }
     });
 
-    it('should parse crazy formulae correctly.', function () {
-      const formula = '(CH3)16(Tc(H2O)3CO(BrFe3(ReCl)3(SO4)2)2)2MnO4';
+    it("should parse crazy formulae correctly.", () => {
+      const formula = "(CH3)16(Tc(H2O)3CO(BrFe3(ReCl)3(SO4)2)2)2MnO4";
       const subgroups = [
         {
-          formula: 'CH3',
-          count: 16
+          formula: "CH3",
+          count: 16,
         },
         {
-          formula: 'Tc(H2O)3CO(BrFe3(ReCl)3(SO4)2)2',
-          count: 2
+          formula: "Tc(H2O)3CO(BrFe3(ReCl)3(SO4)2)2",
+          count: 2,
         },
         {
-          formula: 'MnO4',
-          count: 1
-        }
+          formula: "MnO4",
+          count: 1,
+        },
       ];
       const parsedSubgroups = Parser.findSubgroups(formula);
-      expect(parsedSubgroups).toEqual(subgroups)
+      expect(parsedSubgroups).toEqual(subgroups);
     });
   }); //end parseSubgroups
 
-  describe('decomposeFormula', function () {
+  describe("decomposeFormula", () => {
     const decomposeTestData: { [k: string]: ParsedMolecule } = {
       CH2O: {
         C: 1,
         H: 2,
-        O: 1
+        O: 1,
       },
-      'CH(CH3)3': {
+      "CH(CH3)3": {
         C: 4,
-        H: 1 + 3 * 3
+        H: 1 + 3 * 3,
       },
-      'CH(CH3)2OH': {
+      "CH(CH3)2OH": {
         C: 3,
         H: 8,
-        O: 1
+        O: 1,
       },
-      '(NH4)2SO4': {
+      "(NH4)2SO4": {
         N: 2,
         H: 8,
         S: 1,
-        O: 4
+        O: 4,
       },
-      'C6H2(NO2)3(CH3)3': {
+      "C6H2(NO2)3(CH3)3": {
         C: 6 + 3,
         H: 2 + 9,
         N: 3,
-        O: 2 * 3
+        O: 2 * 3,
       },
-      '(NH4)2SO4 + (NH4)2HPO4 + K2SO4': {
-        "H": 17,
-        "K": 2,
-        "N": 4,
-        "O": 12,
-        "P": 1,
-        "S": 2
+      "(NH4)2SO4 + (NH4)2HPO4 + K2SO4": {
+        H: 17,
+        K: 2,
+        N: 4,
+        O: 12,
+        P: 1,
+        S: 2,
       },
     };
 
-    it('should decompose formulae correctly', function () {
-      for (let formula in decomposeTestData) {
-        expect(Parser.decomposeFormula(formula)).toEqual(decomposeTestData[formula])
+    it("should decompose formulae correctly", () => {
+      for (const formula in decomposeTestData) {
+        expect(Parser.decomposeFormula(formula)).toEqual(decomposeTestData[formula]);
       }
     });
 
-    it('should decompose crazy formulae correctly.', function () {
-      const formula = '(CH3)16(Tc(H2O)3CO(BrFe3(ReCl)3(SO4)2)2)2MnO4';
+    it("should decompose crazy formulae correctly.", () => {
+      const formula = "(CH3)16(Tc(H2O)3CO(BrFe3(ReCl)3(SO4)2)2)2MnO4";
       const decomposition = {
         C: 16 + 1 * 2,
         H: 3 * 16 + 2 * 3 * 2,
@@ -175,30 +177,42 @@ describe('molecularParser', function () {
         Re: 3 * 2 * 2,
         Cl: 3 * 2 * 2,
         S: 2 * 2 * 2,
-        Mn: 1
+        Mn: 1,
       };
       const parsedDecomposition = Parser.decomposeFormula(formula);
-      expect(parsedDecomposition).toEqual(decomposition)
+      expect(parsedDecomposition).toEqual(decomposition);
     });
 
-    it('should decompose complex formula correctly', function () {
-      expect(Parser.decomposeFormula('MgSO4*(H2O)7')).toEqual({
-        'Mg': 1, S: 1, H: 14, O: 4 + 7
-      })
-      expect(Parser.decomposeFormula('MgSO4*7H2O')).toEqual({
-        'Mg': 1, S: 1, H: 14, O: 4 + 7
-      })
+    it("should decompose complex formula correctly", () => {
+      expect(Parser.decomposeFormula("MgSO4*(H2O)7")).toEqual({
+        Mg: 1,
+        S: 1,
+        H: 14,
+        O: 4 + 7,
+      });
+      expect(Parser.decomposeFormula("MgSO4*7H2O")).toEqual({
+        Mg: 1,
+        S: 1,
+        H: 14,
+        O: 4 + 7,
+      });
     });
-    it('issue parse Mg(NO3)2*6H2O', () => {
-      let f = 'Mg(NO3)2*6H2O'
-      expect(Parser.findSubgroups(f)).toEqual([{"count": 1, "formula": "Mg"}, {
-        "count": 2,
-        "formula": "NO3"
-      }, {"count": 6, "formula": "H2O"}])
+    it("issue parse Mg(NO3)2*6H2O", () => {
+      const f = "Mg(NO3)2*6H2O";
+      expect(Parser.findSubgroups(f)).toEqual([
+        { count: 1, formula: "Mg" },
+        {
+          count: 2,
+          formula: "NO3",
+        },
+        { count: 6, formula: "H2O" },
+      ]);
       expect(Parser.decomposeFormula(f)).toEqual({
-        'Mg': 1, N: 2, H: 12, O: 6 + 6
-      })
-
-    })
+        Mg: 1,
+        N: 2,
+        H: 12,
+        O: 6 + 6,
+      });
+    });
   });
 });

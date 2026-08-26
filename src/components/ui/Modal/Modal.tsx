@@ -1,62 +1,57 @@
-import React, {ReactNode, useEffect, useState} from "react";
-import {ModalContainer} from "@/components/ui/Modal/ModalContainer";
-import {Box, Flex, Heading} from "rebass";
-import {Icon} from "@/components/ui/Icon";
-import {Cross} from "@styled-icons/entypo/Cross";
+import { Cross } from "@styled-icons/entypo/Cross";
+import React, { type ReactNode, useEffect, useState } from "react";
+import { Box, Flex, Heading } from "rebass";
+import { Icon } from "@/components/ui/Icon";
+import { ModalContainer } from "@/components/ui/Modal/ModalContainer";
 
 export interface ModalActions {
-  open: () => void,
-  close: () => void,
+  open: () => void;
+  close: () => void;
 }
 
-type RenderCb = (props: {modal: ModalActions}) => ReactNode
+type RenderCb = (props: { modal: ModalActions }) => ReactNode;
 
 interface ModalProps {
-  opened?: boolean,
-  onClose?: () => void,
-  button?: RenderCb,
-  title?: string,
-  container: RenderCb,
+  opened?: boolean;
+  onClose?: () => void;
+  button?: RenderCb;
+  title?: string;
+  container: RenderCb;
 }
 
 export function Modal(props: ModalProps) {
-  const {
-    opened = false,
-    button,
-    container,
-  } = props
+  const { opened = false, button, container } = props;
 
-  const [closed, setClose] = useState(!opened)
+  const [closed, setClose] = useState(!opened);
 
   useEffect(() => {
-    setClose(!opened)
-  }, [opened])
+    setClose(!opened);
+  }, [opened]);
 
   useEffect(() => {
     if (closed && props.onClose) {
-      props.onClose()
+      props.onClose();
     }
-  }, [closed, props])
+  }, [closed, props]);
 
   const modalActions: ModalActions = {
     open: () => setClose(false),
     close: () => setClose(true),
-  }
-  const renderCbProps = {modal: modalActions}
+  };
+  const renderCbProps = { modal: modalActions };
 
   return (
     <>
       {button && button(renderCbProps)}
-      {closed ? null : <ModalContainer>
-        <Flex justifyContent='space-between'>
-          <Heading fontSize={2}>{props.title}</Heading>
-          <Icon component={Cross} onClick={modalActions.close}/>
-        </Flex>
-        <Box>
-          {container(renderCbProps)}
-        </Box>
-      </ModalContainer>
-      }
+      {closed ? null : (
+        <ModalContainer>
+          <Flex justifyContent="space-between">
+            <Heading fontSize={2}>{props.title}</Heading>
+            <Icon component={Cross} onClick={modalActions.close} />
+          </Flex>
+          <Box>{container(renderCbProps)}</Box>
+        </ModalContainer>
+      )}
     </>
-  )
+  );
 }

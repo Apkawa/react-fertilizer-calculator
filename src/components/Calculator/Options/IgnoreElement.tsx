@@ -1,10 +1,8 @@
-import React, {FunctionComponent} from "react";
-import {Card, Flex, Heading} from "rebass";
-import {Checkbox} from "../../ui/ReduxForm/Checkbox";
+import React, { type FunctionComponent } from "react";
+import { Card, Flex, Heading } from "rebass";
+import { Checkbox } from "../../ui/ReduxForm/Checkbox";
 
-interface IgnoreElementProps {
-}
-
+type IgnoreElementProps = {};
 
 export const IgnoreElement: FunctionComponent<IgnoreElementProps> = () => {
   return (
@@ -17,5 +15,5 @@ export const IgnoreElement: FunctionComponent<IgnoreElementProps> = () => {
         <Checkbox name="ignore.Cl" label="Хлор" />
       </Flex>
     </Card>
-  )
-}
+  );
+};

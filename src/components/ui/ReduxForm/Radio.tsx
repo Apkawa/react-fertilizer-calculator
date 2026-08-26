@@ -1,30 +1,27 @@
+import { Label, Radio as RebassRadio, type RadioProps as RebassRadioProps } from "@rebass/forms";
 import React from "react";
-
-import {Label, Radio as RebassRadio, RadioProps as RebassRadioProps} from "@rebass/forms";
-import {Field as ReduxField} from "redux-form";
-import {ReduxFormComponentType, WrapperInputType} from "./types";
+import { Field as ReduxField } from "redux-form";
+import type { ReduxFormComponentType, WrapperInputType } from "./types";
 
 interface RadioProps extends RebassRadioProps {
-  label: string,
-  value: string | number,
+  label: string;
+  value: string | number;
 }
 
-const WrappedCheckbox: WrapperInputType<RadioProps> = ({input, label, value, ...props}: any) =>
+const WrappedCheckbox: WrapperInputType<RadioProps> = ({ input, label, value, ...props }: any) => (
   <Label>
-    <RebassRadio
-      {...props}
-      {...input}
-    />
+    <RebassRadio {...props} {...input} />
     {label}
   </Label>
+);
 
 // TODO вывести тип
 export const Radio: ReduxFormComponentType<RadioProps> = ({
-                                                            name,
-                                                            value,
-                                                            normalize= (v) => v.toString(),
-                                                            ...props
-                                                          }) => {
+  name,
+  value,
+  normalize = (v) => v.toString(),
+  ...props
+}) => {
   return (
     <ReduxField
       component={WrappedCheckbox}
@@ -32,9 +29,9 @@ export const Radio: ReduxFormComponentType<RadioProps> = ({
       normalize={normalize}
       // onClick={() => setChecked(!checked)}
       // checked={checked}
-      type='radio'
+      type="radio"
       value={normalize(value)}
-      {...props as any}
+      {...(props as any)}
     />
-  )
-}
+  );
+};

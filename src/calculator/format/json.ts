@@ -1,9 +1,8 @@
-import {BaseFormat} from "./base";
-import {ExportStateType} from "./types";
-
+import { BaseFormat } from "./base";
+import type { ExportStateType } from "./types";
 
 export class JSONFormat extends BaseFormat {
-  static ext = ".json"
+  static ext = ".json";
 
   export(state: ExportStateType): string {
     return JSON.stringify(state);

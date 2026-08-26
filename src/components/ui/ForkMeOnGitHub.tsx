@@ -1,6 +1,5 @@
-import React, {FunctionComponent} from "react";
+import React, { type FunctionComponent } from "react";
 import styled from "styled-components";
-
 
 const StyledForkMeOnGithub = styled.span`
 &>a {
@@ -59,10 +58,9 @@ const StyledForkMeOnGithub = styled.span`
         box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
     }
 }
-`
+`;
 
-interface ForkMeOnGitHubProps {
-}
+type ForkMeOnGitHubProps = {};
 
 export const ForkMeOnGitHub: FunctionComponent<ForkMeOnGitHubProps> = () => {
   return (
@@ -70,8 +68,10 @@ export const ForkMeOnGitHub: FunctionComponent<ForkMeOnGitHubProps> = () => {
       <a
         target="_blank"
         rel="noopener noreferrer"
-        href={'https://github.com/Apkawa/react-fertilizer-calculator'}
-      >Fork me on GitHub</a>
+        href={"https://github.com/Apkawa/react-fertilizer-calculator"}
+      >
+        Fork me on GitHub
+      </a>
     </StyledForkMeOnGithub>
-  )
-}
+  );
+};

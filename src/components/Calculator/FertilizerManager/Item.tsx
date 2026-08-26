@@ -1,85 +1,79 @@
+import { Edit } from "@styled-icons/fa-regular/Edit";
+import { Trash } from "@styled-icons/fa-solid/Trash";
 import React from "react";
-import {Box, Button, Card, Flex, Text} from "rebass";
-
-import {normalizeFertilizer} from "@/calculator/fertilizer";
-import {FERTILIZER_ELEMENT_NAMES} from "@/calculator/constants";
-
-import {IconButton} from "@/components/ui/IconButton";
-import {Edit} from "@styled-icons/fa-regular/Edit"
-import {Trash} from "@styled-icons/fa-solid/Trash";
-
-import {Element} from "../FertilizerSelect/SelectedListItem";
-import {AddEdit, formToFertilizer, getInitialValues} from './AddEdit';
-import {Modal, ModalActions} from "@/components/ui/Modal/Modal";
-import {useFormValues} from "@/hooks/ReduxForm";
-import {FERTILIZER_EDIT_FORM_NAME} from "@/components/Calculator/FertilizerManager/constants";
-import {useDispatch} from "react-redux";
-import {fertilizerPush, fertilizerRemove} from "@/components/Calculator/actions";
-import {AddEditFormType} from "@/components/Calculator/FertilizerManager/types";
-import {FertilizerInfo} from "@/components/Calculator/types";
+import { useDispatch } from "react-redux";
+import { Box, Button, Card, Flex, Text } from "rebass";
+import { FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
+import { normalizeFertilizer } from "@/calculator/fertilizer";
+import { fertilizerPush, fertilizerRemove } from "@/components/Calculator/actions";
+import { FERTILIZER_EDIT_FORM_NAME } from "@/components/Calculator/FertilizerManager/constants";
+import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";
+import type { FertilizerInfo } from "@/components/Calculator/types";
+import { IconButton } from "@/components/ui/IconButton";
+import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
+import { useFormValues } from "@/hooks/ReduxForm";
+import { Element } from "../FertilizerSelect/SelectedListItem";
+import { AddEdit, formToFertilizer, getInitialValues } from "./AddEdit";
 
 interface ItemProps {
-  fertilizer: FertilizerInfo
+  fertilizer: FertilizerInfo;
 }
 
 export function Item(props: ItemProps) {
-  const {fertilizer} = props
-  const normalizedFertilizer = normalizeFertilizer(fertilizer, false)
-  const [formValues] = useFormValues<AddEditFormType>(FERTILIZER_EDIT_FORM_NAME)
-  const dispatch = useDispatch()
+  const { fertilizer } = props;
+  const normalizedFertilizer = normalizeFertilizer(fertilizer, false);
+  const [formValues] = useFormValues<AddEditFormType>(FERTILIZER_EDIT_FORM_NAME);
+  const dispatch = useDispatch();
   const onRemove = () => {
-    dispatch(fertilizerRemove(fertilizer))
-  }
+    dispatch(fertilizerRemove(fertilizer));
+  };
   const onSave = (modal: ModalActions) => {
-    dispatch(fertilizerPush(formToFertilizer(formValues)))
-    modal.close()
-  }
+    dispatch(fertilizerPush(formToFertilizer(formValues)));
+    modal.close();
+  };
   return (
     <>
-      <Card width={'auto'} marginBottom={2}>
-        <Flex justifyContent={'space-between'} alignItems="center">
+      <Card width={"auto"} marginBottom={2}>
+        <Flex justifyContent={"space-between"} alignItems="center">
           <Box flex={1}>
             <Text flex={1}>
               {fertilizer.id} &nbsp;
-              {fertilizer.solution_concentration && `[жидкий ${fertilizer.solution_concentration} г/л]`} &nbsp;
-              <span title={"Номер помпы в миксере"}>{fertilizer.pump_number && `p${fertilizer.pump_number}`}</span> &nbsp;
+              {fertilizer.solution_concentration &&
+                `[жидкий ${fertilizer.solution_concentration} г/л]`}{" "}
+              &nbsp;
+              <span title={"Номер помпы в миксере"}>
+                {fertilizer.pump_number && `p${fertilizer.pump_number}`}
+              </span>{" "}
+              &nbsp;
             </Text>
             <Flex>
-              {
-                FERTILIZER_ELEMENT_NAMES.map((name) => {
-                    let v = normalizedFertilizer.elements[name]
-                    if (!v) {
-                      return null
-                    }
-                    return <Element
-                      name={name}
-                      key={name}
-                      value={v}
-                      isOxide
-                    />
-                  }
-                )
-              }
+              {FERTILIZER_ELEMENT_NAMES.map((name) => {
+                const v = normalizedFertilizer.elements[name];
+                if (!v) {
+                  return null;
+                }
+                return <Element name={name} key={name} value={v} isOxide />;
+              })}
             </Flex>
           </Box>
           <Flex>
             <Modal
-              button={({modal}) => (
+              button={({ modal }) => (
                 <IconButton
                   padding={1}
                   alignSelf="center"
                   component={Edit}
-                  backgroundColor={'primary'}
+                  backgroundColor={"primary"}
                   onClick={modal.open}
                 />
               )}
-              container={({modal}) => (
+              container={({ modal }) => (
                 <>
-                <AddEdit
-                  initialValues={getInitialValues(fertilizer)}
-                />
+                  <AddEdit initialValues={getInitialValues(fertilizer)} />
                   <Flex justifyContent="flex-end">
-                    <Button type="button" onClick={() => onSave(modal)}>Save</Button>
+                    <Button type="button" onClick={() => onSave(modal)}>
+                      Save
+                    </Button>
                   </Flex>
                 </>
               )}
@@ -88,12 +82,12 @@ export function Item(props: ItemProps) {
               padding={1}
               alignSelf="center"
               component={Trash}
-              backgroundColor={'danger'}
+              backgroundColor={"danger"}
               onClick={onRemove}
             />
           </Flex>
         </Flex>
       </Card>
     </>
-  )
+  );
 }

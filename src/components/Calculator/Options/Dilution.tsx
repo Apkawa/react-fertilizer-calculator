@@ -1,45 +1,43 @@
-import React, {FunctionComponent} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {change, getFormValues} from "redux-form";
-import {Card, Flex, Text} from "rebass";
-import {Label} from "@rebass/forms";
-import {Input} from "@/components/ui/ReduxForm/Input";
-import {decimal, number} from "@/components/ui/ReduxForm/normalizers";
-import {Checkbox} from "@/components/ui/ReduxForm/Checkbox";
-import {REDUX_FORM_NAME} from "@/components/Calculator/constants";
-import {CalculatorFormValues} from "@/components/Calculator/types";
-import {Concentration, normalizeConcentration} from "@/calculator/dilution";
+import { Label } from "@rebass/forms";
+import React, { type FunctionComponent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Card, Flex, Text } from "rebass";
+import { change, getFormValues } from "redux-form";
+import { type Concentration, normalizeConcentration } from "@/calculator/dilution";
+import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
+import type { CalculatorFormValues } from "@/components/Calculator/types";
+import { Checkbox } from "@/components/ui/ReduxForm/Checkbox";
+import { Input } from "@/components/ui/ReduxForm/Input";
+import { decimal, number } from "@/components/ui/ReduxForm/normalizers";
 
-
-interface DilutionProps {
-}
+type DilutionProps = {};
 
 export const Dilution: FunctionComponent<DilutionProps> = () => {
-  const {
-    dilution_enabled, dilution_concentration,
-  } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues
+  const { dilution_enabled, dilution_concentration } = useSelector(
+    getFormValues(REDUX_FORM_NAME),
+  ) as CalculatorFormValues;
   const dispatch = useDispatch();
 
   const onChange = (field: string) => (event: any) => {
     if (!event.target.value) {
-      return
+      return;
     }
-    let k = parseFloat(event.target.value)
+    const k = parseFloat(event.target.value);
 
-    let newCon: Partial<Concentration> = {}
-    if (field === 'k') {
-      newCon.k = k
+    let newCon: Partial<Concentration> = {};
+    if (field === "k") {
+      newCon.k = k;
     } else {
-      newCon = {...dilution_concentration, [field]: k}
-      delete newCon.k
+      newCon = { ...dilution_concentration, [field]: k };
+      delete newCon.k;
     }
-    const newConcentration = normalizeConcentration(newCon)
-    dispatch(change(REDUX_FORM_NAME, 'dilution_concentration', newConcentration))
-  }
+    const newConcentration = normalizeConcentration(newCon);
+    dispatch(change(REDUX_FORM_NAME, "dilution_concentration", newConcentration));
+  };
   return (
     <Card>
-      <Checkbox name="dilution_enabled" label="Разбавление концентрата"/>
-      <Flex flexDirection="column" style={{display: dilution_enabled ? "flex" : "none"}}>
+      <Checkbox name="dilution_enabled" label="Разбавление концентрата" />
+      <Flex flexDirection="column" style={{ display: dilution_enabled ? "flex" : "none" }}>
         <Flex alignItems="center" justifyContent="space-between">
           <Label htmlFor="dilution_volume">Объем, л</Label>
           <Input
@@ -51,7 +49,7 @@ export const Dilution: FunctionComponent<DilutionProps> = () => {
             pattern="^\d+$"
             normalize={number}
             style={{
-              textAlign: "center"
+              textAlign: "center",
             }}
             autoComplete="off"
           />
@@ -64,16 +62,16 @@ export const Dilution: FunctionComponent<DilutionProps> = () => {
           <Input
             name="dilution_concentration.k"
             type="number"
-            width={'auto'}
+            width={"auto"}
             step="0.1"
             min="1"
             max="2000"
             normalize={decimal}
             style={{
-              textAlign: "center"
+              textAlign: "center",
             }}
             autoComplete="off"
-            onChange={onChange('k')}
+            onChange={onChange("k")}
           />
         </Flex>
         <Flex alignItems={"center"}>
@@ -87,14 +85,12 @@ export const Dilution: FunctionComponent<DilutionProps> = () => {
             max="50000"
             normalize={decimal}
             style={{
-              textAlign: "center"
+              textAlign: "center",
             }}
             autoComplete="off"
-            onChange={onChange('v_1')}
+            onChange={onChange("v_1")}
           />
-          мл
-
-          на
+          мл на
           <Input
             name="dilution_concentration.v_2"
             type="number"
@@ -104,15 +100,14 @@ export const Dilution: FunctionComponent<DilutionProps> = () => {
             max="1000000"
             normalize={decimal}
             style={{
-              textAlign: "center"
+              textAlign: "center",
             }}
             autoComplete="off"
-            onChange={onChange('v_2')}
+            onChange={onChange("v_2")}
           />
           мл. рабочего раствора
-
         </Flex>
       </Flex>
     </Card>
-  )
-}
+  );
+};

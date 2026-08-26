@@ -1,39 +1,32 @@
-import React, {FunctionComponent, useState} from "react";
-import {Box, Card, Flex} from "rebass";
-import {FertilizerType} from "./types";
-import {Dropdown} from "@/components/ui/Dropdown/Dropdown";
-import {Plus} from "@styled-icons/boxicons-regular/Plus"
-
-import {useSelector} from "react-redux";
-import {CalculatorState} from "../types";
-import {IconButton} from "@/components/ui/IconButton";
+import { Plus } from "@styled-icons/boxicons-regular/Plus";
+import React, { type FunctionComponent, useState } from "react";
+import { useSelector } from "react-redux";
+import { Box, Card, Flex } from "rebass";
+import { Dropdown } from "@/components/ui/Dropdown/Dropdown";
+import { IconButton } from "@/components/ui/IconButton";
+import type { CalculatorState } from "../types";
+import type { FertilizerType } from "./types";
 
 interface AddItemProps {
-  onAdd: (item: FertilizerType) => void
+  onAdd: (item: FertilizerType) => void;
 }
 
+export const AddItem: FunctionComponent<AddItemProps> = ({ onAdd }) => {
+  const { fertilizers } = useSelector<any>((state) => state.calculator) as CalculatorState;
+  const { calculationForm } = useSelector<any>((state) => state.calculator) as CalculatorState;
 
-export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
-  const {
-    fertilizers,
-  } = useSelector<any>(state => state.calculator) as CalculatorState
-  const {
-    calculationForm,
-  } = useSelector<any>(state => state.calculator) as CalculatorState
-
-  const [selected, setSelected] = useState<FertilizerType | undefined>(fertilizers[0])
+  const [selected, setSelected] = useState<FertilizerType | undefined>(fertilizers[0]);
 
   const selectedFertilizers = calculationForm?.fertilizers || [];
-  const fertilizersIDs = selectedFertilizers.map(f => f?.id)
+  const fertilizersIDs = selectedFertilizers.map((f) => f?.id);
 
   const onChangeHandler = (item: FertilizerType | null) => {
-    item && setSelected(item)
-  }
-
+    item && setSelected(item);
+  };
 
   const onAddHandler = (item: FertilizerType) => {
-    onAdd(item)
-  }
+    onAdd(item);
+  };
   return (
     <Card>
       <Flex flexDirection="column">
@@ -43,28 +36,24 @@ export const AddItem: FunctionComponent<AddItemProps> = ({onAdd}) => {
               value={selected}
               items={fertilizers}
               onChange={onChangeHandler}
-              checkDisabledItem={item => fertilizersIDs.includes(item?.id || "")}
-              renderItem={({item}) => (
+              checkDisabledItem={(item) => fertilizersIDs.includes(item?.id || "")}
+              renderItem={({ item }) => (
                 <Flex flex={1} justifyContent="space-between">
-                  <Box>
-                    {item.id}
-                  </Box>
+                  <Box>{item.id}</Box>
                   <IconButton
                     onClick={(event) => {
-                      event.stopPropagation()
-                      onAddHandler(item)
+                      event.stopPropagation();
+                      onAddHandler(item);
                     }}
                     component={Plus}
                   />
                 </Flex>
               )}
-              renderValue={item => item?.id || ""}
+              renderValue={(item) => item?.id || ""}
             />
           </Box>
         </Flex>
       </Flex>
-
     </Card>
-  )
-}
-
+  );
+};

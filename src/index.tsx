@@ -1,18 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import Root from './Root'
-import {store} from "./redux";
-
+import Root from "./Root";
+import { store } from "./redux";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Root store={store}/>
+    <Root store={store} />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root"),
 );
 
 // PWA: регистрацию service worker теперь делает vite-plugin-pwa (injectRegister: 'auto')
 // при сборке — он подставляет сниппет в index.html (см. vite.config.ts).
 // Старый ручной register() (src/serviceWorker.ts) удалён.
-

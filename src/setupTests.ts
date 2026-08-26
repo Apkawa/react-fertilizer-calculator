@@ -4,4 +4,4 @@
 // learn more: https://github.com/testing-library/jest-dom
 //
 // (Vitest: импорт через субпуть /vitest; старый /extend-expect — для jest <= 27)
-import '@testing-library/jest-dom/vitest'
+import "@testing-library/jest-dom/vitest";

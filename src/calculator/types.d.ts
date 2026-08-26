@@ -1,40 +1,38 @@
-export interface MacroElements<T=number> {
-  NO3: T,
-  NH4: T,
-  P: T,
-  K: T,
-  Ca: T,
-  Mg: T,
-  S: T,
-  Cl: T,
+export interface MacroElements<T = number> {
+  NO3: T;
+  NH4: T;
+  P: T;
+  K: T;
+  Ca: T;
+  Mg: T;
+  S: T;
+  Cl: T;
 }
 
-export interface MicroElements<T=number> {
-  Fe: T,
-  Mn: T,
-  B: T,
-  Zn: T,
-  Cu: T,
-  Mo: T,
-  Co: T,
-  Si: T,
+export interface MicroElements<T = number> {
+  Fe: T;
+  Mn: T;
+  B: T;
+  Zn: T;
+  Cu: T;
+  Mo: T;
+  Co: T;
+  Si: T;
 }
 
 /**
  * NPK чистых элементов
  */
-export interface Elements<T=number> extends MacroElements<T>, MicroElements<T> {
-
-}
+export interface Elements<T = number> extends MacroElements<T>, MicroElements<T> {}
 
 /**
  * NPK рецепта чистых элементов
  */
-export type NeedElements = Partial<Elements>
+export type NeedElements = Partial<Elements>;
 
 export interface Fertilizer {
-  id: string,
-  elements: Elements
+  id: string;
+  elements: Elements;
 }
 
 /**
@@ -43,33 +41,32 @@ export interface Fertilizer {
  */
 export interface FertilizerComposition {
   // As example: K2P2O5
-  formula: string,
+  formula: string;
   // 0-100%
-  percent?: number,
+  percent?: number;
 }
 
 /**
  * Удобрение
  */
 export interface FertilizerInfo {
-  id: string,
+  id: string;
   // TODO
-  name?: string,
+  name?: string;
   // TODO обеспечить типами то что совместно npk и composition использовать нельзя
   // Оксидный NPK
-  npk?: NPKElements,
+  npk?: NPKElements;
   // Состав, в виде формулы
-  composition?: FertilizerComposition[],
+  composition?: FertilizerComposition[];
   // Концентрация солей, г/л
-  solution_concentration?: number,
+  solution_concentration?: number;
   // Плотность, г/л
-  solution_density?: number
-
+  solution_density?: number;
 }
 
 /**
  * NPK оксидов
  */
 export type NPKElements = {
-  [El in keyof Elements]?: Elements[El]
-}
+  [El in keyof Elements]?: Elements[El];
+};

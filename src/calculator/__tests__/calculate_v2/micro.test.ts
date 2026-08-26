@@ -1,25 +1,37 @@
-import {calculate_v2} from "../../index";
-import {getEmptyElements, getFillElementsByType} from "../../helpers";
-import {FertilizerInfo} from "../../types";
+import { getEmptyElements, getFillElementsByType } from "../../helpers";
+import { calculate_v2 } from "../../index";
+import type { FertilizerInfo } from "../../types";
 
-const emptyElements = getEmptyElements()
+const emptyElements = getEmptyElements();
 
 const AK: FertilizerInfo = {
-  id: "Акварин земляничный", npk: {
-    NO3: 7.9, NH4: 12.1, P: 5, K: 10, Mg: 1.5, S: 8.4,
-    Fe: 0.054, Zn: 0.014, Cu: 0.001, Mn: .042, Mo: .004, B: 0.02,
-  }
-}
+  id: "Акварин земляничный",
+  npk: {
+    NO3: 7.9,
+    NH4: 12.1,
+    P: 5,
+    K: 10,
+    Mg: 1.5,
+    S: 8.4,
+    Fe: 0.054,
+    Zn: 0.014,
+    Cu: 0.001,
+    Mn: 0.042,
+    Mo: 0.004,
+    B: 0.02,
+  },
+};
 
 const AquaMix: FertilizerInfo = {
   id: "Аквамикс",
-  npk: {Fe: 3.84, Mn: 2.57, Zn: 0.53, Cu: 0.53, Ca: 2.57, B: 0.52, Mo: 0.13},
-  solution_concentration: 5.75
-}
+  npk: { Fe: 3.84, Mn: 2.57, Zn: 0.53, Cu: 0.53, Ca: 2.57, B: 0.52, Mo: 0.13 },
+  solution_concentration: 5.75,
+};
 
 describe("Calculate V2 Micro", () => {
   test("Simple calculation", () => {
-    const result = calculate_v2({
+    const result = calculate_v2(
+      {
         Fe: 4000 / 1000,
         Mn: 636 / 1000,
         B: 714 / 1000,
@@ -34,111 +46,125 @@ describe("Calculate V2 Micro", () => {
         accuracy: 0.001,
         ignore: {
           ...getFillElementsByType(true).macro,
-        }
-      }
-    )
+        },
+      },
+    );
     expect(result).toEqual({
-      "deltaElements": {
-        "B": 0,
-        "Ca": -3,
-        "Cl": 0,
-        "Co": 0,
-        "Cu": -0.7,
-        "Fe": -1.3,
-        "K": 0,
-        "Mg": 0,
-        "Mn": -2.9,
-        "Mo": -0.1,
-        "NH4": 0,
-        "NO3": 0,
-        "P": 0,
-        "S": 0,
-        "Si": 0,
-        "Zn": -0.3
+      deltaElements: {
+        B: 0,
+        Ca: -3,
+        Cl: 0,
+        Co: 0,
+        Cu: -0.7,
+        Fe: -1.3,
+        K: 0,
+        Mg: 0,
+        Mn: -2.9,
+        Mo: -0.1,
+        NH4: 0,
+        NO3: 0,
+        P: 0,
+        S: 0,
+        Si: 0,
+        Zn: -0.3,
       },
-      "elements": {
-        "B": 0.714,
-        "Ca": 3,
-        "Cl": 0,
-        "Co": 0,
-        "Cu": 0.7277,
-        "Fe": 5.2726,
-        "K": 0,
-        "Mg": 0,
-        "Mn": 3.5288,
-        "Mo": 0.1785,
-        "NH4": 0,
-        "NO3": 0,
-        "P": 0,
-        "S": 0,
-        "Si": 0,
-        "Zn": 0.7277
+      elements: {
+        B: 0.714,
+        Ca: 3,
+        Cl: 0,
+        Co: 0,
+        Cu: 0.7277,
+        Fe: 5.2726,
+        K: 0,
+        Mg: 0,
+        Mn: 3.5288,
+        Mo: 0.1785,
+        NH4: 0,
+        NO3: 0,
+        P: 0,
+        S: 0,
+        Si: 0,
+        Zn: 0.7277,
       },
-      "fertilizers": [{"base_weight": 0.137, "id": "Аквамикс", "volume": 23.826, "weight": 0.137}],
-      "score": 26.21,
-      "stats": {"count": 0, "time": 0}
-    })
-  })
+      fertilizers: [{ base_weight: 0.137, id: "Аквамикс", volume: 23.826, weight: 0.137 }],
+      score: 26.21,
+      stats: { count: 0, time: 0 },
+    });
+  });
   test("Калькуляция макро и получение микро остатков", () => {
-    const result = calculate_v2({
+    const result = calculate_v2(
+      {
         ...emptyElements,
-        NO3: 200, NH4: 14, P: 50, K: 200, Ca: 170, Mg: 50, S: 0,
+        NO3: 200,
+        NH4: 14,
+        P: 50,
+        K: 200,
+        Ca: 170,
+        Mg: 50,
+        S: 0,
       },
       [AK],
       {
         accuracy: 0.001,
         ignore: {
           ...getFillElementsByType(true).micro,
-          S: true
-        }
-      }
-    )
+          S: true,
+        },
+      },
+    );
     expect(result).toEqual({
-      "deltaElements": {
-        "B": 0,
-        "Ca": 170,
-        "Cl": 0,
-        "Co": 0,
-        "Cu": 0,
-        "Fe": -0.1,
-        "K": 190,
-        "Mg": 49,
-        "Mn": 0,
-        "Mo": 0,
-        "NH4": 0,
-        "NO3": 191,
-        "P": 47,
-        "S": -10,
-        "Si": 0,
-        "Zn": 0
+      deltaElements: {
+        B: 0,
+        Ca: 170,
+        Cl: 0,
+        Co: 0,
+        Cu: 0,
+        Fe: -0.1,
+        K: 190,
+        Mg: 49,
+        Mn: 0,
+        Mo: 0,
+        NH4: 0,
+        NO3: 191,
+        P: 47,
+        S: -10,
+        Si: 0,
+        Zn: 0,
       },
-      "elements": {
-        "B": 0.0231,
-        "Ca": 0,
-        "Cl": 0,
-        "Co": 0,
-        "Cu": 0.0012,
-        "Fe": 0.0625,
-        "K": 10,
-        "Mg": 1,
-        "Mn": 0.0486,
-        "Mo": 0.0046,
-        "NH4": 14,
-        "NO3": 9,
-        "P": 3,
-        "S": 10,
-        "Si": 0,
-        "Zn": 0.0162
+      elements: {
+        B: 0.0231,
+        Ca: 0,
+        Cl: 0,
+        Co: 0,
+        Cu: 0.0012,
+        Fe: 0.0625,
+        K: 10,
+        Mg: 1,
+        Mn: 0.0486,
+        Mo: 0.0046,
+        NH4: 14,
+        NO3: 9,
+        P: 3,
+        S: 10,
+        Si: 0,
+        Zn: 0.0162,
       },
-      "fertilizers": [{"base_weight": 0.116, "id": "Акварин земляничный", "volume": null, "weight": 0.116}],
-      "score": 3.32,
-      "stats": {"count": 0, "time": 0}
-    })
-  })
+      fertilizers: [{ base_weight: 0.116, id: "Акварин земляничный", volume: null, weight: 0.116 }],
+      score: 3.32,
+      stats: { count: 0, time: 0 },
+    });
+  });
   test("Ставим основной приоритет по бору если комплекс с NH4 и Бором", () => {
-    const result = calculate_v2({
+    const result = calculate_v2(
+      {
         ...emptyElements,
-        NO3: 200, NH4: 14, P: 50, K: 200, Ca: 170, Mg: 50, S: 0,
+        NO3: 200,
+        NH4: 14,
+        P: 50,
+        K: 200,
+        Ca: 170,
+        Mg: 50,
+        S: 0,
         Fe: 4000 / 1000,
         Mn: 636 / 1000,
         B: 714 / 1000,
@@ -146,31 +172,38 @@ describe("Calculate V2 Micro", () => {
         Cu: 69 / 1000,
         Mo: 69 / 1000,
       },
-      [{...AquaMix,  npk: {...AquaMix.npk, NH4: 15}}],
+      [{ ...AquaMix, npk: { ...AquaMix.npk, NH4: 15 } }],
       {
         accuracy: 0.001,
         ignore: {
           ...getFillElementsByType(true).micro,
-          S: true
-        }
-      }
-    )
+          S: true,
+        },
+      },
+    );
     expect(result).toMatchObject({
-      "deltaElements": {
-        "B": 0,
-        "NH4": -7,
+      deltaElements: {
+        B: 0,
+        NH4: -7,
       },
-      "elements": {
-        "B": 0.714,
-        "NH4": 21,
+      elements: {
+        B: 0.714,
+        NH4: 21,
       },
-    })
-  })
+    });
+  });
 
   test("Не пытаемся покрыть микрой макро", () => {
-    const result = calculate_v2({
+    const result = calculate_v2(
+      {
         ...emptyElements,
-        NO3: 200, NH4: 14, P: 50, K: 200, Ca: 170, Mg: 50, S: 0,
+        NO3: 200,
+        NH4: 14,
+        P: 50,
+        K: 200,
+        Ca: 170,
+        Mg: 50,
+        S: 0,
         Fe: 4000 / 1000,
         Mn: 636 / 1000,
         B: 714 / 1000,
@@ -178,16 +211,20 @@ describe("Calculate V2 Micro", () => {
         Cu: 69 / 1000,
         Mo: 69 / 1000,
       },
-      [{id: "Аммоний молибденовокислый 4х-водный", composition: [{formula: "(NH4)6Mo7O24*4H2O", percent: 100.3}]}],
+      [
+        {
+          id: "Аммоний молибденовокислый 4х-водный",
+          composition: [{ formula: "(NH4)6Mo7O24*4H2O", percent: 100.3 }],
+        },
+      ],
       {
         accuracy: 0.001,
         ignore: {
           ...getFillElementsByType(true).micro,
-          S: true
-        }
-      }
-    )
-    expect(result).toMatchObject({deltaElements: {Mo: 0}})
-  })
-
-})
+          S: true,
+        },
+      },
+    );
+    expect(result).toMatchObject({ deltaElements: { Mo: 0 } });
+  });
+});

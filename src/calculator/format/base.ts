@@ -1,9 +1,7 @@
-import {ExportStateType} from "./types";
+import type { ExportStateType } from "./types";
 
 export abstract class BaseFormat {
-  static ext: string
-  abstract export(state: ExportStateType): string
-  abstract import(string: string): ExportStateType
-
-
+  static ext: string;
+  abstract export(state: ExportStateType): string;
+  abstract import(string: string): ExportStateType;
 }

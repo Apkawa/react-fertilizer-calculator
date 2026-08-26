@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
 interface Size {
-  width: number,
-  height: number,
+  width: number;
+  height: number;
 }
 
-
-function getWindowSize() : Size {
+function getWindowSize(): Size {
   return {
     width: window.innerWidth,
     height: window.innerHeight,
-  }
+  };
 }
 
 // Hook

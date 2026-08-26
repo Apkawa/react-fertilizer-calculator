@@ -1,8 +1,7 @@
-import {ExportStateType} from "./types";
-import {HPGFormat} from "./hpg";
-import {NPKElements} from "../types";
-import {normalizeConcentration} from "../dilution";
-
+import { normalizeConcentration } from "../dilution";
+import type { NPKElements } from "../types";
+import { HPGFormat } from "./hpg";
+import type { ExportStateType } from "./types";
 
 describe("HPG", () => {
   // test("export", () => {
@@ -10,41 +9,41 @@ describe("HPG", () => {
   //   f.export(EXAMPLE_STATE)
   // })
   test("import", () => {
-    let f = new HPGFormat()
-    expect(f.import(EXAMPLE_FILE)).toEqual(EXPECT_STATE)
-  })
+    const f = new HPGFormat();
+    expect(f.import(EXAMPLE_FILE)).toEqual(EXPECT_STATE);
+  });
 
-  const stringProfile = 'N=230 NO3=209.09 NH4=20.91 P=60 K=245 Ca=166 Mg=49 S=51.5 Cl=0 Fe=2.801 Mn=0.445 B=0.5 Zn=0.269 Cu=0.048 Mo=0.048 Co=0.048 Si=0'
+  const stringProfile =
+    "N=230 NO3=209.09 NH4=20.91 P=60 K=245 Ca=166 Mg=49 S=51.5 Cl=0 Fe=2.801 Mn=0.445 B=0.5 Zn=0.269 Cu=0.048 Mo=0.048 Co=0.048 Si=0";
   const npkProfle: NPKElements = {
-    "B": 0.5,
-    "Ca": 166,
-    "Cl": 0,
-    "Co": 0.048,
-    "Cu": 0.048,
-    "Fe": 2.801,
-    "K": 245,
-    "Mg": 49,
-    "Mn": 0.445,
-    "Mo": 0.048,
-    "NH4": 20.91,
-    "NO3": 209.09,
-    "P": 60,
-    "S": 51.5,
-    "Si": 0,
-    "Zn": 0.269
-  }
+    B: 0.5,
+    Ca: 166,
+    Cl: 0,
+    Co: 0.048,
+    Cu: 0.048,
+    Fe: 2.801,
+    K: 245,
+    Mg: 49,
+    Mn: 0.445,
+    Mo: 0.048,
+    NH4: 20.91,
+    NO3: 209.09,
+    P: 60,
+    S: 51.5,
+    Si: 0,
+    Zn: 0.269,
+  };
 
   test("parse profile string", () => {
-    const npk = HPGFormat.parseProfileString(stringProfile)
-    expect(npk).toEqual(npkProfle)
-  })
+    const npk = HPGFormat.parseProfileString(stringProfile);
+    expect(npk).toEqual(npkProfle);
+  });
 
   test("stringify profile", () => {
-    const string = HPGFormat.stringifyProfile(npkProfle)
-    expect(string).toEqual(stringProfile)
-  })
-})
-
+    const string = HPGFormat.stringifyProfile(npkProfle);
+    expect(string).toEqual(stringProfile);
+  });
+});
 
 export const EXAMPLE_FILE = `version=Hydroponic Profile Generator 0.213 https://github.com/siv237/HPG
 Comment=По умолчанию
@@ -169,188 +168,194 @@ date=2021-02-05;Корректор. Скорректирован раствор 
 date=2021-02-05;Старый профиль;N=230 NO3=209.09 NH4=20.91 P=60 K=245 Ca=166 Mg=49 S=51.5 Cl=0 Fe=2.801 Mn=0.445 B=0.5 Zn=0.269 Cu=0.048 Mo=0.048 Co=0.048 Si=0 
 date=2021-02-08;Автозапись. Изготовлен раствор на 15 литров.;N=206 NO3=187.16 NH4=18.72 P=60 K=247.05 Ca=167.38 Mg=49.41 S=76.6 Cl=0 Fe=2.801 Mn=0.445 B=0.5 Zn=0.269 Cu=0.048 Mo=0.048 Co=0.048 Si=0 
 date=2021-02-21;Автозапись. Изготовлен раствор на 17 литров.;N=216 NO3=196.34 NH4=19.65 P=59.99 K=243.43 Ca=166.83 Mg=49.24 S=65 Cl=0 Fe=2.801 Mn=0.445 B=0.5 Zn=0.269 Cu=0.048 Mo=0.048 Co=0.048 Si=0 
-`
+`;
 
-let _fertilizers = [
+const _fertilizers = [
   {
-    "id": "CaNO3",
-    "npk": {
-      "Ca": 28.422,
-      "NO3": 14.2
+    id: "CaNO3",
+    npk: {
+      Ca: 28.422,
+      NO3: 14.2,
     },
-    "pump_number": 1,
-    "solution_concentration": 493,
-    "solution_density": 1281
+    pump_number: 1,
+    solution_concentration: 493,
+    solution_density: 1281,
   },
   {
-    "id": "KNO3",
-    "npk": {
-      "K": 45.745,
-      "NO3": 13.6
+    id: "KNO3",
+    npk: {
+      K: 45.745,
+      NO3: 13.6,
     },
-    "pump_number": 2,
-    "solution_concentration": 250,
-    "solution_density": 1141.8999999999999
+    pump_number: 2,
+    solution_concentration: 250,
+    solution_density: 1141.8999999999999,
   },
   {
-    "id": "NH4NO3",
-    "npk": {
-      "NH4": 17.4,
-      "NO3": 17.4
+    id: "NH4NO3",
+    npk: {
+      NH4: 17.4,
+      NO3: 17.4,
     },
-    "pump_number": 3,
-    "solution_concentration": 336.6,
-    "solution_density": 1104
+    pump_number: 3,
+    solution_concentration: 336.6,
+    solution_density: 1104,
   },
   {
-    "id": "MgSO4",
-    "npk": {
-      "Mg": 16.883,
-      "S": 13.434
+    id: "MgSO4",
+    npk: {
+      Mg: 16.883,
+      S: 13.434,
     },
-    "pump_number": 4,
-    "solution_concentration": 250,
-    "solution_density": 1119
+    pump_number: 4,
+    solution_concentration: 250,
+    solution_density: 1119,
   },
   {
-    "id": "KH2PO4",
-    "npk": {
-      "K": 32.933,
-      "P": 49.602
+    id: "KH2PO4",
+    npk: {
+      K: 32.933,
+      P: 49.602,
     },
-    "pump_number": 5,
-    "solution_concentration": 200,
-    "solution_density": 1125.3
+    pump_number: 5,
+    solution_concentration: 200,
+    solution_density: 1125.3,
   },
   {
-    "id": "K2SO4",
-    "npk": {
-      "K": 50.141,
-      "S": 17.063
+    id: "K2SO4",
+    npk: {
+      K: 50.141,
+      S: 17.063,
     },
-    "pump_number": 6,
-    "solution_concentration": 100,
-    "solution_density": 1075
+    pump_number: 6,
+    solution_concentration: 100,
+    solution_density: 1075,
   },
   {
-    "id": "MgNO3",
-    "npk": {
-      "Mg": 15.716,
-      "NO3": 10.925
+    id: "MgNO3",
+    npk: {
+      Mg: 15.716,
+      NO3: 10.925,
     },
-    "solution_concentration": 250,
-    "solution_density": 1000
+    solution_concentration: 250,
+    solution_density: 1000,
   },
   {
-    "id": "CaCl2",
-    "npk": {
-      "Ca": 25.593,
-      "Cl": 32.366
+    id: "CaCl2",
+    npk: {
+      Ca: 25.593,
+      Cl: 32.366,
     },
-    "solution_concentration": 100,
-    "solution_density": 1000
+    solution_concentration: 100,
+    solution_density: 1000,
   },
   {
-    "composition": [
+    composition: [
       {
-        "formula": "Fe",
-        "percent": 0.4
-      }
+        formula: "Fe",
+        percent: 0.4,
+      },
     ],
-    "id": "Fe",
-    "solution_concentration": 10,
-    "solution_density": 10
+    id: "Fe",
+    solution_concentration: 10,
+    solution_density: 10,
   },
   {
-    "composition": [
+    composition: [
       {
-        "formula": "Mn",
-        "percent": 0.0636
-      }
+        formula: "Mn",
+        percent: 0.0636,
+      },
     ],
-    "id": "Mn",
-    "solution_concentration": 10,
-    "solution_density": 10
+    id: "Mn",
+    solution_concentration: 10,
+    solution_density: 10,
   },
   {
-    "composition": [
+    composition: [
       {
-        "formula": "B",
-        "percent": 0.0714
-      }
+        formula: "B",
+        percent: 0.0714,
+      },
     ],
-    "id": "B",
-    "solution_concentration": 10,
-    "solution_density": 10
+    id: "B",
+    solution_concentration: 10,
+    solution_density: 10,
   },
   {
-    "composition": [
+    composition: [
       {
-        "formula": "Zn",
-        "percent": 0.0384
-      }
+        formula: "Zn",
+        percent: 0.0384,
+      },
     ],
-    "id": "Zn",
-    "solution_concentration": 10,
-    "solution_density": 10
+    id: "Zn",
+    solution_concentration: 10,
+    solution_density: 10,
   },
   {
-    "composition": [
+    composition: [
       {
-        "formula": "Cu",
-        "percent": 0.0069
-      }
+        formula: "Cu",
+        percent: 0.0069,
+      },
     ],
-    "id": "Cu",
-    "solution_concentration": 10,
-    "solution_density": 10
+    id: "Cu",
+    solution_concentration: 10,
+    solution_density: 10,
   },
   {
-    "composition": [
+    composition: [
       {
-        "formula": "Mo",
-        "percent": 0.0069
-      }
+        formula: "Mo",
+        percent: 0.0069,
+      },
     ],
-    "id": "Mo",
-    "solution_concentration": 10,
-    "solution_density": 10
-  }
-]
+    id: "Mo",
+    solution_concentration: 10,
+    solution_density: 10,
+  },
+];
 
 const EXPECT_STATE: ExportStateType = {
-  "calculator": {
-    "calculationForm": {
-      "accuracy": 0.01,
-      "dilution_concentration": normalizeConcentration(1),
-      "dilution_enabled": true,
-      "dilution_volume": 17,
-      "fertilizers": _fertilizers.filter(f => f.id !== 'MgNO3'),
-      "recipe": {
-        "B": 0.5,
-        "Ca": 166.83,
-        "Cl": 0,
-        "Co": 0.048,
-        "Cu": 0.048,
-        "Fe": 2.801,
-        "K": 243.427,
-        "Mg": 49.238,
-        "Mn": 0.445,
-        "Mo": 0.048,
-        "NH4": 19.65,
-        "NO3": 196.34,
-        "P": 59.986,
-        "S": 64.958,
-        "Si": 0,
-        "Zn": 0.269
+  calculator: {
+    calculationForm: {
+      accuracy: 0.01,
+      dilution_concentration: normalizeConcentration(1),
+      dilution_enabled: true,
+      dilution_volume: 17,
+      fertilizers: _fertilizers.filter((f) => f.id !== "MgNO3"),
+      recipe: {
+        B: 0.5,
+        Ca: 166.83,
+        Cl: 0,
+        Co: 0.048,
+        Cu: 0.048,
+        Fe: 2.801,
+        K: 243.427,
+        Mg: 49.238,
+        Mn: 0.445,
+        Mo: 0.048,
+        NH4: 19.65,
+        NO3: 196.34,
+        P: 59.986,
+        S: 64.958,
+        Si: 0,
+        Zn: 0.269,
       },
-      "mixerOptions": {
-        "url": "mixer-esp32.local",
+      mixerOptions: {
+        url: "mixer-esp32.local",
       },
-      "solution_concentration": normalizeConcentration(34),
-      "solution_volume": 0.5
-    }, "fertilizers": _fertilizers, "recipes": [], "result": null
-  }, "meta": {
-    "created": "", "ref": "", "version": "Hydroponic Profile Generator 0.213 https://github.com/siv237/HPG"
-  }
-}
+      solution_concentration: normalizeConcentration(34),
+      solution_volume: 0.5,
+    },
+    fertilizers: _fertilizers,
+    recipes: [],
+    result: null,
+  },
+  meta: {
+    created: "",
+    ref: "",
+    version: "Hydroponic Profile Generator 0.213 https://github.com/siv237/HPG",
+  },
+};

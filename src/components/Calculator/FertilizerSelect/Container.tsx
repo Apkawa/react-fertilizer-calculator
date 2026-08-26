@@ -1,8 +1,7 @@
 import React from "react";
-import {SelectedList} from "./SelectedList";
-import {FieldArray} from "redux-form";
-import {required} from "../../ui/ReduxForm/validators";
-
+import { FieldArray } from "redux-form";
+import { required } from "../../ui/ReduxForm/validators";
+import { SelectedList } from "./SelectedList";
 
 export const Container = () => {
   return (
@@ -11,6 +10,5 @@ export const Container = () => {
       component={SelectedList}
       validate={required("Выберите удобрения")}
     />
-  )
-}
-
+  );
+};

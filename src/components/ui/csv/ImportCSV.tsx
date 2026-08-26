@@ -1,10 +1,7 @@
 import React from "react";
 
-interface ImportCSVProps {
-}
+type ImportCSVProps = {};
 
 export function ImportCSV(props: ImportCSVProps) {
-  return (
-    <div></div>
-  )
+  return <div></div>;
 }

@@ -1,11 +1,11 @@
-import {ATOMIC_MASS, AtomNameType} from "../constants";
+import { ATOMIC_MASS, type AtomNameType } from "../constants";
 
 export interface SubgroupType {
-  formula: string,
-  count: number
+  formula: string;
+  count: number;
 }
 
-export type ParsedMolecule = { [Atom in AtomNameType]?: number }
+export type ParsedMolecule = { [Atom in AtomNameType]?: number };
 
 /**
  * @param formula String A molecular formula, eg CH(CH(CH2)2)2OH
@@ -13,35 +13,35 @@ export type ParsedMolecule = { [Atom in AtomNameType]?: number }
  * Eg [{formula: 'CH', count:1}, {formula:'CH(CH2)2', count:2,
  * {formula:'OH', count:1}]
  */
-export const findSubgroups = function (formula: string): SubgroupType[] {
+export const findSubgroups = (formula: string): SubgroupType[] => {
   let finishingNestedSubgroup;
-  let subgroups: SubgroupType[] = [];
-  let currentFormula = '', currentCount = '';
+  const subgroups: SubgroupType[] = [];
+  let currentFormula = "",
+    currentCount = "";
   let level = 0;
 
   //This pushes the current state of currentFormula and currentCount to subgroups.
   //It also resets currentFormula and currentCount.
-  const pushSubgroup = function () {
+  const pushSubgroup = () => {
     if (!currentFormula) return;
-    const countStr = currentCount || '1';
+    const countStr = currentCount || "1";
     const count = parseInt(countStr, 10);
-    subgroups.push({formula: currentFormula, count: count});
-    currentFormula = '';
-    currentCount = '';
+    subgroups.push({ formula: currentFormula, count: count });
+    currentFormula = "";
+    currentCount = "";
   };
 
-  let i=-1;
+  let i = -1;
 
-  for (let ch of formula) {
-    i++
+  for (const ch of formula) {
+    i++;
     if (/[A-Za-z]/.test(ch)) {
       if (finishingNestedSubgroup) {
         pushSubgroup();
         finishingNestedSubgroup = false;
       }
       currentFormula += ch;
-      continue;
-    } else if (ch === '(') {
+    } else if (ch === "(") {
       //If we are outside of parenthesis start a new subgroup
       if (level === 0 && currentFormula) {
         pushSubgroup();
@@ -51,7 +51,7 @@ export const findSubgroups = function (formula: string): SubgroupType[] {
         currentFormula += ch;
       }
       level += 1;
-    } else if (ch === ')') {
+    } else if (ch === ")") {
       level -= 1;
       if (level === 0) {
         //Finishing top-level subgroup; mark it so we can count multiples
@@ -63,12 +63,12 @@ export const findSubgroups = function (formula: string): SubgroupType[] {
     } else if (/[*+]/.test(ch)) {
       if (level === 0 && currentFormula) {
         pushSubgroup();
-        finishingNestedSubgroup = false
+        finishingNestedSubgroup = false;
       }
       if (level > 0) {
-        currentFormula += ch
+        currentFormula += ch;
       }
-      level += 1
+      level += 1;
     } else if (/\d/.test(ch)) {
       // TODO check numbers > 9
       if (finishingNestedSubgroup) {
@@ -76,11 +76,11 @@ export const findSubgroups = function (formula: string): SubgroupType[] {
       } else {
         if (!currentFormula) {
           // Maybe like as 6H2O
-          currentCount += ch
+          currentCount += ch;
         } else {
           if (i === 0) {
-            currentCount += ch
-            continue
+            currentCount += ch;
+            continue;
           }
           currentFormula += ch;
         }
@@ -90,7 +90,7 @@ export const findSubgroups = function (formula: string): SubgroupType[] {
   //Once more to pick up any straggling formula
   pushSubgroup();
   return subgroups;
-}
+};
 
 /**
  * @param formula String A primitive (ie, without subgroups/parentheses, like
@@ -98,32 +98,31 @@ export const findSubgroups = function (formula: string): SubgroupType[] {
  * @return elementCounts A map of element:count, eg {C:1, H:4}
  * @api private
  */
-const _decomposePrimitiveFormula = function (formula: string): ParsedMolecule {
-  let elementCounts: ParsedMolecule = {};
-  let match = formula.match(elementRe)
+const _decomposePrimitiveFormula = (formula: string): ParsedMolecule => {
+  const elementCounts: ParsedMolecule = {};
+  const match = formula.match(elementRe);
   if (!match) {
-    return elementCounts
+    return elementCounts;
   }
-  for (let token of match) {
+  for (const token of match) {
     //matcher will be of the form ['Na2', 'Na', '2', ...] or ['H', 'H', '', ...]
-    let matcher = token.match(singleElementRe);
+    const matcher = token.match(singleElementRe);
     if (!matcher) {
-      continue
+      continue;
     }
     const element = matcher[1];
-    const count = parseInt((matcher[2] || '1'), 10);
+    const count = parseInt(matcher[2] || "1", 10);
 
-    if (!ATOMIC_MASS.hasOwnProperty(element)) {
-      continue
+    if (!Object.hasOwn(ATOMIC_MASS, element)) {
+      continue;
     }
-    let _el = element as AtomNameType
+    const _el = element as AtomNameType;
     if (element in elementCounts) {
       elementCounts[_el] = (elementCounts[_el] || 0) + count;
     } else {
       elementCounts[_el] = count;
     }
   }
-
 
   return elementCounts;
 };
@@ -135,7 +134,7 @@ const _decomposePrimitiveFormula = function (formula: string): ParsedMolecule {
  *   H: 10
  * }
  */
-export const decomposeFormula = function (formula: string): ParsedMolecule {
+export const decomposeFormula = (formula: string): ParsedMolecule => {
   if (!formula) return {};
   const subgroups = findSubgroups(formula);
   if (subgroups.length === 1 && subgroups[0].formula === formula) {
@@ -143,28 +142,25 @@ export const decomposeFormula = function (formula: string): ParsedMolecule {
     return _decomposePrimitiveFormula(formula);
   } else {
     //We have subgroups
-    let combinedCounts: ParsedMolecule = {};
-    subgroups.forEach(function (subgroup) {
+    const combinedCounts: ParsedMolecule = {};
+    subgroups.forEach((subgroup) => {
       const subgroupCounts = decomposeFormula(subgroup.formula);
       let elementCount;
-      for (let element in subgroupCounts) {
-        if (ATOMIC_MASS.hasOwnProperty(element)) {
-          let _el = element as AtomNameType
+      for (const element in subgroupCounts) {
+        if (Object.hasOwn(ATOMIC_MASS, element)) {
+          const _el = element as AtomNameType;
           elementCount = (subgroupCounts[_el] || 0) * subgroup.count;
           if (element in combinedCounts) {
             combinedCounts[_el] = (combinedCounts[_el] || 0) + elementCount;
           } else {
             combinedCounts[_el] = elementCount;
           }
-
         }
       }
     });
     return combinedCounts;
   }
-}
+};
 
-let elementRe: RegExp = /([A-Z][a-z]{0,2})(\d*)/g
-let singleElementRe: RegExp = /([A-Z][a-z]{0,2})(\d*)/
-
-
+const elementRe: RegExp = /([A-Z][a-z]{0,2})(\d*)/g;
+const singleElementRe: RegExp = /([A-Z][a-z]{0,2})(\d*)/;
