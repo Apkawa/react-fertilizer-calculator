@@ -87,7 +87,7 @@ export function groupFertilizerBySolution(
 export function normalizeConcentration(
   concentration: Partial<Concentration> | number,
 ): Required<Concentration> {
-  if (typeof concentration == "number") {
+  if (typeof concentration === "number") {
     return {
       k: concentration,
       v_1: round(1000 / concentration, 2),

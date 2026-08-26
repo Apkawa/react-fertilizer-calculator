@@ -118,7 +118,7 @@ export default () => {
                 </thead>
                 <tbody>
                   {entries(result.decomposed_formula).map(([a, c]) => (
-                    <tr>
+                    <tr key={a}>
                       <th>{a}</th>
                       <td>{c.mass}</td>
                       <td>{c.count}</td>
@@ -148,14 +148,14 @@ export default () => {
                 <thead>
                   <tr>
                     {FERTILIZER_ELEMENT_NAMES.map((e) => (
-                      <th>{e}</th>
+                      <th key={e}>{e}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     {FERTILIZER_ELEMENT_NAMES.map((e) => (
-                      <td>{result?.oxide_npk[e]}</td>
+                      <td key={e}>{result?.oxide_npk[e]}</td>
                     ))}
                   </tr>
                 </tbody>
@@ -174,14 +174,14 @@ export default () => {
                 <thead>
                   <tr>
                     {FERTILIZER_ELEMENT_NAMES.map((e) => (
-                      <th>{e}</th>
+                      <th key={e}>{e}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     {FERTILIZER_ELEMENT_NAMES.map((e) => (
-                      <td>{result?.npk[e]}</td>
+                      <td key={e}>{result?.npk[e]}</td>
                     ))}
                   </tr>
                 </tbody>

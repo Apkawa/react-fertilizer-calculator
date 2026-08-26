@@ -14,7 +14,7 @@ export function DropdownList<T>(props: DropdownListProps<T>) {
 
   useEffect(() => {
     setHeight(itemRef?.current?.offsetHeight || 0);
-  }, [itemRef]);
+  }, []);
 
   return (
     <Card
@@ -27,8 +27,8 @@ export function DropdownList<T>(props: DropdownListProps<T>) {
       <Flex flexDirection="column">
         {Array.from(items).map((s, i) => {
           return (
-            <Box ref={i === 0 ? itemRef : null}>
-              <DropdownItem<T> value={s} index={i} key={i} />
+            <Box ref={i === 0 ? itemRef : null} key={String(s)}>
+              <DropdownItem<T> value={s} index={i} key={String(s)} />
               {i < items.length - 1 ? <hr style={{ margin: 0 }} /> : null}
             </Box>
           );

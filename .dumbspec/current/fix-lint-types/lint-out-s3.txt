@@ -1,0 +1,364 @@
+$ biome check src
+src/calculator/constants.ts:133:25 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    132 │ export const IONIC_STRENGTH = {
+  > 133 │   NO3: -1 / ATOMIC_MASS["N"],
+        │                         ^^^
+    134 │   NH4: 1 / ATOMIC_MASS["N"],
+    135 │   P: -1 / ATOMIC_MASS["P"],
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    131 131 │   
+    132 132 │   export const IONIC_STRENGTH = {
+    133     │ - ··NO3:·-1·/·ATOMIC_MASS["N"],
+        133 │ + ··NO3:·-1·/·ATOMIC_MASS.N,
+    134 134 │     NH4: 1 / ATOMIC_MASS["N"],
+    135 135 │     P: -1 / ATOMIC_MASS["P"],
+  
+
+src/calculator/constants.ts:134:24 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    132 │ export const IONIC_STRENGTH = {
+    133 │   NO3: -1 / ATOMIC_MASS["N"],
+  > 134 │   NH4: 1 / ATOMIC_MASS["N"],
+        │                        ^^^
+    135 │   P: -1 / ATOMIC_MASS["P"],
+    136 │   K: 1 / ATOMIC_MASS["K"],
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    132 132 │   export const IONIC_STRENGTH = {
+    133 133 │     NO3: -1 / ATOMIC_MASS["N"],
+    134     │ - ··NH4:·1·/·ATOMIC_MASS["N"],
+        134 │ + ··NH4:·1·/·ATOMIC_MASS.N,
+    135 135 │     P: -1 / ATOMIC_MASS["P"],
+    136 136 │     K: 1 / ATOMIC_MASS["K"],
+  
+
+src/calculator/constants.ts:135:23 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    133 │   NO3: -1 / ATOMIC_MASS["N"],
+    134 │   NH4: 1 / ATOMIC_MASS["N"],
+  > 135 │   P: -1 / ATOMIC_MASS["P"],
+        │                       ^^^
+    136 │   K: 1 / ATOMIC_MASS["K"],
+    137 │   Ca: 2 / ATOMIC_MASS["Ca"],
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    133 133 │     NO3: -1 / ATOMIC_MASS["N"],
+    134 134 │     NH4: 1 / ATOMIC_MASS["N"],
+    135     │ - ··P:·-1·/·ATOMIC_MASS["P"],
+        135 │ + ··P:·-1·/·ATOMIC_MASS.P,
+    136 136 │     K: 1 / ATOMIC_MASS["K"],
+    137 137 │     Ca: 2 / ATOMIC_MASS["Ca"],
+  
+
+src/calculator/constants.ts:136:22 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    134 │   NH4: 1 / ATOMIC_MASS["N"],
+    135 │   P: -1 / ATOMIC_MASS["P"],
+  > 136 │   K: 1 / ATOMIC_MASS["K"],
+        │                      ^^^
+    137 │   Ca: 2 / ATOMIC_MASS["Ca"],
+    138 │   Mg: 2 / ATOMIC_MASS["Mg"],
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    134 134 │     NH4: 1 / ATOMIC_MASS["N"],
+    135 135 │     P: -1 / ATOMIC_MASS["P"],
+    136     │ - ··K:·1·/·ATOMIC_MASS["K"],
+        136 │ + ··K:·1·/·ATOMIC_MASS.K,
+    137 137 │     Ca: 2 / ATOMIC_MASS["Ca"],
+    138 138 │     Mg: 2 / ATOMIC_MASS["Mg"],
+  
+
+src/calculator/constants.ts:137:23 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    135 │   P: -1 / ATOMIC_MASS["P"],
+    136 │   K: 1 / ATOMIC_MASS["K"],
+  > 137 │   Ca: 2 / ATOMIC_MASS["Ca"],
+        │                       ^^^^
+    138 │   Mg: 2 / ATOMIC_MASS["Mg"],
+    139 │   S: -2 / ATOMIC_MASS["S"],
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    135 135 │     P: -1 / ATOMIC_MASS["P"],
+    136 136 │     K: 1 / ATOMIC_MASS["K"],
+    137     │ - ··Ca:·2·/·ATOMIC_MASS["Ca"],
+        137 │ + ··Ca:·2·/·ATOMIC_MASS.Ca,
+    138 138 │     Mg: 2 / ATOMIC_MASS["Mg"],
+    139 139 │     S: -2 / ATOMIC_MASS["S"],
+  
+
+src/calculator/constants.ts:138:23 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    136 │   K: 1 / ATOMIC_MASS["K"],
+    137 │   Ca: 2 / ATOMIC_MASS["Ca"],
+  > 138 │   Mg: 2 / ATOMIC_MASS["Mg"],
+        │                       ^^^^
+    139 │   S: -2 / ATOMIC_MASS["S"],
+    140 │   // TODO use for balance without recipe
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    136 136 │     K: 1 / ATOMIC_MASS["K"],
+    137 137 │     Ca: 2 / ATOMIC_MASS["Ca"],
+    138     │ - ··Mg:·2·/·ATOMIC_MASS["Mg"],
+        138 │ + ··Mg:·2·/·ATOMIC_MASS.Mg,
+    139 139 │     S: -2 / ATOMIC_MASS["S"],
+    140 140 │     // TODO use for balance without recipe
+  
+
+src/calculator/constants.ts:139:23 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    137 │   Ca: 2 / ATOMIC_MASS["Ca"],
+    138 │   Mg: 2 / ATOMIC_MASS["Mg"],
+  > 139 │   S: -2 / ATOMIC_MASS["S"],
+        │                       ^^^
+    140 │   // TODO use for balance without recipe
+    141 │   Cl: -1 / ATOMIC_MASS["Cl"],
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    137 137 │     Ca: 2 / ATOMIC_MASS["Ca"],
+    138 138 │     Mg: 2 / ATOMIC_MASS["Mg"],
+    139     │ - ··S:·-2·/·ATOMIC_MASS["S"],
+        139 │ + ··S:·-2·/·ATOMIC_MASS.S,
+    140 140 │     // TODO use for balance without recipe
+    141 141 │     Cl: -1 / ATOMIC_MASS["Cl"],
+  
+
+src/calculator/constants.ts:141:24 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    139 │   S: -2 / ATOMIC_MASS["S"],
+    140 │   // TODO use for balance without recipe
+  > 141 │   Cl: -1 / ATOMIC_MASS["Cl"],
+        │                        ^^^^
+    142 │   Na: 1 / ATOMIC_MASS["Na"],
+    143 │ };
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    139 139 │     S: -2 / ATOMIC_MASS["S"],
+    140 140 │     // TODO use for balance without recipe
+    141     │ - ··Cl:·-1·/·ATOMIC_MASS["Cl"],
+        141 │ + ··Cl:·-1·/·ATOMIC_MASS.Cl,
+    142 142 │     Na: 1 / ATOMIC_MASS["Na"],
+    143 143 │   };
+  
+
+src/calculator/constants.ts:142:23 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    140 │   // TODO use for balance without recipe
+    141 │   Cl: -1 / ATOMIC_MASS["Cl"],
+  > 142 │   Na: 1 / ATOMIC_MASS["Na"],
+        │                       ^^^^
+    143 │ };
+    144 │ 
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    140 140 │     // TODO use for balance without recipe
+    141 141 │     Cl: -1 / ATOMIC_MASS["Cl"],
+    142     │ - ··Na:·1·/·ATOMIC_MASS["Na"],
+        142 │ + ··Na:·1·/·ATOMIC_MASS.Na,
+    143 143 │   };
+    144 144 │   
+  
+
+src/Root.tsx:12:10 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    11 │ type RootProps = {
+  > 12 │   store: any;
+       │          ^^^
+    13 │ };
+    14 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/Root.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    2 │ import { Provider } from "react-redux";
+    3 │ import { Route, HashRouter as Router, Switch } from "react-router-dom";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/__tests__/App.test.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This import is unused.
+  
+    1 │ import { render, waitFor } from "@testing-library/react";
+  > 2 │ import React from "react";
+      │        ^^^^^
+    3 │ import Root from "../Root";
+    4 │ import { store } from "../redux/index";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import { render, waitFor } from "@testing-library/react";
+     2    │ - import·React·from·"react";
+     3  2 │   import Root from "../Root";
+     4  3 │   import { store } from "../redux/index";
+  
+
+src/calculator/itertools.ts:7:46 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    5 │ }>;
+    6 │ 
+  > 7 │ export function* combination<T extends Array<any>>(iterable: T): GenericIterableIterator<T> {
+      │                                              ^^^
+    8 │   for (const p of new Permutation(iterable)) {
+    9 │     yield p as any;
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/calculator/itertools.ts:9:16 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+     7 │ export function* combination<T extends Array<any>>(iterable: T): GenericIterableIterator<T> {
+     8 │   for (const p of new Permutation(iterable)) {
+   > 9 │     yield p as any;
+       │                ^^^
+    10 │   }
+    11 │ }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/calculator/itertools.ts:15:51 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    13 │ // NB: throws if any iterables passed to it are empty
+    14 │ // via https://gist.github.com/cybercase/db7dde901d7070c98c48#gistcomment-3033459
+  > 15 │ export function* product<T extends Array<Iterable<any>>>(
+       │                                                   ^^^
+    16 │   ...iterables: T
+    17 │ ): GenericIterableIterator<T> {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/utils/csv.ts:8:40 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+     6 │  */
+     7 │ 
+   > 8 │ export type CsvRecord = Record<string, any>;
+       │                                        ^^^
+     9 │ export type CsvOptions = Record<string, unknown>;
+    10 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/utils/index.ts:35:29 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    33 │   const m: ToMapResult<T> = {};
+    34 │   for (const i of list) {
+  > 35 │     const key = i[field] as any as string;
+       │                             ^^^
+    36 │     m[key] = i;
+    37 │   }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/utils/index.ts:62:27 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    60 │ }
+    61 │ 
+  > 62 │ export function equal(t1: any, t2: any): boolean {
+       │                           ^^^
+    63 │   return JSON.stringify(t1) === JSON.stringify(t2);
+    64 │ }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/utils/index.ts:62:36 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    60 │ }
+    61 │ 
+  > 62 │ export function equal(t1: any, t2: any): boolean {
+       │                                    ^^^
+    63 │   return JSON.stringify(t1) === JSON.stringify(t2);
+    64 │ }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/utils/index.ts:24:8 lint/suspicious/noGlobalIsNan  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! isNaN is unsafe. It attempts a type coercion. Use Number.isNaN instead.
+  
+    22 │ export function tryParseFloat(value: string): number | string {
+    23 │   const v = parseFloat(value);
+  > 24 │   if (!isNaN(v)) {
+       │        ^^^^^
+    25 │     return v;
+    26 │   }
+  
+  i See the MDN documentation for more details.
+  
+  i Unsafe fix: Use Number.isNaN instead.
+  
+    22 22 │   export function tryParseFloat(value: string): number | string {
+    23 23 │     const v = parseFloat(value);
+    24    │ - ··if·(!isNaN(v))·{
+       24 │ + ··if·(!Number.isNaN(v))·{
+    25 25 │       return v;
+    26 26 │     }
+  
+
+The number of diagnostics exceeds the limit allowed. Use --max-diagnostics to increase it.
+Diagnostics not shown: 190.
+Checked 149 files in 77ms. No fixes applied.
+Found 175 warnings.
+Found 35 infos.

@@ -38,8 +38,10 @@ export const AddEditNPKString: FunctionComponent<AddEditNPKStringProps> = (props
       width={"100%"}
       padding={2}
     >
-      <label style={{ textAlign: "center" }}></label>
+      {/* biome-ignore lint/a11y/noLabelWithoutControl: пустой label — только вертикальный отступ; htmlFor/id прокидываются до DOM-инпута через обёртку */}
+      <label style={{ textAlign: "center" }} htmlFor="npk-string"></label>
       <Input
+        id="npk-string"
         disabled={composition_enable}
         placeholder={'Быстрое редактирование в формате "NO3=10 P2O5=12 K=5"'}
         value={value}

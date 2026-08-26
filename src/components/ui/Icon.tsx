@@ -19,7 +19,7 @@ export const Icon = forwardRef<HTMLDivElement, IconProps>((props, buttonRef) => 
     if (!size && buttonRef && "current" in buttonRef) {
       setSize(buttonRef.current?.offsetWidth || 0);
     }
-  }, [buttonRef, setSize, size]);
+  }, [buttonRef, size]);
 
   return (
     <Box {...extraProps} ref={buttonRef}>

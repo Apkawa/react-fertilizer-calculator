@@ -29,3 +29,4 @@ yarn-error.log*
 .playwright-cli/
 .pnpm-cache/
 .cache/
+tsconfig.tsbuildinfo

@@ -205,7 +205,7 @@ export function calculate_v2(
     if (ignore[key]) {
       ignoredElements[key] = 1;
     }
-    if (typeof needElements[key] == "undefined") {
+    if (typeof needElements[key] === "undefined") {
       ignoredElements[key] = 1;
     }
     // Понижаем приоритет если игнорируется
@@ -346,7 +346,7 @@ export function calculate_v1(
   }
 
   let best_score = 1000000;
-  let score;
+  let score: number | undefined;
   let score_percent = 0;
   let calculatedElements: Elements = getEmptyElements();
 

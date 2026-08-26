@@ -55,7 +55,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [containerRef]);
+  }, []);
 
   const onClickItemHandler = (item: ItemType<T>) => {
     setItem(item);

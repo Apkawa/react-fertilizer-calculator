@@ -111,6 +111,7 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
       <Flex>
         {MACRO_ELEMENT_NAMES.map((el) => (
           <RecipeInput
+            key={el}
             name={el}
             label={el}
             value={recipe[el]}
@@ -148,16 +149,16 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
             <tr>
               <th></th>
               {ELEMENT_IN_MATRIX.map((el) => (
-                <th>{el}</th>
+                <th key={el}>{el}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {ELEMENT_IN_MATRIX.map((el) => (
-              <tr>
+              <tr key={el}>
                 <th>{el}</th>
                 {ELEMENT_IN_MATRIX.map((el2) => (
-                  <td style={{ textAlign: "center" }}>
+                  <td key={el2} style={{ textAlign: "center" }}>
                     {el === el2 ? (
                       1
                     ) : (
@@ -177,6 +178,7 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
       <Flex justifyContent="space-around">
         {MICRO_ELEMENT_NAMES.map((el) => (
           <RecipeInput
+            key={el}
             name={el}
             label={el}
             value={(recipe[el] || 0) * 1000}

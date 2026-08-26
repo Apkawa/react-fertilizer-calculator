@@ -13,7 +13,7 @@ describe("Json", () => {
   });
 });
 
-export const EXAMPLE_STATE: ExportStateType = {
+const EXAMPLE_STATE: ExportStateType = {
   meta: {
     version: "0.1.0",
     ref: "d853706",

@@ -75,13 +75,13 @@ const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
         <Box>Макроэлементы</Box>
         <Flex>
           {MACRO_ELEMENT_NAMES.map((el) => (
-            <AddItemElementForm name={el} disabled={formValues.composition_enable} />
+            <AddItemElementForm key={el} name={el} disabled={formValues.composition_enable} />
           ))}
         </Flex>
         <Box>Микроэлементы</Box>
         <Flex>
           {MICRO_ELEMENT_NAMES.map((el) => (
-            <AddItemElementForm name={el} disabled={formValues.composition_enable} />
+            <AddItemElementForm key={el} name={el} disabled={formValues.composition_enable} />
           ))}
         </Flex>
         <Flex>

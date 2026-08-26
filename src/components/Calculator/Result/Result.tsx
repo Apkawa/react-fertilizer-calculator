@@ -106,7 +106,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
         <StyledList>
           <li>Для {solution_volume}л раствора</li>
           {fertilizerWeightGroups.map(([g, f_weights]) => (
-            <li>
+            <li key={g}>
               <b>Раствор {g}</b>
               <ul>
                 <ResultFertilizerList fertilizers={f_weights} />

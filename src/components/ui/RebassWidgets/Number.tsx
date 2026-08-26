@@ -1,6 +1,5 @@
 import { Input as RebassInput, type InputProps as RebassInputProps } from "@rebass/forms";
-import React from "react";
-import { type FC, useEffect, useRef, useState } from "react";
+import React, { type FC, useEffect, useRef, useState } from "react";
 import { Flex } from "rebass";
 import styled from "styled-components";
 import { countDecimals, round } from "@/utils";
@@ -73,7 +72,7 @@ export const NumberInput: FC<InputProps> = (props: any) => {
       width: inputRef?.current?.offsetWidth || 0,
       height: inputRef?.current?.offsetHeight || 0,
     });
-  }, [inputRef]);
+  }, []);
 
   const offset = -(inputSize?.height || 0) + 5;
 

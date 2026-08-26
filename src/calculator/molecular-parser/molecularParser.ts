@@ -14,7 +14,7 @@ export type ParsedMolecule = { [Atom in AtomNameType]?: number };
  * {formula:'OH', count:1}]
  */
 export const findSubgroups = (formula: string): SubgroupType[] => {
-  let finishingNestedSubgroup;
+  let finishingNestedSubgroup = false;
   const subgroups: SubgroupType[] = [];
   let currentFormula = "",
     currentCount = "";
@@ -145,7 +145,7 @@ export const decomposeFormula = (formula: string): ParsedMolecule => {
     const combinedCounts: ParsedMolecule = {};
     subgroups.forEach((subgroup) => {
       const subgroupCounts = decomposeFormula(subgroup.formula);
-      let elementCount;
+      let elementCount: number;
       for (const element in subgroupCounts) {
         if (Object.hasOwn(ATOMIC_MASS, element)) {
           const _el = element as AtomNameType;

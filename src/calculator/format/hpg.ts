@@ -164,7 +164,7 @@ export class HPGFormat extends BaseFormat {
   }
 
   static stringifyProfile(npk: NPKElements): string {
-    const s = FERTILIZER_ELEMENT_NAMES.map((e) => typeof npk[e] != "undefined" && `${e}=${npk[e]}`)
+    const s = FERTILIZER_ELEMENT_NAMES.map((e) => typeof npk[e] !== "undefined" && `${e}=${npk[e]}`)
       .filter((e) => e)
       .join(" ");
     return `N=${(npk.NO3 || 0) + (npk.NH4 || 0)} ${s}`;

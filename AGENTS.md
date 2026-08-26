@@ -17,6 +17,7 @@ pnpm install            # установка зависимостей
 pnpm start              # dev-сервер (vite, http://localhost:3000)
 pnpm test               # vitest run (jsdom, setupFiles src/setupTests.ts)
 pnpm lint               # biome check src
+pnpm type               # typescript check
 pnpm build              # production-сборка (vite build → build/)
 pnpm full-check         # test + lint + build (pre-commit / preversion)
 pnpm analyze            # разбор бандла (source-map-explorer)

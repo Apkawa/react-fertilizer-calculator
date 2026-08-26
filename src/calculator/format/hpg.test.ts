@@ -45,7 +45,7 @@ describe("HPG", () => {
   });
 });
 
-export const EXAMPLE_FILE = `version=Hydroponic Profile Generator 0.213 https://github.com/siv237/HPG
+const EXAMPLE_FILE = `version=Hydroponic Profile Generator 0.213 https://github.com/siv237/HPG
 Comment=По умолчанию
 N=215.991
 NH4=19.65

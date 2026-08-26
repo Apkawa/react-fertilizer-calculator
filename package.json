@@ -47,7 +47,7 @@
   },
   "scripts": {
     "preversion": "pnpm full-check",
-    "full-check": "pnpm test && pnpm lint && pnpm build",
+    "full-check": "pnpm test && pnpm lint && pnpm type && pnpm build",
     "start": "vite",
     "build": "vite build",
     "test": "vitest run",

@@ -1,7 +1,6 @@
 import type { EmotionIcon } from "@emotion-icons/emotion-icon";
 import { useTheme } from "emotion-theming";
-import React from "react";
-import {
+import React, {
   forwardRef,
   type MouseEventHandler,
   type PropsWithChildren,
@@ -29,7 +28,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>((props,
     if (!size && buttonRef && "current" in buttonRef) {
       setSize(buttonRef.current?.offsetWidth || 0);
     }
-  }, [buttonRef, setSize, size]);
+  }, [buttonRef, size]);
   let marginRight = 0;
   if (children) {
     marginRight = 2;

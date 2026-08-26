@@ -1,10 +1,10 @@
-import presets from "@theme-ui/presets";
+import { polaris } from "@theme-ui/presets";
 import type { Theme } from "@/themes/types";
 
 export const defaultTheme: Theme = {
-  ...presets.polaris,
+  ...polaris,
   colors: {
-    ...presets.polaris.colors,
+    ...polaris.colors,
     NO3: "#05AD11",
     NH4: "#FFF",
     P: "#DBC403",
@@ -14,7 +14,7 @@ export const defaultTheme: Theme = {
     S: "#FFF",
     modes: {
       dark: {
-        ...presets.polaris.colors.modes.dark,
+        ...polaris.colors.modes.dark,
         text: "#9d9d9d",
       },
     },
@@ -24,7 +24,7 @@ export const defaultTheme: Theme = {
     p: 2,
   },
   styles: {
-    ...presets.polaris.styles,
+    ...polaris.styles,
     button: {
       color: "background",
     },

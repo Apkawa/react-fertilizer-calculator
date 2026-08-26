@@ -22,6 +22,7 @@ export const AddEditCompositionList: AddEditCompositionListType = (props) => {
       </Flex>
       <Flex flexDirection="column">
         {fields.map((f, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: поля массива redux-form позиционные (имена по индексу) — другого устойчивого id нет
           <Flex key={i} width="100%">
             <Input name={`${f}.formula`} flex={2} placeholder={"NH4NO3"} />
             <Input

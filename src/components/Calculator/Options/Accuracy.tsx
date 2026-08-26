@@ -12,7 +12,7 @@ export const Accuracy: FunctionComponent<AccuracyProps> = () => {
       <Flex flexDirection="column">
         <Heading fontSize={2}>Точность</Heading>
         {ACCURACY_VARIANTS.map((a) => (
-          <Radio name="accuracy" value={a} label={`${a} г.`} normalize={decimal} />
+          <Radio key={a} name="accuracy" value={a} label={`${a} г.`} normalize={decimal} />
         ))}
       </Flex>
     </Card>

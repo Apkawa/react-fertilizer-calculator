@@ -41,6 +41,7 @@ export const AddItemFertilizerEditForm: FunctionComponent<AddItemFertilizerEditF
       <Flex>
         {MACRO_ELEMENT_NAMES.map((el) => (
           <AddItemElementForm
+            key={el}
             disabled={true}
             name={el}
             value={elements?.[el] || 0}

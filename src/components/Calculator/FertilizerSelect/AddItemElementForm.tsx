@@ -28,8 +28,11 @@ export const AddItemElementForm: FunctionComponent<RecipeElementFormProps> = (pr
 
   return (
     <Flex flexDirection="column" justifyContent="center" alignItems="center" width="4rem">
-      <label style={{ textAlign: "center" }}>{name}</label>
+      <label style={{ textAlign: "center" }} htmlFor={"element-" + name}>
+        {name}
+      </label>
       <StyledInput
+        id={"element-" + name}
         type="number"
         step="0.1"
         min="0"

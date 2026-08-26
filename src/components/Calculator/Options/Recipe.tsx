@@ -101,6 +101,7 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
                     {item.name}
                   </Box>
                   <button
+                    type="button"
                     onClick={(event) => {
                       event.stopPropagation();
                       onRemoveItemHandler(item);
@@ -120,7 +121,7 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
         </Flex>
         <Flex justifyContent="space-between">
           {MACRO_ELEMENT_NAMES.map((n) => (
-            <RecipeElementForm name={n} />
+            <RecipeElementForm key={n} name={n} />
           ))}
         </Flex>
         <Flex justifyContent="space-around">
