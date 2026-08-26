@@ -1,9 +1,21 @@
+import { defaultSchema } from "hast-util-sanitize";
 import React, { type FunctionComponent } from "react";
-import ReactMarkdown from "react-markdown/with-html";
+import ReactMarkdown from "react-markdown";
 import { Switch, useParams } from "react-router-dom";
 import { Box, Flex } from "rebass";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
+import remarkGfm from "remark-gfm";
 import { LazyPromise } from "@/components/LazyPromise";
 import { useHelpPageMap } from "@/pages/Help/pages";
+
+// Справка = собственные статичные .md из src/docs: рендерим markdown и сырой HTML
+// (rehype-raw), как раньше (v4 with-html). Sanitize — дефолтная схема + атрибут `style`
+// для span (цвета в chem_table и т.п.), т.к. докам можно доверять.
+const sanitizeSchema = {
+  ...defaultSchema,
+  attributes: { ...(defaultSchema.attributes ?? {}), span: ["style"] },
+};
 
 export const LazyHelpPage: FunctionComponent<{}> = () => {
   const { slug } = useParams<{ slug?: string }>();
@@ -16,13 +28,15 @@ export const LazyHelpPage: FunctionComponent<{}> = () => {
         lazy={page.lazy}
         component={({ result }) => (
           <ReactMarkdown
-            source={result || ""}
-            escapeHtml={false}
-            transformImageUri={(uri) => {
+            remarkPlugins={[remarkGfm]}
+            transformImageUri={(uri: string) => {
               const s = page.slug.split("/")[0];
               return uri.startsWith("http") ? uri : `./docs/${s}/${uri}`;
             }}
-          />
+            rehypePlugins={[rehypeRaw, [rehypeSanitize, sanitizeSchema]]}
+          >
+            {result || ""}
+          </ReactMarkdown>
         )}
       />
     )

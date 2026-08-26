@@ -24,13 +24,14 @@
     "cubic-spline": "^3.0.3",
     "emotion-icons": "^2.11.0",
     "emotion-theming": "^10.0.27",
+    "hast-util-sanitize": "^5.0.2",
     "js-combinatorics": "^1.4.5",
     "lodash.orderby": "^4.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-focus-lock": "^2.5.0",
     "react-helmet": "^6.1.0",
-    "react-markdown": "^4.3.1",
+    "react-markdown": "^8.0.7",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-router-tabs": "^1.3.2",
@@ -39,6 +40,9 @@
     "redux": "4.0.5",
     "redux-form": "^8.3.6",
     "redux-saga": "^1.1.3",
+    "rehype-raw": "^6.1.1",
+    "rehype-sanitize": "^5.0.1",
+    "remark-gfm": "^3.0.1",
     "sortablejs": "^1.12.0",
     "styled-components": "^5.2.0",
     "styled-icons": "^10.19.0",
@@ -62,7 +66,8 @@
     }
   },
   "engines": {
-    "node": ">=24"
+    "node": ">=24",
+    "pnpm": ">=11.22.0"
   },
   "browserslist": {
     "production": [
