@@ -23,6 +23,11 @@ export const HELP_PAGES: HelpPageType[] = [
     lazy: () => import("!!raw-loader!../../docs/how_to_use.md").then(m => m.default)
   },
   {
+    slug: 'newbie-guide',
+    name: 'Гайд для новичка',
+    lazy: () => import("!!raw-loader!../../docs/newbie-guide.md").then(m => m.default)
+  },
+  {
     slug: 'profile',
     name: 'Профиль элементов',
     lazy: () => import("!!raw-loader!../../docs/profile/README.md").then(m => m.default),
