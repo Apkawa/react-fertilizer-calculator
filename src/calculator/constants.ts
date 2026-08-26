@@ -142,7 +142,7 @@ export const IONIC_STRENGTH = {
   Na: 1 / ATOMIC_MASS["Na"],
 };
 
-export const NPKOxides = {
+export const NPKOxides: Record<string, string> = {
   NO3: "NO3",
   NH4: "NH4",
   P: "P2O5",

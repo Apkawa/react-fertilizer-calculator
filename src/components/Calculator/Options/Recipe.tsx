@@ -44,7 +44,7 @@ type RecipeProps = {};
 export const Recipe: FunctionComponent<RecipeProps> = () => {
   const { recipes = [] } = useSelector<any>((state) => state.calculator) as CalculatorState;
 
-  const [values, setValue] = useFormValues(useFormName());
+  const [values, setValue] = useFormValues<{ recipe: Elements }>(useFormName());
   const [selected, setSelected] = useState<RecipeType | undefined>(recipes?.[0]);
 
   const dispatch = useDispatch();

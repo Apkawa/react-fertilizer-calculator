@@ -1,5 +1,5 @@
 import { Input as RebassInput, type InputProps as RebassInputProps } from "@rebass/forms";
-import type React from "react";
+import React from "react";
 import { type FC, useEffect, useRef, useState } from "react";
 import { Flex } from "rebass";
 import styled from "styled-components";

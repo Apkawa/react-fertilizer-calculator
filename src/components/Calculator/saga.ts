@@ -34,7 +34,7 @@ export function* storeCalculateFormSaga() {
   // yield put(calculateStart())
 }
 
-export function* calculateStartSaga() {
+export function* calculateStartSaga(): Generator {
   const formValues: CalculatorFormValues = yield select(
     (state) => state.calculator.calculationForm,
   );

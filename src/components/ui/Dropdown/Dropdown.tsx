@@ -39,7 +39,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
   };
 
   const [opened, setOpened] = useState(false);
-  const [item, setItem] = useState(props.value || null);
+  const [item, setItem] = useState<ItemType<T> | null>(props.value || null);
   const [value, setValue] = useState(renderValue(props.value || null));
   const [editing, setEditing] = useState(false);
   const containerRef = useRef<HTMLDivElement>();

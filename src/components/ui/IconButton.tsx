@@ -1,6 +1,6 @@
 import type { EmotionIcon } from "@emotion-icons/emotion-icon";
 import { useTheme } from "emotion-theming";
-import type React from "react";
+import React from "react";
 import {
   forwardRef,
   type MouseEventHandler,

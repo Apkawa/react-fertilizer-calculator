@@ -6,7 +6,7 @@ import { LazyPromise } from "@/components/LazyPromise";
 import { useHelpPageMap } from "@/pages/Help/pages";
 
 export const LazyHelpPage: FunctionComponent<{}> = () => {
-  const { slug } = useParams();
+  const { slug } = useParams<{ slug?: string }>();
   const pageMap = useHelpPageMap();
   const page = pageMap[slug || ""] || null;
 

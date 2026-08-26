@@ -57,6 +57,7 @@ export const EXAMPLE_STATE: ExportStateType = {
         newSolution: { EC: 2.0, volume: 20 },
         currentSolution: { volume: 15, EC: 1.9, profileEC: 1.9, profileSaltsConcentration: 1.5 },
       },
+      mixerOptions: {},
     },
     result: {
       fertilizers: [
