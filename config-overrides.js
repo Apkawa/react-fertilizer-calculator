@@ -65,6 +65,7 @@ module.exports = {
 
     const workboxConfig = {
       ...defaultGenerateConfig,
+      // FIXME Заккоментировано потому что сборка не работает после перехода на pnpm
       // swDest: path.join(__dirname, 'build', 'pwa-sw.js'),
       // // Важный момент чтобы срабатывал рефреш.
       // skipWaiting: true,
