@@ -45,15 +45,23 @@ Research notes (Stage 2):
 - `pages/NotFound` is unreachable: `Route path="/"` in `Root.tsx` matches any path before the catch-all. Smoke asserts the shell stays alive on unknown URLs instead.
 
 ## Stage 3 — Component smoke tests (co-located)
-- [ ] `src/test-utils/render.tsx` — app wrapper (Provider(store) > ThemeProvider(defaultTheme) > MemoryRouter) + `renderApp`
-- [ ] RED→GREEN pages: `src/pages/{Calculator,Help,ChemFormula,DensityCalculator,Example,NotFound}/*.smoke.test.tsx`
-- [ ] RED→GREEN calculator: `src/components/Calculator/{Calculator,Options,Result,FertilizerSelect,FertilizerManager}.smoke.test.tsx`
-- [ ] RED→GREEN ui: TabMenu, Modal, Dropdown, Sidebar, IconButton, Number, ReduxForm×3, ImportCSV, ForkMeOnGitHub
-- [ ] RED→GREEN misc: ColorModeToggle, LazyPromise
-- [ ] `pnpm test` green (all smokes), `pnpm type` green, `pnpm lint` green
+- [x] `src/test-utils/render.tsx` — app wrapper (Provider(store) > ThemeProvider(defaultTheme) > MemoryRouter) + `renderApp`
+- [x] `src/test-utils/form.tsx` — `createFormWrapper` (component decorated with `reduxForm()` + inner `<Form>`), see notes below
+- [x] RED→GREEN pages: `src/pages/{Calculator,Help,ChemFormula,DensityCalculator,Example,NotFound}/*.smoke.test.tsx`
+- [x] RED→GREEN calculator: `src/components/Calculator/{Calculator,Options,Result,FertilizerSelect,FertilizerManager}.smoke.test.tsx`
+- [x] RED→GREEN ui: TabMenu, Modal, Dropdown, Sidebar, IconButton, Number, ReduxForm×3, ImportCSV, ForkMeOnGitHub
+- [x] RED→GREEN misc: ColorModeToggle, LazyPromise
+- [x] `pnpm test` green (all smokes), `pnpm type` green, `pnpm lint` green
 
 **Criterion:** every component in the spec set has a co-located `*.smoke.test.tsx` that renders without exceptions; vitest/type/lint all green.
-**Commit:** 
+**Commit:** `test(components): add co-located component smoke tests`
+
+Research notes (Stage 3):
+- redux-form v8 `Form` (and Field/FieldArray) read `_reduxForm` from `ReduxFormContext`, which is provided only by a component decorated with `reduxForm()`; and the form is registered in the store (`initialize`) in `componentWillMount` **only when `initialValues` is given**. Both facts are why the wrapper (`src/test-utils/form.tsx`) is a `reduxForm({ form, initialValues: {} })`-decorated component — the same structure the real app uses (`CalculatorContainer`).
+- `Result` destructures `getFormValues(REDUX_FORM_NAME)` on first render, so its smoke must use the real form name `calculatorOptions`.
+- `TabMenu` in jsdom (1024px) renders only the hamburger: the sidebar docks only at width > 1650px, so the nav links are inside the closed overlay.
+- `Modal`/`Sidebar` render into portals (`#modal-root` / `#sidebar-root`) — assertions go to `document.body`.
+- Store is a module singleton; vitest isolates modules per test file, so each smoke file gets a clean store and jsdom (fresh `localStorage`).
 
 ## Stage 4 — Docs + final check
 - [ ] AGENTS.md Commands: add `pnpm test:e2e` / `pnpm test:smoke` notes
