@@ -54,6 +54,8 @@
     "start": "vite",
     "build": "vite build",
     "test": "vitest run",
+    "test:e2e": "playwright test tests/e2e",
+    "test:smoke": "playwright test tests/smoke",
     "lint": "biome check src",
     "type": "tsc --build",
     "analyze": "pnpm build && source-map-explorer 'build/assets/*.js'",
@@ -82,6 +84,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.10",
+    "@playwright/test": "^1.62.1",
     "@testing-library/jest-dom": "7.0.1",
     "@testing-library/react": "12.1.5",
     "@testing-library/user-event": "^7.1.2",

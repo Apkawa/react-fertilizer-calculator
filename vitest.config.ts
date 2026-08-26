@@ -11,6 +11,8 @@ export default mergeConfig(
       globals: true,
       environment: "jsdom",
       setupFiles: ["./src/setupTests.ts"],
+      // tests/ — Playwright (browser) тесты, не часть vitest-сьюта.
+      exclude: ["**/node_modules/**", "**/dist/**", "tests/**"],
     },
   }),
 );

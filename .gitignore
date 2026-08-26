@@ -27,6 +27,10 @@ yarn-error.log*
 
 # browser session artifacts (playwright-cli smoke checks)
 .playwright-cli/
+
+# playwright test artifacts
+/test-results/
+/playwright-report/
 .pnpm-cache/
 .cache/
 tsconfig.tsbuildinfo

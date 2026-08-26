@@ -19,16 +19,16 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `docs(tests): e2e-smoke-tests spec, research and plan`
 
 ## Stage 1 — Playwright scaffold + smoke tests (`tests/smoke/`)
-- [ ] `pnpm add -D @playwright/test`; verify chromium available (cache or `playwright install chromium`)
-- [ ] `playwright.config.ts` (root): testDir `./tests`, chromium project, baseURL :3000, webServer `pnpm start` (timeout 120s, reuseExistingServer)
-- [ ] `vitest.config.ts`: exclude `tests/**` from vitest
-- [ ] package.json scripts: `test:e2e`, `test:smoke`
-- [ ] RED: `tests/smoke/routes.test.ts` — per-route markers + zero console.error/pageerror
-- [ ] GREEN: run `pnpm test:smoke` → all pass
-- [ ] Sanity: `pnpm test` (vitest) does NOT pick up `tests/`
+- [x] `pnpm add -D @playwright/test`; verify chromium available (cache or `playwright install chromium`)
+- [x] `playwright.config.ts` (root): testDir `./tests`, chromium project, baseURL :3000, webServer `pnpm start` (timeout 120s, reuseExistingServer)
+- [x] `vitest.config.ts`: exclude `tests/**` from vitest
+- [x] package.json scripts: `test:e2e`, `test:smoke`
+- [x] RED: `tests/smoke/routes.test.ts` — per-route markers + zero console.error/pageerror
+- [x] GREEN: run `pnpm test:smoke` → all pass
+- [x] Sanity: `pnpm test` (vitest) does NOT pick up `tests/`
 
 **Criterion:** `pnpm test:smoke` green against `pnpm start`; vitest suite unchanged.
-**Commit:** 
+**Commit:** `test: add playwright config and route smoke tests`
 
 ## Stage 2 — E2E tests (`tests/e2e/`)
 - [ ] RED: `tests/e2e/calculator.test.ts` — load `/#/`, click `Calculate`, assert result list shows a default fertilizer id
