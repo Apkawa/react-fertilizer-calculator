@@ -1,14 +1,11 @@
 import { expect, test } from "@playwright/test";
+import { trackConsoleErrors } from "../helpers";
 
 // Smoke: каждый главный маршрут грузится без ошибок консоли/страницы
 // и показывает характерный маркер страницы. Поведение не проверяем —
 // только «маршрут жив».
 //
 // Маршруты — HashRouter (/#/…), как в реальном приложении.
-
-// Dev-предупреждения React 16 про legacy lifecycles — их шлют redux-form
-// (Form/Field/FieldArray) на странице калькулятора. Шум либы, не ошибки приложения.
-const isKnownDevWarning = (text: string) => text.startsWith("Warning: Using UNSAFE_");
 
 type RouteCase = {
   name: string;
@@ -31,20 +28,20 @@ const routes: RouteCase[] = [
   // NotFound (pages/NotFound) на самом деле недостижим: Route path="/" в Root.tsx
   // матчит любой путь раньше catch-all. Известная особенность приложения — smoke здесь
   // проверяет, что неизвестный URL не роняет shell.
-  { name: "not found (unreachable page, shell alive)", url: "/#/definitely-not-a-page", marker: /Fork me on GitHub/ },
+  {
+    name: "not found (unreachable page, shell alive)",
+    url: "/#/definitely-not-a-page",
+    marker: /Fork me on GitHub/,
+  },
 ];
 
 for (const route of routes) {
   test(`smoke: ${route.name}`, async ({ page }) => {
-    const errors: string[] = [];
-    page.on("console", (m) => {
-      if (m.type() === "error" && !isKnownDevWarning(m.text())) errors.push(m.text());
-    });
-    page.on("pageerror", (e) => errors.push(String(e)));
+    const errors = trackConsoleErrors(page);
 
     await page.goto(route.url);
     await expect(page.getByText(route.marker).first()).toBeVisible();
 
-    expect(errors, `console/page errors: ${errors.join("\n")}`).toEqual([]);
+    expect(errors(), `console/page errors: ${errors().join("\n")}`).toEqual([]);
   });
 }

@@ -31,13 +31,18 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `test: add playwright config and route smoke tests`
 
 ## Stage 2 — E2E tests (`tests/e2e/`)
-- [ ] RED: `tests/e2e/calculator.test.ts` — load `/#/`, click `Calculate`, assert result list shows a default fertilizer id
-- [ ] RED: `tests/e2e/navigation.test.ts` — sidebar links → each page marker
-- [ ] RED: `tests/e2e/persistence.test.ts` — calculate → reload → result preserved (localStorage)
-- [ ] GREEN: `pnpm test:e2e` all pass; console-error guards in every file
+- [x] RED: `tests/e2e/calculator.test.ts` — load `/#/`, click `Calculate`, assert result list shows a default fertilizer id
+- [x] RED: `tests/e2e/navigation.test.ts` — sidebar links → each page marker
+- [x] RED: `tests/e2e/persistence.test.ts` — calculate → reload → result preserved (localStorage)
+- [x] GREEN: `pnpm test:e2e` all pass; console-error guards in every file
 
 **Criterion:** `pnpm test:e2e` green; three scenario files under `tests/e2e/`.
-**Commit:** 
+**Commit:** `test(e2e): add playwright e2e scenarios (calculator, navigation, persistence)`
+
+Research notes (Stage 2):
+- Console guard filters known React 16 dev warnings (dev-only noise, documented in `tests/helpers.ts`): redux-form legacy lifecycles (`UNSAFE_`), DropdownList `key={String(item)}` duplicate keys, unkeyed Fragment in `RenderHelpPages`. These are real (minor) app defects — candidates for the upcoming refactor.
+- Sidebar at width < 1650px is a closed overlay (hamburger), not docked; clicking any link bubbles to the overlay and closes the sidebar — nav test reopens it before each step.
+- `pages/NotFound` is unreachable: `Route path="/"` in `Root.tsx` matches any path before the catch-all. Smoke asserts the shell stays alive on unknown URLs instead.
 
 ## Stage 3 — Component smoke tests (co-located)
 - [ ] `src/test-utils/render.tsx` — app wrapper (Provider(store) > ThemeProvider(defaultTheme) > MemoryRouter) + `renderApp`
