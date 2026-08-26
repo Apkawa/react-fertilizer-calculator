@@ -16,6 +16,8 @@
 pnpm install            # install dependencies
 pnpm start              # dev server (vite, http://localhost:3000)
 pnpm test               # vitest run (jsdom, setupFiles src/setupTests.ts)
+pnpm test:smoke         # playwright: route smoke tests (tests/smoke/)
+pnpm test:e2e           # playwright: e2e scenarios (tests/e2e/)
 pnpm lint               # biome check src
 pnpm type               # TypeScript check
 pnpm build              # production build (vite build → build/)
@@ -25,6 +27,7 @@ node server.js          # serve build/ static files on :9005
 ```
 
 - The husky pre-commit hook runs `pnpm full-check`; commits only pass after the full cycle succeeds.
+- The playwright suites (`test:smoke` / `test:e2e`) are NOT part of `full-check` or CI: they spin up the dev server (`webServer` in `playwright.config.ts`) and run in a real chromium, so they are run locally / manually when UI behavior matters. Co-located `*.smoke.test.tsx` files (render-smoke of components in jsdom) ARE part of `pnpm test`.
 - Versioning: `npm version patch|minor` (preversion = full-check).
 - Caches are kept inside the project directory, not globally: for pnpm the env var `pnpm_config_store_dir=./.pnpm-cache/v11` is set.
 

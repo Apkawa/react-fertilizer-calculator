@@ -64,10 +64,10 @@ Research notes (Stage 3):
 - Store is a module singleton; vitest isolates modules per test file, so each smoke file gets a clean store and jsdom (fresh `localStorage`).
 
 ## Stage 4 — Docs + final check
-- [ ] AGENTS.md Commands: add `pnpm test:e2e` / `pnpm test:smoke` notes
-- [ ] `pnpm full-check` green end-to-end
-- [ ] `pnpm test:e2e` + `pnpm test:smoke` final green run
-- [ ] Mark plan stages `[x]`, commit
+- [x] AGENTS.md Commands: add `pnpm test:e2e` / `pnpm test:smoke` notes
+- [x] `pnpm full-check` green end-to-end
+- [x] `pnpm test:e2e` + `pnpm test:smoke` final green run (e2e 3/3, smoke 7/7)
+- [x] Mark plan stages `[x]`, commit
 
 **Criterion:** full-check + both playwright suites green on a clean run.
-**Commit:** 
+**Commit:** `docs: document playwright test scripts`
