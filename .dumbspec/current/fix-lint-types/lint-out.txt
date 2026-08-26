@@ -1,0 +1,4568 @@
+src/calculator/constants.ts:133:25 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    132 │ export const IONIC_STRENGTH = {
+  > 133 │   NO3: -1 / ATOMIC_MASS["N"],
+        │                         ^^^
+    134 │   NH4: 1 / ATOMIC_MASS["N"],
+    135 │   P: -1 / ATOMIC_MASS["P"],
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    131 131 │   
+    132 132 │   export const IONIC_STRENGTH = {
+    133     │ - ··NO3:·-1·/·ATOMIC_MASS["N"],
+        133 │ + ··NO3:·-1·/·ATOMIC_MASS.N,
+    134 134 │     NH4: 1 / ATOMIC_MASS["N"],
+    135 135 │     P: -1 / ATOMIC_MASS["P"],
+  
+
+src/calculator/constants.ts:134:24 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    132 │ export const IONIC_STRENGTH = {
+    133 │   NO3: -1 / ATOMIC_MASS["N"],
+  > 134 │   NH4: 1 / ATOMIC_MASS["N"],
+        │                        ^^^
+    135 │   P: -1 / ATOMIC_MASS["P"],
+    136 │   K: 1 / ATOMIC_MASS["K"],
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    132 132 │   export const IONIC_STRENGTH = {
+    133 133 │     NO3: -1 / ATOMIC_MASS["N"],
+    134     │ - ··NH4:·1·/·ATOMIC_MASS["N"],
+        134 │ + ··NH4:·1·/·ATOMIC_MASS.N,
+    135 135 │     P: -1 / ATOMIC_MASS["P"],
+    136 136 │     K: 1 / ATOMIC_MASS["K"],
+  
+
+src/calculator/constants.ts:135:23 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    133 │   NO3: -1 / ATOMIC_MASS["N"],
+    134 │   NH4: 1 / ATOMIC_MASS["N"],
+  > 135 │   P: -1 / ATOMIC_MASS["P"],
+        │                       ^^^
+    136 │   K: 1 / ATOMIC_MASS["K"],
+    137 │   Ca: 2 / ATOMIC_MASS["Ca"],
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    133 133 │     NO3: -1 / ATOMIC_MASS["N"],
+    134 134 │     NH4: 1 / ATOMIC_MASS["N"],
+    135     │ - ··P:·-1·/·ATOMIC_MASS["P"],
+        135 │ + ··P:·-1·/·ATOMIC_MASS.P,
+    136 136 │     K: 1 / ATOMIC_MASS["K"],
+    137 137 │     Ca: 2 / ATOMIC_MASS["Ca"],
+  
+
+src/calculator/constants.ts:136:22 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    134 │   NH4: 1 / ATOMIC_MASS["N"],
+    135 │   P: -1 / ATOMIC_MASS["P"],
+  > 136 │   K: 1 / ATOMIC_MASS["K"],
+        │                      ^^^
+    137 │   Ca: 2 / ATOMIC_MASS["Ca"],
+    138 │   Mg: 2 / ATOMIC_MASS["Mg"],
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    134 134 │     NH4: 1 / ATOMIC_MASS["N"],
+    135 135 │     P: -1 / ATOMIC_MASS["P"],
+    136     │ - ··K:·1·/·ATOMIC_MASS["K"],
+        136 │ + ··K:·1·/·ATOMIC_MASS.K,
+    137 137 │     Ca: 2 / ATOMIC_MASS["Ca"],
+    138 138 │     Mg: 2 / ATOMIC_MASS["Mg"],
+  
+
+src/calculator/constants.ts:137:23 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    135 │   P: -1 / ATOMIC_MASS["P"],
+    136 │   K: 1 / ATOMIC_MASS["K"],
+  > 137 │   Ca: 2 / ATOMIC_MASS["Ca"],
+        │                       ^^^^
+    138 │   Mg: 2 / ATOMIC_MASS["Mg"],
+    139 │   S: -2 / ATOMIC_MASS["S"],
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    135 135 │     P: -1 / ATOMIC_MASS["P"],
+    136 136 │     K: 1 / ATOMIC_MASS["K"],
+    137     │ - ··Ca:·2·/·ATOMIC_MASS["Ca"],
+        137 │ + ··Ca:·2·/·ATOMIC_MASS.Ca,
+    138 138 │     Mg: 2 / ATOMIC_MASS["Mg"],
+    139 139 │     S: -2 / ATOMIC_MASS["S"],
+  
+
+src/calculator/constants.ts:138:23 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    136 │   K: 1 / ATOMIC_MASS["K"],
+    137 │   Ca: 2 / ATOMIC_MASS["Ca"],
+  > 138 │   Mg: 2 / ATOMIC_MASS["Mg"],
+        │                       ^^^^
+    139 │   S: -2 / ATOMIC_MASS["S"],
+    140 │   // TODO use for balance without recipe
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    136 136 │     K: 1 / ATOMIC_MASS["K"],
+    137 137 │     Ca: 2 / ATOMIC_MASS["Ca"],
+    138     │ - ··Mg:·2·/·ATOMIC_MASS["Mg"],
+        138 │ + ··Mg:·2·/·ATOMIC_MASS.Mg,
+    139 139 │     S: -2 / ATOMIC_MASS["S"],
+    140 140 │     // TODO use for balance without recipe
+  
+
+src/calculator/constants.ts:139:23 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    137 │   Ca: 2 / ATOMIC_MASS["Ca"],
+    138 │   Mg: 2 / ATOMIC_MASS["Mg"],
+  > 139 │   S: -2 / ATOMIC_MASS["S"],
+        │                       ^^^
+    140 │   // TODO use for balance without recipe
+    141 │   Cl: -1 / ATOMIC_MASS["Cl"],
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    137 137 │     Ca: 2 / ATOMIC_MASS["Ca"],
+    138 138 │     Mg: 2 / ATOMIC_MASS["Mg"],
+    139     │ - ··S:·-2·/·ATOMIC_MASS["S"],
+        139 │ + ··S:·-2·/·ATOMIC_MASS.S,
+    140 140 │     // TODO use for balance without recipe
+    141 141 │     Cl: -1 / ATOMIC_MASS["Cl"],
+  
+
+src/calculator/constants.ts:141:24 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    139 │   S: -2 / ATOMIC_MASS["S"],
+    140 │   // TODO use for balance without recipe
+  > 141 │   Cl: -1 / ATOMIC_MASS["Cl"],
+        │                        ^^^^
+    142 │   Na: 1 / ATOMIC_MASS["Na"],
+    143 │ };
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    139 139 │     S: -2 / ATOMIC_MASS["S"],
+    140 140 │     // TODO use for balance without recipe
+    141     │ - ··Cl:·-1·/·ATOMIC_MASS["Cl"],
+        141 │ + ··Cl:·-1·/·ATOMIC_MASS.Cl,
+    142 142 │     Na: 1 / ATOMIC_MASS["Na"],
+    143 143 │   };
+  
+
+src/calculator/constants.ts:142:23 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    140 │   // TODO use for balance without recipe
+    141 │   Cl: -1 / ATOMIC_MASS["Cl"],
+  > 142 │   Na: 1 / ATOMIC_MASS["Na"],
+        │                       ^^^^
+    143 │ };
+    144 │ 
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    140 140 │     // TODO use for balance without recipe
+    141 141 │     Cl: -1 / ATOMIC_MASS["Cl"],
+    142     │ - ··Na:·1·/·ATOMIC_MASS["Na"],
+        142 │ + ··Na:·1·/·ATOMIC_MASS.Na,
+    143 143 │   };
+    144 144 │   
+  
+
+src/calculator/format/hpg.ts:45:39 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    43 │     if (parsed.chkComplex === "TRUE") {
+    44 │       const fInfo: FertilizerInfo = buildNPKFertilizer("Микро", microNPK);
+  > 45 │       fInfo.solution_density = parsed["gmlCmplx"];
+       │                                       ^^^^^^^^^^
+    46 │       fInfo.solution_concentration = parsed["glCmplx"];
+    47 │       const pump_number = parseFloat(parsed[`mCmplx`].match(/\d+/));
+  
+  i Unsafe fix: Use a literal key instead.
+  
+     43  43 │       if (parsed.chkComplex === "TRUE") {
+     44  44 │         const fInfo: FertilizerInfo = buildNPKFertilizer("Микро", microNPK);
+     45     │ - ······fInfo.solution_density·=·parsed["gmlCmplx"];
+         45 │ + ······fInfo.solution_density·=·parsed.gmlCmplx;
+     46  46 │         fInfo.solution_concentration = parsed["glCmplx"];
+     47  47 │         const pump_number = parseFloat(parsed[`mCmplx`].match(/\d+/));
+  
+
+src/calculator/format/hpg.ts:46:45 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    44 │       const fInfo: FertilizerInfo = buildNPKFertilizer("Микро", microNPK);
+    45 │       fInfo.solution_density = parsed["gmlCmplx"];
+  > 46 │       fInfo.solution_concentration = parsed["glCmplx"];
+       │                                             ^^^^^^^^^
+    47 │       const pump_number = parseFloat(parsed[`mCmplx`].match(/\d+/));
+    48 │       if (pump_number) {
+  
+  i Unsafe fix: Use a literal key instead.
+  
+     44  44 │         const fInfo: FertilizerInfo = buildNPKFertilizer("Микро", microNPK);
+     45  45 │         fInfo.solution_density = parsed["gmlCmplx"];
+     46     │ - ······fInfo.solution_concentration·=·parsed["glCmplx"];
+         46 │ + ······fInfo.solution_concentration·=·parsed.glCmplx;
+     47  47 │         const pump_number = parseFloat(parsed[`mCmplx`].match(/\d+/));
+     48  48 │         if (pump_number) {
+  
+
+src/calculator/format/hpg.ts:47:45 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    45 │       fInfo.solution_density = parsed["gmlCmplx"];
+    46 │       fInfo.solution_concentration = parsed["glCmplx"];
+  > 47 │       const pump_number = parseFloat(parsed[`mCmplx`].match(/\d+/));
+       │                                             ^^^^^^^^
+    48 │       if (pump_number) {
+    49 │         fInfo.pump_number = pump_number;
+  
+  i Unsafe fix: Use a literal key instead.
+  
+     45  45 │         fInfo.solution_density = parsed["gmlCmplx"];
+     46  46 │         fInfo.solution_concentration = parsed["glCmplx"];
+     47     │ - ······const·pump_number·=·parseFloat(parsed[`mCmplx`].match(/\d+/));
+         47 │ + ······const·pump_number·=·parseFloat(parsed.mCmplx.match(/\d+/));
+     48  48 │         if (pump_number) {
+     49  49 │           fInfo.pump_number = pump_number;
+  
+
+src/calculator/format/hpg.ts:160:11 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    158 │       }
+    159 │     }
+  > 160 │     if (p["N"] && !elements.NO3) {
+        │           ^^^
+    161 │       elements.NO3 = p["N"];
+    162 │     }
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    158 158 │         }
+    159 159 │       }
+    160     │ - ····if·(p["N"]·&&·!elements.NO3)·{
+        160 │ + ····if·(p.N·&&·!elements.NO3)·{
+    161 161 │         elements.NO3 = p["N"];
+    162 162 │       }
+  
+
+src/calculator/format/hpg.ts:161:24 lint/complexity/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The computed expression can be simplified without the use of a string literal.
+  
+    159 │     }
+    160 │     if (p["N"] && !elements.NO3) {
+  > 161 │       elements.NO3 = p["N"];
+        │                        ^^^
+    162 │     }
+    163 │     return elements;
+  
+  i Unsafe fix: Use a literal key instead.
+  
+    159 159 │       }
+    160 160 │       if (p["N"] && !elements.NO3) {
+    161     │ - ······elements.NO3·=·p["N"];
+        161 │ + ······elements.NO3·=·p.N;
+    162 162 │       }
+    163 163 │       return elements;
+  
+
+src/components/Calculator/FertilizerManager/AddItemElementForm.tsx:23:15 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    21 │       <label style={{ textAlign: "center" }}>{displayName}</label>
+    22 │       <Input
+  > 23 │         name={"npk." + name}
+       │               ^^^^^^^^^^^^^
+    24 │         type="number"
+    25 │         min="0"
+  
+  i Unsafe fix: Use a template literal.
+  
+    21 21 │         <label style={{ textAlign: "center" }}>{displayName}</label>
+    22 22 │         <Input
+    23    │ - ········name={"npk."·+·name}
+       23 │ + ········name={`npk.${name}`}
+    24 24 │           type="number"
+    25 25 │           min="0"
+  
+
+src/components/Calculator/FertilizerManager/Item.tsx:35:5 lint/complexity/noUselessFragments  FIXABLE  ━━━━━━━━━━
+
+  i This fragment is unnecessary.
+  
+    33 │   };
+    34 │   return (
+  > 35 │     <>
+       │     ^^
+  > 36 │       <Card width={"auto"} marginBottom={2}>
+        ...
+  > 90 │       </Card>
+  > 91 │     </>
+       │     ^^^
+    92 │   );
+    93 │ }
+  
+  i A fragment is redundant if it contains only one child, or if it is the child of a html element, and is not a keyed fragment.
+  
+  i Unsafe fix: Remove the Fragment
+  
+    33 33 │     };
+    34 34 │     return (
+    35    │ - ····<>
+    36    │ - ······<Card·width={"auto"}·marginBottom={2}>
+       35 │ + ····<Card·width={"auto"}·marginBottom={2}>
+    37 36 │           <Flex justifyContent={"space-between"} alignItems="center">
+    38 37 │             <Box flex={1}>
+    ····· │ 
+    88 87 │             </Flex>
+    89 88 │           </Flex>
+    90    │ - ······</Card>
+    91    │ - ····</>
+       89 │ + ······</Card>
+    92 90 │     );
+    93 91 │   }
+  
+
+src/components/Calculator/ImportExport/ExportFertilizers.tsx:28:5 lint/complexity/noUselessFragments  FIXABLE  ━━━━━━━━━━
+
+  i This fragment is unnecessary.
+  
+    26 │   };
+    27 │   return (
+  > 28 │     <>
+       │     ^^
+  > 29 │       <IconButton onClick={doExport} component={Export} />
+  > 30 │     </>
+       │     ^^^
+    31 │   );
+    32 │ }
+  
+  i A fragment is redundant if it contains only one child, or if it is the child of a html element, and is not a keyed fragment.
+  
+  i Unsafe fix: Remove the Fragment
+  
+    26 26 │     };
+    27 27 │     return (
+    28    │ - ····<>
+    29    │ - ······<IconButton·onClick={doExport}·component={Export}·/>
+    30    │ - ····</>
+       28 │ + ····<IconButton·onClick={doExport}·component={Export}·/>
+    31 29 │     );
+    32 30 │   }
+  
+
+src/components/Calculator/ImportExport/ExportRecipes.tsx:26:5 lint/complexity/noUselessFragments  FIXABLE  ━━━━━━━━━━
+
+  i This fragment is unnecessary.
+  
+    24 │   };
+    25 │   return (
+  > 26 │     <>
+       │     ^^
+  > 27 │       <IconButton onClick={doExport} component={Export} />
+  > 28 │     </>
+       │     ^^^
+    29 │   );
+    30 │ }
+  
+  i A fragment is redundant if it contains only one child, or if it is the child of a html element, and is not a keyed fragment.
+  
+  i Unsafe fix: Remove the Fragment
+  
+    24 24 │     };
+    25 25 │     return (
+    26    │ - ····<>
+    27    │ - ······<IconButton·onClick={doExport}·component={Export}·/>
+    28    │ - ····</>
+       26 │ + ····<IconButton·onClick={doExport}·component={Export}·/>
+    29 27 │     );
+    30 28 │   }
+  
+
+src/components/Calculator/ImportExport/ExportState.tsx:34:5 lint/complexity/noUselessFragments  FIXABLE  ━━━━━━━━━━
+
+  i This fragment is unnecessary.
+  
+    32 │   };
+    33 │   return (
+  > 34 │     <>
+       │     ^^
+  > 35 │       <IconButton onClick={doExport} component={Export} title={"Экспорт настроек"} />
+  > 36 │     </>
+       │     ^^^
+    37 │   );
+    38 │ }
+  
+  i A fragment is redundant if it contains only one child, or if it is the child of a html element, and is not a keyed fragment.
+  
+  i Unsafe fix: Remove the Fragment
+  
+    32 32 │     };
+    33 33 │     return (
+    34    │ - ····<>
+    35    │ - ······<IconButton·onClick={doExport}·component={Export}·title={"Экспорт·настроек"}·/>
+    36    │ - ····</>
+       34 │ + ····<IconButton·onClick={doExport}·component={Export}·title={"Экспорт·настроек"}·/>
+    37 35 │     );
+    38 36 │   }
+  
+
+src/components/Calculator/ImportExport/ImportFertilizers.tsx:30:15 lint/correctness/useParseIntRadix  FIXABLE  ━━━━━━━━━━
+
+  i Missing radix parameter
+  
+    28 │   const loadCSV = (csv: string) => {
+    29 │     const p = csvParse(csv, { columns: COLUMNS });
+  > 30 │     if (isNaN(parseInt(p[0].P))) {
+       │               ^^^^^^^^^^^^^^^^
+    31 │       p.splice(0, 1);
+    32 │     }
+  
+  i Add a non-fractional number between 2 and 36
+  
+  i Unsafe fix: Add a radix of 10
+  
+    30 │ ····if·(isNaN(parseInt(p[0].P,·10)))·{
+       │                              ++++     
+
+src/components/Calculator/ImportExport/ImportFertilizers.tsx:53:5 lint/complexity/noUselessFragments  FIXABLE  ━━━━━━━━━━
+
+  i This fragment is unnecessary.
+  
+    51 │   };
+    52 │   return (
+  > 53 │     <>
+       │     ^^
+  > 54 │       <IconButton
+        ...
+  > 73 │       </IconButton>
+  > 74 │     </>
+       │     ^^^
+    75 │   );
+    76 │ }
+  
+  i A fragment is redundant if it contains only one child, or if it is the child of a html element, and is not a keyed fragment.
+  
+  i Unsafe fix: Remove the Fragment
+  
+    51 51 │     };
+    52 52 │     return (
+    53    │ - ····<>
+    54    │ - ······<IconButton
+       53 │ + ····<IconButton
+    55 54 │           sx={{
+    56 55 │             position: "relative",
+    ····· │ 
+    71 70 │             }}
+    72 71 │           />
+    73    │ - ······</IconButton>
+    74    │ - ····</>
+       72 │ + ······</IconButton>
+    75 73 │     );
+    76 74 │   }
+  
+
+src/components/Calculator/ImportExport/ImportRecipes.tsx:29:15 lint/correctness/useParseIntRadix  FIXABLE  ━━━━━━━━━━
+
+  i Missing radix parameter
+  
+    27 │   const loadCSV = (csv: string) => {
+    28 │     const p = csvParse(csv, { columns: COLUMNS });
+  > 29 │     if (isNaN(parseInt(p[0].P))) {
+       │               ^^^^^^^^^^^^^^^^
+    30 │       p.splice(0, 1);
+    31 │     }
+  
+  i Add a non-fractional number between 2 and 36
+  
+  i Unsafe fix: Add a radix of 10
+  
+    29 │ ····if·(isNaN(parseInt(p[0].P,·10)))·{
+       │                              ++++     
+
+src/components/Calculator/ImportExport/ImportRecipes.tsx:51:5 lint/complexity/noUselessFragments  FIXABLE  ━━━━━━━━━━
+
+  i This fragment is unnecessary.
+  
+    49 │   };
+    50 │   return (
+  > 51 │     <>
+       │     ^^
+  > 52 │       <IconButton
+        ...
+  > 71 │       </IconButton>
+  > 72 │     </>
+       │     ^^^
+    73 │   );
+    74 │ }
+  
+  i A fragment is redundant if it contains only one child, or if it is the child of a html element, and is not a keyed fragment.
+  
+  i Unsafe fix: Remove the Fragment
+  
+    49 49 │     };
+    50 50 │     return (
+    51    │ - ····<>
+    52    │ - ······<IconButton
+       51 │ + ····<IconButton
+    53 52 │           sx={{
+    54 53 │             position: "relative",
+    ····· │ 
+    69 68 │             }}
+    70 69 │           />
+    71    │ - ······</IconButton>
+    72    │ - ····</>
+       70 │ + ······</IconButton>
+    73 71 │     );
+    74 72 │   }
+  
+
+src/components/Calculator/ImportExport/ImportState.tsx:25:17 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    24 │   const loadData = (file: File, data: string) => {
+  > 25 │     const ext = "." + file.name.split(".").pop();
+       │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    26 │     if (FORMATS_MAP[ext]) {
+    27 │       const f = new FORMATS_MAP[ext]();
+  
+  i Unsafe fix: Use a template literal.
+  
+    23 23 │   
+    24 24 │     const loadData = (file: File, data: string) => {
+    25    │ - ····const·ext·=·"."·+·file.name.split(".").pop();
+       25 │ + ····const·ext·=·`.${file.name.split(".").pop()}`;
+    26 26 │       if (FORMATS_MAP[ext]) {
+    27 27 │         const f = new FORMATS_MAP[ext]();
+  
+
+src/components/Calculator/ImportExport/ImportState.tsx:47:5 lint/complexity/noUselessFragments  FIXABLE  ━━━━━━━━━━
+
+  i This fragment is unnecessary.
+  
+    45 │   };
+    46 │   return (
+  > 47 │     <>
+       │     ^^
+  > 48 │       <IconButton
+        ...
+  > 68 │       </IconButton>
+  > 69 │     </>
+       │     ^^^
+    70 │   );
+    71 │ }
+  
+  i A fragment is redundant if it contains only one child, or if it is the child of a html element, and is not a keyed fragment.
+  
+  i Unsafe fix: Remove the Fragment
+  
+    45 45 │     };
+    46 46 │     return (
+    47    │ - ····<>
+    48    │ - ······<IconButton
+       47 │ + ····<IconButton
+    49 48 │           sx={{
+    50 49 │             position: "relative",
+    ····· │ 
+    66 65 │             title={"Импорт настроек"}
+    67 66 │           />
+    68    │ - ······</IconButton>
+    69    │ - ····</>
+       67 │ + ······</IconButton>
+    70 68 │     );
+    71 69 │   }
+  
+
+src/components/Calculator/Result/ResultDilution.tsx:52:5 lint/complexity/noUselessFragments  FIXABLE  ━━━━━━━━━━
+
+  i This fragment is unnecessary.
+  
+    51 │   return (
+  > 52 │     <>
+       │     ^^
+  > 53 │       <Flex flexDirection="column" width="75%">
+        ...
+  > 66 │       </Flex>
+  > 67 │     </>
+       │     ^^^
+    68 │   );
+    69 │ }
+  
+  i A fragment is redundant if it contains only one child, or if it is the child of a html element, and is not a keyed fragment.
+  
+  i Unsafe fix: Remove the Fragment
+  
+    50 50 │   
+    51 51 │     return (
+    52    │ - ····<>
+    53    │ - ······<Flex·flexDirection="column"·width="75%">
+       52 │ + ····<Flex·flexDirection="column"·width="75%">
+    54 53 │           <Heading fontSize={2}>Разбавление</Heading>
+    55 54 │           <ul>
+    ····· │ 
+    64 63 │             </li>
+    65 64 │           </ul>
+    66    │ - ······</Flex>
+    67    │ - ····</>
+       65 │ + ······</Flex>
+    68 66 │     );
+    69 67 │   }
+  
+
+src/components/ui/Dropdown/Dropdown.tsx:38:12 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    36 │       return props.renderValue(item);
+    37 │     }
+  > 38 │     return (item || "") + "";
+       │            ^^^^^^^^^^^^^^^^^
+    39 │   };
+    40 │ 
+  
+  i Unsafe fix: Use a template literal.
+  
+     36  36 │         return props.renderValue(item);
+     37  37 │       }
+     38     │ - ····return·(item·||·"")·+·"";
+         38 │ + ····return·`${item·||·""}`;
+     39  39 │     };
+     40  40 │   
+  
+
+src/components/ui/Dropdown/DropdownItem.tsx:59:12 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    57 │       return <ctx.renderItem item={value} index={index} />;
+    58 │     }
+  > 59 │     return value + "";
+       │            ^^^^^^^^^^
+    60 │   };
+    61 │ 
+  
+  i Unsafe fix: Use a template literal.
+  
+    57 57 │         return <ctx.renderItem item={value} index={index} />;
+    58 58 │       }
+    59    │ - ····return·value·+·"";
+       59 │ + ····return·`${value}`;
+    60 60 │     };
+    61 61 │   
+  
+
+src/components/ui/ReduxForm/normalizers.ts:2:19 lint/correctness/useParseIntRadix  FIXABLE  ━━━━━━━━━━
+
+  i Missing radix parameter
+  
+    1 │ export function number(value: any) {
+  > 2 │   return value && parseInt(value);
+      │                   ^^^^^^^^^^^^^^^
+    3 │ }
+    4 │ 
+  
+  i Add a non-fractional number between 2 and 36
+  
+  i Unsafe fix: Add a radix of 10
+  
+    2 │ ··return·value·&&·parseInt(value,·10);
+      │                                 ++++  
+
+src/pages/Example/index.tsx:14:41 lint/correctness/useParseIntRadix  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━
+
+  i Missing radix parameter
+  
+    12 │ const Example: FunctionComponent<indexProps> = () => {
+    13 │   const [items, setItems] = useState<ItemType[]>(
+  > 14 │     Array.from("123").map((v) => ({ id: parseInt(v), name: v })),
+       │                                         ^^^^^^^^^^^
+    15 │   );
+    16 │   const [value, setValue] = useState("");
+  
+  i Add a non-fractional number between 2 and 36
+  
+  i Unsafe fix: Add a radix of 10
+  
+    14 │ ····Array.from("123").map((v)·=>·({·id:·parseInt(v,·10),·name:·v·})),
+       │                                                   ++++               
+
+src/pages/Help/pages.ts:94:15 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    92 │         children: p.children ? processPages(p.children, _slug) : [],
+    93 │         active: _slug === slug,
+  > 94 │         path: "/help/" + _slug,
+       │               ^^^^^^^^^^^^^^^^
+    95 │       };
+    96 │     });
+  
+  i Unsafe fix: Use a template literal.
+  
+     92  92 │           children: p.children ? processPages(p.children, _slug) : [],
+     93  93 │           active: _slug === slug,
+     94     │ - ········path:·"/help/"·+·_slug,
+         94 │ + ········path:·`/help/${_slug}`,
+     95  95 │         };
+     96  96 │       });
+  
+
+src/Root.tsx:12:10 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    11 │ type RootProps = {
+  > 12 │   store: any;
+       │          ^^^
+    13 │ };
+    14 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/Root.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    2 │ import { Provider } from "react-redux";
+    3 │ import { Route, HashRouter as Router, Switch } from "react-router-dom";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/__tests__/App.test.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This import is unused.
+  
+    1 │ import { render, waitFor } from "@testing-library/react";
+  > 2 │ import React from "react";
+      │        ^^^^^
+    3 │ import Root from "../Root";
+    4 │ import { store } from "../redux/index";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import { render, waitFor } from "@testing-library/react";
+     2    │ - import·React·from·"react";
+     3  2 │   import Root from "../Root";
+     4  3 │   import { store } from "../redux/index";
+  
+
+src/calculator/fertilizer.ts:84:41 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    82 │ export function elementsToNPK(elements: Partial<Elements>, precision = 3): NPKElements {
+    83 │   const e = entries(elements).map(([atom, val]) => {
+  > 84 │     const oxide: string = (NPKOxides as any)[atom] || atom;
+       │                                         ^^^
+    85 │     const massParts = calculateMassParts(parseMolecule(oxide));
+    86 │     const skipElements = Object.hasOwn(massParts, "N") || Object.hasOwn(massParts, "S");
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/calculator/format/hpg.ts:19:28 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    17 │   }
+    18 │ 
+  > 19 │   buildFertilizers(parsed: any): FertilizerInfo[] {
+       │                            ^^^
+    20 │     const fertilizers = [];
+    21 │     for (const f of FERTILIZERS) {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/calculator/format/hpg.ts:15:10 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━━
+
+  ! This parameter state is unused.
+  
+    13 │   static ext = ".hpg";
+    14 │ 
+  > 15 │   export(state: ExportStateType): string {
+       │          ^^^^^
+    16 │     return "";
+    17 │   }
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend state with an underscore.
+  
+     13  13 │     static ext = ".hpg";
+     14  14 │   
+     15     │ - ··export(state:·ExportStateType):·string·{
+         15 │ + ··export(_state:·ExportStateType):·string·{
+     16  16 │       return "";
+     17  17 │     }
+  
+
+src/calculator/helpers.ts:27:10 lint/suspicious/noGlobalIsFinite  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! isFinite is unsafe. It attempts a type coercion. Use Number.isFinite instead.
+  
+    25 │     }
+    26 │     v = v as number;
+  > 27 │     if (!isFinite(v)) {
+       │          ^^^^^^^^
+    28 │       v = 0;
+    29 │     }
+  
+  i See the MDN documentation for more details.
+  
+  i Unsafe fix: Use Number.isFinite instead.
+  
+     25  25 │       }
+     26  26 │       v = v as number;
+     27     │ - ····if·(!isFinite(v))·{
+         27 │ + ····if·(!Number.isFinite(v))·{
+     28  28 │         v = 0;
+     29  29 │       }
+  
+
+src/calculator/index.ts:150:16 lint/complexity/useDateNow  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use Date.now() instead of new Date().getTime().
+  
+    148 │ ): CalculateResult {
+    149 │   let result: CalculateResult | null = null;
+  > 150 │   const time = new Date().getTime();
+        │                ^^^^^^^^^^^^^^^^^^^^
+    151 │   let count = 0;
+    152 │   for (const f of combination(fertilizers)) {
+  
+  i Date.now() is more readable and also avoids unnecessary instantiation of Date object.
+  
+  i Unsafe fix: Replace with Date.now().
+  
+    148 148 │   ): CalculateResult {
+    149 149 │     let result: CalculateResult | null = null;
+    150     │ - ··const·time·=·new·Date().getTime();
+        150 │ + ··const·time·=·Date.now();
+    151 151 │     let count = 0;
+    152 152 │     for (const f of combination(fertilizers)) {
+  
+
+src/calculator/index.ts:172:26 lint/complexity/useDateNow  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use Date.now() instead of new Date().getTime().
+  
+    170 │   if (result) {
+    171 │     result.stats.count = count;
+  > 172 │     result.stats.time = (new Date().getTime() - time) / 1000;
+        │                          ^^^^^^^^^^^^^^^^^^^^
+    173 │   }
+    174 │   return result as CalculateResult;
+  
+  i Date.now() is more readable and also avoids unnecessary instantiation of Date object.
+  
+  i Unsafe fix: Replace with Date.now().
+  
+    170 170 │     if (result) {
+    171 171 │       result.stats.count = count;
+    172     │ - ····result.stats.time·=·(new·Date().getTime()·-·time)·/·1000;
+        172 │ + ····result.stats.time·=·(Date.now()-·time)·/·1000;
+    173 173 │     }
+    174 174 │     return result as CalculateResult;
+  
+
+src/calculator/index.ts:331:16 lint/complexity/useDateNow  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use Date.now() instead of new Date().getTime().
+  
+    329 │   options: CalculateOptions = {},
+    330 │ ): CalculateResult {
+  > 331 │   const time = new Date().getTime();
+        │                ^^^^^^^^^^^^^^^^^^^^
+    332 │   let count = 0;
+    333 │   const { accuracy = 0.1, max_iterations = 25, ignore = {} } = options || {};
+  
+  i Date.now() is more readable and also avoids unnecessary instantiation of Date object.
+  
+  i Unsafe fix: Replace with Date.now().
+  
+    329 329 │     options: CalculateOptions = {},
+    330 330 │   ): CalculateResult {
+    331     │ - ··const·time·=·new·Date().getTime();
+        331 │ + ··const·time·=·Date.now();
+    332 332 │     let count = 0;
+    333 333 │     const { accuracy = 0.1, max_iterations = 25, ignore = {} } = options || {};
+  
+
+src/calculator/index.ts:436:14 lint/complexity/useDateNow  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use Date.now() instead of new Date().getTime().
+  
+    434 │     deltaElements,
+    435 │     stats: {
+  > 436 │       time: (new Date().getTime() - time) / 1000,
+        │              ^^^^^^^^^^^^^^^^^^^^
+    437 │       count: count,
+    438 │     },
+  
+  i Date.now() is more readable and also avoids unnecessary instantiation of Date object.
+  
+  i Unsafe fix: Replace with Date.now().
+  
+    434 434 │       deltaElements,
+    435 435 │       stats: {
+    436     │ - ······time:·(new·Date().getTime()·-·time)·/·1000,
+        436 │ + ······time:·(Date.now()-·time)·/·1000,
+    437 437 │         count: count,
+    438 438 │       },
+  
+
+src/calculator/itertools.ts:7:46 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    5 │ }>;
+    6 │ 
+  > 7 │ export function* combination<T extends Array<any>>(iterable: T): GenericIterableIterator<T> {
+      │                                              ^^^
+    8 │   for (const p of new Permutation(iterable)) {
+    9 │     yield p as any;
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/calculator/itertools.ts:9:16 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+     7 │ export function* combination<T extends Array<any>>(iterable: T): GenericIterableIterator<T> {
+     8 │   for (const p of new Permutation(iterable)) {
+   > 9 │     yield p as any;
+       │                ^^^
+    10 │   }
+    11 │ }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/calculator/itertools.ts:15:51 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    13 │ // NB: throws if any iterables passed to it are empty
+    14 │ // via https://gist.github.com/cybercase/db7dde901d7070c98c48#gistcomment-3033459
+  > 15 │ export function* product<T extends Array<Iterable<any>>>(
+       │                                                   ^^^
+    16 │   ...iterables: T
+    17 │ ): GenericIterableIterator<T> {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/calculator/itertools.ts:38:50 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    36 │       }
+    37 │     } else {
+  > 38 │       yield results.map(({ value }) => value) as any;
+       │                                                  ^^^
+    39 │       i = 0;
+    40 │     }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/calculator/ratio.ts:41:20 lint/suspicious/noGlobalIsFinite  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! isFinite is unsafe. It attempts a type coercion. Use Number.isFinite instead.
+  
+    39 │             } else {
+    40 │               r = round(ppm / ppm2, 3);
+  > 41 │               if (!isFinite(r)) {
+       │                    ^^^^^^^^
+    42 │                 r = 0;
+    43 │               }
+  
+  i See the MDN documentation for more details.
+  
+  i Unsafe fix: Use Number.isFinite instead.
+  
+     39  39 │               } else {
+     40  40 │                 r = round(ppm / ppm2, 3);
+     41     │ - ··············if·(!isFinite(r))·{
+         41 │ + ··············if·(!Number.isFinite(r))·{
+     42  42 │                   r = 0;
+     43  43 │                 }
+  
+
+src/components/Calculator/FertilizerManager/AddEdit.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! This import is unused.
+  
+    1 │ import { Label } from "@rebass/forms";
+  > 2 │ import React from "react";
+      │        ^^^^^
+    3 │ import { useDispatch } from "react-redux";
+    4 │ import { Box, Flex, Text } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+      1   1 │   import { Label } from "@rebass/forms";
+      2     │ - import·React·from·"react";
+      3   2 │   import { useDispatch } from "react-redux";
+      4   3 │   import { Box, Flex, Text } from "rebass";
+  
+
+src/components/Calculator/FertilizerManager/AddEdit.tsx:101:25 lint/complexity/noBannedTypes ━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     99 │         {formValues.composition_enable ? (
+    100 │           <Flex>
+  > 101 │             <FieldArray<{}> name="composition" component={AddEditCompositionList} />
+        │                         ^^
+    102 │           </Flex>
+    103 │         ) : null}
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/FertilizerManager/AddEdit.tsx:66:68 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+    64 │ }
+    65 │ 
+  > 66 │ const AddEditForm: ReduxFormType<AddEditProps, AddEditFormType> = (props) => {
+       │                                                                    ^^^^^
+    67 │   const formName = useFormName();
+    68 │   const formValues = useFormValues<AddEditFormType>(formName)[0];
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+     64  64 │   }
+     65  65 │   
+     66     │ - const·AddEditForm:·ReduxFormType<AddEditProps,·AddEditFormType>·=·(props)·=>·{
+         66 │ + const·AddEditForm:·ReduxFormType<AddEditProps,·AddEditFormType>·=·(_props)·=>·{
+     67  67 │     const formName = useFormName();
+     68  68 │     const formValues = useFormValues<AddEditFormType>(formName)[0];
+  
+
+src/components/Calculator/FertilizerManager/AddEditCompositionList.tsx:8:36 lint/complexity/noBannedTypes ━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     6 │ import type { ReduxFieldArrayType } from "@/components/ui/ReduxForm/types";
+     7 │ 
+   > 8 │ type AddEditCompositionListProps = {};
+       │                                    ^^
+     9 │ 
+    10 │ type AddEditCompositionListType = ReduxFieldArrayType<
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/FertilizerManager/AddEditCompositionList.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! This import is unused.
+  
+  > 1 │ import React from "react";
+      │        ^^^^^
+    2 │ import { Card, Flex } from "rebass";
+    3 │ import type { FertilizerComposition } from "@/calculator/types";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React·from·"react";
+      │ --------------------------
+
+src/components/Calculator/FertilizerManager/AddEditNPKString.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Input } from "@rebass/forms";
+  > 2 │ import React, { type ChangeEvent, type FunctionComponent, useEffect, useState } from "react";
+      │        ^^^^^
+    3 │ import { Flex } from "rebass";
+    4 │ import { parseProfileStringToNPK, stringifyProfile } from "@/calculator/profile";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·ChangeEvent,·type·FunctionComponent,·useEffect,·useState·}·from·"react";
+      │        -------                                                                               
+
+src/components/Calculator/FertilizerManager/AddEditNPKString.tsx:31:5 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━
+
+  ! Change to an optional chain.
+  
+    29 │     const elements = parseProfileStringToNPK(e.target.value);
+    30 │     console.log(elements);
+  > 31 │     onChange && onChange(elements);
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    32 │   };
+    33 │   return (
+  
+  i Unsafe fix: Change to an optional chain.
+  
+    29 29 │       const elements = parseProfileStringToNPK(e.target.value);
+    30 30 │       console.log(elements);
+    31    │ - ····onChange·&&·onChange(elements);
+       31 │ + ····onChange?.(elements);
+    32 32 │     };
+    33 33 │     return (
+  
+
+src/components/Calculator/FertilizerManager/AddItemElementForm.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    2 │ import { Flex } from "rebass";
+    3 │ import { NPKOxides } from "@/calculator/constants";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/components/Calculator/FertilizerManager/Item.tsx:3:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! This import is unused.
+  
+    1 │ import { Edit } from "@styled-icons/fa-regular/Edit";
+    2 │ import { Trash } from "@styled-icons/fa-solid/Trash";
+  > 3 │ import React from "react";
+      │        ^^^^^
+    4 │ import { useDispatch } from "react-redux";
+    5 │ import { Box, Button, Card, Flex, Text } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import { Edit } from "@styled-icons/fa-regular/Edit";
+     2  2 │   import { Trash } from "@styled-icons/fa-solid/Trash";
+     3    │ - import·React·from·"react";
+     4  3 │   import { useDispatch } from "react-redux";
+     5  4 │   import { Box, Button, Card, Flex, Text } from "rebass";
+  
+
+src/components/Calculator/FertilizerManager/List.tsx:25:22 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+    23 │ type ListProps = {};
+    24 │ 
+  > 25 │ export function List(props: ListProps) {
+       │                      ^^^^^
+    26 │   const { fertilizers } = useSelector<any>((state) => state.calculator) as CalculatorState;
+    27 │   const [formValues] = useFormValues<AddEditFormType>(FERTILIZER_EDIT_FORM_NAME);
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+    23 23 │   type ListProps = {};
+    24 24 │   
+    25    │ - export·function·List(props:·ListProps)·{
+       25 │ + export·function·List(_props:·ListProps)·{
+    26 26 │     const { fertilizers } = useSelector<any>((state) => state.calculator) as CalculatorState;
+    27 27 │     const [formValues] = useFormValues<AddEditFormType>(FERTILIZER_EDIT_FORM_NAME);
+  
+
+src/components/Calculator/FertilizerManager/List.tsx:26:39 lint/suspicious/noExplicitAny ━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    25 │ export function List(props: ListProps) {
+  > 26 │   const { fertilizers } = useSelector<any>((state) => state.calculator) as CalculatorState;
+       │                                       ^^^
+    27 │   const [formValues] = useFormValues<AddEditFormType>(FERTILIZER_EDIT_FORM_NAME);
+    28 │   const dispatch = useDispatch();
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/FertilizerManager/List.tsx:3:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! This import is unused.
+  
+    1 │ import { Plus } from "@styled-icons/boxicons-regular/Plus";
+    2 │ import { Restart } from "@styled-icons/remix-line/Restart";
+  > 3 │ import React from "react";
+      │        ^^^^^
+    4 │ import { useDispatch, useSelector } from "react-redux";
+    5 │ import { ReactSortable } from "react-sortablejs";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import { Plus } from "@styled-icons/boxicons-regular/Plus";
+     2  2 │   import { Restart } from "@styled-icons/remix-line/Restart";
+     3    │ - import·React·from·"react";
+     4  3 │   import { useDispatch, useSelector } from "react-redux";
+     5  4 │   import { ReactSortable } from "react-sortablejs";
+  
+
+src/components/Calculator/FertilizerManager/List.tsx:23:18 lint/complexity/noBannedTypes ━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    21 │ import { Item } from "./Item";
+    22 │ 
+  > 23 │ type ListProps = {};
+       │                  ^^
+    24 │ 
+    25 │ export function List(props: ListProps) {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/FertilizerSelect/AddItem.tsx:15:39 lint/suspicious/noExplicitAny ━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    14 │ export const AddItem: FunctionComponent<AddItemProps> = ({ onAdd }) => {
+  > 15 │   const { fertilizers } = useSelector<any>((state) => state.calculator) as CalculatorState;
+       │                                       ^^^
+    16 │   const { calculationForm } = useSelector<any>((state) => state.calculator) as CalculatorState;
+    17 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/FertilizerSelect/AddItem.tsx:16:43 lint/suspicious/noExplicitAny ━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    14 │ export const AddItem: FunctionComponent<AddItemProps> = ({ onAdd }) => {
+    15 │   const { fertilizers } = useSelector<any>((state) => state.calculator) as CalculatorState;
+  > 16 │   const { calculationForm } = useSelector<any>((state) => state.calculator) as CalculatorState;
+       │                                           ^^^
+    17 │ 
+    18 │   const [selected, setSelected] = useState<FertilizerType | undefined>(fertilizers[0]);
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/FertilizerSelect/AddItem.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Plus } from "@styled-icons/boxicons-regular/Plus";
+  > 2 │ import React, { type FunctionComponent, useState } from "react";
+      │        ^^^^^
+    3 │ import { useSelector } from "react-redux";
+    4 │ import { Box, Card, Flex } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·FunctionComponent,·useState·}·from·"react";
+      │        -------                                                  
+
+src/components/Calculator/FertilizerSelect/AddItemElementForm.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type FunctionComponent, useEffect, useState } from "react";
+      │        ^^^^^
+    2 │ import { Flex } from "rebass";
+    3 │ import { StyledInput } from "@/components/ui/ReduxForm/Input";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·FunctionComponent,·useEffect,·useState·}·from·"react";
+      │        -------                                                             
+
+src/components/Calculator/FertilizerSelect/AddItemElementForm.tsx:26:5 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━
+
+  ! Change to an optional chain.
+  
+    25 │   const onBlur = () => {
+  > 26 │     props.onChange && props.onChange(value);
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    27 │   };
+    28 │ 
+  
+  i Unsafe fix: Change to an optional chain.
+  
+    24 24 │   
+    25 25 │     const onBlur = () => {
+    26    │ - ····props.onChange·&&·props.onChange(value);
+       26 │ + ····props.onChange?.(value);
+    27 27 │     };
+    28 28 │   
+  
+
+src/components/Calculator/FertilizerSelect/AddItemFertilizerEditForm.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type FunctionComponent, useEffect, useState } from "react";
+      │        ^^^^^
+    2 │ import { Flex } from "rebass";
+    3 │ import type { Elements } from "@/calculator/types";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·FunctionComponent,·useEffect,·useState·}·from·"react";
+      │        -------                                                             
+
+src/components/Calculator/FertilizerSelect/AddItemFertilizerEditForm.tsx:28:28 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter el is unused.
+  
+    26 │   );
+    27 │ 
+  > 28 │   const onChangeHandler = (el: FERTILIZER_ELEMENT_NAMES, val: number) => {
+       │                            ^^
+    29 │     if (!elements || !fertilizer) {
+    30 │       return;
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend el with an underscore.
+  
+    26 26 │     );
+    27 27 │   
+    28    │ - ··const·onChangeHandler·=·(el:·FERTILIZER_ELEMENT_NAMES,·val:·number)·=>·{
+       28 │ + ··const·onChangeHandler·=·(_el:·FERTILIZER_ELEMENT_NAMES,·val:·number)·=>·{
+    29 29 │       if (!elements || !fertilizer) {
+    30 30 │         return;
+  
+
+src/components/Calculator/FertilizerSelect/AddItemFertilizerEditForm.tsx:28:58 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter val is unused.
+  
+    26 │   );
+    27 │ 
+  > 28 │   const onChangeHandler = (el: FERTILIZER_ELEMENT_NAMES, val: number) => {
+       │                                                          ^^^
+    29 │     if (!elements || !fertilizer) {
+    30 │       return;
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend val with an underscore.
+  
+    26 26 │     );
+    27 27 │   
+    28    │ - ··const·onChangeHandler·=·(el:·FERTILIZER_ELEMENT_NAMES,·val:·number)·=>·{
+       28 │ + ··const·onChangeHandler·=·(el:·FERTILIZER_ELEMENT_NAMES,·_val:·number)·=>·{
+    29 29 │       if (!elements || !fertilizer) {
+    30 30 │         return;
+  
+
+src/components/Calculator/FertilizerSelect/Container.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! This import is unused.
+  
+  > 1 │ import React from "react";
+      │        ^^^^^
+    2 │ import { FieldArray } from "redux-form";
+    3 │ import { required } from "../../ui/ReduxForm/validators";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React·from·"react";
+      │ --------------------------
+
+src/components/Calculator/FertilizerSelect/Container.tsx:8:17 lint/complexity/noBannedTypes ━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     6 │ export const Container = () => {
+     7 │   return (
+   > 8 │     <FieldArray<{}>
+       │                 ^^
+     9 │       name={"fertilizers"}
+    10 │       component={SelectedList}
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/FertilizerSelect/SelectedList.tsx:16:51 lint/suspicious/noExplicitAny ━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    14 │   meta: { error },
+    15 │ }) => {
+  > 16 │   const { calculationForm, result } = useSelector<any>(
+       │                                                   ^^^
+    17 │     (state) => state.calculator,
+    18 │   ) as CalculatorState;
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/FertilizerSelect/SelectedList.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! This import is unused.
+  
+  > 1 │ import React from "react";
+      │        ^^^^^
+    2 │ import { useSelector } from "react-redux";
+    3 │ import { Flex } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React·from·"react";
+      │ --------------------------
+
+src/components/Calculator/FertilizerSelect/SelectedList.tsx:10:26 lint/complexity/noBannedTypes ━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     8 │ import type { FertilizerType } from "./types";
+     9 │ 
+  > 10 │ type SelectedListProps = {};
+       │                          ^^
+    11 │ 
+    12 │ export const SelectedList: ReduxFieldArrayType<SelectedListProps, FertilizerType> = ({
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/FertilizerSelect/SelectedListItem.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Cross } from "@styled-icons/entypo/Cross";
+  > 2 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    3 │ import { Box, Card, Flex, Text } from "rebass";
+    4 │ import type { FertilizerWeights } from "@/calculator";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/components/Calculator/ImportExport/ExportFertilizers.tsx:13:35 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+    11 │ type ExportFertilizersProps = {};
+    12 │ 
+  > 13 │ export function ExportFertilizers(props: ExportFertilizersProps) {
+       │                                   ^^^^^
+    14 │   const { fertilizers } = useSelector<any>((state) => state.calculator) as CalculatorState;
+    15 │   const doExport = () => {
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+    11 11 │   type ExportFertilizersProps = {};
+    12 12 │   
+    13    │ - export·function·ExportFertilizers(props:·ExportFertilizersProps)·{
+       13 │ + export·function·ExportFertilizers(_props:·ExportFertilizersProps)·{
+    14 14 │     const { fertilizers } = useSelector<any>((state) => state.calculator) as CalculatorState;
+    15 15 │     const doExport = () => {
+  
+
+src/components/Calculator/ImportExport/ExportFertilizers.tsx:11:31 lint/complexity/noBannedTypes ━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     9 │ import { saveData } from "@/utils/downloads";
+    10 │ 
+  > 11 │ type ExportFertilizersProps = {};
+       │                               ^^
+    12 │ 
+    13 │ export function ExportFertilizers(props: ExportFertilizersProps) {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/ImportExport/ExportFertilizers.tsx:14:39 lint/suspicious/noExplicitAny ━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    13 │ export function ExportFertilizers(props: ExportFertilizersProps) {
+  > 14 │   const { fertilizers } = useSelector<any>((state) => state.calculator) as CalculatorState;
+       │                                       ^^^
+    15 │   const doExport = () => {
+    16 │     const npkFertilizer = fertilizers.map((f) => normalizeFertilizer(f, false));
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/ImportExport/ExportFertilizers.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! This import is unused.
+  
+    1 │ import { Export } from "@styled-icons/boxicons-regular/Export";
+  > 2 │ import React from "react";
+      │        ^^^^^
+    3 │ import { useSelector } from "react-redux";
+    4 │ import { FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import { Export } from "@styled-icons/boxicons-regular/Export";
+     2    │ - import·React·from·"react";
+     3  2 │   import { useSelector } from "react-redux";
+     4  3 │   import { FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
+  
+
+src/components/Calculator/ImportExport/ExportRecipes.tsx:13:35 lint/suspicious/noExplicitAny ━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    12 │ export function ExportRecipes(props: ExportRecipesProps) {
+  > 13 │   const { recipes } = useSelector<any>((state) => state.calculator) as CalculatorState;
+       │                                   ^^^
+    14 │   const doExport = () => {
+    15 │     const rows = recipes.map((f) => {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/ImportExport/ExportRecipes.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! This import is unused.
+  
+    1 │ import { Export } from "@styled-icons/boxicons-regular/Export";
+  > 2 │ import React from "react";
+      │        ^^^^^
+    3 │ import { useSelector } from "react-redux";
+    4 │ import { FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import { Export } from "@styled-icons/boxicons-regular/Export";
+     2    │ - import·React·from·"react";
+     3  2 │   import { useSelector } from "react-redux";
+     4  3 │   import { FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
+  
+
+src/components/Calculator/ImportExport/ExportRecipes.tsx:10:27 lint/complexity/noBannedTypes ━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     8 │ import { saveData } from "@/utils/downloads";
+     9 │ 
+  > 10 │ type ExportRecipesProps = {};
+       │                           ^^
+    11 │ 
+    12 │ export function ExportRecipes(props: ExportRecipesProps) {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/ImportExport/ExportRecipes.tsx:12:31 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+    10 │ type ExportRecipesProps = {};
+    11 │ 
+  > 12 │ export function ExportRecipes(props: ExportRecipesProps) {
+       │                               ^^^^^
+    13 │   const { recipes } = useSelector<any>((state) => state.calculator) as CalculatorState;
+    14 │   const doExport = () => {
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+    10 10 │   type ExportRecipesProps = {};
+    11 11 │   
+    12    │ - export·function·ExportRecipes(props:·ExportRecipesProps)·{
+       12 │ + export·function·ExportRecipes(_props:·ExportRecipesProps)·{
+    13 13 │     const { recipes } = useSelector<any>((state) => state.calculator) as CalculatorState;
+    14 14 │     const doExport = () => {
+  
+
+src/components/Calculator/ImportExport/ExportState.tsx:11:29 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+     9 │ type ExportRecipesProps = {};
+    10 │ 
+  > 11 │ export function ExportState(props: ExportRecipesProps) {
+       │                             ^^^^^
+    12 │   const { calculationForm, result, fertilizers, recipes } = useSelector<any>(
+    13 │     (state) => state.calculator,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+     9  9 │   type ExportRecipesProps = {};
+    10 10 │   
+    11    │ - export·function·ExportState(props:·ExportRecipesProps)·{
+       11 │ + export·function·ExportState(_props:·ExportRecipesProps)·{
+    12 12 │     const { calculationForm, result, fertilizers, recipes } = useSelector<any>(
+    13 13 │       (state) => state.calculator,
+  
+
+src/components/Calculator/ImportExport/ExportState.tsx:12:73 lint/suspicious/noExplicitAny ━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    11 │ export function ExportState(props: ExportRecipesProps) {
+  > 12 │   const { calculationForm, result, fertilizers, recipes } = useSelector<any>(
+       │                                                                         ^^^
+    13 │     (state) => state.calculator,
+    14 │   ) as CalculatorState;
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/ImportExport/ExportState.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! This import is unused.
+  
+    1 │ import { Export } from "@styled-icons/boxicons-regular/Export";
+  > 2 │ import React from "react";
+      │        ^^^^^
+    3 │ import { useSelector } from "react-redux";
+    4 │ import type { ExportStateType } from "@/calculator/format/types";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import { Export } from "@styled-icons/boxicons-regular/Export";
+     2    │ - import·React·from·"react";
+     3  2 │   import { useSelector } from "react-redux";
+     4  3 │   import type { ExportStateType } from "@/calculator/format/types";
+  
+
+src/components/Calculator/ImportExport/ExportState.tsx:9:27 lint/complexity/noBannedTypes ━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     7 │ import { saveData } from "@/utils/downloads";
+     8 │ 
+   > 9 │ type ExportRecipesProps = {};
+       │                           ^^
+    10 │ 
+    11 │ export function ExportState(props: ExportRecipesProps) {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/ImportExport/ImportFertilizers.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Import } from "@styled-icons/boxicons-regular/Import";
+  > 2 │ import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
+      │        ^^^^^
+    3 │ import { useDispatch } from "react-redux";
+    4 │ import { FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·ChangeEvent,·createRef,·useEffect,·useState·}·from·"react";
+      │        -------                                                                  
+
+src/components/Calculator/ImportExport/ImportFertilizers.tsx:10:31 lint/complexity/noBannedTypes ━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     8 │ import { csvParse } from "@/utils/csv";
+     9 │ 
+  > 10 │ type ImportFertilizersProps = {};
+       │                               ^^
+    11 │ 
+    12 │ const COLUMNS = ["id", ...FERTILIZER_ELEMENT_NAMES];
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/ImportExport/ImportFertilizers.tsx:14:35 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+    12 │ const COLUMNS = ["id", ...FERTILIZER_ELEMENT_NAMES];
+    13 │ 
+  > 14 │ export function ImportFertilizers(props: ImportFertilizersProps) {
+       │                                   ^^^^^
+    15 │   const buttonRef = createRef<HTMLButtonElement>();
+    16 │   const dispatch = useDispatch();
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+    12 12 │   const COLUMNS = ["id", ...FERTILIZER_ELEMENT_NAMES];
+    13 13 │   
+    14    │ - export·function·ImportFertilizers(props:·ImportFertilizersProps)·{
+       14 │ + export·function·ImportFertilizers(_props:·ImportFertilizersProps)·{
+    15 15 │     const buttonRef = createRef<HTMLButtonElement>();
+    16 16 │     const dispatch = useDispatch();
+  
+
+src/components/Calculator/ImportExport/ImportFertilizers.tsx:30:9 lint/suspicious/noGlobalIsNan  FIXABLE  ━━━━━━━━━━
+
+  ! isNaN is unsafe. It attempts a type coercion. Use Number.isNaN instead.
+  
+    28 │   const loadCSV = (csv: string) => {
+    29 │     const p = csvParse(csv, { columns: COLUMNS });
+  > 30 │     if (isNaN(parseInt(p[0].P))) {
+       │         ^^^^^
+    31 │       p.splice(0, 1);
+    32 │     }
+  
+  i See the MDN documentation for more details.
+  
+  i Unsafe fix: Use Number.isNaN instead.
+  
+    28 28 │     const loadCSV = (csv: string) => {
+    29 29 │       const p = csvParse(csv, { columns: COLUMNS });
+    30    │ - ····if·(isNaN(parseInt(p[0].P)))·{
+       30 │ + ····if·(Number.isNaN(parseInt(p[0].P)))·{
+    31 31 │         p.splice(0, 1);
+    32 32 │       }
+  
+
+src/components/Calculator/ImportExport/ImportRecipes.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Import } from "@styled-icons/boxicons-regular/Import";
+  > 2 │ import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
+      │        ^^^^^
+    3 │ import { useDispatch } from "react-redux";
+    4 │ import { FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·ChangeEvent,·createRef,·useEffect,·useState·}·from·"react";
+      │        -------                                                                  
+
+src/components/Calculator/ImportExport/ImportRecipes.tsx:9:27 lint/complexity/noBannedTypes ━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     7 │ import { csvParse } from "@/utils/csv";
+     8 │ 
+   > 9 │ type ImportRecipesProps = {};
+       │                           ^^
+    10 │ 
+    11 │ const COLUMNS = ["id", ...FERTILIZER_ELEMENT_NAMES];
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/ImportExport/ImportRecipes.tsx:13:31 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+    11 │ const COLUMNS = ["id", ...FERTILIZER_ELEMENT_NAMES];
+    12 │ 
+  > 13 │ export function ImportRecipes(props: ImportRecipesProps) {
+       │                               ^^^^^
+    14 │   const buttonRef = createRef<HTMLButtonElement>();
+    15 │   const dispatch = useDispatch();
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+    11 11 │   const COLUMNS = ["id", ...FERTILIZER_ELEMENT_NAMES];
+    12 12 │   
+    13    │ - export·function·ImportRecipes(props:·ImportRecipesProps)·{
+       13 │ + export·function·ImportRecipes(_props:·ImportRecipesProps)·{
+    14 14 │     const buttonRef = createRef<HTMLButtonElement>();
+    15 15 │     const dispatch = useDispatch();
+  
+
+src/components/Calculator/ImportExport/ImportRecipes.tsx:29:9 lint/suspicious/noGlobalIsNan  FIXABLE  ━━━━━━━━━━
+
+  ! isNaN is unsafe. It attempts a type coercion. Use Number.isNaN instead.
+  
+    27 │   const loadCSV = (csv: string) => {
+    28 │     const p = csvParse(csv, { columns: COLUMNS });
+  > 29 │     if (isNaN(parseInt(p[0].P))) {
+       │         ^^^^^
+    30 │       p.splice(0, 1);
+    31 │     }
+  
+  i See the MDN documentation for more details.
+  
+  i Unsafe fix: Use Number.isNaN instead.
+  
+    27 27 │     const loadCSV = (csv: string) => {
+    28 28 │       const p = csvParse(csv, { columns: COLUMNS });
+    29    │ - ····if·(isNaN(parseInt(p[0].P)))·{
+       29 │ + ····if·(Number.isNaN(parseInt(p[0].P)))·{
+    30 30 │         p.splice(0, 1);
+    31 31 │       }
+  
+
+src/components/Calculator/ImportExport/ImportState.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Import } from "@styled-icons/boxicons-regular/Import";
+  > 2 │ import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
+      │        ^^^^^
+    3 │ import { useDispatch } from "react-redux";
+    4 │ import { ACCEPT_FORMATS, FORMATS_MAP } from "@/calculator/format";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·ChangeEvent,·createRef,·useEffect,·useState·}·from·"react";
+      │        -------                                                                  
+
+src/components/Calculator/ImportExport/ImportState.tsx:8:25 lint/complexity/noBannedTypes ━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     6 │ import { IconButton } from "@/components/ui/IconButton";
+     7 │ 
+   > 8 │ type ImportStateProps = {};
+       │                         ^^
+     9 │ 
+    10 │ export function ImportState(props: ImportStateProps) {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/ImportExport/ImportState.tsx:10:29 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+     8 │ type ImportStateProps = {};
+     9 │ 
+  > 10 │ export function ImportState(props: ImportStateProps) {
+       │                             ^^^^^
+    11 │   const buttonRef = createRef<HTMLButtonElement>();
+    12 │   const dispatch = useDispatch();
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+     8  8 │   type ImportStateProps = {};
+     9  9 │   
+    10    │ - export·function·ImportState(props:·ImportStateProps)·{
+       10 │ + export·function·ImportState(_props:·ImportStateProps)·{
+    11 11 │     const buttonRef = createRef<HTMLButtonElement>();
+    12 12 │     const dispatch = useDispatch();
+  
+
+src/components/Calculator/Mixer/Mixer.tsx:17:34 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    15 │     getFormValues(REDUX_FORM_NAME),
+    16 │   ) as CalculatorFormValues;
+  > 17 │   const { result } = useSelector<any>((state) => state.calculator) as CalculatorState;
+       │                                  ^^^
+    18 │ 
+    19 │   const initialMixerOptions = {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/Mixer/Mixer.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Save } from "@styled-icons/fa-regular/Save";
+  > 2 │ import React, { type ComponentType } from "react";
+      │        ^^^^^
+    3 │ import { useSelector } from "react-redux";
+    4 │ import { Button, Flex } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·ComponentType·}·from·"react";
+      │        -------                                    
+
+src/components/Calculator/Mixer/MixerForm.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! This import is unused.
+  
+  > 1 │ import React from "react";
+      │        ^^^^^
+    2 │ import { Flex } from "rebass";
+    3 │ 
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React·from·"react";
+      │ --------------------------
+
+src/components/Calculator/Mixer/MixerForm.tsx:9:21 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     7 │ import type { ReduxFormType } from "@/components/ui/ReduxForm/types";
+     8 │ 
+   > 9 │ type AddEditProps = {};
+       │                     ^^
+    10 │ 
+    11 │ export interface MixerFormType extends MixerOptions {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/Mixer/MixerForm.tsx:15:66 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+    13 │ }
+    14 │ 
+  > 15 │ const AddEditForm: ReduxFormType<AddEditProps, MixerFormType> = (props) => {
+       │                                                                  ^^^^^
+    16 │   return (
+    17 │     <Form>
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+    13 13 │   }
+    14 14 │   
+    15    │ - const·AddEditForm:·ReduxFormType<AddEditProps,·MixerFormType>·=·(props)·=>·{
+       15 │ + const·AddEditForm:·ReduxFormType<AddEditProps,·MixerFormType>·=·(_props)·=>·{
+    16 16 │     return (
+    17 17 │       <Form>
+  
+
+src/components/Calculator/Options/Accuracy.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    2 │ import { Card, Flex, Heading } from "rebass";
+    3 │ import { decimal } from "../../ui/ReduxForm/normalizers";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/components/Calculator/Options/Accuracy.tsx:7:22 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    6 │ const ACCURACY_VARIANTS = [0.2, 0.1, 0.05, 0.01];
+  > 7 │ type AccuracyProps = {};
+      │                      ^^
+    8 │ 
+    9 │ export const Accuracy: FunctionComponent<AccuracyProps> = () => {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/Options/Dilution.tsx:21:47 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    19 │   const dispatch = useDispatch();
+    20 │ 
+  > 21 │   const onChange = (field: string) => (event: any) => {
+       │                                               ^^^
+    22 │     if (!event.target.value) {
+    23 │       return;
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/Options/Dilution.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Label } from "@rebass/forms";
+  > 2 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    3 │ import { useDispatch, useSelector } from "react-redux";
+    4 │ import { Card, Flex, Text } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/components/Calculator/Options/Dilution.tsx:13:22 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    11 │ import { decimal, number } from "@/components/ui/ReduxForm/normalizers";
+    12 │ 
+  > 13 │ type DilutionProps = {};
+       │                      ^^
+    14 │ 
+    15 │ export const Dilution: FunctionComponent<DilutionProps> = () => {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/Options/IgnoreElement.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    2 │ import { Card, Flex, Heading } from "rebass";
+    3 │ import { Checkbox } from "../../ui/ReduxForm/Checkbox";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/components/Calculator/Options/IgnoreElement.tsx:5:27 lint/complexity/noBannedTypes ━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    3 │ import { Checkbox } from "../../ui/ReduxForm/Checkbox";
+    4 │ 
+  > 5 │ type IgnoreElementProps = {};
+      │                           ^^
+    6 │ 
+    7 │ export const IgnoreElement: FunctionComponent<IgnoreElementProps> = () => {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/Options/Options.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type ComponentType } from "react";
+      │        ^^^^^
+    2 │ import { Box, Button, Flex } from "rebass";
+    3 │ import { Accuracy } from "./Accuracy";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·ComponentType·}·from·"react";
+      │        -------                                    
+
+src/components/Calculator/Options/Options.tsx:9:21 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     7 │ import { ToppingUp } from "./ToppingUp";
+     8 │ 
+   > 9 │ type OptionsProps = {};
+       │                     ^^
+    10 │ 
+    11 │ export const Options: ComponentType<OptionsProps> = () => {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/Options/Recipe.tsx:45:40 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    44 │ export const Recipe: FunctionComponent<RecipeProps> = () => {
+  > 45 │   const { recipes = [] } = useSelector<any>((state) => state.calculator) as CalculatorState;
+       │                                        ^^^
+    46 │ 
+    47 │   const [values, setValue] = useFormValues(useFormName());
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/Options/Recipe.tsx:4:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    2 │ import { Broom } from "@styled-icons/fa-solid/Broom";
+    3 │ import { Tune } from "@styled-icons/material-sharp/Tune";
+  > 4 │ import React, { type FunctionComponent, useState } from "react";
+      │        ^^^^^
+    5 │ import { useDispatch, useSelector } from "react-redux";
+    6 │ import { Box, Card, Flex, Heading, Text } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    4 │ import·React,·{·type·FunctionComponent,·useState·}·from·"react";
+      │        -------                                                  
+
+src/components/Calculator/Options/Recipe.tsx:42:20 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    40 │ };
+    41 │ 
+  > 42 │ type RecipeProps = {};
+       │                    ^^
+    43 │ 
+    44 │ export const Recipe: FunctionComponent<RecipeProps> = () => {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/Options/RecipeElementForm.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    2 │ import { Box, Flex } from "rebass";
+    3 │ import { Input } from "@/components/ui/ReduxForm/Input";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/components/Calculator/Options/RecipeTuneForm.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Input } from "@rebass/forms";
+  > 2 │ import React, { type ChangeEvent, useEffect, useState } from "react";
+      │        ^^^^^
+    3 │ import { Box, Button, Flex } from "rebass";
+    4 │ import {
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·ChangeEvent,·useEffect,·useState·}·from·"react";
+      │        -------                                                       
+
+src/components/Calculator/Options/RecipeTuneForm.tsx:233:7 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━
+
+  ! Change to an optional chain.
+  
+    231 │     if (e.target.value) {
+    232 │       const val = decimal(e.target.value);
+  > 233 │       onChange && onChange(val);
+        │       ^^^^^^^^^^^^^^^^^^^^^^^^^
+    234 │     }
+    235 │   };
+  
+  i Unsafe fix: Change to an optional chain.
+  
+    231 231 │       if (e.target.value) {
+    232 232 │         const val = decimal(e.target.value);
+    233     │ - ······onChange·&&·onChange(val);
+        233 │ + ······onChange?.(val);
+    234 234 │       }
+    235 235 │     };
+  
+
+src/components/Calculator/Options/Solution.tsx:20:47 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    18 │   const dispatch = useDispatch();
+    19 │ 
+  > 20 │   const onChange = (field: string) => (event: any) => {
+       │                                               ^^^
+    21 │     if (!event.target.value) {
+    22 │       return;
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/Options/Solution.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Label } from "@rebass/forms";
+  > 2 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    3 │ import { useDispatch, useSelector } from "react-redux";
+    4 │ import { Card, Flex, Heading, Text } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/components/Calculator/Options/Solution.tsx:12:28 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    10 │ import { decimal } from "../../ui/ReduxForm/normalizers";
+    11 │ 
+  > 12 │ type SolutionVolumeProps = {};
+       │                            ^^
+    13 │ 
+    14 │ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/Options/ToppingUp.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Label } from "@rebass/forms";
+  > 2 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    3 │ import { useSelector } from "react-redux";
+    4 │ import { Card, Flex } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/components/Calculator/Options/ToppingUp.tsx:12:23 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    10 │ import { decimal, number } from "@/components/ui/ReduxForm/normalizers";
+    11 │ 
+  > 12 │ type ToppingUpProps = {};
+       │                       ^^
+    13 │ 
+    14 │ export const ToppingUp: FunctionComponent<ToppingUpProps> = () => {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/Result/Result.tsx:40:47 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    39 │ export const Result: FunctionComponent<ResultProps> = () => {
+  > 40 │   const { fertilizers, result } = useSelector<any>((state) => state.calculator) as CalculatorState;
+       │                                               ^^^
+    41 │ 
+    42 │   const { solution_volume } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues;
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/Result/Result.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Save } from "@styled-icons/fa-regular/Save";
+  > 2 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    3 │ import { useDispatch, useSelector } from "react-redux";
+    4 │ import { Button, Card, Flex, Heading, Text } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/components/Calculator/Result/Result.tsx:31:20 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    29 │ import { ResultFertilizerList } from "./ResultFertilizerList";
+    30 │ 
+  > 31 │ type ResultProps = {};
+       │                    ^^
+    32 │ 
+    33 │ const StyledList = styled.ul`
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/Result/ResultDilution.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! This import is unused.
+  
+  > 1 │ import React from "react";
+      │        ^^^^^
+    2 │ import { useSelector } from "react-redux";
+    3 │ import { Flex, Heading } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React·from·"react";
+      │ --------------------------
+
+src/components/Calculator/Result/ResultDilution.tsx:16:28 lint/complexity/noBannedTypes ━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    14 │ import { round } from "@/utils";
+    15 │ 
+  > 16 │ type DilutionResultProps = {};
+       │                            ^^
+    17 │ 
+    18 │ export function ResultDilution(props: DilutionResultProps) {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/Calculator/Result/ResultDilution.tsx:18:32 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+    16 │ type DilutionResultProps = {};
+    17 │ 
+  > 18 │ export function ResultDilution(props: DilutionResultProps) {
+       │                                ^^^^^
+    19 │   const {
+    20 │     dilution_enabled,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+    16 16 │   type DilutionResultProps = {};
+    17 17 │   
+    18    │ - export·function·ResultDilution(props:·DilutionResultProps)·{
+       18 │ + export·function·ResultDilution(_props:·DilutionResultProps)·{
+    19 19 │     const {
+    20 20 │       dilution_enabled,
+  
+
+src/components/Calculator/Result/ResultFertilizerList.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! This import is unused.
+  
+  > 1 │ import React from "react";
+      │        ^^^^^
+    2 │ import { useSelector } from "react-redux";
+    3 │ import { getFormValues } from "redux-form";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React·from·"react";
+      │ --------------------------
+
+src/components/Calculator/Result/hooks.ts:19:47 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    18 │ export function useFertilizerSolutionGroup() {
+  > 19 │   const { fertilizers, result } = useSelector<any>((state) => state.calculator) as CalculatorState;
+       │                                               ^^^
+    20 │ 
+    21 │   const fertilizersWeights = (result?.fertilizers || []).map((f) => ({ ...f }));
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/Result/hooks.ts:11:34 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    10 │ export function usePPM() {
+  > 11 │   const { result } = useSelector<any>((state) => state.calculator) as CalculatorState;
+       │                                  ^^^
+    12 │   const { solution_volume } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues;
+    13 │   const fertilizerWeights = (result?.fertilizers || []).map((f) => ({ ...f }));
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/Calculator/index.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+  ! This import is unused.
+  
+    1 │ import { Restart } from "@styled-icons/remix-line/Restart";
+  > 2 │ import React from "react";
+      │        ^^^^^
+    3 │ import { connect, useDispatch } from "react-redux";
+    4 │ import { Box, Card, Flex, Heading, Text } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+      1   1 │   import { Restart } from "@styled-icons/remix-line/Restart";
+      2     │ - import·React·from·"react";
+      3   2 │   import { connect, useDispatch } from "react-redux";
+      4   3 │   import { Box, Card, Flex, Heading, Text } from "rebass";
+  
+
+src/components/Calculator/index.tsx:24:24 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    22 │ import type { CalculatorFormValues } from "./types";
+    23 │ 
+  > 24 │ type CalculatorProps = {};
+       │                        ^^
+    25 │ 
+    26 │ const initialValues: CalculatorFormValues = {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/ColorModeToggle.tsx:3:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Moon } from "@styled-icons/boxicons-solid/Moon";
+    2 │ import { Sun } from "@styled-icons/fa-solid/Sun";
+  > 3 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    4 │ import { useColorMode } from "theme-ui";
+    5 │ 
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    3 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/components/ColorModeToggle.tsx:6:23 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    4 │ import { useColorMode } from "theme-ui";
+    5 │ 
+  > 6 │ type ColorModeProps = {};
+      │                       ^^
+    7 │ 
+    8 │ export const ColorModeToggle: FunctionComponent<ColorModeProps> = () => {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/LazyPromise.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type ComponentType, useState } from "react";
+      │        ^^^^^
+    2 │ 
+    3 │ interface LazyPromiseProps<T> {
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·ComponentType,·useState·}·from·"react";
+      │        -------                                              
+
+src/components/ui/Dropdown/Dropdown.tsx:11:20 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    10 │ const IconDown = styled(ChevronDownSquare)`
+  > 11 │   color: ${(props: any) => props.theme.colors.text};
+       │                    ^^^
+    12 │   height: 3rem;
+    13 │   opacity: 0.5;
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/Dropdown/Dropdown.tsx:49:82 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    47 │   useEffect(() => {
+    48 │     function handleClickOutside(event: MouseEvent) {
+  > 49 │       if (containerRef.current && !containerRef.current.contains(event.target as any)) {
+       │                                                                                  ^^^
+    50 │         setOpened(false);
+    51 │       }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/Dropdown/Dropdown.tsx:4:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    2 │ import { ChevronDownSquare } from "@emotion-icons/boxicons-solid/ChevronDownSquare";
+    3 │ import { Input } from "@rebass/forms";
+  > 4 │ import React, { type ChangeEvent, type KeyboardEvent, useEffect, useRef, useState } from "react";
+      │        ^^^^^
+    5 │ import { Box, Flex } from "rebass";
+    6 │ import { DropdownContext, type DropdownContextInterface } from "./context";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    4 │ import·React,·{·type·ChangeEvent,·type·KeyboardEvent,·useEffect,·useRef,·useState·}·from·"react";
+      │        -------                                                                                   
+
+src/components/ui/Dropdown/Dropdown.tsx:64:5 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━
+
+  ! Change to an optional chain.
+  
+    62 │     setValue(renderValue(item));
+    63 │ 
+  > 64 │     props.onChange && props.onChange(item);
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    65 │     setEditing(false);
+    66 │     setOpened(false);
+  
+  i Unsafe fix: Change to an optional chain.
+  
+     62  62 │       setValue(renderValue(item));
+     63  63 │   
+     64     │ - ····props.onChange·&&·props.onChange(item);
+         64 │ + ····props.onChange?.(item);
+     65  65 │       setEditing(false);
+     66  66 │       setOpened(false);
+  
+
+src/components/ui/Dropdown/Dropdown.tsx:78:7 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━
+
+  ! Change to an optional chain.
+  
+    76 │     event.stopPropagation();
+    77 │     if (event.key === "Enter") {
+  > 78 │       props.onEdit && props.onEdit(value);
+       │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    79 │     }
+    80 │     if (event.key === "Escape") {
+  
+  i Unsafe fix: Change to an optional chain.
+  
+     76  76 │       event.stopPropagation();
+     77  77 │       if (event.key === "Enter") {
+     78     │ - ······props.onEdit·&&·props.onEdit(value);
+         78 │ + ······props.onEdit?.(value);
+     79  79 │       }
+     80  80 │       if (event.key === "Escape") {
+  
+
+src/components/ui/Dropdown/Dropdown.tsx:87:7 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━
+
+  ! Change to an optional chain.
+  
+    85 │   const onBlurInputHandler = () => {
+    86 │     if (editing) {
+  > 87 │       value && props.onEdit && props.onEdit(value);
+       │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    88 │     }
+    89 │   };
+  
+  i Unsafe fix: Change to an optional chain.
+  
+     85  85 │     const onBlurInputHandler = () => {
+     86  86 │       if (editing) {
+     87     │ - ······value·&&·props.onEdit·&&·props.onEdit(value);
+         87 │ + ······value·&&·props.onEdit?.(value);
+     88  88 │       }
+     89  89 │     };
+  
+
+src/components/ui/Dropdown/DropdownItem.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type FunctionComponent, useContext } from "react";
+      │        ^^^^^
+    2 │ import { Box, Flex } from "rebass";
+    3 │ import styled, { css } from "styled-components";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·FunctionComponent,·useContext·}·from·"react";
+      │        -------                                                    
+
+src/components/ui/Dropdown/DropdownItem.tsx:71:17 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━
+
+  ! Change to an optional chain.
+  
+    69 │     <StyledItemBox
+    70 │       onClick={onItemClickHandler}
+  > 71 │       disabled={ctx.checkDisabledItem && ctx.checkDisabledItem(value)}
+       │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    72 │     >
+    73 │       <ItemContainer>{renderItem()}</ItemContainer>
+  
+  i Unsafe fix: Change to an optional chain.
+  
+    69 69 │       <StyledItemBox
+    70 70 │         onClick={onItemClickHandler}
+    71    │ - ······disabled={ctx.checkDisabledItem·&&·ctx.checkDisabledItem(value)}
+       71 │ + ······disabled={ctx.checkDisabledItem?.(value)}
+    72 72 │       >
+    73 73 │         <ItemContainer>{renderItem()}</ItemContainer>
+  
+
+src/components/ui/Dropdown/DropdownList.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { useEffect, useRef, useState } from "react";
+      │        ^^^^^
+    2 │ import { Box, Card, Flex } from "rebass";
+    3 │ import { DropdownItem } from "./DropdownItem";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·useEffect,·useRef,·useState·}·from·"react";
+      │        -------                                             
+
+src/components/ui/Dropdown/context.ts:5:47 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    4 │ // TODO  сделать генерик
+  > 5 │ export interface DropdownContextInterface<T = any> {
+      │                                               ^^^
+    6 │   onItemClick?: ItemCallback<T>;
+    7 │   renderItem?: RenderItemCallback<T>;
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/Dropdown/context.ts:12:47 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    11 │ export type DropdownContext<T> = Context<DropdownContextInterface<T>>;
+  > 12 │ export const DropdownContext: DropdownContext<any> = React.createContext({});
+       │                                               ^^^
+    13 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/Dropdown/types.d.ts:6:6 lint/correctness/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This type alias RenderItemCallback is unused.
+  
+    4 │ export type ItemCallback<T, R = void> = (item: ItemType<T>) => R;
+    5 │ export type RenderValueCallback<T> = ItemCallback<T, string>;
+  > 6 │ type RenderItemCallback<T> = ComponentType<{ item: T; index: number }>;
+      │      ^^^^^^^^^^^^^^^^^^
+    7 │ 
+  
+  i Unused variables are often the result of typos, incomplete refactors, or other sources of bugs.
+  
+
+src/components/ui/ForkMeOnGitHub.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    2 │ import styled from "styled-components";
+    3 │ 
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/components/ui/ForkMeOnGitHub.tsx:63:28 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    61 │ `;
+    62 │ 
+  > 63 │ type ForkMeOnGitHubProps = {};
+       │                            ^^
+    64 │ 
+    65 │ export const ForkMeOnGitHub: FunctionComponent<ForkMeOnGitHubProps> = () => {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/ui/Icon.tsx:3:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import type { EmotionIcon } from "@emotion-icons/emotion-icon";
+    2 │ import { useTheme } from "emotion-theming";
+  > 3 │ import React, { forwardRef, useEffect, useState } from "react";
+      │        ^^^^^
+    4 │ import { Box, type BoxProps } from "rebass";
+    5 │ import type { Theme } from "@/themes/types";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    3 │ import·React,·{·forwardRef,·useEffect,·useState·}·from·"react";
+      │        -------                                                 
+
+src/components/ui/Modal/Modal.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Cross } from "@styled-icons/entypo/Cross";
+  > 2 │ import React, { type ReactNode, useEffect, useState } from "react";
+      │        ^^^^^
+    3 │ import { Box, Flex, Heading } from "rebass";
+    4 │ import { Icon } from "@/components/ui/Icon";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·ReactNode,·useEffect,·useState·}·from·"react";
+      │        -------                                                     
+
+src/components/ui/Modal/Modal.tsx:45:8 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━
+
+  ! Change to an optional chain.
+  
+    43 │   return (
+    44 │     <>
+  > 45 │       {button && button(renderCbProps)}
+       │        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    46 │       {closed ? null : (
+    47 │         <ModalContainer>
+  
+  i Unsafe fix: Change to an optional chain.
+  
+    43 43 │     return (
+    44 44 │       <>
+    45    │ - ······{button·&&·button(renderCbProps)}
+       45 │ + ······{button?.(renderCbProps)}
+    46 46 │         {closed ? null : (
+    47 47 │           <ModalContainer>
+  
+
+src/components/ui/Modal/ModalContainer.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import styled from "@emotion/styled";
+  > 2 │ import React, { type ReactNode } from "react";
+      │        ^^^^^
+    3 │ import ReactDOM from "react-dom";
+    4 │ import { Helmet } from "react-helmet";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·ReactNode·}·from·"react";
+      │        -------                                
+
+src/components/ui/RebassWidgets/Number.tsx:33:52 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    31 │ `;
+    32 │ 
+  > 33 │ export const NumberInput: FC<InputProps> = (props: any) => {
+       │                                                    ^^^
+    34 │   const step = parseFloat(props.step || 1);
+    35 │   const precision = countDecimals(step);
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/RebassWidgets/Number.tsx:47:85 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    45 │   };
+    46 │   const onBlurHandler = (e: FocusEvent) => {
+  > 47 │     if (![upButtonRef?.current, downButtonRef?.current].includes(e.relatedTarget as any)) {
+       │                                                                                     ^^^
+    48 │       setShowBtn(false);
+    49 │     }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/ReduxForm/Checkbox.tsx:14:87 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    12 │ }
+    13 │ 
+  > 14 │ const WrappedCheckbox: WrapperInputType<CheckboxProps> = ({ input, label, ...props }: any) => (
+       │                                                                                       ^^^
+    15 │   <Label>
+    16 │     <RebassCheckbox {...props} {...input} checked={input.value} />
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/ReduxForm/Checkbox.tsx:23:76 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    21 │ // TODO вывести тип
+    22 │ export const Checkbox: ReduxFormComponentType<CheckboxProps> = ({ name, ...props }) => {
+  > 23 │   return <ReduxField component={WrappedCheckbox} name={name} {...(props as any)} />;
+       │                                                                            ^^^
+    24 │ };
+    25 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/ReduxForm/Checkbox.tsx:6:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━
+
+  ! This import is unused.
+  
+    4 │   type CheckboxProps as RebassCheckboxProps,
+    5 │ } from "@rebass/forms";
+  > 6 │ import React from "react";
+      │        ^^^^^
+    7 │ import { Field as ReduxField } from "redux-form";
+    8 │ import type { ReduxFormComponentType, WrapperInputType } from "./types";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     4  4 │     type CheckboxProps as RebassCheckboxProps,
+     5  5 │   } from "@rebass/forms";
+     6    │ - import·React·from·"react";
+     7  6 │   import { Field as ReduxField } from "redux-form";
+     8  7 │   import type { ReduxFormComponentType, WrapperInputType } from "./types";
+  
+
+src/components/ui/ReduxForm/Input.tsx:18:4 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    16 │   type = "text",
+    17 │   ...props
+  > 18 │ }: any) => (
+       │    ^^^
+    19 │   <RebassInput
+    20 │     {...props}
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/ReduxForm/Input.tsx:30:73 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    28 │ // TODO вывести тип
+    29 │ export const Input: ReduxFormComponentType<InputProps> = ({ name, ...props }) => {
+  > 30 │   return <ReduxField component={WrappedInput} name={name} {...(props as any)} />;
+       │                                                                         ^^^
+    31 │ };
+    32 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/ReduxForm/Input.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━
+
+  ! This import is unused.
+  
+  > 1 │ import React from "react";
+      │        ^^^^^
+    2 │ import { Field as ReduxField } from "redux-form";
+    3 │ 
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React·from·"react";
+      │ --------------------------
+
+src/components/ui/ReduxForm/Radio.tsx:11:91 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+     9 │ }
+    10 │ 
+  > 11 │ const WrappedCheckbox: WrapperInputType<RadioProps> = ({ input, label, value, ...props }: any) => (
+       │                                                                                           ^^^
+    12 │   <Label>
+    13 │     <RebassRadio {...props} {...input} />
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/ReduxForm/Radio.tsx:34:21 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    32 │       type="radio"
+    33 │       value={normalize(value)}
+  > 34 │       {...(props as any)}
+       │                     ^^^
+    35 │     />
+    36 │   );
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/ReduxForm/Radio.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━
+
+  ! This import is unused.
+  
+    1 │ import { Label, Radio as RebassRadio, type RadioProps as RebassRadioProps } from "@rebass/forms";
+  > 2 │ import React from "react";
+      │        ^^^^^
+    3 │ import { Field as ReduxField } from "redux-form";
+    4 │ import type { ReduxFormComponentType, WrapperInputType } from "./types";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import { Label, Radio as RebassRadio, type RadioProps as RebassRadioProps } from "@rebass/forms";
+     2    │ - import·React·from·"react";
+     3  2 │   import { Field as ReduxField } from "redux-form";
+     4  3 │   import type { ReduxFormComponentType, WrapperInputType } from "./types";
+  
+
+src/components/ui/ReduxForm/index.tsx:5:66 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    4 │ // TODO вывести тип
+  > 5 │ export function renderReduxField(WrappedComponent: ComponentType<any>) {
+      │                                                                  ^^^
+    6 │   return (props: WrappedFieldProps) => {
+    7 │     return <WrappedComponent {...props.input} />;
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/ReduxForm/index.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type ComponentType } from "react";
+      │        ^^^^^
+    2 │ import type { WrappedFieldProps } from "redux-form";
+    3 │ 
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·ComponentType·}·from·"react";
+      │        -------                                    
+
+src/components/ui/ReduxForm/normalizers.ts:1:31 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+  > 1 │ export function number(value: any) {
+      │                               ^^^
+    2 │   return value && parseInt(value);
+    3 │ }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/ReduxForm/normalizers.ts:5:32 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    3 │ }
+    4 │ 
+  > 5 │ export function decimal(value: any) {
+      │                                ^^^
+    6 │   return value && parseFloat(value);
+    7 │ }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/ReduxForm/types.d.ts:12:41 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    11 │ export type ReduxFormComponentType<T> = ComponentType<T & Partial<BaseFieldProps>>;
+  > 12 │ export type ReduxFormType<Props, Data = {}> = ComponentType<Props & InjectedFormProps<Data>>;
+       │                                         ^^
+    13 │ 
+    14 │ export type ReduxFieldArrayType<Props, Data = {}> = ComponentType<
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/ui/ReduxForm/types.d.ts:14:47 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    12 │ export type ReduxFormType<Props, Data = {}> = ComponentType<Props & InjectedFormProps<Data>>;
+    13 │ 
+  > 14 │ export type ReduxFieldArrayType<Props, Data = {}> = ComponentType<
+       │                                               ^^
+    15 │   Props & WrappedFieldArrayProps<Data>
+    16 │ >;
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/ui/ReduxForm/validators.ts:1:34 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+  > 1 │ type ValidatorCallback = (value: any) => void | string;
+      │                                  ^^^
+    2 │ 
+    3 │ export function pattern(pattern: RegExp | string, message?: string): ValidatorCallback {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/components/ui/ReduxForm/validators.ts:1:42 lint/suspicious/noConfusingVoidType  FIXABLE  ━━━━━━━━━━
+
+  ! void is confusing inside a union type.
+  
+  > 1 │ type ValidatorCallback = (value: any) => void | string;
+      │                                          ^^^^
+    2 │ 
+    3 │ export function pattern(pattern: RegExp | string, message?: string): ValidatorCallback {
+  
+  i Unsafe fix: Use undefined instead.
+  
+     1    │ - type·ValidatorCallback·=·(value:·any)·=>·void·|·string;
+        1 │ + type·ValidatorCallback·=·(value:·any)·=>·undefined·|·string;
+     2  2 │   
+     3  3 │   export function pattern(pattern: RegExp | string, message?: string): ValidatorCallback {
+  
+
+src/components/ui/ReduxForm/validators.ts:27:9 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━
+
+  ! Change to an optional chain.
+  
+    26 │   return (value) => {
+  > 27 │     if (!value || !value?.length) {
+       │         ^^^^^^^^^^^^^^^^^^^^^^^^
+    28 │       return message;
+    29 │     }
+  
+  i Unsafe fix: Change to an optional chain.
+  
+    27 │ ····if·(!value·||·!value?.length)·{
+       │               ----------           
+
+src/components/ui/Sidebar/Sidebar.tsx:3:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Menu } from "@styled-icons/boxicons-regular/Menu";
+    2 │ import { Cross } from "@styled-icons/entypo/Cross";
+  > 3 │ import React, { type ReactNode, useEffect, useState } from "react";
+      │        ^^^^^
+    4 │ import { Box, Flex, Heading } from "rebass";
+    5 │ import { Icon } from "@/components/ui/Icon";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    3 │ import·React,·{·type·ReactNode,·useEffect,·useState·}·from·"react";
+      │        -------                                                     
+
+src/components/ui/Sidebar/SidebarContainer.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import styled from "@emotion/styled";
+  > 2 │ import React, { type ReactNode } from "react";
+      │        ^^^^^
+    3 │ import ReactDOM from "react-dom";
+    4 │ import { Helmet } from "react-helmet";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·type·ReactNode·}·from·"react";
+      │        -------                                
+
+src/components/ui/TabMenu/TabMenu.tsx:14:25 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+    12 │ type TabMenuProps = {};
+    13 │ 
+  > 14 │ export function TabMenu(props: TabMenuProps) {
+       │                         ^^^^^
+    15 │   return (
+    16 │     <Sidebar>
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+    12 12 │   type TabMenuProps = {};
+    13 13 │   
+    14    │ - export·function·TabMenu(props:·TabMenuProps)·{
+       14 │ + export·function·TabMenu(_props:·TabMenuProps)·{
+    15 15 │     return (
+    16 16 │       <Sidebar>
+  
+
+src/components/ui/TabMenu/TabMenu.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━
+
+  ! This import is unused.
+  
+  > 1 │ import React from "react";
+      │        ^^^^^
+    2 │ import { NavTab, RoutedTabs } from "react-router-tabs";
+    3 │ 
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React·from·"react";
+      │ --------------------------
+
+src/components/ui/TabMenu/TabMenu.tsx:12:21 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    10 │ import { type HelpPageListType, useHelpPagesList } from "@/pages/Help/pages";
+    11 │ 
+  > 12 │ type TabMenuProps = {};
+       │                     ^^
+    13 │ 
+    14 │ export function TabMenu(props: TabMenuProps) {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/ui/TabMenu/TabMenu.tsx:50:34 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+    48 │ }
+    49 │ 
+  > 50 │ export function HelpPagesSubMenu(props: {}) {
+       │                                  ^^^^^
+    51 │   const match = useRouteMatch<{ slug: string }>({
+    52 │     path: "/help/:slug?",
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+    48 48 │   }
+    49 49 │   
+    50    │ - export·function·HelpPagesSubMenu(props:·{})·{
+       50 │ + export·function·HelpPagesSubMenu(_props:·{})·{
+    51 51 │     const match = useRouteMatch<{ slug: string }>({
+    52 52 │       path: "/help/:slug?",
+  
+
+src/components/ui/TabMenu/TabMenu.tsx:50:41 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    48 │ }
+    49 │ 
+  > 50 │ export function HelpPagesSubMenu(props: {}) {
+       │                                         ^^
+    51 │   const match = useRouteMatch<{ slug: string }>({
+    52 │     path: "/help/:slug?",
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/ui/csv/ImportCSV.tsx:3:23 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    1 │ import React from "react";
+    2 │ 
+  > 3 │ type ImportCSVProps = {};
+      │                       ^^
+    4 │ 
+    5 │ export function ImportCSV(props: ImportCSVProps) {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/components/ui/csv/ImportCSV.tsx:5:27 lint/correctness/noUnusedFunctionParameters  FIXABLE  ━━━━━━━━━━
+
+  ! This parameter props is unused.
+  
+    3 │ type ImportCSVProps = {};
+    4 │ 
+  > 5 │ export function ImportCSV(props: ImportCSVProps) {
+      │                           ^^^^^
+    6 │   return <div></div>;
+    7 │ }
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: If this is intentional, prepend props with an underscore.
+  
+    3 3 │   type ImportCSVProps = {};
+    4 4 │   
+    5   │ - export·function·ImportCSV(props:·ImportCSVProps)·{
+      5 │ + export·function·ImportCSV(_props:·ImportCSVProps)·{
+    6 6 │     return <div></div>;
+    7 7 │   }
+  
+
+src/components/ui/csv/ImportCSV.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+  ! This import is unused.
+  
+  > 1 │ import React from "react";
+      │        ^^^^^
+    2 │ 
+    3 │ type ImportCSVProps = {};
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React·from·"react";
+      │ --------------------------
+
+src/hooks/ReduxForm.ts:15:39 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    13 │ export function useFormValues<FormValues = object>(
+    14 │   formName: string,
+  > 15 │ ): [FormValues, (name: string, value: any) => void] {
+       │                                       ^^^
+    16 │   const dispatch = useDispatch();
+    17 │   const values = useSelector((state) => getFormValues(formName)(state)) as FormValues;
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/hooks/ReduxForm.ts:19:42 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    17 │   const values = useSelector((state) => getFormValues(formName)(state)) as FormValues;
+    18 │ 
+  > 19 │   const setValue = (name: string, value: any) => {
+       │                                          ^^^
+    20 │     dispatch(change(formName, name, value));
+    21 │   };
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/pages/App/index.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This import is unused.
+  
+  > 1 │ import React from "react";
+      │        ^^^^^
+    2 │ import logo from "./logo.svg";
+    3 │ import "./App.css";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React·from·"react";
+      │ --------------------------
+
+src/pages/Calculator/index.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This import is unused.
+  
+    1 │ import loadable from "@loadable/component";
+  > 2 │ import React from "react";
+      │        ^^^^^
+    3 │ import { Route, HashRouter as Router, Switch } from "react-router-dom";
+    4 │ 
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import loadable from "@loadable/component";
+     2    │ - import·React·from·"react";
+     3  2 │   import { Route, HashRouter as Router, Switch } from "react-router-dom";
+     4  3 │   
+  
+
+src/pages/ChemFormula/index.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Input } from "@rebass/forms";
+  > 2 │ import React, { useEffect, useState } from "react";
+      │        ^^^^^
+    3 │ import { useHistory, useParams } from "react-router-dom";
+    4 │ import { Box, Flex, Heading } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·useEffect,·useState·}·from·"react";
+      │        -------                                     
+
+src/pages/DensityCalculator/index.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+    1 │ import { Input, Label } from "@rebass/forms";
+  > 2 │ import React, { useEffect, useState } from "react";
+      │        ^^^^^
+    3 │ import { useHistory, useParams } from "react-router-dom";
+    4 │ import { Box, Flex, Heading, Text } from "rebass";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·React,·{·useEffect,·useState·}·from·"react";
+      │        -------                                     
+
+src/pages/Example/index.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type FunctionComponent, useState } from "react";
+      │        ^^^^^
+    2 │ import { Box, Button, Flex } from "rebass";
+    3 │ import { Dropdown } from "../../components/ui/Dropdown/Dropdown";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·FunctionComponent,·useState·}·from·"react";
+      │        -------                                                  
+
+src/pages/Example/index.tsx:5:19 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    3 │ import { Dropdown } from "../../components/ui/Dropdown/Dropdown";
+    4 │ 
+  > 5 │ type indexProps = {};
+      │                   ^^
+    6 │ 
+    7 │ type ItemType = {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/pages/Help/Help.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! These imports are unused.
+  
+  > 1 │ import React, { type FunctionComponent } from "react";
+      │        ^^^^^
+    2 │ import ReactMarkdown from "react-markdown/with-html";
+    3 │ import { Switch, useParams } from "react-router-dom";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·FunctionComponent·}·from·"react";
+      │        -------                                        
+
+src/pages/Help/Help.tsx:8:46 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+     6 │ import { useHelpPageMap } from "@/pages/Help/pages";
+     7 │ 
+   > 8 │ export const LazyHelpPage: FunctionComponent<{}> = () => {
+       │                                              ^^
+     9 │   const { slug } = useParams();
+    10 │   const pageMap = useHelpPageMap();
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/pages/Help/Help.tsx:32:18 lint/complexity/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type.
+  
+    30 │ };
+    31 │ 
+  > 32 │ type HelpProps = {};
+       │                  ^^
+    33 │ 
+    34 │ export const Help: FunctionComponent<HelpProps> = () => {
+  
+  i '{}' accepts any non-nullish value, including non-object primitives like '123' and 'true'.
+    - If you want a type meaning "any arbitrary object", use 'object' instead.
+    - If you want a type meaning "any value", use 'unknown' instead.
+    - If you want a type meaning "an object whose properties cannot be used", use '{ [k: keyof any]: never }' or 'Record<keyof any, never>' instead.
+    - If you want a type meaning "an object that cannot contain any properties whatsoever", use '{ [uniqueSymbol]?: never }' with an unexported unique symbol in the same file.
+  
+  i If that's really what you want, use an inline disable comment.
+  
+
+src/pages/NotFound/index.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This import is unused.
+  
+  > 1 │ import React from "react";
+      │        ^^^^^
+    2 │ 
+    3 │ export default () => <h1>Not found</h1>;
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React·from·"react";
+      │ --------------------------
+
+src/redux/index.ts:8:37 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+     6 │ import { rootReducers } from "./rootReducers";
+     7 │ 
+   > 8 │ const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+       │                                     ^^^
+     9 │ 
+    10 │ const sagaMiddleware = createSagaMiddleware();
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/redux/index.ts:13:14 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    12 │ function loadPersistedState() {
+  > 13 │   let state: any = {};
+       │              ^^^
+    14 │   if (localStorage.getItem("reduxState")) {
+    15 │     state = JSON.parse(localStorage.getItem("reduxState") as string);
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/saga.ts:5:35 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    3 │ import calculatorRootSaga from "./components/Calculator/saga";
+    4 │ 
+  > 5 │ type AnySagaGenerator = Generator<any, any, any>;
+      │                                   ^^^
+    6 │ 
+    7 │ const sagas: (() => AnySagaGenerator)[] = [calculatorRootSaga, fertilizerManagerRootSaga];
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/saga.ts:5:40 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    3 │ import calculatorRootSaga from "./components/Calculator/saga";
+    4 │ 
+  > 5 │ type AnySagaGenerator = Generator<any, any, any>;
+      │                                        ^^^
+    6 │ 
+    7 │ const sagas: (() => AnySagaGenerator)[] = [calculatorRootSaga, fertilizerManagerRootSaga];
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/saga.ts:5:45 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    3 │ import calculatorRootSaga from "./components/Calculator/saga";
+    4 │ 
+  > 5 │ type AnySagaGenerator = Generator<any, any, any>;
+      │                                             ^^^
+    6 │ 
+    7 │ const sagas: (() => AnySagaGenerator)[] = [calculatorRootSaga, fertilizerManagerRootSaga];
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/themes/index.ts:3:16 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    1 │ import type { Theme } from "@/themes/types";
+    2 │ 
+  > 3 │ const presets: any = require("@theme-ui/presets");
+      │                ^^^
+    4 │ 
+    5 │ export const defaultTheme: Theme = {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/utils/csv.ts:8:40 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+     6 │  */
+     7 │ 
+   > 8 │ export type CsvRecord = Record<string, any>;
+       │                                        ^^^
+     9 │ export type CsvOptions = Record<string, unknown>;
+    10 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/utils/index.ts:62:27 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    60 │ }
+    61 │ 
+  > 62 │ export function equal(t1: any, t2: any): boolean {
+       │                           ^^^
+    63 │   return JSON.stringify(t1) === JSON.stringify(t2);
+    64 │ }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/utils/index.ts:62:36 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    60 │ }
+    61 │ 
+  > 62 │ export function equal(t1: any, t2: any): boolean {
+       │                                    ^^^
+    63 │   return JSON.stringify(t1) === JSON.stringify(t2);
+    64 │ }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/utils/index.ts:35:29 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    33 │   const m: ToMapResult<T> = {};
+    34 │   for (const i of list) {
+  > 35 │     const key = i[field] as any as string;
+       │                             ^^^
+    36 │     m[key] = i;
+    37 │   }
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src/utils/index.ts:24:8 lint/suspicious/noGlobalIsNan  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! isNaN is unsafe. It attempts a type coercion. Use Number.isNaN instead.
+  
+    22 │ export function tryParseFloat(value: string): number | string {
+    23 │   const v = parseFloat(value);
+  > 24 │   if (!isNaN(v)) {
+       │        ^^^^^
+    25 │     return v;
+    26 │   }
+  
+  i See the MDN documentation for more details.
+  
+  i Unsafe fix: Use Number.isNaN instead.
+  
+    22 22 │   export function tryParseFloat(value: string): number | string {
+    23 23 │     const v = parseFloat(value);
+    24    │ - ··if·(!isNaN(v))·{
+       24 │ + ··if·(!Number.isNaN(v))·{
+    25 25 │       return v;
+    26 26 │     }
+  
+
+src/calculator/dilution.ts:90:28 lint/suspicious/noDoubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Using == may be unsafe if you are relying on type coercion.
+  
+    88 │   concentration: Partial<Concentration> | number,
+    89 │ ): Required<Concentration> {
+  > 90 │   if (typeof concentration == "number") {
+       │                            ^^
+    91 │     return {
+    92 │       k: concentration,
+  
+  i == is only allowed when comparing against null.
+  
+  i Unsafe fix: Use === instead.
+  
+    90 │ ··if·(typeof·concentration·===·"number")·{
+       │                              +            
+
+src/calculator/format/hpg.test.ts:48:1 lint/suspicious/noExportsInTest ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Do not export from a test file.
+  
+     46 │ });
+     47 │ 
+   > 48 │ export const EXAMPLE_FILE = `version=Hydroponic Profile Generator 0.213 https://github.com/siv237/HPG
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   > 49 │ Comment=По умолчанию
+         ...
+  > 170 │ date=2021-02-21;Автозапись. Изготовлен раствор на 17 литров.;N=216 NO3=196.34 NH4=19.65 P=59.99 K=243.43 Ca=166.83 Mg=49.24 S=65 Cl=0 Fe=2.801 Mn=0.445 B=0.5 Zn=0.269 Cu=0.048 Mo=0.048 Co=0.048 Si=0·
+  > 171 │ `;
+        │ ^^
+    172 │ 
+    173 │ const _fertilizers = [
+  
+
+src/calculator/format/hpg.ts:167:65 lint/suspicious/noDoubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Using != may be unsafe if you are relying on type coercion.
+  
+    166 │   static stringifyProfile(npk: NPKElements): string {
+  > 167 │     const s = FERTILIZER_ELEMENT_NAMES.map((e) => typeof npk[e] != "undefined" && `${e}=${npk[e]}`)
+        │                                                                 ^^
+    168 │       .filter((e) => e)
+    169 │       .join(" ");
+  
+  i != is only allowed when comparing against null.
+  
+  i Unsafe fix: Use !== instead.
+  
+    167 │ ····const·s·=·FERTILIZER_ELEMENT_NAMES.map((e)·=>·typeof·npk[e]·!==·"undefined"·&&·`${e}=${npk[e]}`)
+        │                                                                   +                                 
+
+src/calculator/format/json.test.ts:16:1 lint/suspicious/noExportsInTest ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Do not export from a test file.
+  
+     14 │ });
+     15 │ 
+   > 16 │ export const EXAMPLE_STATE: ExportStateType = {
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   > 17 │   meta: {
+         ...
+  > 142 │     ],
+  > 143 │   },
+  > 144 │ };
+        │ ^^
+    145 │ 
+  
+
+src/calculator/index.ts:208:34 lint/suspicious/noDoubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Using == may be unsafe if you are relying on type coercion.
+  
+    206 │       ignoredElements[key] = 1;
+    207 │     }
+  > 208 │     if (typeof needElements[key] == "undefined") {
+        │                                  ^^
+    209 │       ignoredElements[key] = 1;
+    210 │     }
+  
+  i == is only allowed when comparing against null.
+  
+  i Unsafe fix: Use === instead.
+  
+    208 │ ····if·(typeof·needElements[key]·===·"undefined")·{
+        │                                    +               
+
+src/calculator/index.ts:349:7 lint/suspicious/noImplicitAnyLet ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × This variable implicitly has the any type.
+  
+    348 │   let best_score = 1000000;
+  > 349 │   let score;
+        │       ^^^^^
+    350 │   let score_percent = 0;
+    351 │   let calculatedElements: Elements = getEmptyElements();
+  
+  i Variable declarations without type annotation and initialization implicitly have the any type. Declare a type or initialize the variable with some value.
+  
+
+src/calculator/molecular-parser/molecularParser.ts:148:11 lint/suspicious/noImplicitAnyLet ━━━━━━━━━━
+
+  × This variable implicitly has the any type.
+  
+    146 │     subgroups.forEach((subgroup) => {
+    147 │       const subgroupCounts = decomposeFormula(subgroup.formula);
+  > 148 │       let elementCount;
+        │           ^^^^^^^^^^^^
+    149 │       for (const element in subgroupCounts) {
+    150 │         if (Object.hasOwn(ATOMIC_MASS, element)) {
+  
+  i Variable declarations without type annotation and initialization implicitly have the any type. Declare a type or initialize the variable with some value.
+  
+
+src/calculator/molecular-parser/molecularParser.ts:17:7 lint/suspicious/noImplicitAnyLet ━━━━━━━━━━━
+
+  × This variable implicitly has the any type.
+  
+    15 │  */
+    16 │ export const findSubgroups = (formula: string): SubgroupType[] => {
+  > 17 │   let finishingNestedSubgroup;
+       │       ^^^^^^^^^^^^^^^^^^^^^^^
+    18 │   const subgroups: SubgroupType[] = [];
+    19 │   let currentFormula = "",
+  
+  i Variable declarations without type annotation and initialization implicitly have the any type. Declare a type or initialize the variable with some value.
+  
+
+src/components/Calculator/FertilizerManager/AddEdit.tsx:84:13 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    82 │         <Flex>
+    83 │           {MICRO_ELEMENT_NAMES.map((el) => (
+  > 84 │             <AddItemElementForm name={el} disabled={formValues.composition_enable} />
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    85 │           ))}
+    86 │         </Flex>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/Calculator/FertilizerManager/AddEdit.tsx:78:13 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    76 │         <Flex>
+    77 │           {MACRO_ELEMENT_NAMES.map((el) => (
+  > 78 │             <AddItemElementForm name={el} disabled={formValues.composition_enable} />
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    79 │           ))}
+    80 │         </Flex>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/Calculator/FertilizerManager/AddEditCompositionList.tsx:25:22 lint/suspicious/noArrayIndexKey ━━━━━━━━━━
+
+  × Avoid using the index of an array as key property in an element.
+  
+    23 │       <Flex flexDirection="column">
+    24 │         {fields.map((f, i) => (
+  > 25 │           <Flex key={i} width="100%">
+       │                      ^
+    26 │             <Input name={`${f}.formula`} flex={2} placeholder={"NH4NO3"} />
+    27 │             <Input
+  
+  i This is the source of the key value.
+  
+    22 │       </Flex>
+    23 │       <Flex flexDirection="column">
+  > 24 │         {fields.map((f, i) => (
+       │                         ^
+    25 │           <Flex key={i} width="100%">
+    26 │             <Input name={`${f}.formula`} flex={2} placeholder={"NH4NO3"} />
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+src/components/Calculator/FertilizerManager/AddEditNPKString.tsx:41:7 lint/a11y/noLabelWithoutControl ━━━━━━━━━━
+
+  × A form label must be associated with an input.
+  
+    39 │       padding={2}
+    40 │     >
+  > 41 │       <label style={{ textAlign: "center" }}></label>
+       │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    42 │       <Input
+    43 │         disabled={composition_enable}
+  
+  i Consider adding an accessible text content to the label element.
+  
+  i Consider adding a "for" or "htmlFor" attribute to the label element or moving the input element to inside the label element.
+  
+
+src/components/Calculator/FertilizerManager/AddItemElementForm.tsx:21:7 lint/a11y/noLabelWithoutControl ━━━━━━━━━━
+
+  × A form label must be associated with an input.
+  
+    19 │   return (
+    20 │     <Flex flexDirection="column" justifyContent="center" alignItems="center" width="4rem">
+  > 21 │       <label style={{ textAlign: "center" }}>{displayName}</label>
+       │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    22 │       <Input
+    23 │         name={"npk." + name}
+  
+  i Consider adding a "for" or "htmlFor" attribute to the label element or moving the input element to inside the label element.
+  
+
+src/components/Calculator/FertilizerSelect/AddItemElementForm.tsx:31:7 lint/a11y/noLabelWithoutControl ━━━━━━━━━━
+
+  × A form label must be associated with an input.
+  
+    29 │   return (
+    30 │     <Flex flexDirection="column" justifyContent="center" alignItems="center" width="4rem">
+  > 31 │       <label style={{ textAlign: "center" }}>{name}</label>
+       │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    32 │       <StyledInput
+    33 │         type="number"
+  
+  i Consider adding a "for" or "htmlFor" attribute to the label element or moving the input element to inside the label element.
+  
+
+src/components/Calculator/FertilizerSelect/AddItemFertilizerEditForm.tsx:43:11 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    41 │       <Flex>
+    42 │         {MACRO_ELEMENT_NAMES.map((el) => (
+  > 43 │           <AddItemElementForm
+       │           ^^^^^^^^^^^^^^^^^^^
+  > 44 │             disabled={true}
+  > 45 │             name={el}
+  > 46 │             value={elements?.[el] || 0}
+  > 47 │             onChange={(v) => onChangeHandler(el, v)}
+  > 48 │           />
+       │           ^^
+    49 │         ))}
+    50 │       </Flex>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/Calculator/Options/Accuracy.tsx:15:11 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    13 │         <Heading fontSize={2}>Точность</Heading>
+    14 │         {ACCURACY_VARIANTS.map((a) => (
+  > 15 │           <Radio name="accuracy" value={a} label={`${a} г.`} normalize={decimal} />
+       │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    16 │         ))}
+    17 │       </Flex>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/Calculator/Options/Recipe.tsx:103:19 lint/a11y/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Provide an explicit type prop for the button element.
+  
+    101 │                     {item.name}
+    102 │                   </Box>
+  > 103 │                   <button
+        │                   ^^^^^^^
+  > 104 │                     onClick={(event) => {
+  > 105 │                       event.stopPropagation();
+  > 106 │                       onRemoveItemHandler(item);
+  > 107 │                     }}
+  > 108 │                   >
+        │                   ^
+    109 │                     -
+    110 │                   </button>
+  
+  i The default type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
+  
+  i Allowed button types are: submit, button or reset
+  
+
+src/components/Calculator/Options/Recipe.tsx:123:13 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    121 │         <Flex justifyContent="space-between">
+    122 │           {MACRO_ELEMENT_NAMES.map((n) => (
+  > 123 │             <RecipeElementForm name={n} />
+        │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    124 │           ))}
+    125 │         </Flex>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/Calculator/Options/RecipeTuneForm.tsx:151:17 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    149 │               <th></th>
+    150 │               {ELEMENT_IN_MATRIX.map((el) => (
+  > 151 │                 <th>{el}</th>
+        │                 ^^^^
+    152 │               ))}
+    153 │             </tr>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/Calculator/Options/RecipeTuneForm.tsx:157:15 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    155 │           <tbody>
+    156 │             {ELEMENT_IN_MATRIX.map((el) => (
+  > 157 │               <tr>
+        │               ^^^^
+    158 │                 <th>{el}</th>
+    159 │                 {ELEMENT_IN_MATRIX.map((el2) => (
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/Calculator/Options/RecipeTuneForm.tsx:160:19 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    158 │                 <th>{el}</th>
+    159 │                 {ELEMENT_IN_MATRIX.map((el2) => (
+  > 160 │                   <td style={{ textAlign: "center" }}>
+        │                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    161 │                     {el === el2 ? (
+    162 │                       1
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/Calculator/Options/RecipeTuneForm.tsx:179:11 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    177 │       <Flex justifyContent="space-around">
+    178 │         {MICRO_ELEMENT_NAMES.map((el) => (
+  > 179 │           <RecipeInput
+        │           ^^^^^^^^^^^^
+  > 180 │             name={el}
+         ...
+  > 184 │             step={1}
+  > 185 │           />
+        │           ^^
+    186 │         ))}
+    187 │       </Flex>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/Calculator/Options/RecipeTuneForm.tsx:113:11 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    111 │       <Flex>
+    112 │         {MACRO_ELEMENT_NAMES.map((el) => (
+  > 113 │           <RecipeInput
+        │           ^^^^^^^^^^^^
+  > 114 │             name={el}
+         ...
+  > 118 │             step={0.1}
+  > 119 │           />
+        │           ^^
+    120 │         ))}
+    121 │         <RecipeInput name={"EC"} label={"EC"} value={EC} onChange={onChangeEC} />
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/Calculator/Result/Result.tsx:109:13 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    107 │           <li>Для {solution_volume}л раствора</li>
+    108 │           {fertilizerWeightGroups.map(([g, f_weights]) => (
+  > 109 │             <li>
+        │             ^^^^
+    110 │               <b>Раствор {g}</b>
+    111 │               <ul>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/Calculator/Result/ResultDilution.tsx:57:13 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    55 │         <ul>
+    56 │           {dilution.map((d) => (
+  > 57 │             <li>
+       │             ^^^^
+    58 │               Раствор {d.id} - {d.volume < 1 ? `${d.volume * 1000}мл` : `${d.volume}л`}
+    59 │             </li>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/ui/Dropdown/Dropdown.tsx:47:3 lint/correctness/useExhaustiveDependencies  FIXABLE  ━━━━━━━━━━
+
+  × This hook specifies more dependencies than necessary: containerRef.
+  
+    45 │   const containerRef = useRef<HTMLDivElement>();
+    46 │ 
+  > 47 │   useEffect(() => {
+       │   ^^^^^^^^^
+    48 │     function handleClickOutside(event: MouseEvent) {
+    49 │       if (containerRef.current && !containerRef.current.contains(event.target as any)) {
+  
+  i This dependency can be removed from the list.
+  
+    56 │       document.removeEventListener("mousedown", handleClickOutside);
+    57 │     };
+  > 58 │   }, [containerRef]);
+       │       ^^^^^^^^^^^^
+    59 │ 
+    60 │   const onClickItemHandler = (item: ItemType<T>) => {
+  
+  i React relies on hook dependencies to determine when to re-compute Effects.
+    Specifying more dependencies than required can lead to unnecessary re-rendering
+    and degraded performance.
+  
+  i Unsafe fix: Remove the extra dependencies from the list.
+  
+    58 │ ··},·[containerRef]);
+       │       ------------   
+
+src/components/ui/Dropdown/DropdownList.tsx:15:3 lint/correctness/useExhaustiveDependencies  FIXABLE  ━━━━━━━━━━
+
+  × This hook specifies more dependencies than necessary: itemRef.
+  
+    13 │   const [height, setHeight] = useState(0);
+    14 │ 
+  > 15 │   useEffect(() => {
+       │   ^^^^^^^^^
+    16 │     setHeight(itemRef?.current?.offsetHeight || 0);
+    17 │   }, [itemRef]);
+  
+  i This dependency can be removed from the list.
+  
+    15 │   useEffect(() => {
+    16 │     setHeight(itemRef?.current?.offsetHeight || 0);
+  > 17 │   }, [itemRef]);
+       │       ^^^^^^^
+    18 │ 
+    19 │   return (
+  
+  i React relies on hook dependencies to determine when to re-compute Effects.
+    Specifying more dependencies than required can lead to unnecessary re-rendering
+    and degraded performance.
+  
+  i Unsafe fix: Remove the extra dependencies from the list.
+  
+    17 │ ··},·[itemRef]);
+       │       -------   
+
+src/components/ui/Dropdown/DropdownList.tsx:30:13 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    28 │         {Array.from(items).map((s, i) => {
+    29 │           return (
+  > 30 │             <Box ref={i === 0 ? itemRef : null}>
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    31 │               <DropdownItem<T> value={s} index={i} key={i} />
+    32 │               {i < items.length - 1 ? <hr style={{ margin: 0 }} /> : null}
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/components/ui/Dropdown/DropdownList.tsx:31:57 lint/suspicious/noArrayIndexKey ━━━━━━━━━━━━━━━━━━
+
+  × Avoid using the index of an array as key property in an element.
+  
+    29 │           return (
+    30 │             <Box ref={i === 0 ? itemRef : null}>
+  > 31 │               <DropdownItem<T> value={s} index={i} key={i} />
+       │                                                         ^
+    32 │               {i < items.length - 1 ? <hr style={{ margin: 0 }} /> : null}
+    33 │             </Box>
+  
+  i This is the source of the key value.
+  
+    26 │     >
+    27 │       <Flex flexDirection="column">
+  > 28 │         {Array.from(items).map((s, i) => {
+       │                                    ^
+    29 │           return (
+    30 │             <Box ref={i === 0 ? itemRef : null}>
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+src/components/ui/Icon.tsx:18:3 lint/correctness/useExhaustiveDependencies  FIXABLE  ━━━━━━━━━━━━━━━
+
+  × This hook specifies more dependencies than necessary: setSize.
+  
+    16 │   const theme = useTheme<Theme>();
+    17 │ 
+  > 18 │   useEffect(() => {
+       │   ^^^^^^^^^
+    19 │     if (!size && buttonRef && "current" in buttonRef) {
+    20 │       setSize(buttonRef.current?.offsetWidth || 0);
+  
+  i This dependency can be removed from the list.
+  
+    20 │       setSize(buttonRef.current?.offsetWidth || 0);
+    21 │     }
+  > 22 │   }, [buttonRef, setSize, size]);
+       │                  ^^^^^^^
+    23 │ 
+    24 │   return (
+  
+  i React relies on hook dependencies to determine when to re-compute Effects.
+    Specifying more dependencies than required can lead to unnecessary re-rendering
+    and degraded performance.
+  
+  i Unsafe fix: Remove the extra dependencies from the list.
+  
+    22 │ ··},·[buttonRef,·setSize,·size]);
+       │                  ---------       
+
+src/components/ui/IconButton.tsx:28:3 lint/correctness/useExhaustiveDependencies  FIXABLE  ━━━━━━━━━━
+
+  × This hook specifies more dependencies than necessary: setSize.
+  
+    26 │   const theme = useTheme<Theme>();
+    27 │ 
+  > 28 │   useEffect(() => {
+       │   ^^^^^^^^^
+    29 │     if (!size && buttonRef && "current" in buttonRef) {
+    30 │       setSize(buttonRef.current?.offsetWidth || 0);
+  
+  i This dependency can be removed from the list.
+  
+    30 │       setSize(buttonRef.current?.offsetWidth || 0);
+    31 │     }
+  > 32 │   }, [buttonRef, setSize, size]);
+       │                  ^^^^^^^
+    33 │   let marginRight = 0;
+    34 │   if (children) {
+  
+  i React relies on hook dependencies to determine when to re-compute Effects.
+    Specifying more dependencies than required can lead to unnecessary re-rendering
+    and degraded performance.
+  
+  i Unsafe fix: Remove the extra dependencies from the list.
+  
+    32 │ ··},·[buttonRef,·setSize,·size]);
+       │                  ---------       
+
+src/components/ui/RebassWidgets/Number.tsx:71:3 lint/correctness/useExhaustiveDependencies  FIXABLE  ━━━━━━━━━━
+
+  × This hook specifies more dependencies than necessary: inputRef.
+  
+    69 │   }, [props.value, value]);
+    70 │ 
+  > 71 │   useEffect(() => {
+       │   ^^^^^^^^^
+    72 │     setInputSize({
+    73 │       width: inputRef?.current?.offsetWidth || 0,
+  
+  i This dependency can be removed from the list.
+  
+    74 │       height: inputRef?.current?.offsetHeight || 0,
+    75 │     });
+  > 76 │   }, [inputRef]);
+       │       ^^^^^^^^
+    77 │ 
+    78 │   const offset = -(inputSize?.height || 0) + 5;
+  
+  i React relies on hook dependencies to determine when to re-compute Effects.
+    Specifying more dependencies than required can lead to unnecessary re-rendering
+    and degraded performance.
+  
+  i Unsafe fix: Remove the extra dependencies from the list.
+  
+    76 │ ··},·[inputRef]);
+       │       --------   
+
+src/pages/App/logo.svg:1:1 lint/a11y/noSvgWithoutTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Alternative text title element cannot be empty
+  
+  > 1 │ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 841.9 595.3">
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 2 │     <g fill="#61DAFB">
+  > 3 │         <path d="M666.3 296.5c0-32.5-40.7-63.3-103.1-82.4 14.4-63.6 8-114.2-20.2-130.4-6.5-3.8-14.1-...
+  > 4 │         <circle cx="420.9" cy="296.5" r="45.7"/>
+  > 5 │         <path d="M520.5 78.1z"/>
+  > 6 │     </g>
+  > 7 │ </svg>
+      │ ^^^^^^
+    8 │ 
+  
+  i For accessibility purposes, SVGs should have an alternative text, provided via title element. If the svg element has role="img", you should add the aria-label or aria-labelledby attribute.
+  
+
+src/pages/ChemFormula/index.tsx:121:21 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    119 │                 <tbody>
+    120 │                   {entries(result.decomposed_formula).map(([a, c]) => (
+  > 121 │                     <tr>
+        │                     ^^^^
+    122 │                       <th>{a}</th>
+    123 │                       <td>{c.mass}</td>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/pages/ChemFormula/index.tsx:151:23 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    149 │                   <tr>
+    150 │                     {FERTILIZER_ELEMENT_NAMES.map((e) => (
+  > 151 │                       <th>{e}</th>
+        │                       ^^^^
+    152 │                     ))}
+    153 │                   </tr>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/pages/ChemFormula/index.tsx:158:23 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    156 │                   <tr>
+    157 │                     {FERTILIZER_ELEMENT_NAMES.map((e) => (
+  > 158 │                       <td>{result?.oxide_npk[e]}</td>
+        │                       ^^^^
+    159 │                     ))}
+    160 │                   </tr>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/pages/ChemFormula/index.tsx:177:23 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    175 │                   <tr>
+    176 │                     {FERTILIZER_ELEMENT_NAMES.map((e) => (
+  > 177 │                       <th>{e}</th>
+        │                       ^^^^
+    178 │                     ))}
+    179 │                   </tr>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+src/pages/ChemFormula/index.tsx:184:23 lint/correctness/useJsxKeyInIterable ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing key property for this element in iterable.
+  
+    182 │                   <tr>
+    183 │                     {FERTILIZER_ELEMENT_NAMES.map((e) => (
+  > 184 │                       <td>{result?.npk[e]}</td>
+        │                       ^^^^
+    185 │                     ))}
+    186 │                   </tr>
+  
+  i The order of the items may change, and having a key can help React identify which item was moved.
+  
+  i Check the React documentation. 
+  
+
+Checked 149 files in 48ms. No fixes applied.
+Found 38 errors.
+Found 176 warnings.
+Found 31 infos.
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  
+
