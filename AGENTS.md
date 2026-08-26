@@ -26,8 +26,7 @@ node server.js          # статика из build/ на :9005
 
 - pre-commit (husky) запускает `pnpm full-check`; коммиты проходят только после полного цикла.
 - Версионирование: `npm version patch|minor` (preversion = full-check).
-- Кэши — в каталоге проекта, не глобально: для pnpm задаём env `pnpm_config_store_dir=./.pnpm-cache/v11`, для playwright-cli — `PLAYWRIGHT_BROWSERS_PATH=./.cache/ms-playwright/`.
-
+- Кэши — в каталоге проекта, не глобально: для pnpm задаём env `pnpm_config_store_dir=./.pnpm-cache/v11`
 ## Структура
 
 ```
@@ -88,3 +87,26 @@ tools/mdb_convert.ts    # утилита конвертации
 - Node ≥ 24 (`engines` в package.json, workflow использует 24.x), **pnpm** (версия из `packageManager`).
 - Сборка требует доступ к `git` (чтение HEAD — `getBuildInfo()` в `vite.config.ts`).
 - PWA: **vite-plugin-pwa** (generateSW, `registerType: auto`) — настраивается в `vite.config.ts`.
+
+## playwright-cli в песочнице (browser для проверки UI)
+
+Механика DSH: каждый `bash`-вызов — новая песочница (свой /tmp; процессы и /tmp предыдущего вызова исчезают). Персистентны: каталог проекта, `.pnpm-cache`, `.cache/ms-playwright` (bind-монтирован в `~/.cache/ms-playwright` — **общий с пользователем**) и хост-сеть (localhost виден).
+
+Env для **всех** команд playwright-cli (иначе EROFS: daemon пишет логи/сокеты в `~/.cache` и `/tmp`, недоступные для записи/переживающие вызов):
+
+```bash
+export XDG_CACHE_HOME=$PWD/.cache                    # реестр daemon → .cache/ms-playwright/daemon (общий, виден пользователю в list/show)
+export PLAYWRIGHT_BROWSERS_PATH=$PWD/.cache/ms-playwright
+export PWTEST_SOCKETS_DIR=$PWD/.cache/pw-sockets     # сокеты демона (по умолчанию /tmp — не переживает вызов)
+```
+
+Персистентный браузер — **background-job** (run_in_background), живёт дольше отдельных bash-вызовов:
+
+```bash
+cd <project> && export …три env выше… && playwright-cli -s=ui open http://localhost:3000/ && sleep 3600
+```
+
+- Управление из обычных вызовов: `playwright-cli -s=ui snapshot/click/eval/goto …` (тот же env). Остановка: `job_kill` (job) или `playwright-cli -s=ui close`.
+- **Stale-session hang**: старые `.session/.err` мёртвого демона в `.cache/ms-playwright/daemon/<workspace-hash>/` → `open` с тем же именем виснет (попытка resume). Перед новым `open`: `rm .cache/ms-playwright/daemon/<hash>/<name>.*`. `kill-all` не помогает — процессы живут в мёртвой песочнице.
+- Сессии агента видны пользователю в его терминале (`playwright-cli list/show`) — реестр общий через bind-mount.
+- Не работает: одиночный `PLAYWRIGHT_BROWSERS_PATH` (путь daemon определяется `XDG_CACHE_HOME`, бинарники браузеров — им), fake `HOME=./.pw-home` (сессии невидимы пользователю).
