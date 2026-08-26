@@ -12,3 +12,14 @@ declare module "*.md?raw" {
   const value: string;
   export default value;
 }
+
+// CSS / SVG-ассеты (Vite): side-effect-импорты и default-экспорт.
+declare module "*.css";
+declare module "*.svg" {
+  const value: string;
+  export default value;
+}
+
+// Зависимости без собственных деклараций типов.
+declare module "cubic-spline";
+declare module "@theme-ui/presets";

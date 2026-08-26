@@ -1,6 +1,5 @@
+import presets from "@theme-ui/presets";
 import type { Theme } from "@/themes/types";
-
-const presets: any = require("@theme-ui/presets");
 
 export const defaultTheme: Theme = {
   ...presets.polaris,
