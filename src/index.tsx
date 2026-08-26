@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as serviceWorker from './serviceWorker';
-
 import Root from './Root'
 import {store} from "./redux";
 
@@ -14,8 +12,7 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.register();
+// PWA: регистрацию service worker теперь делает vite-plugin-pwa (injectRegister: 'auto')
+// при сборке — он подставляет сниппет в index.html (см. vite.config.ts).
+// Старый ручной register() (src/serviceWorker.ts) удалён.
 

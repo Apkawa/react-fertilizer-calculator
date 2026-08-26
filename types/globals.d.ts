@@ -8,7 +8,8 @@ declare const __COMMIT_REF_NAME__: string
 declare const __PUBLIC_PATH__: string
 
 
-declare module "!!raw-loader!*" {
+// Vite-эквивалент старой `??raw-loader` (webpack) — текст файла как default-экспорт.
+declare module "*.md?raw" {
   const value: string
   export default value
 }

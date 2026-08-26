@@ -21,16 +21,23 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `docs(dumbspec): add migrate-vite-biome spec and plan`
 
 ## Stage 1 — Vite foundation (config, deps, PWA, ?raw)
-- [ ] Rewrite `package.json` scripts (start/build/test/lint/full-check/analyze), drop CRA-era envs (`NODE_OPTIONS=--openssl-legacy-provider`, `cross-env`, `BROWSER`)
-- [ ] Add new devDeps (vite, @vitejs/plugin-react, vite-plugin-pwa + workbox-build/workbox-window, vite-plugin-static-copy); remove dead ones (react-scripts, react-app-rewired(+workbox), raw-loader, copy-webpack-plugin, workbox-sw, @types/workbox-sw)
-- [ ] Create `vite.config.ts`: `base: './'`, `outDir: 'build'`, alias `@/`, `define` (same `getBuildInfo()` git constants), `@vitejs/plugin-react` (classic JSX runtime), `vite-plugin-static-copy` (`src/docs` images → `docs/`), `vite-plugin-pwa` (generateSW, auto registration), `server.port: 3000`
-- [ ] Migrate 10 `!!raw-loader!` imports in `src/pages/Help/pages.ts` to `?raw`; add `*.md?raw` module decl to `types/globals.d.ts`
-- [ ] Delete `src/serviceWorker.ts`; drop its import + `register()` call from `src/index.tsx`
-- [ ] Delete `config-overrides.js`
-- [ ] Verify: `pnpm build` produces `build/` with: index.html (SW registration injected), JS/CSS bundles with relative base, `docs/**` images, manifest.json, `sw.js` + workbox files
-- [ ] Verify dev: `pnpm start` serves :3000, app renders (smoke check)
+- [x] Rewrite `package.json` scripts (start/build/test/lint/full-check/analyze), drop CRA-era envs (`NODE_OPTIONS=--openssl-legacy-provider`, `cross-env`, `BROWSER`)
+- [x] Add new devDeps (vite, @vitejs/plugin-react, vite-plugin-pwa + workbox-build/workbox-window, vite-plugin-static-copy); remove dead ones (react-scripts, react-app-rewired(+workbox), raw-loader, copy-webpack-plugin, workbox-sw, @types/workbox-sw)
+- [x] Create `vite.config.ts`: `base: './'`, `outDir: 'build'`, alias `@/`, `define` (same `getBuildInfo()` git constants), `@vitejs/plugin-react` (classic JSX runtime), `vite-plugin-static-copy` (`src/docs` images → `docs/`, API v4: `src`/`dest`/`rename.stripBase`), `vite-plugin-pwa` (generateSW, auto registration), `server.port: 3000`
+- [x] Migrate 10 `!!raw-loader!` imports in `src/pages/Help/pages.ts` to `?raw`; add `*.md?raw` module decl to `types/globals.d.ts`
+- [x] Delete `src/serviceWorker.ts`; drop its import + `register()` call from `src/index.tsx`
+- [ ] Delete `config-overrides.js` — **отложено до Stage 4** (решение пользователя: не удалять пока, свериться со старой логикой; сверка выполнена в этой сессии: build-артефакты идентичны по смыслу, см. ниже)
+- [x] Verify: `pnpm build` produces `build/` with: index.html (SW registration injected: `registerSW.js` + `sw.js` + `manifest.webmanifest`), JS/CSS bundles with relative base (`./assets/*`), `docs/**` images, manifest.json, `sw.js` + workbox files
+- [x] Verify dev: `pnpm start` (vite) serves :3000 (занят был старым CRA-процессом → проверил на :3001), app renders (playwright: калькулятор, рецепт, ионный баланс)
+- [x] Verify runtime parity in browser (playwright against `vite preview`):
+  - ✅ Home/Calculator renders, Redux store works (рецепт, ΔΣ I, EC)
+  - ✅ Build constants injected (`0.2.1`, branch `refactor` in bundle)
+  - ✅ `module` shim for redux-form (`module.hot` CJS check) — добавлен в `index.html`
+  - ⚠️ CSV import/export: `csv-parse`/`csv-stringify` используют node-`Buffer` → **stub'ы** в `src/utils/csv.ts` (решение пользователя: «пока отключим csv*, в функции сделать заглушки»). Включить обратно: полифилл глобального `Buffer` в браузере + вернуть импорты.
+  - ⚠️ Help-страницы: `react-markdown/with-html` → `html-to-react` → `htmlparser2` `Parser extends stream.Writable` → **ломается** (`Object prototype may only be... undefined`; Vite не полифиллит `stream`, webpack 4 полифиллил). **Отложено пользователем**: «пока отложим справку, может быть при обновлении пофиксится». Пути: апгрейд `html-to-react`/`react-markdown` / alias `stream` → `readable-stream` (2.3.7 уже в дереве).
+  - Pre-existing tsc errors (не мешают vite build — он не type-check'ит): `App.test.tsx` (TS7016 types), `example.ts` (TS1208 isolatedModules), `json.test.ts` (TS2741 mixerOptions), `pages/App/index.tsx` (TS2307 `*.svg` — нет декларации `.svg`-модулей).
 
-**Criterion:** `vite build` output in `build/` is deploy-equivalent to CRA output (relative base, docs images, PWA files); dev server works; PWA registration present in index.html.
+**Criterion:** `vite build` output in `build/` is deploy-equivalent to CRA output (relative base, docs images, PWA files); dev server works; PWA registration present in index.html. — **done**, с двумя отложенными known-issues (CSV stub'ы, Help).
 **Commit:** `build: migrate from CRA to vite (config, pwa, ?raw)`
 
 ## Stage 2 — vitest migration

@@ -20,44 +20,44 @@ export const HELP_PAGES: HelpPageType[] = [
   {
     slug: 'how_to_use',
     name: 'Как использовать',
-    lazy: () => import("!!raw-loader!../../docs/how_to_use.md").then(m => m.default)
+    lazy: () => import("../../docs/how_to_use.md?raw").then(m => m.default)
   },
   {
     slug: 'newbie-guide',
     name: 'Гайд для новичка',
-    lazy: () => import("!!raw-loader!../../docs/newbie-guide.md").then(m => m.default)
+    lazy: () => import("../../docs/newbie-guide.md?raw").then(m => m.default)
   },
   {
     slug: 'profile',
     name: 'Профиль элементов',
-    lazy: () => import("!!raw-loader!../../docs/profile/README.md").then(m => m.default),
+    lazy: () => import("../../docs/profile/README.md?raw").then(m => m.default),
     children: [
       {
         slug: 'example',
         name: 'Примеры профилей',
-        lazy: () => import("!!raw-loader!../../docs/profile/example.md").then(m => m.default)
+        lazy: () => import("../../docs/profile/example.md?raw").then(m => m.default)
       },
     ]
   },
   {
     slug: 'technique',
     name: 'Методика расчета',
-    lazy: () => import("!!raw-loader!../../docs/technique.md").then(m => m.default)
+    lazy: () => import("../../docs/technique.md?raw").then(m => m.default)
   },
   {
     slug: 'chelates',
     name: 'Изготовление хелатов',
-    lazy: () => import("!!raw-loader!../../docs/chelates/README.md").then(m => m.default)
+    lazy: () => import("../../docs/chelates/README.md?raw").then(m => m.default)
   },
   {
     slug: 'safety',
     name: 'Техника безопасности',
-    lazy: () => import("!!raw-loader!../../docs/safety/README.md").then(m => m.default),
+    lazy: () => import("../../docs/safety/README.md?raw").then(m => m.default),
     children: [
       {
         slug: 'chem_table',
         name: 'Таблица опасности веществ',
-        lazy: () => import("!!raw-loader!../../docs/safety/chem_table.md").then(m => m.default),
+        lazy: () => import("../../docs/safety/chem_table.md?raw").then(m => m.default),
       }
 
     ]
@@ -65,17 +65,17 @@ export const HELP_PAGES: HelpPageType[] = [
   {
     slug: 'light',
     name: 'Светокультура',
-    lazy: () => import("!!raw-loader!../../docs/light.md").then(m => m.default)
+    lazy: () => import("../../docs/light.md?raw").then(m => m.default)
   },
   {
     slug: 'builds',
     name: 'Виды установок',
-    lazy: () => import("!!raw-loader!../../docs/builds/README.md").then(m => m.default)
+    lazy: () => import("../../docs/builds/README.md?raw").then(m => m.default)
   },
   {
     slug: 'references',
     name: 'Ссылки и литература',
-    lazy: () => import("!!raw-loader!../../docs/references.md").then(m => m.default)
+    lazy: () => import("../../docs/references.md?raw").then(m => m.default)
   },
 ]
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Расчёт питательных растворов и подбор дозировок удобрений (гидропоника)"
+    />
+    <link rel="apple-touch-icon" href="./logo192.png" />
+    <!--
+      manifest.json — метаданные для установки приложения.
+      Путь относительный (./), чтобы работать и в подпапке GitHub Pages.
+    -->
+    <link rel="manifest" href="./manifest.json" />
+    <title>Fertilizer calculator</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      redux-form (CJS) читает `module.hot`, чтобы обнаружить HMR webpack.
+      В браузерной ESM-сборке Vite переменной `module` нет — даём пустой глобал,
+      чтобы проверка прошла (старый webpack 4 встраивал её в каждый CJS-модуль).
+    -->
+    <script type="module">
+      if (typeof self.module === "undefined") self.module = {}
+    </script>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>
