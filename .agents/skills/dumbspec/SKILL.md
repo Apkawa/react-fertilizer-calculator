@@ -74,12 +74,17 @@ Rules:
 
 1. **Capture input.** Receive the user's request. If the user did not specify a task tag (for example `v2`), invent one yourself using the tag rules above.
 2. **Create or update `draft.md`.** **MUST be the first file written on a new task.** Record the raw input verbatim. Do not rewrite, summarize, or interpret at this stage — no research, no source reading, no "let me check how it works" before this file exists.
-3. **Confirm refinement.** Ask the user whether to refine the draft before proceeding. Apply any requested edits to `draft.md`.
-4. **Research.** Begin only after step 3 is passed. Investigate feasibility, constraints, and options. **Important:** update `research.md` continuously as you go — do not defer writing findings until the end, so nothing is lost after context compaction.
-5. **Write the specification.** Produce `spec.md` from the draft together with the research results. Note that some items may turn out to be infeasible or costly based on the research; reflect this honestly in the spec.
-6. **Review the specification.** Work through `spec.md` and resolve any open questions or problems.
-7. **Write the plan.** If no blocking questions or problems remain, produce `plan.md`.
-8. **Execute after confirmation.** Begin execution only once the user has confirmed the plan.
+2. **Pre-checks (git).** Before any file is written:
+   - if the working tree has uncommitted changes — **stop immediately** and report them to the user; write nothing.
+   - if the current branch is `master` — create a branch named `<task-tag>` and switch to it.
+3. **Create or update `draft.md`.** **MUST be the first file written on a new task.** Record the raw input verbatim. Do not rewrite, summarize, or interpret at this stage — no research, no source reading, no "let me check how it works" before this file exists.
+4. **Write the initial `spec.md`.** Produce a first pass of `spec.md` from `draft.md` alone — its scope, approach, and the questions already visible in the draft. This step only translates the draft: no research, no source reading. It is a working skeleton that will be refined in step 7.
+5. **Confirm refinement.** Ask the user whether to refine the draft (and the initial spec written from it) before proceeding. Apply any requested edits to `draft.md` and carry them into `spec.md`.
+6. **Research.** Begin only after step 5 is passed. Investigate feasibility, constraints, and options. **Important:** update `research.md` continuously as you go — do not defer writing findings until the end, so nothing is lost after context compaction.
+7. **Refine the specification.** Update `spec.md` from the draft together with the research results. Note that some items may turn out to be infeasible or costly based on the research; reflect this honestly in the spec.
+8. **Review the specification.** Work through `spec.md` and resolve any open questions or problems.
+9. **Write the plan.** If no blocking questions or problems remain, produce `plan.md`.
+10. **Execute after confirmation.** Begin execution only once the user has confirmed the plan.
 
 ## Resuming an existing task
 
