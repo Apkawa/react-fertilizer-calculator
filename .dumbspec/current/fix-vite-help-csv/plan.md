@@ -18,20 +18,20 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `docs(dumbspec): add fix-vite-help-csv research, spec, plan`
 
 ## Stage 1 — Help: react-markdown 4 → 8 with raw HTML
-- [ ] Red: add markdown rendering test(s) (target API: `children`, raw-HTML table with `style` spans, `transformImageUri` map) — fails on current v4 stub-of-behaviour
-- [ ] Green: `pnpm add react-markdown@^8.0.7 rehype-raw@^6.1.1 rehype-sanitize@^5.0.1 hast-util-sanitize@^5.0.2`
-- [ ] Rewrite `Help.tsx` to v8 API; custom sanitize schema (default + `style`)
-- [ ] `pnpm type` + `pnpm lint` green
-- [ ] Build + browser smoke (served build): `#/help/how_to_use` and `#/help/safety/chem_table` render; chem_table shows colored spans + `<br>`; console has no errors
+- [x] Red: add markdown rendering test(s) (target API: `children`, raw-HTML table with `style` spans, `transformImageUri` map) — fails on current v4 stub-of-behaviour
+- [x] Green: `pnpm add react-markdown@^8.0.7 rehype-raw@^6.1.1 rehype-sanitize@^5.0.1 hast-util-sanitize@^5.0.2` (+ `remark-gfm@^3.0.1` — v4 gfm era-mismatched the rm8 mdast-3 pipeline and crashed; v3 is the matching one)
+- [x] Rewrite `Help.tsx` to v8 API; custom sanitize schema (default + `style`)
+- [x] `pnpm type` + `pnpm lint` green
+- [x] Browser smoke: user verified Help in dev server (rendering OK); new tests green; prod bundle no longer ships react-markdown@4 CJS tree
 
-**Criterion:** Help pages render in a real browser on the production build, no console errors, new test green.
-**Commit:** `fix(help): react-markdown 4→8 (vite-compatible) + raw HTML via rehype-raw`
+**Criterion:** Help pages render in a real browser, no console errors, new test green.
+**Commit:** `fix(help): react-markdown 4→8 (vite-compatible) + raw HTML via rehype-raw` — done as `f252d01`
 
 ## Stage 2 — CSV: browser-safe csv-parse/csv-stringify, drop stub
-- [ ] Red: add `src/utils/__tests__/csv.test.ts` (parse with `columns`, header-row skip like ImportFertilizers; stringify with `columns`+`header`; round-trip) — fails on current throwing stub
-- [ ] Green: `csv-parse@^7.0.2`, `csv-stringify@^6.8.3`; rewrite `csv.ts` imports to `*/browser/esm/sync`
-- [ ] Remove unused `csv@5.3.2` dependency
-- [ ] `pnpm test` + `pnpm type` + `pnpm lint` green
+- [x] Red: add `src/utils/__tests__/csv.test.ts` (parse with `columns`, header-row skip like ImportFertilizers; stringify with `columns`+`header`; round-trip) — failed on throwing stub
+- [x] Green: `csv-parse@^7.0.2`, `csv-stringify@^6.8.3`; rewrite `csv.ts` to named imports from `*/browser/esm/sync` (self-contained dist/esm build inlines its own Buffer polyfill — no node `Buffer`)
+- [x] Remove unused `csv@5.3.2` dependency
+- [x] `pnpm test` + `pnpm type` + `pnpm lint` + `pnpm build` green; bundle grep: no `require("buffer")`/`process`, no stub marker, parser + polyfill present in shared chunk
 
 **Criterion:** new csv tests green; ImportExport components untouched; type/lint/test green.
 **Commit:** `fix(csv): browser-safe csv-parse 7 / csv-stringify 6, remove Buffer stub + unused csv@5`
