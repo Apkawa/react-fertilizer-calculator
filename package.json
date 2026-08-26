@@ -3,12 +3,24 @@
   "version": "0.2.1",
   "private": true,
   "dependencies": {
+    "@emotion-icons/boxicons-solid": "2.10.0",
+    "@emotion-icons/emotion-icon": "2.0.3",
+    "@emotion/styled": "10.0.27",
     "@loadable/component": "^5.13.1",
     "@rebass/forms": "^4.0.6",
     "@rebass/preset": "^4.0.5",
+    "@styled-icons/boxicons-regular": "10.18.0",
+    "@styled-icons/boxicons-solid": "10.18.0",
+    "@styled-icons/entypo": "10.18.0",
+    "@styled-icons/fa-regular": "10.18.0",
+    "@styled-icons/fa-solid": "10.18.0",
+    "@styled-icons/material-sharp": "10.18.0",
+    "@styled-icons/remix-line": "10.18.0",
     "@theme-ui/presets": "^0.3.0",
     "algebra.js": "^0.2.6",
     "csv": "^5.3.2",
+    "csv-parse": "4.12.0",
+    "csv-stringify": "5.5.1",
     "cubic-spline": "^3.0.3",
     "emotion-icons": "^2.11.0",
     "emotion-theming": "^10.0.27",
@@ -26,6 +38,7 @@
     "react-scripts": "3.4.3",
     "react-sortablejs": "^6.0.0",
     "rebass": "^4.0.7",
+    "redux": "4.0.5",
     "redux-form": "^8.3.6",
     "redux-saga": "^1.1.3",
     "sortablejs": "^1.12.0",
@@ -35,19 +48,19 @@
     "ts-node": "^9.0.0"
   },
   "scripts": {
-    "preversion": "yarn full-check",
-    "full-check": "export NODE_OPTIONS=--openssl-legacy-provider && yarn test -- --watchAll=false --all && yarn lint && yarn build",
+    "preversion": "pnpm full-check",
+    "full-check": "export NODE_OPTIONS=--openssl-legacy-provider && pnpm test -- --watchAll=false --all && pnpm lint && pnpm build",
     "start": "export BROWSER=none NODE_OPTIONS=--openssl-legacy-provider && PUBLIC_URL=./ react-app-rewired start",
     "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider  PUBLIC_URL=./ MODE=production react-app-rewired build",
     "test": "react-app-rewired test",
-    "types": "typesync && yarn",
+    "types": "typesync && pnpm i",
     "lint": "eslint --ext js,ts,tsx --max-warnings=0 src",
-    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
+    "analyze": "pnpm build && source-map-explorer 'build/static/js/*.js'",
     "jupyter": "jupyter-notebook docs/"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn full-check"
+      "pre-commit": "pnpm full-check"
     }
   },
   "eslintConfig": {
@@ -60,7 +73,7 @@
     }
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=24"
   },
   "browserslist": {
     "production": [
@@ -100,6 +113,8 @@
     "@types/workbox-sw": "^4.3.1",
     "copy-webpack-plugin": "^6.4.1",
     "cross-env": "^7.0.2",
+    "eslint": "6.8.0",
+    "express": "4.17.1",
     "husky": "^4.3.0",
     "raw-loader": "^4.0.1",
     "react-app-rewired": "^2.1.6",
@@ -109,5 +124,5 @@
     "typesync": "^0.7.0",
     "workbox-sw": "^5.1.4"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "pnpm@11.22.0"
 }

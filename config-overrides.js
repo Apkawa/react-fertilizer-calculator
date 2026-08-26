@@ -11,6 +11,7 @@ const esModules = [
   'js-combinatorics',
 ]
 
+
 function getBuildInfo() {
   let [ commitHash, isoDate, ref_name ] = require('child_process')
     .execSync("git show --no-patch --no-notes --pretty='%h;%cI;%D' HEAD")
@@ -27,7 +28,9 @@ function getBuildInfo() {
 
 module.exports = {
   jest: (config) => {
-    config.transformIgnorePatterns = [ `<rootDir>/node_modules/(?!${esModules.join('|')})` ]
+    // В pnpm-лейауте реальный путь пакета — node_modules/.pnpm/<name>@<ver>/node_modules/<name>,
+    // поэтому не игнорируем всё, что в пути содержит ESM-пакет (js-combinatorics)
+    config.transformIgnorePatterns = [ `<rootDir>/node_modules/(?!.*${esModules.join('|')})` ]
     return config
   },
   webpack: (config, env) => {
@@ -62,15 +65,16 @@ module.exports = {
 
     const workboxConfig = {
       ...defaultGenerateConfig,
-      swDest: path.join(__dirname, 'build', 'pwa-sw.js'),
-      // Важный момент чтобы срабатывал рефреш.
-      skipWaiting: true,
-      // Define runtime caching rules.
-      runtimeCaching: [ {
-        urlPattern: new RegExp('/'),
-        handler: 'StaleWhileRevalidate',
-        options: {},
-      } ],
+      // swDest: path.join(__dirname, 'build', 'pwa-sw.js'),
+      // // Важный момент чтобы срабатывал рефреш.
+      // skipWaiting: true,
+      // // Define runtime caching rules.
+      // runtimeCaching: [ {
+      //   urlPattern: new RegExp('/'),
+      //   handler: 'StaleWhileRevalidate',
+      //   options: {},
+      // }
+      // ],
 
     };
     config = rewireWorkboxGenerate(workboxConfig)(config, env);
