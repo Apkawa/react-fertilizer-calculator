@@ -11,6 +11,12 @@ export const RestartIcon = (props: IconSvgProps) => (
       strokeWidth={2}
       strokeLinecap="round"
     />
-    <path d="M12 4l-2.5-2.2v4.4z" fill="currentColor" />
+    <path
+      d="M2 14l2-2 2 2"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+    />
   </svg>
 );

@@ -11,7 +11,7 @@ export const SaveIcon = (props: IconSvgProps) => (
       strokeWidth={2}
       strokeLinejoin="round"
     />
-    <path d="M8 2v5h6" fill="none" stroke="currentColor" strokeWidth={2} />
+    <path d="M8 2v5h6V2" fill="none" stroke="currentColor" strokeWidth={2} />
     <path d="M8 22v-7h6v7" fill="none" stroke="currentColor" strokeWidth={2} />
   </svg>
 );
