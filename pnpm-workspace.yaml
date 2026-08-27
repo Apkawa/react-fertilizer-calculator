@@ -1,0 +1,21 @@
+packages:
+  - apps/*
+  - packages/*
+
+allowBuilds:
+  '@scarf/scarf': false
+  core-js: false
+  core-js-pure: false
+  husky: true
+# Перенесено из yarn.lock: точные версии резолва старых диапазонов.
+# Сгенерировано: node tools/yarnlock2overrides.js yarn.lock -
+# overrides:
+
+
+
+# pnpm >= 10 блокирует build-скрипты без явного согласия.
+# husky нужен для git-hooks (pre-commit full-check); core-js — баннер.
+onlyBuiltDependencies:
+  - husky
+  - core-js
+  - core-js-pure

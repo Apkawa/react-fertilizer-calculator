@@ -1,0 +1,37 @@
+import { polaris } from "@theme-ui/presets";
+import type { Theme } from "@/themes/types";
+
+export const defaultTheme: Theme = {
+  ...polaris,
+  colors: {
+    ...polaris.colors,
+    NO3: "#05AD11",
+    NH4: "#FFF",
+    P: "#DBC403",
+    K: "#E07206",
+    Ca: "#D1C7C7",
+    Mg: "#AB0AE0",
+    S: "#FFF",
+    modes: {
+      dark: {
+        ...polaris.colors.modes.dark,
+        text: "#9d9d9d",
+      },
+    },
+  },
+  card: {
+    boxShadow: "small",
+    p: 2,
+  },
+  styles: {
+    ...polaris.styles,
+    button: {
+      color: "background",
+    },
+  },
+  shadows: {
+    small: "0 0 4px rgba(0, 0, 0, .125)",
+    large: "0 0 24px rgba(0, 0, 0, .125)",
+  },
+};
+console.log(defaultTheme);

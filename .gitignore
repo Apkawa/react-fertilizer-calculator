@@ -5,6 +5,7 @@
 
 # dependencies
 /node_modules*
+node_modules/
 /.pnp
 .pnp.js
 
@@ -12,7 +13,8 @@
 /coverage
 
 # production
-/build
+/apps/web/build
+build/
 
 # misc
 .DS_Store
@@ -24,3 +26,16 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# browser session artifacts (playwright-cli smoke checks)
+.playwright-cli/
+
+# playwright test artifacts
+/test-results/
+/playwright-report/
+.pnpm-cache/
+.cache/
+tsconfig.tsbuildinfo
+
+# tsc incremental build state (не коммитим артефакты сборки)
+tsconfig.tsbuildinfo

@@ -1,113 +1,36 @@
 {
   "name": "fertilizer-calculator",
-  "version": "0.2.1",
   "private": true,
-  "dependencies": {
-    "@loadable/component": "^5.13.1",
-    "@rebass/forms": "^4.0.6",
-    "@rebass/preset": "^4.0.5",
-    "@theme-ui/presets": "^0.3.0",
-    "algebra.js": "^0.2.6",
-    "csv": "^5.3.2",
-    "cubic-spline": "^3.0.3",
-    "emotion-icons": "^2.11.0",
-    "emotion-theming": "^10.0.27",
-    "js-combinatorics": "^1.4.5",
-    "lodash.orderby": "^4.6.0",
-    "react": "^16.13.1",
-    "react-app-rewire-workbox": "^2.0.1",
-    "react-dom": "^16.13.1",
-    "react-focus-lock": "^2.5.0",
-    "react-helmet": "^6.1.0",
-    "react-markdown": "^4.3.1",
-    "react-redux": "^7.2.1",
-    "react-router-dom": "^5.2.0",
-    "react-router-tabs": "^1.3.2",
-    "react-scripts": "3.4.3",
-    "react-sortablejs": "^6.0.0",
-    "rebass": "^4.0.7",
-    "redux-form": "^8.3.6",
-    "redux-saga": "^1.1.3",
-    "sortablejs": "^1.12.0",
-    "styled-components": "^5.2.0",
-    "styled-icons": "^10.19.0",
-    "theme-ui": "^0.3.1",
-    "ts-node": "^9.0.0"
-  },
   "scripts": {
-    "preversion": "yarn full-check",
-    "full-check": "export NODE_OPTIONS=--openssl-legacy-provider && yarn test -- --watchAll=false --all && yarn lint && yarn build",
-    "start": "export BROWSER=none NODE_OPTIONS=--openssl-legacy-provider && PUBLIC_URL=./ react-app-rewired start",
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider  PUBLIC_URL=./ MODE=production react-app-rewired build",
-    "test": "react-app-rewired test",
-    "types": "typesync && yarn",
-    "lint": "eslint --ext js,ts,tsx --max-warnings=0 src",
-    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
+    "preversion": "pnpm full-check",
+    "full-check": "pnpm test && pnpm lint && pnpm type && pnpm build",
+    "start": "pnpm -C apps/web start",
+    "build": "pnpm -C apps/web build",
+    "test": "pnpm -C packages/calculator test && pnpm -C packages/icons test && pnpm -C apps/web test",
+    "test:e2e": "playwright test tests/e2e",
+    "test:smoke": "playwright test tests/smoke",
+    "lint": "biome check apps packages",
+    "type": "tsc -p packages/calculator && tsc -p packages/icons && tsc -p apps/web",
+    "analyze": "pnpm build && source-map-explorer 'apps/web/build/assets/*.js'",
     "jupyter": "jupyter-notebook docs/"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn full-check"
-    }
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "rules": {
-      "import/no-webpack-loader-syntax": "off"
+      "pre-commit": "pnpm full-check"
     }
   },
   "engines": {
-    "node": ">=12"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "node": ">=24",
+    "pnpm": ">=11.22.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/filesystem": "^0.0.29",
-    "@types/jest": "^26.0.13",
-    "@types/loadable__component": "^5.13.0",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "@types/react-helmet": "^6.1.0",
-    "@types/react-redux": "^7.1.9",
-    "@types/react-router-dom": "^5.1.5",
-    "@types/react-router-tabs": "^1.3.1",
-    "@types/rebass": "^4.0.6",
-    "@types/rebass__forms": "^4.0.2",
-    "@types/redux-form": "^8.3.0",
-    "@types/redux-saga": "^0.10.5",
-    "@types/sortablejs": "^1.10.6",
-    "@types/styled-components": "^5.1.3",
-    "@types/testing-library__jest-dom": "^5.9.2",
-    "@types/testing-library__react": "^10.2.0",
-    "@types/theme-ui": "^0.3.6",
-    "@types/workbox-sw": "^4.3.1",
-    "copy-webpack-plugin": "^6.4.1",
-    "cross-env": "^7.0.2",
+    "@biomejs/biome": "^2.5.10",
+    "@playwright/test": "^1.62.1",
     "husky": "^4.3.0",
-    "raw-loader": "^4.0.1",
-    "react-app-rewired": "^2.1.6",
     "source-map-explorer": "^2.5.0",
-    "ts-jest": "^26.3.0",
-    "typescript": "~3.7.2",
-    "typesync": "^0.7.0",
-    "workbox-sw": "^5.1.4"
+    "ts-node": "^9.0.0",
+    "typescript": "7.0.2",
+    "typesync": "^0.7.0"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "pnpm@11.22.0"
 }

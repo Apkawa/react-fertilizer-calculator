@@ -1,0 +1,23 @@
+$ tsc --build
+src/calculator/fertilizer.ts(25,17): error TS7053: Element implicitly has an 'any' type because expression of type 'keyof Elements<number>' can't be used to index type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+  Property 'B' does not exist on type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+src/calculator/format/json.test.ts(23,5): error TS2741: Property 'mixerOptions' is missing in type '{ accuracy: number; solution_volume: number; solution_concentration: Required<Concentration>; recipe: { Cl: number; Fe: number; Mn: number; B: number; Zn: number; Cu: number; Mo: number; NO3: number; NH4: number; P: number; K: number; Ca: number; Mg: number; S: number; }; fertilizers: { id: string; npk: { ...; }; so...' but required in type 'CalculatorFormValues'.
+src/calculator/profile.ts(255,13): error TS7053: Element implicitly has an 'any' type because expression of type '"B" | "Ca" | "Cl" | "Co" | "Cu" | "Fe" | "K" | "Mg" | "Mn" | "Mo" | "NH4" | "NO3" | "P" | "S" | "Si" | "Zn"' can't be used to index type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+  Property 'B' does not exist on type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+src/components/Calculator/FertilizerManager/AddItemElementForm.tsx(17,19): error TS7053: Element implicitly has an 'any' type because expression of type 'keyof Elements<number>' can't be used to index type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+  Property 'B' does not exist on type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+src/components/Calculator/FertilizerSelect/SelectedListItem.tsx(22,19): error TS7053: Element implicitly has an 'any' type because expression of type 'keyof Elements<number>' can't be used to index type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+  Property 'B' does not exist on type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+src/components/Calculator/Options/Recipe.tsx(52,46): error TS2339: Property 'recipe' does not exist on type 'object'.
+src/components/Calculator/Options/Recipe.tsx(81,52): error TS2339: Property 'recipe' does not exist on type 'object'.
+src/components/Calculator/saga.ts(68,29): error TS7057: 'yield' expression implicitly results in an 'any' type because its containing generator lacks a return-type annotation.
+src/components/ui/Dropdown/Dropdown.tsx(61,13): error TS2345: Argument of type 'ItemType<T>' is not assignable to parameter of type 'SetStateAction<NonNullable<T> | null>'.
+  Type 'T' is not assignable to type 'SetStateAction<NonNullable<T> | null>'.
+src/components/ui/IconButton.tsx(38,6): error TS1361: 'React' cannot be used as a value because it was imported using 'import type'.
+src/components/ui/IconButton.tsx(39,8): error TS1361: 'React' cannot be used as a value because it was imported using 'import type'.
+src/components/ui/RebassWidgets/Number.tsx(81,6): error TS1361: 'React' cannot be used as a value because it was imported using 'import type'.
+src/components/ui/RebassWidgets/Number.tsx(83,10): error TS1361: 'React' cannot be used as a value because it was imported using 'import type'.
+src/components/ui/RebassWidgets/Number.tsx(92,8): error TS1361: 'React' cannot be used as a value because it was imported using 'import type'.
+src/components/ui/RebassWidgets/Number.tsx(101,10): error TS1361: 'React' cannot be used as a value because it was imported using 'import type'.
+src/pages/Help/Help.tsx(9,11): error TS2339: Property 'slug' does not exist on type '{}'.
+[ELIFECYCLE] Command failed with exit code 1.

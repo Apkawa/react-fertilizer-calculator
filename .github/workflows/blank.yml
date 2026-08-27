@@ -12,16 +12,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: 12.x
-      - name: Build
-        run: |
-          yarn --frozen-lockfile
-          yarn test -- --watchAll=false --all
-          yarn lint
-          yarn build
+          version: 11.22.0
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Test, lint and build
+        run: pnpm full-check
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
@@ -41,7 +43,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: build # The folder the action should deploy.
+          FOLDER: apps/web/build # The folder the action should deploy.
           CLEAN: true # Automatically remove deleted files from the deploy branch
           TARGET_FOLDER: ${{ steps.target_folder.outputs.value }}
 

@@ -1,0 +1,27 @@
+{
+  "extends": "./tsconfig.paths.json",
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react",
+    "types": ["vitest/globals"]
+  },
+  "files": ["./types/globals.d.ts"],
+  "include": [
+    "./src/**/*",
+    // @fertilizer/calculator — source-пакет: приложение тянет его .ts напрямую,
+    // амбиентная декларация его зависимостей входит в программу приложения.
+    "../../packages/calculator/src/**/*.d.ts"
+  ]
+}

@@ -1,0 +1,224 @@
+$ tsc --build
+src/__tests__/App.test.tsx(9,1): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/__tests__/App.test.tsx(14,7): error TS2304: Cannot find name 'expect'.
+src/__tests__/App.test.tsx(16,7): error TS2304: Cannot find name 'expect'.
+src/__tests__/App.test.tsx(17,7): error TS2304: Cannot find name 'expect'.
+src/__tests__/example.ts(1,1): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/__tests__/example.ts(2,3): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v1.test.ts(23,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v1.test.ts(24,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v1.test.ts(37,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v1.test.ts(60,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v1.test.ts(74,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v1.test.ts(88,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v1.test.ts(102,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v2/base.test.ts(7,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v2/base.test.ts(8,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v2/base.test.ts(39,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v2/base.test.ts(90,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v2/base.test.ts(110,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v2/base.test.ts(113,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v2/base.test.ts(135,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v2/base.test.ts(203,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v2/base.test.ts(204,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v2/base.test.ts(231,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v2/base.test.ts(252,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v2/base.test.ts(292,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v2/base.test.ts(306,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v2/micro.test.ts(31,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v2/micro.test.ts(32,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v2/micro.test.ts(52,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v2/micro.test.ts(94,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v2/micro.test.ts(115,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v2/micro.test.ts(157,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v2/micro.test.ts(184,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v2/micro.test.ts(196,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v2/micro.test.ts(228,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v4/base.test.ts(7,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v4/base.test.ts(8,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v4/base.test.ts(35,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v4/base.test.ts(56,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v4/base.test.ts(96,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v4/base.test.ts(135,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v4/base.test.ts(156,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/calculate_v4/base.test.ts(203,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/calculate_v4/base.test.ts(215,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/dilution.test.ts(3,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/dilution.test.ts(4,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/dilution.test.ts(8,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/dilution.test.ts(10,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/dilution.test.ts(14,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/dilution.test.ts(16,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/dilution.test.ts(20,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/dilution.test.ts(22,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/dilution.test.ts(27,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/dilution.test.ts(33,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/dilution.test.ts(37,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(9,1): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/fertilizer.test.ts(17,3): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(40,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/fertilizer.test.ts(41,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/fertilizer.test.ts(51,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(66,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/fertilizer.test.ts(71,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(86,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/fertilizer.test.ts(94,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(102,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/fertilizer.test.ts(107,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(115,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/fertilizer.test.ts(134,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(135,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(143,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/fertilizer.test.ts(151,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(158,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/fertilizer.test.ts(166,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(171,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/fertilizer.test.ts(179,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(185,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/fertilizer.test.ts(213,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(220,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(253,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/fertilizer.test.ts(255,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/helpers.test.ts(8,1): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/helpers.test.ts(84,3): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/helpers.test.ts(87,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/helpers.test.ts(88,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/helpers.test.ts(101,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(11,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(12,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(15,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(28,1): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(40,3): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(43,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(54,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(56,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(58,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(60,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(62,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(64,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(68,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(70,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(74,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(75,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(77,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(81,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(82,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(86,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(87,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(91,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(92,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(93,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(97,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(98,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(101,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(103,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(107,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(109,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/profile.test.ts(112,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(115,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/profile.test.ts(116,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/ratio.test.ts(3,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/ratio.test.ts(4,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/ratio.test.ts(5,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/ratio.test.ts(6,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/ratio.test.ts(11,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/ratio.test.ts(12,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/ratio.test.ts(14,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/ratio.test.ts(24,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/ratio.test.ts(25,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/__tests__/ratio.test.ts(26,5): error TS2304: Cannot find name 'expect'.
+src/calculator/__tests__/ratio.test.ts(27,5): error TS2304: Cannot find name 'expect'.
+src/calculator/chem.test.ts(5,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(6,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(8,5): error TS2304: Cannot find name 'expect'.
+src/calculator/chem.test.ts(10,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(12,5): error TS2304: Cannot find name 'expect'.
+src/calculator/chem.test.ts(14,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(16,5): error TS2304: Cannot find name 'expect'.
+src/calculator/chem.test.ts(18,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(20,5): error TS2304: Cannot find name 'expect'.
+src/calculator/chem.test.ts(24,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(25,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(28,7): error TS2304: Cannot find name 'expect'.
+src/calculator/chem.test.ts(31,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(34,7): error TS2304: Cannot find name 'expect'.
+src/calculator/chem.test.ts(37,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(49,7): error TS2304: Cannot find name 'expect'.
+src/calculator/chem.test.ts(58,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(59,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(61,5): error TS2304: Cannot find name 'expect'.
+src/calculator/chem.test.ts(63,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(65,5): error TS2304: Cannot find name 'expect'.
+src/calculator/chem.test.ts(67,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(69,5): error TS2304: Cannot find name 'expect'.
+src/calculator/chem.test.ts(71,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/chem.test.ts(74,5): error TS2304: Cannot find name 'expect'.
+src/calculator/density-calculator/index.test.ts(5,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/density-calculator/index.test.ts(6,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/density-calculator/index.test.ts(20,7): error TS2304: Cannot find name 'expect'.
+src/calculator/density-calculator/index.test.ts(25,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/density-calculator/index.test.ts(26,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/density-calculator/index.test.ts(40,7): error TS2304: Cannot find name 'expect'.
+src/calculator/density-calculator/index.test.ts(43,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/density-calculator/index.test.ts(44,5): error TS2304: Cannot find name 'expect'.
+src/calculator/density-calculator/index.test.ts(46,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/density-calculator/index.test.ts(48,5): error TS2304: Cannot find name 'expect'.
+src/calculator/density-calculator/index.test.ts(51,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/density-calculator/index.test.ts(52,5): error TS2304: Cannot find name 'expect'.
+src/calculator/density-calculator/interpolation.ts(9,42): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/calculator/fertilizer.ts(25,17): error TS7053: Element implicitly has an 'any' type because expression of type 'keyof Elements<number>' can't be used to index type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+  Property 'B' does not exist on type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+src/calculator/format/hpg.test.ts(6,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/format/hpg.test.ts(11,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/format/hpg.test.ts(13,5): error TS2304: Cannot find name 'expect'.
+src/calculator/format/hpg.test.ts(37,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/format/hpg.test.ts(39,5): error TS2304: Cannot find name 'expect'.
+src/calculator/format/hpg.test.ts(42,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/format/hpg.test.ts(44,5): error TS2304: Cannot find name 'expect'.
+src/calculator/format/json.test.ts(5,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/format/json.test.ts(6,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/format/json.test.ts(10,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/format/json.test.ts(12,5): error TS2304: Cannot find name 'expect'.
+src/calculator/format/json.test.ts(23,5): error TS2741: Property 'mixerOptions' is missing in type '{ accuracy: number; solution_volume: number; solution_concentration: Required<Concentration>; recipe: { Cl: number; Fe: number; Mn: number; B: number; Zn: number; Cu: number; Mo: number; NO3: number; NH4: number; P: number; K: number; Ca: number; Mg: number; S: number; }; fertilizers: { id: string; npk: { ...; }; so...' but required in type 'CalculatorFormValues'.
+src/calculator/itertools.test.ts(3,1): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/itertools.test.ts(5,3): error TS2304: Cannot find name 'expect'.
+src/calculator/molecular-parser/molecularParser.test.ts(4,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/molecular-parser/molecularParser.test.ts(5,3): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/molecular-parser/molecularParser.test.ts(96,5): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/molecular-parser/molecularParser.test.ts(99,9): error TS2304: Cannot find name 'expect'.
+src/calculator/molecular-parser/molecularParser.test.ts(103,5): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/molecular-parser/molecularParser.test.ts(120,7): error TS2304: Cannot find name 'expect'.
+src/calculator/molecular-parser/molecularParser.test.ts(124,3): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/molecular-parser/molecularParser.test.ts(162,5): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/molecular-parser/molecularParser.test.ts(164,9): error TS2304: Cannot find name 'expect'.
+src/calculator/molecular-parser/molecularParser.test.ts(168,5): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/molecular-parser/molecularParser.test.ts(183,7): error TS2304: Cannot find name 'expect'.
+src/calculator/molecular-parser/molecularParser.test.ts(186,5): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/molecular-parser/molecularParser.test.ts(187,7): error TS2304: Cannot find name 'expect'.
+src/calculator/molecular-parser/molecularParser.test.ts(193,7): error TS2304: Cannot find name 'expect'.
+src/calculator/molecular-parser/molecularParser.test.ts(200,5): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/calculator/molecular-parser/molecularParser.test.ts(202,7): error TS2304: Cannot find name 'expect'.
+src/calculator/molecular-parser/molecularParser.test.ts(210,7): error TS2304: Cannot find name 'expect'.
+src/calculator/profile.ts(255,13): error TS7053: Element implicitly has an 'any' type because expression of type '"B" | "Ca" | "Cl" | "Co" | "Cu" | "Fe" | "K" | "Mg" | "Mn" | "Mo" | "NH4" | "NO3" | "P" | "S" | "Si" | "Zn"' can't be used to index type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+  Property 'B' does not exist on type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+src/components/Calculator/FertilizerManager/AddItemElementForm.tsx(17,19): error TS7053: Element implicitly has an 'any' type because expression of type 'keyof Elements<number>' can't be used to index type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+  Property 'B' does not exist on type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+src/components/Calculator/FertilizerSelect/SelectedListItem.tsx(22,19): error TS7053: Element implicitly has an 'any' type because expression of type 'keyof Elements<number>' can't be used to index type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+  Property 'B' does not exist on type '{ NO3: string; NH4: string; P: string; K: string; Ca: string; Mg: string; }'.
+src/components/Calculator/Options/Recipe.tsx(52,46): error TS2339: Property 'recipe' does not exist on type 'object'.
+src/components/Calculator/Options/Recipe.tsx(81,52): error TS2339: Property 'recipe' does not exist on type 'object'.
+src/components/Calculator/saga.ts(68,29): error TS7057: 'yield' expression implicitly results in an 'any' type because its containing generator lacks a return-type annotation.
+src/components/ui/Dropdown/Dropdown.tsx(61,13): error TS2345: Argument of type 'ItemType<T>' is not assignable to parameter of type 'SetStateAction<NonNullable<T> | null>'.
+  Type 'T' is not assignable to type 'SetStateAction<NonNullable<T> | null>'.
+src/components/ui/IconButton.tsx(38,6): error TS1361: 'React' cannot be used as a value because it was imported using 'import type'.
+src/components/ui/IconButton.tsx(39,8): error TS1361: 'React' cannot be used as a value because it was imported using 'import type'.
+src/components/ui/RebassWidgets/Number.tsx(81,6): error TS1361: 'React' cannot be used as a value because it was imported using 'import type'.
+src/components/ui/RebassWidgets/Number.tsx(83,10): error TS1361: 'React' cannot be used as a value because it was imported using 'import type'.
+src/components/ui/RebassWidgets/Number.tsx(92,8): error TS1361: 'React' cannot be used as a value because it was imported using 'import type'.
+src/components/ui/RebassWidgets/Number.tsx(101,10): error TS1361: 'React' cannot be used as a value because it was imported using 'import type'.
+src/components/ui/TabMenu/TabMenu.tsx(8,8): error TS2882: Cannot find module or type declarations for side-effect import of './style.css'.
+src/pages/App/index.tsx(2,18): error TS2307: Cannot find module './logo.svg' or its corresponding type declarations.
+src/pages/App/index.tsx(3,8): error TS2882: Cannot find module or type declarations for side-effect import of './App.css'.
+src/pages/Help/Help.tsx(9,11): error TS2339: Property 'slug' does not exist on type '{}'.
+src/themes/index.ts(3,22): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+[ELIFECYCLE] Command failed with exit code 1.

@@ -12,8 +12,8 @@ https://apkawa.github.io/react-fertilizer-calculator/
 
 # Справка 
 
-* [Описание методики расчетов](src/docs/technique.md)
-* [Краткая справка](src/docs/how_to_use.md)
+* [Описание методики расчетов](apps/web/src/docs/technique.md)
+* [Краткая справка](apps/web/src/docs/how_to_use.md)
 
 
 

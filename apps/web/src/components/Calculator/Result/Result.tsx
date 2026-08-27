@@ -1,0 +1,159 @@
+import { MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
+import { buildFertilizerFromSolution } from "@fertilizer/calculator/fertilizer";
+import { getEmptyElements, getNPKDetailInfo } from "@fertilizer/calculator/helpers";
+import { IconButton } from "@fertilizer/icons";
+import React, { type FunctionComponent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Card, Flex, Heading, Text } from "rebass";
+import { getFormValues } from "redux-form";
+import styled from "styled-components";
+import { fertilizerPush } from "@/components/Calculator/actions";
+import {
+  AddEdit as FertilizerAddEditForm,
+  formToFertilizer,
+  getInitialValues,
+} from "@/components/Calculator/FertilizerManager/AddEdit";
+import { FERTILIZER_EDIT_FORM_NAME } from "@/components/Calculator/FertilizerManager/constants";
+import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";
+import { MixerModal } from "@/components/Calculator/Mixer/Mixer";
+import { ResultDilution } from "@/components/Calculator/Result/ResultDilution";
+import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
+import { useFormValues } from "@/hooks/ReduxForm";
+import { round, sum } from "@/utils";
+import { REDUX_FORM_NAME } from "../constants";
+import { Element } from "../FertilizerSelect/SelectedListItem";
+import { StyledBalanceCell } from "../Options/Recipe";
+import type { CalculatorFormValues, CalculatorState } from "../types";
+import { useFertilizerSolutionGroup } from "./hooks";
+import { ResultFertilizerList } from "./ResultFertilizerList";
+
+type ResultProps = {};
+
+const StyledList = styled.ul`
+  @media screen and (min-width: 800px) {
+    width: 75%;
+  }
+`;
+
+export const Result: FunctionComponent<ResultProps> = () => {
+  const { fertilizers, result } = useSelector<any>((state) => state.calculator) as CalculatorState;
+
+  const { solution_volume } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues;
+
+  const fertilizerWeightGroups = useFertilizerSolutionGroup();
+
+  const elements = result?.elements || getEmptyElements();
+  const deltaElements = result?.deltaElements || getEmptyElements();
+  const NPKBalance = getNPKDetailInfo(elements);
+
+  // const liquidFertilizersVolume = round(sum((result?.fertilizers || []).map(f => f.volume || 0)), 1)
+  const totalWeight = round(sum((result?.fertilizers || []).map((f) => f.weight || 0)), 2);
+
+  const [formValues] = useFormValues<AddEditFormType>(FERTILIZER_EDIT_FORM_NAME);
+  const dispatch = useDispatch();
+  const onSave = (modal: ModalActions) => {
+    dispatch(fertilizerPush(formToFertilizer(formValues)));
+    modal.close();
+  };
+  const complexFertilizer = buildFertilizerFromSolution("", {
+    fertilizers,
+    fertilizer_weights: result?.fertilizers || [],
+    volume: solution_volume,
+  });
+
+  return (
+    <Card>
+      <Flex alignItems="center" flexDirection="column" width="100%">
+        <Heading fontSize={2}>Результат расчета</Heading>
+        <Flex justifyContent="space-around" width="100%">
+          {elements &&
+            MACRO_ELEMENT_NAMES.map((k) => (
+              <Element
+                key={k}
+                name={k}
+                value={round(elements[k])}
+                delta={round(deltaElements[k])}
+              />
+            ))}
+        </Flex>
+        <Flex justifyContent="space-around" width="100%">
+          {elements &&
+            MICRO_ELEMENT_NAMES.map((k) => (
+              <Element
+                key={k}
+                name={k}
+                value={round(elements[k] * 1000)}
+                delta={round(deltaElements[k] * 1000)}
+              />
+            ))}
+        </Flex>
+        <Flex justifyContent="space-around">
+          <StyledBalanceCell
+            name="ΔΣ I"
+            value={NPKBalance.ion_balance}
+            title={"Ионный баланс, дб == 0±5%"}
+          />
+          <StyledBalanceCell name="EC" value={NPKBalance.EC} />
+          <StyledBalanceCell
+            name="%NH4"
+            value={round((NPKBalance.ratio?.NH4?.NO3 || 0) * 100, 1)}
+          />
+          <StyledBalanceCell name="K:N" value={NPKBalance.ratio.K.N} />
+          <StyledBalanceCell name="K:Ca" value={NPKBalance.ratio.K.Ca} />
+          <StyledBalanceCell name="K:Mg" value={NPKBalance.ratio.K.Mg} />
+        </Flex>
+        <StyledList>
+          <li>Для {solution_volume}л раствора</li>
+          {fertilizerWeightGroups.map(([g, f_weights]) => (
+            <li key={g}>
+              <b>Раствор {g}</b>
+              <ul>
+                <ResultFertilizerList fertilizers={f_weights} />
+              </ul>
+            </li>
+          ))}
+          <li>Всего солей: {totalWeight} г.</li>
+          <li>Концентрация солей: {round(totalWeight / solution_volume, 2)} г/л</li>
+        </StyledList>
+        <ResultDilution />
+        {result?.stats && (
+          <Text>
+            Обработано вариантов: {result?.stats.count} Время: {result?.stats.time} сек
+          </Text>
+        )}
+        <Flex>
+          {result?.fertilizers ? (
+            <Flex>
+              <Modal
+                button={({ modal }) => (
+                  <IconButton
+                    padding={1}
+                    alignSelf="center"
+                    name="save"
+                    backgroundColor={"primary"}
+                    onClick={modal.open}
+                  >
+                    Сохранить комплекс
+                  </IconButton>
+                )}
+                container={({ modal }) => (
+                  <>
+                    <FertilizerAddEditForm initialValues={getInitialValues(complexFertilizer)} />
+                    <Flex justifyContent="flex-end">
+                      <Button type="button" onClick={() => onSave(modal)}>
+                        Save
+                      </Button>
+                    </Flex>
+                  </>
+                )}
+              />
+            </Flex>
+          ) : null}
+          <Flex>
+            <MixerModal />
+          </Flex>
+        </Flex>
+      </Flex>
+    </Card>
+  );
+};
