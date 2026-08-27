@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@fertilizer/calculator": "workspace:*",
+    "@fertilizer/icons": "workspace:*",
     "@emotion-icons/boxicons-solid": "2.10.0",
     "@emotion-icons/emotion-icon": "2.0.3",
     "@emotion/styled": "10.0.27",
