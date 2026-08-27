@@ -19,11 +19,11 @@ All commands run from the repo root (proxy scripts in the root `package.json`):
 ```bash
 pnpm install              # install dependencies (workspace)
 pnpm start                # dev server (vite, http://localhost:3000)
-pnpm test                 # vitest: packages/calculator (node) then apps/web (jsdom, setupFiles src/setupTests.ts)
+pnpm test                 # vitest: packages/calculator (node), packages/icons (jsdom) then apps/web (jsdom, setupFiles src/setupTests.ts)
 pnpm test:smoke           # playwright: route smoke tests (tests/smoke/)
 pnpm test:e2e             # playwright: e2e scenarios (tests/e2e/)
 pnpm lint                 # biome check apps packages
-pnpm type                 # tsc -p packages/calculator && tsc -p apps/web
+pnpm type                 # tsc -p packages/calculator && tsc -p packages/icons && tsc -p apps/web
 pnpm build                # production build (vite build → apps/web/build/)
 pnpm full-check           # test + lint + type + build (pre-commit / preversion)
 pnpm analyze              # bundle analysis (source-map-explorer)
@@ -51,6 +51,12 @@ apps/web/                 # @fertilizer/web — the React PWA (all deps of the a
   vitest.config.ts        # tests: jsdom + shared config from vite.config.ts
   server.js               # static server for build/ on :9005 (express)
 packages/
+  icons/                  # @fertilizer/icons — app icon set (SVG components chosen by name: Icon/IconButton), source package
+    src/
+      icons/              # 14 hand-drawn 24×24 SVG icons
+      Icon.tsx            # icon by name (svg wrapped in a div/Box)
+      IconButton.tsx      # button with icon by name
+      registry.ts         # name → icon component map
   calculator/             # @fertilizer/calculator — calculation core, pure logic
     src/
       index.ts            # calculate_v1..v4 (current: v4)
@@ -69,7 +75,7 @@ docs/                     # jupyter models of the calculations (model_v3, EDTA_F
 tools/mdb_convert.ts      # conversion utility
 ```
 
-- `packages/calculator` is a **source package**: `main`/`exports` point at `./src/*.ts` directly — no build step; the app depends on it as `@fertilizer/calculator: workspace:*`. Vite bundles the TS source, `tsc` resolves it via `moduleResolution: bundler`. The app's tsconfig includes the package's `src/**/*.d.ts` (ambient declarations for its untyped deps) because the app pulls the package's `.ts` files into its program.
+- `packages/calculator` and `packages/icons` are **source packages**: `main`/`exports` point at `./src/*.ts` directly — no build step; the app depends on them as `workspace:*`. Vite bundles the TS source, `tsc` resolves it via `moduleResolution: bundler`. `@fertilizer/icons` is the app's icon set: `Icon`/`IconButton` render icons by name from `registry.ts` (14 own SVGs); the app's tsconfig includes each package's `src/**/*.d.ts` (ambient declarations for untyped deps) because the app pulls the packages' `.ts` files into its program.
 - Alias `@/` → `apps/web/src/` (vite `resolve.alias` + tsconfig.paths.json). The app imports the package via `@fertilizer/calculator[/subpath]`.
 - Markdown `.md` files are imported with the `?raw` query (native Vite mechanism, `apps/web/src/pages/Help/pages.ts`).
 - Build-time constants (`__VERSION__`, `__COMMIT_HASH__`, `__COMMIT_DATE__`, `__COMMIT_REF_NAME__`) are injected via `define` in `apps/web/vite.config.ts` from `git` — git is required for builds.
