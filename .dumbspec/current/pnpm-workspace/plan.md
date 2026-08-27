@@ -21,16 +21,17 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `docs: spec pnpm workspace split (draft, research, spec, plan)`
 
 ## Stage 1 — Workspace skeleton: move the app to `apps/web` (monolith intact)
-- [ ] Baseline build: `pnpm build` on the untouched monolith, snapshot `build/` → `.cache/build-baseline/` (gitignored)
-- [ ] `pnpm-workspace.yaml`: add `packages: ['apps/*', 'packages/*']` (keep allowBuilds/onlyBuiltDependencies)
-- [ ] `apps/web/package.json`: name `@fertilizer/web`, version 0.2.1, private; **all** current root deps + devDeps (js-combinatorics/cubic-spline stay here until stage 2)
-- [ ] Root `package.json`: drop deps/version/browserslist (→ app); keep name, private, scripts (proxies), engines, packageManager, husky; root devDeps keep biome/playwright/typescript/source-map-explorer/husky/typesync/ts-node/express→(stays till stage 4)
-- [ ] `git mv`: `src` → `apps/web/src`; `vite.config.ts`, `vitest.config.ts`, `index.html`, `tsconfig.json`, `tsconfig.paths.json`, `types/`, `public/`, `server.js` → `apps/web/`
-- [ ] Root script proxies: `start`/`build` → `pnpm -C apps/web …`; `test` → `pnpm -C apps/web test`; `lint` → `biome check apps`; `type` → `tsc -p apps/web`; `full-check` = same composition; `analyze` → `… 'apps/web/build/assets/*.js'`
-- [ ] `pnpm install` (workspace resolution, lockfile importers restructured)
-- [ ] Verify: `pnpm full-check` green at root; `node server.js` still serves `build/`… (still `build/` at root? — server.js moved to app: root `node apps/web/server.js` serves app build) — check dev server :3000 via `pnpm start`
+- [x] Baseline build: `pnpm build` on the untouched monolith, snapshot `build/` → `.cache/build-baseline/` (gitignored)
+- [x] `pnpm-workspace.yaml`: add `packages: ['apps/*', 'packages/*']` (keep allowBuilds/onlyBuiltDependencies)
+- [x] `apps/web/package.json`: name `@fertilizer/web`, version 0.2.1, private; **all** current root deps + devDeps (js-combinatorics/cubic-spline stay here until stage 2)
+- [x] Root `package.json`: drop deps/version/browserslist (→ app); keep name, private, scripts (proxies), engines, packageManager, husky; root devDeps keep biome/playwright/typescript/source-map-explorer/husky/typesync/ts-node/express→(stays till stage 4)
+- [x] `git mv`: `src` → `apps/web/src`; `vite.config.ts`, `vitest.config.ts`, `index.html`, `tsconfig.json`, `tsconfig.paths.json`, `types/`, `public/`, `server.js` → `apps/web/`
+- [x] Root script proxies: `start`/`build` → `pnpm -C apps/web …`; `test` → `pnpm -C apps/web test`; `lint` → `biome check apps`; `type` → `tsc -p apps/web`; `full-check` = same composition; `analyze` → `… 'apps/web/build/assets/*.js'`
+- [x] `pnpm install` (workspace resolution, lockfile importers restructured; `CI=true … --no-frozen-lockfile`, store via `pnpm_config_store_dir`)
+- [x] Verify: `pnpm full-check` green at root; dev server :3000 via `pnpm start` → HTTP 200; `apps/web/server.js` (moved) serves its own `build/` on :9005
+- [x] `.gitignore`: `/build` → `/apps/web/build` (done here, needed for clean tree)
 
-**Criterion:** identical app, now living in `apps/web`; root commands work; full-check green; baseline build snapshot saved.
+**Criterion:** identical app, now living in `apps/web`; root commands work; full-check green; dev server boots. Byte-parity of build assets **relaxed by user** (chunks regrouped: vite/rollup names shared chunks differently in workspace layout — same module set, different hash names; sw.js precache follows).
 **Commit:** `chore: scaffold pnpm workspace, move app to apps/web`
 
 ## Stage 2 — Extract `packages/calculator` (`@fertilizer/calculator`)
@@ -67,7 +68,7 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 - [ ] CI `.github/workflows/blank.yml`: `FOLDER: build` → `FOLDER: apps/web/build` (only CI change)
 - [ ] Final `pnpm full-check` green at root
 
-**Criterion:** build artifact set identical to baseline (metadata-only byte deltas); CI points at app build; all root commands work as before.
+**Criterion:** build works and serves (byte parity relaxed by user — see Stage 1 note); same page/asset set; CI points at app build; all root commands work as before.
 **Commit:** `chore: workspace build parity, CI deploy folder, server.js to apps/web`
 
 ## Stage 5 — Docs + freeze

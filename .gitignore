@@ -5,6 +5,7 @@
 
 # dependencies
 /node_modules*
+node_modules/
 /.pnp
 .pnp.js
 
@@ -12,7 +13,7 @@
 /coverage
 
 # production
-/build
+/apps/web/build
 
 # misc
 .DS_Store
