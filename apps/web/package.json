@@ -8,6 +8,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@fertilizer/calculator": "workspace:*",
     "@emotion-icons/boxicons-solid": "2.10.0",
     "@emotion-icons/emotion-icon": "2.0.3",
     "@emotion/styled": "10.0.27",
@@ -25,11 +26,9 @@
     "algebra.js": "^0.2.6",
     "csv-parse": "7.0.2",
     "csv-stringify": "6.8.3",
-    "cubic-spline": "^3.0.3",
     "emotion-icons": "^2.11.0",
     "emotion-theming": "^10.0.27",
     "hast-util-sanitize": "^5.0.2",
-    "js-combinatorics": "^1.4.5",
     "lodash.orderby": "^4.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

@@ -1,9 +1,9 @@
+import { type Concentration, normalizeConcentration } from "@fertilizer/calculator/dilution";
 import { Label } from "@rebass/forms";
 import React, { type FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Flex, Text } from "rebass";
 import { change, getFormValues } from "redux-form";
-import { type Concentration, normalizeConcentration } from "@/calculator/dilution";
 import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
 import type { CalculatorFormValues } from "@/components/Calculator/types";
 import { Checkbox } from "@/components/ui/ReduxForm/Checkbox";

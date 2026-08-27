@@ -1,4 +1,4 @@
-import { keys } from "../../utils";
+import { keys } from "../utils";
 
 export const DENSITY_DATA = {
   NH4NO3: [

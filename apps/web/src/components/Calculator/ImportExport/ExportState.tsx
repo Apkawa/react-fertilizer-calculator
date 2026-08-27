@@ -1,7 +1,7 @@
+import type { ExportStateType } from "@fertilizer/calculator/format/types";
 import { Export } from "@styled-icons/boxicons-regular/Export";
 import React from "react";
 import { useSelector } from "react-redux";
-import type { ExportStateType } from "@/calculator/format/types";
 import type { CalculatorState } from "@/components/Calculator/types";
 import { IconButton } from "@/components/ui/IconButton";
 import { saveData } from "@/utils/downloads";

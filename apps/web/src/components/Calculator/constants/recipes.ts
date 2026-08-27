@@ -1,4 +1,4 @@
-import type { NeedElements } from "@/calculator/types";
+import type { NeedElements } from "@fertilizer/calculator/types";
 import type { Recipe } from "@/components/Calculator/types";
 
 export const DEFAULT_MICRO_RECIPE: NeedElements = {

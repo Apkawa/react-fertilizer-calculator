@@ -1,11 +1,15 @@
+import { calculateMassParts, parseMolecule } from "@fertilizer/calculator/chem";
+import {
+  ATOMIC_MASS,
+  type AtomNameType,
+  FERTILIZER_ELEMENT_NAMES,
+} from "@fertilizer/calculator/constants";
+import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
+import type { Elements } from "@fertilizer/calculator/types";
 import { Input } from "@rebass/forms";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Box, Flex, Heading } from "rebass";
-import { calculateMassParts, parseMolecule } from "@/calculator/chem";
-import { ATOMIC_MASS, type AtomNameType, FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
-import { normalizeFertilizer } from "@/calculator/fertilizer";
-import type { Elements } from "@/calculator/types";
 import { entries, round, sum, values } from "@/utils";
 
 type DecomposedChemFormulaInfo = {

@@ -1,13 +1,13 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Flex, Heading } from "rebass";
-import { getFormValues } from "redux-form";
 import {
   type DilutionResult,
   dilution_solution,
   normalizeConcentration,
-} from "@/calculator/dilution";
-import { ppmToEC } from "@/calculator/helpers";
+} from "@fertilizer/calculator/dilution";
+import { ppmToEC } from "@fertilizer/calculator/helpers";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Flex, Heading } from "rebass";
+import { getFormValues } from "redux-form";
 import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
 import { useFertilizerSolutionGroup, usePPM } from "@/components/Calculator/Result/hooks";
 import type { CalculatorFormValues } from "@/components/Calculator/types";

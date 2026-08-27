@@ -1,7 +1,7 @@
+import { NPKOxides } from "@fertilizer/calculator/constants";
+import type { Elements } from "@fertilizer/calculator/types";
 import React, { type FunctionComponent } from "react";
 import { Flex } from "rebass";
-import { NPKOxides } from "@/calculator/constants";
-import type { Elements } from "@/calculator/types";
 import { Input } from "@/components/ui/ReduxForm/Input";
 import { decimal } from "@/components/ui/ReduxForm/normalizers";
 

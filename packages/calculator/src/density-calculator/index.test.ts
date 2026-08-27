@@ -1,4 +1,4 @@
-import { entries } from "../../utils";
+import { entries } from "../utils";
 import { DATA_KEYS } from "./constants";
 import { getConcentrationFromDensity, getDensityFromConcentration } from "./index";
 

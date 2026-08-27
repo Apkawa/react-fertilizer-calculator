@@ -14,6 +14,7 @@ node_modules/
 
 # production
 /apps/web/build
+build/
 
 # misc
 .DS_Store

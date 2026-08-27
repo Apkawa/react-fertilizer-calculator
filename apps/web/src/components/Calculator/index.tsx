@@ -1,9 +1,9 @@
+import { normalizeConcentration } from "@fertilizer/calculator/dilution";
 import { Restart } from "@styled-icons/remix-line/Restart";
 import React from "react";
 import { connect, useDispatch } from "react-redux";
 import { Box, Card, Flex, Heading, Text } from "rebass";
 import { Form, reduxForm } from "redux-form";
-import { normalizeConcentration } from "@/calculator/dilution";
 import { DEFAULT_MICRO_RECIPE, DEFAULT_RECIPES } from "@/components/Calculator/constants/recipes";
 import { Recipe } from "@/components/Calculator/Options/Recipe";
 import { IconButton } from "@/components/ui/IconButton";

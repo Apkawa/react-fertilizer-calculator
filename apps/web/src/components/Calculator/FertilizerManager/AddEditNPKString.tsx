@@ -1,8 +1,8 @@
+import { parseProfileStringToNPK, stringifyProfile } from "@fertilizer/calculator/profile";
+import type { NPKElements } from "@fertilizer/calculator/types";
 import { Input } from "@rebass/forms";
 import React, { type ChangeEvent, type FunctionComponent, useEffect, useState } from "react";
 import { Flex } from "rebass";
-import { parseProfileStringToNPK, stringifyProfile } from "@/calculator/profile";
-import type { NPKElements } from "@/calculator/types";
 import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";
 import { useFormName, useFormValues } from "@/hooks/ReduxForm";
 

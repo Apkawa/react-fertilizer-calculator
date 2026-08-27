@@ -1,5 +1,5 @@
-import { parseProfileStringToNPK } from "@/calculator/profile";
-import type { FertilizerInfo } from "@/calculator/types";
+import { parseProfileStringToNPK } from "@fertilizer/calculator/profile";
+import type { FertilizerInfo } from "@fertilizer/calculator/types";
 
 export const defaultFertilizers: FertilizerInfo[] = [
   { id: "Сульфат магния (MgSO4*7H2O)", composition: [{ formula: "MgSO4*7H2O", percent: 98 }] },

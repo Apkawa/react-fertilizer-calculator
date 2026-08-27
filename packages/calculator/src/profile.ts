@@ -1,9 +1,9 @@
-import { entries, round } from "../utils";
 import { ATOMIC_MASS, FERTILIZER_ELEMENT_NAMES, NPKOxides } from "./constants";
 import { compositionToElements, elementsToNPK } from "./fertilizer";
 import { HPGFormat } from "./format/hpg";
 import { type ElementsMatrixType, getProfileRatioMatrix } from "./ratio";
 import type { Elements, NPKElements } from "./types";
+import { entries, round } from "./utils";
 
 // export interface ProfileInfo {
 //   ratio: ElementsMatrixType

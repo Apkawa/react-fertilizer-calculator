@@ -1,8 +1,8 @@
+import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
+import { buildNPKFertilizer } from "@fertilizer/calculator/fertilizer";
 import { Import } from "@styled-icons/boxicons-regular/Import";
 import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
-import { buildNPKFertilizer } from "@/calculator/fertilizer";
 import { fertilizerPush } from "@/components/Calculator/actions";
 import { IconButton } from "@/components/ui/IconButton";
 import { csvParse } from "@/utils/csv";

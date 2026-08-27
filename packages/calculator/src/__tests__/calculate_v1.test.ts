@@ -1,6 +1,6 @@
-import type { FertilizerInfo } from "@/calculator/types";
 import { buildNPKFertilizer, normalizeFertilizer } from "../fertilizer";
 import { calculate_v1 } from "../index";
+import type { FertilizerInfo } from "../types";
 
 const defaultFertilizers: FertilizerInfo[] = [
   buildNPKFertilizer("Valagro 3:11:38", {

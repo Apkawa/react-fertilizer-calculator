@@ -27,9 +27,8 @@ node server.js          # serve build/ static files on :9005
 ```
 
 - The husky pre-commit hook runs `pnpm full-check`; commits only pass after the full cycle succeeds.
-- The playwright suites (`test:smoke` / `test:e2e`) are NOT part of `full-check` or CI: they spin up the dev server (`webServer` in `playwright.config.ts`) and run in a real chromium, so they are run locally / manually when UI behavior matters. Co-located `*.smoke.test.tsx` files (render-smoke of components in jsdom) ARE part of `pnpm test`.
+- The playwright suites (`test:smoke` / `test:e2e`) are NOT part of `full-check` or CI: they spin up the dev server (`webServer` in `playwright.config.ts`) and run in a real chromium, so they are run locally / manually when UI behavior matters. Co-located `*.test.tsx` files (render-smoke of components in jsdom) ARE part of `pnpm test`.
 - Versioning: `npm version patch|minor` (preversion = full-check).
-- Caches are kept inside the project directory, not globally: for pnpm the env var `pnpm_config_store_dir=./.pnpm-cache/v11` is set.
 
 ## Structure
 
@@ -91,6 +90,13 @@ Calculation tests in `src/calculator/__tests__/` are reference tests; do not bre
 - Node ≥ 24 (`engines` in package.json; the CI workflow uses 24.x), **pnpm** (version pinned in `packageManager`).
 - Builds require `git` access (reading HEAD — `getBuildInfo()` in `vite.config.ts`).
 - PWA: **vite-plugin-pwa** (generateSW, `registerType: auto`) — configured in `vite.config.ts`.
+
+## pnpm in the Sandbox
+
+- Caches are kept inside the project directory, not globally 
+- for pnpm the env var `pnpm_config_store_dir=./.pnpm-cache/v11` is set.
+
+`pnpm_config_store_dir=./.pnpm-cache/v11 pnpm install`
 
 ## playwright-cli in the Sandbox (browser for UI verification)
 

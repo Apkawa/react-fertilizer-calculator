@@ -1,7 +1,7 @@
+import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { Export } from "@styled-icons/boxicons-regular/Export";
 import React from "react";
 import { useSelector } from "react-redux";
-import { FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
 import type { CalculatorState } from "@/components/Calculator/types";
 import { IconButton } from "@/components/ui/IconButton";
 import { csvExport } from "@/utils/csv";

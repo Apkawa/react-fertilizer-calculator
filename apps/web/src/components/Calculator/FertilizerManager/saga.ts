@@ -1,6 +1,6 @@
+import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
 import { actionTypes, change, type FormAction, getFormValues } from "redux-form";
 import { all, call, fork, put, select, takeLatest } from "redux-saga/effects";
-import { normalizeFertilizer } from "@/calculator/fertilizer";
 import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";
 import { equal } from "@/utils";
 import { FERTILIZER_EDIT_FORM_NAME } from "./constants";

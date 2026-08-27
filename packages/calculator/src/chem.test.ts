@@ -1,6 +1,6 @@
-import { entries } from "../utils";
 import { calculateMassParts, parseMolecule, parseNitrates } from "./chem";
 import type { AtomNameType } from "./constants";
+import { entries } from "./utils";
 
 describe("parseMolecule", () => {
   test("H2O", () => {

@@ -1,0 +1,24 @@
+{
+  "name": "@fertilizer/calculator",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Расчётное ядро: расчёт концентраций и дозирования удобрений (source-пакет, без шага сборки)",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./format": "./src/format/index.ts",
+    "./density-calculator": "./src/density-calculator/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "js-combinatorics": "^1.4.5",
+    "cubic-spline": "^3.0.3"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "vitest": "^4.1.11"
+  },
+  "scripts": {
+    "test": "vitest run"
+  }
+}

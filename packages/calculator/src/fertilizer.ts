@@ -1,15 +1,15 @@
-import type { FertilizerWeights } from "@/calculator/index";
+import { calculateMassParts, parseMolecule, parseNitrates } from "./chem";
+import { type AtomNameType, NPKOxides } from "./constants";
+import { getEmptyElements } from "./helpers";
+import type { FertilizerWeights } from "./index";
 import type {
   Elements,
   Fertilizer,
   FertilizerComposition,
   FertilizerInfo,
   NPKElements,
-} from "@/calculator/types";
-import { entries, keys, round, sum, values } from "../utils";
-import { calculateMassParts, parseMolecule, parseNitrates } from "./chem";
-import { type AtomNameType, NPKOxides } from "./constants";
-import { getEmptyElements } from "./helpers";
+} from "./types";
+import { entries, keys, round, sum, values } from "./utils";
 
 /**
  * Создается удобрения по npk элементов

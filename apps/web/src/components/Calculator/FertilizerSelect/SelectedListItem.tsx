@@ -1,10 +1,10 @@
+import type { FertilizerWeights } from "@fertilizer/calculator";
+import { FERTILIZER_ELEMENT_NAMES, NPKOxides } from "@fertilizer/calculator/constants";
+import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
+import type { Elements } from "@fertilizer/calculator/types";
 import { Cross } from "@styled-icons/entypo/Cross";
 import React, { type FunctionComponent } from "react";
 import { Box, Card, Flex, Text } from "rebass";
-import type { FertilizerWeights } from "@/calculator";
-import { FERTILIZER_ELEMENT_NAMES, NPKOxides } from "@/calculator/constants";
-import { normalizeFertilizer } from "@/calculator/fertilizer";
-import type { Elements } from "@/calculator/types";
 import { IconButton } from "@/components/ui/IconButton";
 import type { FertilizerType } from "./types";
 

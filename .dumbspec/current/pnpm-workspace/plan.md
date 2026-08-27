@@ -35,27 +35,29 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `chore: scaffold pnpm workspace, move app to apps/web`
 
 ## Stage 2 — Extract `packages/calculator` (`@fertilizer/calculator`)
-- [ ] `packages/calculator/`: `git mv apps/web/src/calculator packages/calculator/src`; package.json (name, main/exports → `./src/index.ts` / `./*`→`./src/*.ts`, deps js-combinatorics + cubic-spline, devDeps vitest + typescript)
-- [ ] Rename `src/types.d.ts` → `src/types.ts`, `src/format/types.d.ts` → `src/format/types.ts`
-- [ ] Move 7 functions (`countDecimals, entries, keys, round, sum, values, tryParseFloat`) from app `src/utils/index.ts` into `packages/calculator/src/utils.ts`; app `src/utils/index.ts` re-exports them from `@fertilizer/calculator`, keeps local `toMap/update/updateOrPush/equal` + csv/downloads
-- [ ] Internal specifiers: `@/calculator/X` → relative (`fertilizer.ts`, `__tests__/calculate_v1.test.ts`); `../utils`/`../../utils` → `./utils`/`../utils` (package-local)
-- [ ] Break type cycle: package `src/types.ts` `FertilizerInfo` += `pump_number?: number`; `src/format/types.ts` defines structural `ExportCalculationForm`/`Recipe`/`ExportStateType` (package types only, no `@/components/...`); `format/hpg.ts` imports `FertilizerInfo` from `../types`
-- [ ] `declare module "cubic-spline"` moved into package (own d.ts); app `types/globals.d.ts` drops it
-- [ ] Package `tsconfig.json` (strict, bundler, noEmit, types vitest/globals) + `vitest.config.ts` (globals, node env)
-- [ ] App import rewrites: `@/calculator…` → `@fertilizer/calculator…` (~40 files, incl. the one relative import in `FertilizerSelect/AddItemFertilizerEditForm.tsx`); app `devDependency`/`dependency` `@fertilizer/calculator: workspace:*`
-- [ ] Root scripts: `test` → package tests **then** app tests; `type` → `tsc -p packages/calculator && tsc -p apps/web`; `lint` → `biome check apps packages`
-- [ ] `pnpm install` (new importer, workspace link)
+- [x] `packages/calculator/`: `git mv apps/web/src/calculator packages/calculator/src`; package.json (name, main/exports → `./src/index.ts` / `./*`→`./src/*.ts`, deps js-combinatorics + cubic-spline, devDeps vitest + typescript)
+- [x] Rename `src/types.d.ts` → `src/types.ts`, `src/format/types.d.ts` → `src/format/types.ts`
+- [x] Move 7 functions (`countDecimals, entries, keys, round, sum, values, tryParseFloat`) from app `src/utils/index.ts` into `packages/calculator/src/utils.ts`; app `src/utils/index.ts` re-exports them from `@fertilizer/calculator`, keeps local `toMap/update/updateOrPush/equal` + csv/downloads
+- [x] Internal specifiers: `@/calculator/X` → relative (`fertilizer.ts`, `__tests__/calculate_v1.test.ts`); `../utils`/`../../utils` → `./utils`/`../utils` (package-local)
+- [x] Break type cycle: package `src/types.ts` `FertilizerInfo` += `pump_number?: number`; `src/format/types.ts` defines structural `ExportCalculationForm`/`Recipe`/`ExportStateType` (package types only, no `@/components/...`); `format/hpg.ts` imports `FertilizerInfo` from `../types`
+- [x] `declare module "cubic-spline"` moved into package (own d.ts); app `types/globals.d.ts` drops it
+- [x] Package `tsconfig.json` (strict, bundler, noEmit, types vitest/globals) + `vitest.config.ts` (globals, node env)
+- [x] App import rewrites: `@/calculator…` → `@fertilizer/calculator…` (~40 files, incl. the one relative import in `FertilizerSelect/AddItemFertilizerEditForm.tsx`); app `devDependency`/`dependency` `@fertilizer/calculator: workspace:*`
+- [x] Root scripts: `test` → package tests **then** app tests; `type` → `tsc -p packages/calculator && tsc -p apps/web`; `lint` → `biome check apps packages`
+- [x] `pnpm install` (new importer, workspace link)
 
 **Criterion:** `pnpm full-check` green at root — calculator suite runs from the package (same 41-file/98-test totals as baseline, no test edits), app consumes the package, tsc clean in both projects.
 **Commit:** `refactor(calculator): extract @fertilizer/calculator package`
+- [x] Adjustments: `format/types.ts` `calculationForm` nullable (`ExportCalculationForm | null`); app `tsconfig.json` includes `../../packages/calculator/src/**/*.d.ts` (app pulls package `.ts` directly)
+**Commit:** `a713ed7` — `refactor(calculator): extract @fertilizer/calculator package`
 
-## Stage 3 — Extract `packages/test-utils` (`@fertilizer/test-utils`)
-- [ ] `packages/test-utils/`: `git mv apps/web/src/test-utils packages/test-utils/src`; package.json (peers: react, react-dom, react-redux, react-router-dom, redux, redux-form, theme-ui, @testing-library/react; devDeps typescript + @types/react, @types/react-dom, @types/react-redux, @types/react-router-dom, @types/redux-form, @types/theme-ui)
-- [ ] `src/render.tsx`: `createRenderApp(store, theme): (ui, initialEntries?) => RenderResult` (Provider + ThemeProvider + MemoryRouter) — generic, no app imports
-- [ ] `src/form.tsx`: `createFormWrapper(formName)` with local `ReduxFormType` alias (mirrors app's) — generic, no app imports
-- [ ] Package `tsconfig.json` (jsx classic, dom lib, noEmit, strict)
-- [ ] App thin bindings at **same paths**: `apps/web/src/test-utils/render.tsx` = `createRenderApp(store, defaultTheme)` (comment: store-синглтон/тема — привязка приложения), `form.tsx` = re-export; app devDep `@fertilizer/test-utils: workspace:*`
-- [ ] Root `type` adds `tsc -p packages/test-utils`
+## Stage 3 — Extract `packages/test-utils` (`@fertilizer/test-utils`) — **пропущена** (решение пользователя: `test-utils` остаётся в `apps/web/src/test-utils`)
+- [~] `packages/test-utils/`: `git mv apps/web/src/test-utils packages/test-utils/src`; package.json (peers: react, react-dom, react-redux, react-router-dom, redux, redux-form, theme-ui, @testing-library/react; devDeps typescript + @types/react, @types/react-dom, @types/react-redux, @types/react-router-dom, @types/redux-form, @types/theme-ui)
+- [~] `src/render.tsx`: `createRenderApp(store, theme): (ui, initialEntries?) => RenderResult` (Provider + ThemeProvider + MemoryRouter) — generic, no app imports
+- [~] `src/form.tsx`: `createFormWrapper(formName)` with local `ReduxFormType` alias (mirrors app's) — generic, no app imports
+- [~] Package `tsconfig.json` (jsx classic, dom lib, noEmit, strict)
+- [~] App thin bindings at **same paths**: `apps/web/src/test-utils/render.tsx` = `createRenderApp(store, defaultTheme)` (comment: store-синглтон/тема — привязка приложения), `form.tsx` = re-export; app devDep `@fertilizer/test-utils: workspace:*`
+- [~] Root `type` adds `tsc -p packages/test-utils`
 
 **Criterion:** zero edits in any `*.test.tsx`; `pnpm full-check` green at root (same test totals); `tsc -p packages/test-utils` clean.
 **Commit:** `refactor(test-utils): extract @fertilizer/test-utils package`

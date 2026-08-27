@@ -62,6 +62,8 @@ export interface FertilizerInfo {
   solution_concentration?: number;
   // Плотность, г/л
   solution_density?: number;
+  // Номер насоса (заполняется форматом HPG при импорте)
+  pump_number?: number;
 }
 
 /**

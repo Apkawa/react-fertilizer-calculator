@@ -1,10 +1,10 @@
+import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
+import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
 import { Edit } from "@styled-icons/fa-regular/Edit";
 import { Trash } from "@styled-icons/fa-solid/Trash";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Box, Button, Card, Flex, Text } from "rebass";
-import { FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
-import { normalizeFertilizer } from "@/calculator/fertilizer";
 import { fertilizerPush, fertilizerRemove } from "@/components/Calculator/actions";
 import { FERTILIZER_EDIT_FORM_NAME } from "@/components/Calculator/FertilizerManager/constants";
 import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";

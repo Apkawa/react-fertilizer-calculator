@@ -1,6 +1,6 @@
-import type { CalculateResult } from "@/calculator";
-import type { ExportStateType } from "@/calculator/format/types";
-import type { CalculateToppingUpResult } from "@/calculator/helpers";
+import type { CalculateResult } from "@fertilizer/calculator";
+import type { ExportStateType } from "@fertilizer/calculator/format/types";
+import type { CalculateToppingUpResult } from "@fertilizer/calculator/helpers";
 import type {
   CalculatorFormValues,
   CalculatorState,

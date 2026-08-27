@@ -1,9 +1,12 @@
+import {
+  type FERTILIZER_ELEMENT_NAMES,
+  MACRO_ELEMENT_NAMES,
+} from "@fertilizer/calculator/constants";
+import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
+import type { Elements } from "@fertilizer/calculator/types";
 import React, { type FunctionComponent, useEffect, useState } from "react";
 import { Flex } from "rebass";
-import type { Elements } from "@/calculator/types";
 import type { FertilizerInfo } from "@/components/Calculator/types";
-import { type FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES } from "../../../calculator/constants";
-import { normalizeFertilizer } from "../../../calculator/fertilizer";
 import { AddItemElementForm } from "./AddItemElementForm";
 
 interface AddItemFertilizerEditFormProps {

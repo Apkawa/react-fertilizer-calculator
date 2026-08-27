@@ -1,7 +1,7 @@
+import { ACCEPT_FORMATS, FORMATS_MAP } from "@fertilizer/calculator/format";
 import { Import } from "@styled-icons/boxicons-regular/Import";
 import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { ACCEPT_FORMATS, FORMATS_MAP } from "@/calculator/format";
 import { loadStateStart } from "@/components/Calculator/actions";
 import { IconButton } from "@/components/ui/IconButton";
 

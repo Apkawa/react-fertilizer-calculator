@@ -1,9 +1,8 @@
-import type { FertilizerInfo } from "../../components/Calculator/types";
-import { entries, tryParseFloat } from "../../utils";
 import { FERTILIZER_ELEMENT_NAMES, MICRO_ELEMENT_NAMES } from "../constants";
 import { normalizeConcentration } from "../dilution";
 import { buildNPKFertilizer, elementsToNPK, normalizeFertilizer } from "../fertilizer";
-import type { NPKElements } from "../types";
+import type { FertilizerInfo, NPKElements } from "../types";
+import { entries, tryParseFloat } from "../utils";
 import { BaseFormat } from "./base";
 import type { ExportStateType } from "./types";
 

@@ -1,6 +1,6 @@
-import { entries, sum, values } from "../utils";
 import { ATOMIC_MASS, type AtomNameType } from "./constants";
 import { decomposeFormula, findSubgroups } from "./molecular-parser/molecularParser";
+import { entries, sum, values } from "./utils";
 
 export type DecomposedChemFormula = {
   [Atom in AtomNameType]?: number;

@@ -1,7 +1,7 @@
+import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { Import } from "@styled-icons/boxicons-regular/Import";
 import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
 import { recipePush } from "@/components/Calculator/actions";
 import { IconButton } from "@/components/ui/IconButton";
 import { csvParse } from "@/utils/csv";

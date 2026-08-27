@@ -1,4 +1,4 @@
-import { CalculateResult } from "@/calculator";
+import { CalculateResult } from "@fertilizer/calculator";
 import { CalculatorFormValues, Recipe } from "@/components/Calculator/types";
 
 export interface DiaryEntryType {

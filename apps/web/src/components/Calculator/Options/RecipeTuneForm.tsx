@@ -1,27 +1,27 @@
-import { Input } from "@rebass/forms";
-import React, { type ChangeEvent, useEffect, useState } from "react";
-import { Box, Button, Flex } from "rebass";
 import {
   type FERTILIZER_ELEMENT_NAMES,
   MACRO_ELEMENT_NAMES,
   MICRO_ELEMENT_NAMES,
-} from "@/calculator/constants";
-import { HPGFormat } from "@/calculator/format/hpg";
-import { getNPKDetailInfo } from "@/calculator/helpers";
+} from "@fertilizer/calculator/constants";
+import { HPGFormat } from "@fertilizer/calculator/format/hpg";
+import { getNPKDetailInfo } from "@fertilizer/calculator/helpers";
 import {
   calculateEC,
   convertProfileWithEC,
   fixIonicBalanceByCa,
   fixIonicBalanceByS,
-} from "@/calculator/profile";
+} from "@fertilizer/calculator/profile";
 import {
   ALLOWED_ELEMENT_IN_MATRIX,
   convertProfileWithRatio,
   getMultiElementRatio,
   getProfileRatioMatrix,
   OPTIMAL_RATIO,
-} from "@/calculator/ratio";
-import type { Elements, NeedElements } from "@/calculator/types";
+} from "@fertilizer/calculator/ratio";
+import type { Elements, NeedElements } from "@fertilizer/calculator/types";
+import { Input } from "@rebass/forms";
+import React, { type ChangeEvent, useEffect, useState } from "react";
+import { Box, Button, Flex } from "rebass";
 import { StyledBalanceCell } from "@/components/Calculator/Options/Recipe";
 import type { CalculatorFormValues } from "@/components/Calculator/types";
 import type { ModalActions } from "@/components/ui/Modal/Modal";

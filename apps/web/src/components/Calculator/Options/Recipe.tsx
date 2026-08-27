@@ -1,12 +1,12 @@
+import { FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
+import { getEmptyElements, getNPKDetailInfo } from "@fertilizer/calculator/helpers";
+import type { Elements, NeedElements } from "@fertilizer/calculator/types";
 import { Save } from "@styled-icons/boxicons-regular/Save";
 import { Broom } from "@styled-icons/fa-solid/Broom";
 import { Tune } from "@styled-icons/material-sharp/Tune";
 import React, { type FunctionComponent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Card, Flex, Heading, Text } from "rebass";
-import { FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES } from "@/calculator/constants";
-import { getEmptyElements, getNPKDetailInfo } from "@/calculator/helpers";
-import type { Elements, NeedElements } from "@/calculator/types";
 import { recipePush, recipeRemove } from "@/components/Calculator/actions";
 import { DEFAULT_MICRO_RECIPE } from "@/components/Calculator/constants/recipes";
 import {

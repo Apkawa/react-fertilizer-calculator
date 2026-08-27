@@ -18,5 +18,10 @@
     "types": ["vitest/globals"]
   },
   "files": ["./types/globals.d.ts"],
-  "include": ["./src/**/*"]
+  "include": [
+    "./src/**/*",
+    // @fertilizer/calculator — source-пакет: приложение тянет его .ts напрямую,
+    // амбиентная декларация его зависимостей входит в программу приложения.
+    "../../packages/calculator/src/**/*.d.ts"
+  ]
 }

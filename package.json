@@ -6,11 +6,11 @@
     "full-check": "pnpm test && pnpm lint && pnpm type && pnpm build",
     "start": "pnpm -C apps/web start",
     "build": "pnpm -C apps/web build",
-    "test": "pnpm -C apps/web test",
+    "test": "pnpm -C packages/calculator test && pnpm -C apps/web test",
     "test:e2e": "playwright test tests/e2e",
     "test:smoke": "playwright test tests/smoke",
     "lint": "biome check apps packages",
-    "type": "tsc -p apps/web",
+    "type": "tsc -p packages/calculator && tsc -p apps/web",
     "analyze": "pnpm build && source-map-explorer 'apps/web/build/assets/*.js'",
     "jupyter": "jupyter-notebook docs/"
   },

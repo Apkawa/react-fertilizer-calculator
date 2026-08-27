@@ -1,8 +1,8 @@
+import type { FertilizerWeights } from "@fertilizer/calculator";
+import { groupFertilizerBySolution } from "@fertilizer/calculator/dilution";
+import { calculatePPM } from "@fertilizer/calculator/helpers";
 import { useSelector } from "react-redux";
 import { getFormValues } from "redux-form";
-import type { FertilizerWeights } from "@/calculator";
-import { groupFertilizerBySolution } from "@/calculator/dilution";
-import { calculatePPM } from "@/calculator/helpers";
 import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
 import type { CalculatorFormValues, CalculatorState } from "@/components/Calculator/types";
 import { entries, toMap } from "@/utils";

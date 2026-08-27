@@ -1,4 +1,3 @@
-import { round } from "../../utils";
 import {
   calculateEC,
   calculateIonicBalance,
@@ -7,6 +6,7 @@ import {
   fixIonicBalanceByS,
 } from "../profile";
 import { convertProfileWithRatio, getProfileRatioMatrix } from "../ratio";
+import { round } from "../utils";
 
 describe("Calculate profile matrix", () => {
   test("Generic", () => {

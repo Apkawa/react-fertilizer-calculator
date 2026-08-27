@@ -1,8 +1,11 @@
-import { CalculateResult } from "@/calculator";
-import { FERTILIZER_ELEMENT_NAMES } from "@/calculator/constants";
-import { Concentration } from "@/calculator/dilution";
-import { CalculateToppingUpOptions, CalculateToppingUpResult } from "@/calculator/helpers";
-import { FertilizerInfo as _FertilizerInfo, NeedElements } from "@/calculator/types";
+import { CalculateResult } from "@fertilizer/calculator";
+import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
+import { Concentration } from "@fertilizer/calculator/dilution";
+import {
+  CalculateToppingUpOptions,
+  CalculateToppingUpResult,
+} from "@fertilizer/calculator/helpers";
+import { FertilizerInfo as _FertilizerInfo, NeedElements } from "@fertilizer/calculator/types";
 import { InferValuesTypes } from "@/redux-helpers/types";
 import * as actions from "./actions";
 

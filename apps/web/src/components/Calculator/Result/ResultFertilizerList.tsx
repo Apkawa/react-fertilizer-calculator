@@ -1,7 +1,7 @@
+import type { FertilizerWeights } from "@fertilizer/calculator";
 import React from "react";
 import { useSelector } from "react-redux";
 import { getFormValues } from "redux-form";
-import type { FertilizerWeights } from "@/calculator";
 import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
 import type { CalculatorFormValues } from "@/components/Calculator/types";
 import { countDecimals, round } from "@/utils";

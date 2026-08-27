@@ -1,10 +1,10 @@
+import { MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
+import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
 import { Label } from "@rebass/forms";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Box, Flex, Text } from "rebass";
 import { change, FieldArray, Form, reduxForm } from "redux-form";
-import { MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES } from "@/calculator/constants";
-import { normalizeFertilizer } from "@/calculator/fertilizer";
 import { AddEditCompositionList } from "@/components/Calculator/FertilizerManager/AddEditCompositionList";
 import { AddEditNPKString } from "@/components/Calculator/FertilizerManager/AddEditNPKString";
 import type { FertilizerInfo } from "@/components/Calculator/types";

@@ -1,8 +1,8 @@
-import { entries, round } from "../utils";
 import { MACRO_ELEMENT_NAMES } from "./constants";
 import { extract_percent } from "./helpers";
 import { calculateEC, convertProfileWithEC } from "./profile";
 import type { NPKElements } from "./types";
+import { entries, round } from "./utils";
 
 export const ALLOWED_ELEMENT_IN_MATRIX = ["N", ...MACRO_ELEMENT_NAMES];
 export type ALLOWED_ELEMENT_IN_MATRIX = (typeof ALLOWED_ELEMENT_IN_MATRIX)[number];

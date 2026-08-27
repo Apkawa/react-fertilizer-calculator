@@ -1,6 +1,6 @@
+import type { FertilizerComposition } from "@fertilizer/calculator/types";
 import React from "react";
 import { Card, Flex } from "rebass";
-import type { FertilizerComposition } from "@/calculator/types";
 import { Input } from "@/components/ui/ReduxForm/Input";
 import { decimal } from "@/components/ui/ReduxForm/normalizers";
 import type { ReduxFieldArrayType } from "@/components/ui/ReduxForm/types";

@@ -21,5 +21,4 @@ declare module "*.svg" {
 }
 
 // Зависимости без собственных деклараций типов.
-declare module "cubic-spline";
 declare module "@theme-ui/presets";
