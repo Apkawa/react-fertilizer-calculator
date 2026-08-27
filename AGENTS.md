@@ -32,6 +32,7 @@ node apps/web/server.js   # serve apps/web/build/ static files on :9005
 
 - The husky pre-commit hook runs `pnpm full-check`; commits only pass after the full cycle succeeds.
 - The playwright suites (`test:smoke` / `test:e2e`) are NOT part of `full-check` or CI: they spin up the dev server (`webServer` in `playwright.config.ts` — `pnpm start` at the root) and run in a real chromium, so they are run locally / manually when UI behavior matters. Co-located `*.test.tsx` files (render-smoke of components in jsdom) ARE part of `pnpm test`.
+- `packages/icons` PNG-превью иконок (`src/__tests__/icons-png.test.tsx`): каждая иконка из `registry.ts` рендерится в SVG и конвертируется системным `rsvg-convert` в PNG (96×96), сравнение с базлайном в `src/__tests__/snapshots/icons/`. Без `rsvg-convert` блок пропускается. Обновить базлайны: `UPDATE_ICON_PNGS=1 pnpm -C packages/icons test`; только свои иконки: `ICON_PNG_FILTER=plus,close`.
 - Versioning: `pnpm -C apps/web version patch|minor` (preversion = full-check). The app version lives in `apps/web/package.json` — `vite.config.ts` reads it for `__VERSION__`; the root has no version.
 
 ## Structure
