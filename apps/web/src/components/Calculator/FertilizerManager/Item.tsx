@@ -1,7 +1,6 @@
 import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
-import { Edit } from "@styled-icons/fa-regular/Edit";
-import { Trash } from "@styled-icons/fa-solid/Trash";
+import { IconButton } from "@fertilizer/icons";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Box, Button, Card, Flex, Text } from "rebass";
@@ -9,7 +8,6 @@ import { fertilizerPush, fertilizerRemove } from "@/components/Calculator/action
 import { FERTILIZER_EDIT_FORM_NAME } from "@/components/Calculator/FertilizerManager/constants";
 import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";
 import type { FertilizerInfo } from "@/components/Calculator/types";
-import { IconButton } from "@/components/ui/IconButton";
 import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
 import { useFormValues } from "@/hooks/ReduxForm";
 import { Element } from "../FertilizerSelect/SelectedListItem";
@@ -62,7 +60,7 @@ export function Item(props: ItemProps) {
                 <IconButton
                   padding={1}
                   alignSelf="center"
-                  component={Edit}
+                  name="edit"
                   backgroundColor={"primary"}
                   onClick={modal.open}
                 />
@@ -81,7 +79,7 @@ export function Item(props: ItemProps) {
             <IconButton
               padding={1}
               alignSelf="center"
-              component={Trash}
+              name="trash"
               backgroundColor={"danger"}
               onClick={onRemove}
             />

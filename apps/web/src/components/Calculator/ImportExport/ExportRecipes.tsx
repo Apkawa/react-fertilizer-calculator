@@ -1,9 +1,8 @@
 import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
-import { Export } from "@styled-icons/boxicons-regular/Export";
+import { IconButton } from "@fertilizer/icons";
 import React from "react";
 import { useSelector } from "react-redux";
 import type { CalculatorState } from "@/components/Calculator/types";
-import { IconButton } from "@/components/ui/IconButton";
 import { csvExport } from "@/utils/csv";
 import { saveData } from "@/utils/downloads";
 
@@ -24,7 +23,7 @@ export function ExportRecipes(props: ExportRecipesProps) {
   };
   return (
     <>
-      <IconButton onClick={doExport} component={Export} />
+      <IconButton onClick={doExport} name="export" />
     </>
   );
 }

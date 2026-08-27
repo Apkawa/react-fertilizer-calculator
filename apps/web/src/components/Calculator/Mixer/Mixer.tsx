@@ -1,4 +1,4 @@
-import { Save } from "@styled-icons/fa-regular/Save";
+import { IconButton } from "@fertilizer/icons";
 import React, { type ComponentType } from "react";
 import { useSelector } from "react-redux";
 import { Button, Flex } from "rebass";
@@ -6,7 +6,6 @@ import { getFormValues } from "redux-form";
 import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
 import { type MixerFormType, MixerOptionsForm } from "@/components/Calculator/Mixer/MixerForm";
 import type { CalculatorFormValues, CalculatorState } from "@/components/Calculator/types";
-import { IconButton } from "@/components/ui/IconButton";
 import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
 import { useFormValues } from "@/hooks/ReduxForm";
 
@@ -39,7 +38,7 @@ export const MixerModal: ComponentType = () => {
         <IconButton
           padding={1}
           alignSelf="center"
-          component={Save}
+          name="save"
           backgroundColor={"primary"}
           onClick={modal.open}
         >

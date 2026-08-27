@@ -1,10 +1,9 @@
 import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { buildNPKFertilizer } from "@fertilizer/calculator/fertilizer";
-import { Import } from "@styled-icons/boxicons-regular/Import";
+import { IconButton } from "@fertilizer/icons";
 import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { fertilizerPush } from "@/components/Calculator/actions";
-import { IconButton } from "@/components/ui/IconButton";
 import { csvParse } from "@/utils/csv";
 
 type ImportFertilizersProps = {};
@@ -56,7 +55,7 @@ export function ImportFertilizers(props: ImportFertilizersProps) {
           position: "relative",
         }}
         ref={buttonRef}
-        component={Import}
+        name="import"
       >
         <input
           type="file"

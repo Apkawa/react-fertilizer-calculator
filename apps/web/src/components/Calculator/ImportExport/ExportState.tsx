@@ -1,9 +1,8 @@
 import type { ExportStateType } from "@fertilizer/calculator/format/types";
-import { Export } from "@styled-icons/boxicons-regular/Export";
+import { IconButton } from "@fertilizer/icons";
 import React from "react";
 import { useSelector } from "react-redux";
 import type { CalculatorState } from "@/components/Calculator/types";
-import { IconButton } from "@/components/ui/IconButton";
 import { saveData } from "@/utils/downloads";
 
 type ExportRecipesProps = {};
@@ -32,7 +31,7 @@ export function ExportState(props: ExportRecipesProps) {
   };
   return (
     <>
-      <IconButton onClick={doExport} component={Export} title={"Экспорт настроек"} />
+      <IconButton onClick={doExport} name="export" title={"Экспорт настроек"} />
     </>
   );
 }

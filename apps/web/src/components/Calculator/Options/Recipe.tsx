@@ -1,9 +1,7 @@
 import { FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { getEmptyElements, getNPKDetailInfo } from "@fertilizer/calculator/helpers";
 import type { Elements, NeedElements } from "@fertilizer/calculator/types";
-import { Save } from "@styled-icons/boxicons-regular/Save";
-import { Broom } from "@styled-icons/fa-solid/Broom";
-import { Tune } from "@styled-icons/material-sharp/Tune";
+import { IconButton } from "@fertilizer/icons";
 import React, { type FunctionComponent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Card, Flex, Heading, Text } from "rebass";
@@ -15,7 +13,6 @@ import {
 } from "@/components/Calculator/Options/RecipeTuneForm";
 import type { CalculatorState, Recipe as RecipeType } from "@/components/Calculator/types";
 import { Dropdown } from "@/components/ui/Dropdown/Dropdown";
-import { IconButton } from "@/components/ui/IconButton";
 import { Modal } from "@/components/ui/Modal/Modal";
 import { useFormName, useFormValues } from "@/hooks/ReduxForm";
 import { round } from "@/utils";
@@ -115,8 +112,8 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
             />
           </Box>
           <Box>
-            <IconButton marginRight={1} component={Save} onClick={onAddHandler} />
-            <IconButton component={Broom} onClick={resetRecipe} />
+            <IconButton marginRight={1} name="save" onClick={onAddHandler} />
+            <IconButton name="broom" onClick={resetRecipe} />
           </Box>
         </Flex>
         <Flex justifyContent="space-between">
@@ -127,9 +124,7 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
         <Flex justifyContent="space-around">
           <Modal
             title="Настройка профиля"
-            button={({ modal }) => (
-              <IconButton marginRight={1} component={Tune} onClick={modal.open} />
-            )}
+            button={({ modal }) => <IconButton marginRight={1} name="tune" onClick={modal.open} />}
             container={({ modal }) => (
               <>
                 <RecipeTuneForm modal={modal} onSave={setRecipe} />

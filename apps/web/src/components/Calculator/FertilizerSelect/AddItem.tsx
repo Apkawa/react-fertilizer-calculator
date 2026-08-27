@@ -1,9 +1,8 @@
-import { Plus } from "@styled-icons/boxicons-regular/Plus";
+import { IconButton } from "@fertilizer/icons";
 import React, { type FunctionComponent, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, Card, Flex } from "rebass";
 import { Dropdown } from "@/components/ui/Dropdown/Dropdown";
-import { IconButton } from "@/components/ui/IconButton";
 import type { CalculatorState } from "../types";
 import type { FertilizerType } from "./types";
 
@@ -45,7 +44,7 @@ export const AddItem: FunctionComponent<AddItemProps> = ({ onAdd }) => {
                       event.stopPropagation();
                       onAddHandler(item);
                     }}
-                    component={Plus}
+                    name="plus"
                   />
                 </Flex>
               )}

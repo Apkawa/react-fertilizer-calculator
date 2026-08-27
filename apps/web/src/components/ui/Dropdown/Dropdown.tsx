@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { ChevronDownSquare } from "@emotion-icons/boxicons-solid/ChevronDownSquare";
+import { Icon } from "@fertilizer/icons";
 import { Input } from "@rebass/forms";
 import React, { type ChangeEvent, type KeyboardEvent, useEffect, useRef, useState } from "react";
 import { Box, Flex } from "rebass";
@@ -7,11 +7,11 @@ import { DropdownContext, type DropdownContextInterface } from "./context";
 import { DropdownList } from "./DropdownList";
 import type { ItemCallback, ItemType, RenderItemCallback, RenderValueCallback } from "./types";
 
-const IconDown = styled(ChevronDownSquare)`
+const IconDown = styled(Icon)`
   color: ${(props: any) => props.theme.colors.text};
   height: 3rem;
   opacity: 0.5;
-  
+
   &:hover {
     opacity: 0.7;
   }
@@ -110,7 +110,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
               right: 0,
             }}
           >
-            <IconDown onClick={() => setOpened(!opened)} />
+            <IconDown name="chevron-down" onClick={() => setOpened(!opened)} />
           </Box>
         </Flex>
         <Flex sx={{ position: "relative" }}>

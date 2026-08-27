@@ -1,7 +1,7 @@
 import { MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { buildFertilizerFromSolution } from "@fertilizer/calculator/fertilizer";
 import { getEmptyElements, getNPKDetailInfo } from "@fertilizer/calculator/helpers";
-import { Save } from "@styled-icons/fa-regular/Save";
+import { IconButton } from "@fertilizer/icons";
 import React, { type FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Card, Flex, Heading, Text } from "rebass";
@@ -17,7 +17,6 @@ import { FERTILIZER_EDIT_FORM_NAME } from "@/components/Calculator/FertilizerMan
 import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";
 import { MixerModal } from "@/components/Calculator/Mixer/Mixer";
 import { ResultDilution } from "@/components/Calculator/Result/ResultDilution";
-import { IconButton } from "@/components/ui/IconButton";
 import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
 import { useFormValues } from "@/hooks/ReduxForm";
 import { round, sum } from "@/utils";
@@ -130,7 +129,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
                   <IconButton
                     padding={1}
                     alignSelf="center"
-                    component={Save}
+                    name="save"
                     backgroundColor={"primary"}
                     onClick={modal.open}
                   >

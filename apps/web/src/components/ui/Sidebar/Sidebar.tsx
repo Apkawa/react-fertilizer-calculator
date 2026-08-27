@@ -1,8 +1,6 @@
-import { Menu } from "@styled-icons/boxicons-regular/Menu";
-import { Cross } from "@styled-icons/entypo/Cross";
+import { Icon } from "@fertilizer/icons";
 import React, { type ReactNode, useEffect, useState } from "react";
 import { Box, Flex, Heading } from "rebass";
-import { Icon } from "@/components/ui/Icon";
 import { SidebarContainer } from "@/components/ui/Sidebar/SidebarContainer";
 import { useWindowSize } from "@/hooks/screen";
 
@@ -56,11 +54,11 @@ export function Sidebar(props: SidebarProps) {
 
   return (
     <>
-      {button ? button(renderCbProps) : <Icon size={42} component={Menu} onClick={actions.open} />}
+      {button ? button(renderCbProps) : <Icon size={42} name="menu" onClick={actions.open} />}
       {closed ? null : (
         <SidebarContainer actions={actions} docked={docked}>
           <Flex justifyContent="space-between">
-            {docked ? null : <Icon size={42} component={Cross} onClick={actions.close} />}
+            {docked ? null : <Icon size={42} name="close" onClick={actions.close} />}
             <Heading fontSize={2}>{props.title}</Heading>
           </Flex>
           <Box>{props.children}</Box>

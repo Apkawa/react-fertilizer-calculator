@@ -2,10 +2,9 @@ import type { FertilizerWeights } from "@fertilizer/calculator";
 import { FERTILIZER_ELEMENT_NAMES, NPKOxides } from "@fertilizer/calculator/constants";
 import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
 import type { Elements } from "@fertilizer/calculator/types";
-import { Cross } from "@styled-icons/entypo/Cross";
+import { IconButton } from "@fertilizer/icons";
 import React, { type FunctionComponent } from "react";
 import { Box, Card, Flex, Text } from "rebass";
-import { IconButton } from "@/components/ui/IconButton";
 import type { FertilizerType } from "./types";
 
 interface ElementProps {
@@ -85,7 +84,7 @@ export const SelectedListItem: FunctionComponent<SelectedListItemProps> = ({
               </Text>
             ) : null}
           </Flex>
-          <IconButton padding={1} alignSelf="center" component={Cross} onClick={() => onRemove()} />
+          <IconButton padding={1} alignSelf="center" name="close" onClick={() => onRemove()} />
         </Flex>
       </Flex>
     </Card>

@@ -1,9 +1,8 @@
 import { ACCEPT_FORMATS, FORMATS_MAP } from "@fertilizer/calculator/format";
-import { Import } from "@styled-icons/boxicons-regular/Import";
+import { IconButton } from "@fertilizer/icons";
 import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loadStateStart } from "@/components/Calculator/actions";
-import { IconButton } from "@/components/ui/IconButton";
 
 type ImportStateProps = {};
 
@@ -50,7 +49,7 @@ export function ImportState(props: ImportStateProps) {
           position: "relative",
         }}
         ref={buttonRef}
-        component={Import}
+        name="import"
       >
         <input
           type="file"

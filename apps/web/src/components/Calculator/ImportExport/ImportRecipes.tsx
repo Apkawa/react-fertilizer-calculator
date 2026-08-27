@@ -1,9 +1,8 @@
 import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
-import { Import } from "@styled-icons/boxicons-regular/Import";
+import { IconButton } from "@fertilizer/icons";
 import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { recipePush } from "@/components/Calculator/actions";
-import { IconButton } from "@/components/ui/IconButton";
 import { csvParse } from "@/utils/csv";
 
 type ImportRecipesProps = {};
@@ -54,7 +53,7 @@ export function ImportRecipes(props: ImportRecipesProps) {
           position: "relative",
         }}
         ref={buttonRef}
-        component={Import}
+        name="import"
       >
         <input
           type="file"

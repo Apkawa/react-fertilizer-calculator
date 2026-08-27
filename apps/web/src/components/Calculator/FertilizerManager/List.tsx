@@ -1,5 +1,4 @@
-import { Plus } from "@styled-icons/boxicons-regular/Plus";
-import { Restart } from "@styled-icons/remix-line/Restart";
+import { IconButton } from "@fertilizer/icons";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactSortable } from "react-sortablejs";
@@ -15,7 +14,6 @@ import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/
 import { ExportFertilizers } from "@/components/Calculator/ImportExport/ExportFertilizers";
 import { ImportFertilizers } from "@/components/Calculator/ImportExport/ImportFertilizers";
 import type { CalculatorState } from "@/components/Calculator/types";
-import { IconButton } from "@/components/ui/IconButton";
 import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
 import { useFormValues } from "@/hooks/ReduxForm";
 import { Item } from "./Item";
@@ -40,7 +38,7 @@ export function List(props: ListProps) {
             <IconButton
               padding={1}
               alignSelf="center"
-              component={Plus}
+              name="plus"
               backgroundColor={"primary"}
               onClick={modal.open}
             />
@@ -80,7 +78,7 @@ export function List(props: ListProps) {
             >
               <ImportFertilizers />
               <ExportFertilizers />
-              <IconButton component={Restart} onClick={() => dispatch(fertilizerReset())} />
+              <IconButton name="restart" onClick={() => dispatch(fertilizerReset())} />
             </Box>
           </Flex>
         </Flex>

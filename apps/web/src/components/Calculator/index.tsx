@@ -1,12 +1,11 @@
 import { normalizeConcentration } from "@fertilizer/calculator/dilution";
-import { Restart } from "@styled-icons/remix-line/Restart";
+import { IconButton } from "@fertilizer/icons";
 import React from "react";
 import { connect, useDispatch } from "react-redux";
 import { Box, Card, Flex, Heading, Text } from "rebass";
 import { Form, reduxForm } from "redux-form";
 import { DEFAULT_MICRO_RECIPE, DEFAULT_RECIPES } from "@/components/Calculator/constants/recipes";
 import { Recipe } from "@/components/Calculator/Options/Recipe";
-import { IconButton } from "@/components/ui/IconButton";
 import { mobileStyles } from "@/components/ui/styled";
 import type { RootState } from "@/redux/types";
 import type { ReduxFormType } from "../ui/ReduxForm/types";
@@ -87,7 +86,7 @@ export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormV
                 >
                   <ImportRecipes />
                   <ExportRecipes />
-                  <IconButton component={Restart} onClick={() => dispatch(recipeReset())} />
+                  <IconButton name="restart" onClick={() => dispatch(recipeReset())} />
                 </Box>
               </Flex>
               <Flex alignItems="center" justifyContent="space-between" flexWrap="wrap">

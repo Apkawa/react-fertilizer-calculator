@@ -1,7 +1,6 @@
-import { Cross } from "@styled-icons/entypo/Cross";
+import { Icon } from "@fertilizer/icons";
 import React, { type ReactNode, useEffect, useState } from "react";
 import { Box, Flex, Heading } from "rebass";
-import { Icon } from "@/components/ui/Icon";
 import { ModalContainer } from "@/components/ui/Modal/ModalContainer";
 
 export interface ModalActions {
@@ -47,7 +46,7 @@ export function Modal(props: ModalProps) {
         <ModalContainer>
           <Flex justifyContent="space-between">
             <Heading fontSize={2}>{props.title}</Heading>
-            <Icon component={Cross} onClick={modalActions.close} />
+            <Icon name="close" onClick={modalActions.close} />
           </Flex>
           <Box>{container(renderCbProps)}</Box>
         </ModalContainer>
