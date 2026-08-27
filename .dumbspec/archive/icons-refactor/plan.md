@@ -46,4 +46,4 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 - [x] `AGENTS.md`: добавить `packages/icons/` в структуру + строки test/type
 
 **Criterion:** в `apps/web/package.json` нет иконочных пакетов; `pnpm full-check` зелёный; grep по пакетам чистый.
-**Commit:** `chore(web): drop icon dependencies (@styled-icons, @emotion-icons, emotion-theming)`
+**Commit:** `8f0103e` `chore(web): drop icon dependencies (@styled-icons, @emotion-icons, emotion-theming)`
