@@ -14,9 +14,6 @@ importers:
       '@playwright/test':
         specifier: ^1.62.1
         version: 1.62.1
-      express:
-        specifier: 4.17.1
-        version: 4.17.1(supports-color@7.1.0)
       husky:
         specifier: ^4.3.0
         version: 4.3.0
@@ -7271,12 +7268,6 @@ snapshots:
     optionalDependencies:
       supports-color: 5.5.0
 
-  debug@2.6.9(supports-color@7.1.0):
-    dependencies:
-      ms: 2.0.0
-    optionalDependencies:
-      supports-color: 7.1.0
-
   debug@3.1.0(supports-color@5.5.0):
     dependencies:
       ms: 2.0.0
@@ -7594,41 +7585,6 @@ snapshots:
       safe-buffer: 5.1.2
       send: 0.17.1(supports-color@5.5.0)
       serve-static: 1.14.1(supports-color@5.5.0)
-      setprototypeof: 1.1.1
-      statuses: 1.5.0
-      type-is: 1.6.18
-      utils-merge: 1.0.1
-      vary: 1.1.2
-    transitivePeerDependencies:
-      - supports-color
-
-  express@4.17.1(supports-color@7.1.0):
-    dependencies:
-      accepts: 1.3.7
-      array-flatten: 1.1.1
-      body-parser: 1.19.0(supports-color@5.5.0)
-      content-disposition: 0.5.3
-      content-type: 1.0.4
-      cookie: 0.4.0
-      cookie-signature: 1.0.6
-      debug: 2.6.9(supports-color@5.5.0)
-      depd: 1.1.2
-      encodeurl: 1.0.2
-      escape-html: 1.0.3
-      etag: 1.8.1
-      finalhandler: 1.1.2(supports-color@5.5.0)
-      fresh: 0.5.2
-      merge-descriptors: 1.0.1
-      methods: 1.1.2
-      on-finished: 2.3.0
-      parseurl: 1.3.3
-      path-to-regexp: 0.1.7
-      proxy-addr: 2.0.6
-      qs: 6.7.0
-      range-parser: 1.2.1
-      safe-buffer: 5.1.2
-      send: 0.17.1(supports-color@5.5.0)
-      serve-static: 1.14.1(supports-color@7.1.0)
       setprototypeof: 1.1.1
       statuses: 1.5.0
       type-is: 1.6.18
@@ -9237,24 +9193,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  send@0.17.1(supports-color@7.1.0):
-    dependencies:
-      debug: 2.6.9(supports-color@7.1.0)
-      depd: 1.1.2
-      destroy: 1.0.4
-      encodeurl: 1.0.2
-      escape-html: 1.0.3
-      etag: 1.8.1
-      fresh: 0.5.2
-      http-errors: 1.7.3
-      mime: 1.6.0
-      ms: 2.1.1
-      on-finished: 2.3.0
-      range-parser: 1.2.1
-      statuses: 1.5.0
-    transitivePeerDependencies:
-      - supports-color
-
   serialize-javascript@7.1.0: {}
 
   serve-static@1.14.1(supports-color@5.5.0):
@@ -9263,15 +9201,6 @@ snapshots:
       escape-html: 1.0.3
       parseurl: 1.3.3
       send: 0.17.1(supports-color@5.5.0)
-    transitivePeerDependencies:
-      - supports-color
-
-  serve-static@1.14.1(supports-color@7.1.0):
-    dependencies:
-      encodeurl: 1.0.2
-      escape-html: 1.0.3
-      parseurl: 1.3.3
-      send: 0.17.1(supports-color@7.1.0)
     transitivePeerDependencies:
       - supports-color
 

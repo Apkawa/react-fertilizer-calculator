@@ -26,7 +26,6 @@
   "devDependencies": {
     "@biomejs/biome": "^2.5.10",
     "@playwright/test": "^1.62.1",
-    "express": "4.17.1",
     "husky": "^4.3.0",
     "source-map-explorer": "^2.5.0",
     "ts-node": "^9.0.0",
