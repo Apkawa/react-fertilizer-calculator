@@ -63,21 +63,23 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `refactor(test-utils): extract @fertilizer/test-utils package`
 
 ## Stage 4 — Build parity + CI + housekeeping
-- [ ] `pnpm build` (workspace) → diff `apps/web/build/` vs `.cache/build-baseline/`: same file set; byte-differences only where git build-metadata (`__COMMIT_HASH__`/`__COMMIT_DATE__`/ref, PWA precache hashes) is embedded — document the delta
-- [ ] Remove stale root `build/` (gitignored)
-- [ ] `server.js` → `apps/web/server.js` (serves its own `build/`, code unchanged); `express` devDep → `apps/web`; root script `serve` (or AGENTS.md note `node apps/web/server.js`)
-- [ ] `.gitignore`: `/build` → `/apps/web/build`
-- [ ] CI `.github/workflows/blank.yml`: `FOLDER: build` → `FOLDER: apps/web/build` (only CI change)
-- [ ] Final `pnpm full-check` green at root
+- [x] `pnpm build` (workspace) → diff `apps/web/build/` vs `.cache/build-baseline/`: same file set; byte-differences only where git build-metadata (`__COMMIT_HASH__`/`__COMMIT_DATE__`/ref, PWA precache hashes) is embedded — document the delta
+- [x] Remove stale root `build/` (gitignored)
+- [x] `server.js` → `apps/web/server.js` (serves its own `build/`, code unchanged); `express` devDep → `apps/web`; root script `serve` (or AGENTS.md note `node apps/web/server.js`)
+- [x] `.gitignore`: `/build` → `/apps/web/build`
+- [x] CI `.github/workflows/blank.yml`: `FOLDER: build` → `FOLDER: apps/web/build` (only CI change)
+- [x] Final `pnpm full-check` green at root
 
 **Criterion:** build works and serves (byte parity relaxed by user — see Stage 1 note); same page/asset set; CI points at app build; all root commands work as before.
 **Commit:** `chore: workspace build parity, CI deploy folder, server.js to apps/web`
+**Commit:** pending — `chore: workspace build parity, CI deploy folder, server.js to apps/web`
 
 ## Stage 5 — Docs + freeze
-- [ ] `AGENTS.md`: Structure (apps/web, packages/*), Commands (root proxies + `node apps/web/server.js`), workspace notes (source packages, version in apps/web, pnpm-workspace.yaml, per-package vitest/tsc)
-- [ ] `README.md`: check/adjust commands section if it describes structure
-- [ ] Update `.dumbspec/AGENTS.md`-per lifecycle: move `current/pnpm-workspace/` → `archive/pnpm-workspace/` **after** final commit
-- [ ] Final cycle: `pnpm full-check` green
+- [x] `AGENTS.md`: Structure (apps/web, packages/*), Commands (root proxies + `node apps/web/server.js`), workspace notes (source packages, version in apps/web, pnpm-workspace.yaml, per-package vitest/tsc)
+- [x] `README.md`: check/adjust commands section if it describes structure
+- [x] Update `.dumbspec/AGENTS.md`-per lifecycle: move `current/pnpm-workspace/` → `archive/pnpm-workspace/` **after** final commit
+- [x] Final cycle: `pnpm full-check` green
 
 **Criterion:** docs match reality; task archived; full-check green.
 **Commit:** `docs: AGENTS.md — pnpm workspace layout`
+**Commit:** pending — `docs: AGENTS.md — pnpm workspace layout`
