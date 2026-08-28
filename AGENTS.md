@@ -142,3 +142,8 @@ cd <project> && export …three env vars above… && playwright-cli -s=ui open h
 - **Stale-session hang**: leftover `.session/.err` of a dead daemon in `.cache/ms-playwright/daemon/<workspace-hash>/` → `open` with the same name hangs (resume attempt). Before a new `open`: `rm .cache/ms-playwright/daemon/<hash>/<name>.*`. `kill-all` does not help — the processes live in a dead sandbox.
 - The agent's sessions are visible to the user in their terminal (`playwright-cli list/show`) — the registry is shared via the bind-mount.
 - Does not work: a lone `PLAYWRIGHT_BROWSERS_PATH` (the daemon path is derived from `XDG_CACHE_HOME`; browser binaries live under it), a fake `HOME=./.pw-home` (sessions invisible to the user).
+
+## Subagents
+
+- Before using the `subagent` / `subagent_fork` tools, load the skill **`subagents-local`** (`.agents/skills/subagents-local/SKILL.md`).
+- The local LLM allows only one concurrent agent — hand large tasks to subagents **sequentially**: one active subagent at a time; wait for its run to settle (sync result / settlement notice) before starting the next; never launch several subagents in the same message.
