@@ -139,7 +139,7 @@ Findings from research into feasibility, constraints, and options. (Internal, En
 7. Legacy `yarn.lock` at root is dead (project is pnpm) and is the only place `styled-icons` exists → delete file as part of cleanup (verify nothing references it: CI uses pnpm).
 
 ## Decisions (resolved at spec review)
-- React pin: **18.3.1** (user confirmed; latest 18.x LTS line).
+- React pin: **stays 16.13.1** (REVISITED 2026-08-28 — the React 18 requirement was dropped from the draft; see "Scope change" below).
 - packages/ui scope: **atoms + ui components** (primitives: Input, NumberInput, Button, Card, Text/Heading-like, Checkbox, Label, Radio + composites: Dropdown, Modal, Sidebar, TabMenu, ForkMeOnGitHub, ImportCSV).
 - ui/ReduxForm: **rewritten NOW** onto native input/checkbox/radio + new styling; redux-form wiring (`Field`, `reduxForm`, sagas) untouched (separate removal task).
 - packages/icons: **rewritten in place** (Icon/IconButton without rebass/theme-ui); package stays autonomous source package.
@@ -155,3 +155,22 @@ Findings from research into feasibility, constraints, and options. (Internal, En
 - `pages/App/` (App.css, logo.svg, index.tsx) — app shell page; check during Root/pages stage.
 - `Calculator/index.tsx` uses `mobileStyles` from ui/styled.ts — the helper itself is rebass-typed; replace with tailwind responsive utilities.
 - `StyledBalanceCell` (Calculator/Options/Recipe.tsx) — export used by Result; check technique at implementation (rebass-based or styled).
+
+## Scope change (2026-08-28) — React 18 requirement dropped
+
+User removed the React 18 migration requirement from `draft.md`. The app stays on **React 16.13.1** (pinned via `pnpm-workspace.yaml` `catalog: { react: ^16.13.1 }`, installed by both `apps/web` and `packages/icons` through `react: "catalog:"`), `@types/react`/`@types/react-dom` ^16.9.x, `ReactDOM.render` in `apps/web/src/index.tsx`. Consequences:
+
+- The whole "React 18 line" version matrix above (react 18.3.1, @types 18.3.x, RTL 14.3.x, user-event 14.x, router 5.3.4, loadable 5.16.x, sortablejs 6.1.x, redux-form 8.3.10 + react-redux 7.2.9) is moot. **No dependency bumps** for this task.
+- `@testing-library/react` stays **12.1.5** (works with React 16; RTL 14+ targets React 18 — out of scope). No `createRoot` migration; React 16 entry API unchanged.
+- The redux-form peer constraint (old "Constraint summary #1") is moot, and in the background: the **redux-to-zustand task is completed** (commit `e6381f7`) — redux/redux-form/redux-saga are gone from the app. Form state = zustand store + `form-context` (`FormProvider` + `useFormField` dot-path fields, `@/store`). Only the legacy `reduxState` localStorage key survives (one-time migration in `store/persistence.ts`).
+- `ui/ReduxForm/` (per the v1 spec/research) no longer exists: it is now `ui/Form/` — zustand-based `Input`/`Checkbox`/`Radio` (+`normalizers`) that wrap `RebassWidgets` primitives and read/write through `useFormField`. These are now **in scope** for migration (the old exclusion — "redux-form removal is a separate task" — is done). The controlled wrappers (name/normalize/useFormField) depend on the app store, so they stay in `apps/web/src` as glue over `packages/ui` presentational atoms.
+- `apps/web/src/react18-types-compat.d.ts` (leftover from an earlier React-18 attempt; entire content commented out, header says "удалить в Stage 8") → delete in the cleanup stage.
+- `react-helmet` 6.1.0, `react-router-dom` 5.2.0, `react-sortablejs` 6.0.0, `react-markdown` 8.0.7, `@loadable/component` 5.13.1: peers all fine on React 16 — unchanged.
+- `packages/icons` still depends directly on `rebass` + `theme-ui` (`peerDependencies: react: catalog:`) — it must drop them (rewrite `Icon`/`IconButton` on vanilla-extract) before the workspace can remove rebass/theme-ui, as before.
+
+### Revised hard constraints (supersede "Constraint summary")
+1. React 16.13.1 is pinned by the pnpm catalog (`pnpm-workspace.yaml`) — **no react/react-dom bump**; `@types/react(-dom)` stay ^16.9.x; `@testing-library/react` stays 12.1.5.
+2. Vite 8.2.2 in-repo is supported by both `@vanilla-extract/vite-plugin` (peer ^8) and `@tailwindcss/vite` (peer ^8) — no plugin downgrades.
+3. `packages/icons` directly depends on rebass + theme-ui → the icons rewrite is a prerequisite for removing them from the workspace.
+4. Classic JSX runtime (`import React` in every file, tsconfig `jsx: "react"`) is kept.
+5. `pnpm full-check` (test + lint + type + build) must be green at every stage (TDD: red test → green implementation → refactor).
