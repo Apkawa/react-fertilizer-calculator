@@ -105,6 +105,22 @@ Calculation tests in `packages/calculator/src/__tests__/` are reference tests; d
 - Jupyter models belong in `docs/` (python, repo root), not in the app or package sources.
 - The language of in-project comments is Russian; preserve that style.
 
+## Development Principles
+
+All implementation follows TDD, KISS, DRY, SOLID. On conflict: strict TDD+DRY+SOLID in `packages/calculator` and the store; strict KISS in UI/glue code.
+
+- **TDD** — test first: failing test → implement → refactor; bug → test that reproduces it, then fix. Tests colocated, run by `pnpm test` (`full-check`); no production code without a test in the change that introduces it.
+- **KISS** — simplest working implementation; no abstractions/config for hypothetical needs (YAGNI); direct code over cleverness.
+- **DRY** — shared logic in one place (helper/hook/`packages/calculator`); extract before extending duplicated code.
+- **SOLID** — S: one reason to change; O: extend via extension points, don't rewrite; L: never break existing contracts; I: props/types contain only what consumers use; D: depend on abstractions — `packages/calculator` stays UI-free.
+
+### Conflict resolution
+
+- **DRY↔KISS**: structural duplication (algorithms, data mapping, calculations) → extract immediately; incidental/UI duplication → wait for the third stable copy (Rule of Three); when in doubt → KISS.
+- **SOLID↔KISS**: SOLID applies at module boundaries (calculator, store). UI: only SRP+ISP; no DI containers or strategy hierarchies for hypothetical variants.
+- **TDD↔KISS**: calculator/store → full coverage; UI → render-smoke (`*.test.tsx`); glue code → type-check or smoke, no extra test infra.
+- **Tie-breaker**: pick the option simplest for a newcomer and easiest to change later; note the tradeoff in the commit message or comment.
+
 ## Environment Constraints
 
 - Node ≥ 24 (`engines` in package.json; the CI workflow uses 24.x), **pnpm** (version pinned in `packageManager` at the root).
