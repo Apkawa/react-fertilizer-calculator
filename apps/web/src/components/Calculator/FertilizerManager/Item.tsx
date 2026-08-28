@@ -2,16 +2,12 @@ import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
 import { IconButton } from "@fertilizer/icons";
 import React from "react";
-import { useDispatch } from "react-redux";
 import { Box, Button, Card, Flex, Text } from "rebass";
-import { fertilizerPush, fertilizerRemove } from "@/components/Calculator/actions";
-import { FERTILIZER_EDIT_FORM_NAME } from "@/components/Calculator/FertilizerManager/constants";
-import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";
 import type { FertilizerInfo } from "@/components/Calculator/types";
 import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
-import { useFormValues } from "@/hooks/ReduxForm";
+import { useStore } from "@/store";
 import { Element } from "../FertilizerSelect/SelectedListItem";
-import { AddEdit, formToFertilizer, getInitialValues } from "./AddEdit";
+import { AddEdit, formToFertilizer } from "./AddEdit";
 
 interface ItemProps {
   fertilizer: FertilizerInfo;
@@ -20,13 +16,14 @@ interface ItemProps {
 export function Item(props: ItemProps) {
   const { fertilizer } = props;
   const normalizedFertilizer = normalizeFertilizer(fertilizer, false);
-  const [formValues] = useFormValues<AddEditFormType>(FERTILIZER_EDIT_FORM_NAME);
-  const dispatch = useDispatch();
+  // Форма удобрения — глобальный стор (аналог useFormValues)
+  const formValues = useStore((s) => s.fertilizerEdit);
+
   const onRemove = () => {
-    dispatch(fertilizerRemove(fertilizer));
+    useStore.getState().removeFertilizer(fertilizer);
   };
   const onSave = (modal: ModalActions) => {
-    dispatch(fertilizerPush(formToFertilizer(formValues)));
+    useStore.getState().pushFertilizer(formToFertilizer(formValues));
     modal.close();
   };
   return (
@@ -67,7 +64,7 @@ export function Item(props: ItemProps) {
               )}
               container={({ modal }) => (
                 <>
-                  <AddEdit initialValues={getInitialValues(fertilizer)} />
+                  <AddEdit fertilizer={fertilizer} />
                   <Flex justifyContent="flex-end">
                     <Button type="button" onClick={() => onSave(modal)}>
                       Save

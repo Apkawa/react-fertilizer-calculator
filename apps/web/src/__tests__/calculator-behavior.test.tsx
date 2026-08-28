@@ -146,10 +146,9 @@ describe("Импорт состояния", () => {
 });
 
 describe("Topping-up", () => {
-  // TODO(Stage 2): переключить шов test-utils/state.ts на zustand и убрать .skip.
-  // На текущем redux-стеке тест намеренно «красный» (дефект calculateStartSaga),
-  // логика уже покрыта unit-тестом стора (store/index.test.ts, зелёный).
-  test.skip("включен → solution_volume доводится до объема topping-up, пересчет", async () => {
+  // Шов на zustand: стор доводит solution_volume/concentration до topping-up
+  // за один проход и пересчитывает результат (store/index.test.ts — unit-паритет).
+  test("включен → solution_volume доводится до объема topping-up, пересчет", async () => {
     renderApp(<Calculator />);
     setFormField("fertilizers", defaultFertilizers.slice(0, 2));
     setFormField("topping_up_enabled", true);

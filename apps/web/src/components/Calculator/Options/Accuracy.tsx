@@ -1,7 +1,6 @@
 import React, { type FunctionComponent } from "react";
 import { Card, Flex, Heading } from "rebass";
-import { decimal } from "../../ui/ReduxForm/normalizers";
-import { Radio } from "../../ui/ReduxForm/Radio";
+import { decimal, Radio } from "@/components/ui/Form";
 
 const ACCURACY_VARIANTS = [0.2, 0.1, 0.05, 0.01];
 type AccuracyProps = {};

@@ -1,14 +1,12 @@
 import { ACCEPT_FORMATS, FORMATS_MAP } from "@fertilizer/calculator/format";
 import { IconButton } from "@fertilizer/icons";
 import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { loadStateStart } from "@/components/Calculator/actions";
+import { useStore } from "@/store";
 
 type ImportStateProps = {};
 
 export function ImportState(props: ImportStateProps) {
   const buttonRef = createRef<HTMLButtonElement>();
-  const dispatch = useDispatch();
   const [size, setSize] = useState({ width: 0, height: 0 });
   useEffect(() => {
     const newSize = {
@@ -25,7 +23,7 @@ export function ImportState(props: ImportStateProps) {
     if (FORMATS_MAP[ext]) {
       const f = new FORMATS_MAP[ext]();
       const p = f.import(data);
-      dispatch(loadStateStart(p));
+      useStore.getState().importState(p);
     }
   };
 

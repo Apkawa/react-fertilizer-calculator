@@ -1,114 +1,74 @@
 /**
  * Тестовый шов: доступ к состоянию приложения без привязки к конкретной стеку.
- * Поведенческие тесты (__tests__/*.behavior.test.tsx) зависят только от этого модуля:
- * при переходе с redux + redux-form + saga на zustand меняется только эта реализация,
- * тела тестов остаются без изменений.
+ * Поведенческие тесты (__tests__/*.behavior.test.tsx) зависят только от этого модуля.
+ *
+ * Реализация на zustand (`@/store`): тот же набор функций, что при redux +
+ * redux-form + saga, но обращения идут к zustand-стору.
  */
 
 import type { ExportStateType } from "@fertilizer/calculator/format/types";
 import type { FertilizerInfo } from "@fertilizer/calculator/types";
-import { change, reset } from "redux-form";
-import {
-  calculateStart,
-  fertilizerPush,
-  fertilizerReset,
-  fertilizerSet,
-  loadStateStart,
-  loadStateSuccess,
-} from "@/components/Calculator/actions";
-import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
-import { defaultFertilizers } from "@/components/Calculator/constants/fertilizers";
-import { DEFAULT_RECIPES } from "@/components/Calculator/constants/recipes";
-import { FERTILIZER_EDIT_FORM_NAME } from "@/components/Calculator/FertilizerManager/constants";
 import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";
 import type { CalculatorState } from "@/components/Calculator/types";
-import { store } from "@/redux";
+import { createAppStore, useStore } from "@/store";
+import { PERSIST_KEY } from "@/store/persistence";
 
 // Снимок части состояния, которую проверяют поведенческие тесты
 export type AppSnapshot = CalculatorState;
 
-// Корневое состояние: слайс калькулятора + формы
-type RootState = {
-  calculator: CalculatorState;
-  form?: {
-    [form: string]: {
-      values?: Record<string, unknown>;
-      syncErrors?: { [field: string]: { _error?: string } };
-    };
-  };
-};
-
-const rootState = (): RootState => store.getState() as unknown as RootState;
-
-export const getState = (): AppSnapshot => rootState().calculator;
+export const getState = (): AppSnapshot => useStore.getState().calculator;
 
 // Поле формы расчета (dot-path)
 export const setFormField = (name: string, value: unknown): void => {
-  store.dispatch(change(REDUX_FORM_NAME, name, value));
+  useStore.getState().setFieldValue(name, value);
 };
 
 // Запуск расчета (минуя валидацию формы)
 export const calculateNow = (): void => {
-  store.dispatch(calculateStart());
+  useStore.getState().calculate();
 };
 
 // Менеджер удобрений
 export const pushFertilizer = (f: FertilizerInfo): void => {
-  store.dispatch(fertilizerPush(f));
+  useStore.getState().pushFertilizer(f);
 };
 
 export const setFertilizers = (list: FertilizerInfo[]): void => {
-  store.dispatch(fertilizerSet(list));
+  useStore.getState().setFertilizers(list);
 };
 
 export const resetFertilizers = (): void => {
-  store.dispatch(fertilizerReset());
+  useStore.getState().resetFertilizers();
 };
 
 // Импорт состояния
 export const importState = (payload: ExportStateType): void => {
-  store.dispatch(loadStateStart(payload));
+  useStore.getState().importState(payload);
 };
 
-// Сообщение об ошибке на поле fertilizers формы расчета
+// Сообщение об ошибке выбора удобрений (top-level в zustand-сторе)
 export const getFertilizersError = (): string | undefined =>
-  rootState().form?.[REDUX_FORM_NAME]?.syncErrors?.fertilizers?._error;
+  useStore.getState().fertilizersError ?? undefined;
 
 // Форма редактирования удобрения
-export const getFertilizerEditForm = (): AddEditFormType =>
-  rootState().form?.[FERTILIZER_EDIT_FORM_NAME]?.values as unknown as AddEditFormType;
+export const getFertilizerEditForm = (): AddEditFormType => useStore.getState().fertilizerEdit;
 
 export const setFertilizerEditField = (name: string, value: unknown): void => {
-  store.dispatch(change(FERTILIZER_EDIT_FORM_NAME, name, value));
+  useStore.getState().setFertilizerEditField(name, value);
 };
 
-// Персистентность: сырое содержимое хранилища
+// Персистентность: сырое содержимое хранилища (zustand пишет под ключ `appState`)
 export const readPersistence = (): { calculator: AppSnapshot } | null => {
-  const raw = localStorage.getItem("reduxState");
+  const raw = localStorage.getItem(PERSIST_KEY);
   return raw ? (JSON.parse(raw) as { calculator: AppSnapshot }) : null;
 };
 
 // «Перезапуск» приложения: свежий экземпляр стора, читающий персистентность
 export async function getFreshSnapshot(): Promise<AppSnapshot> {
-  const { vi } = await import("vitest");
-  vi.resetModules();
-  const mod = (await import("@/redux")) as { store: { getState: () => unknown } };
-  return (mod.store.getState() as unknown as RootState).calculator;
+  return createAppStore().getState().calculator;
 }
 
 // Херметичный сброс: состояние к дефолтам (каждый тест независимо)
 export const resetStore = (): void => {
-  store.dispatch(reset(REDUX_FORM_NAME));
-  store.dispatch(reset(FERTILIZER_EDIT_FORM_NAME));
-  store.dispatch(
-    loadStateSuccess({
-      calculationForm: null,
-      result: null,
-      toppingUpResult: null,
-      process: false,
-      error: false,
-      fertilizers: [...defaultFertilizers],
-      recipes: [...DEFAULT_RECIPES],
-    }),
-  );
+  useStore.getState().reset();
 };

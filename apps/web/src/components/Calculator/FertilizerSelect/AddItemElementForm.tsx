@@ -1,6 +1,6 @@
 import React, { type FunctionComponent, useEffect, useState } from "react";
 import { Flex } from "rebass";
-import { StyledInput } from "@/components/ui/ReduxForm/Input";
+import { StyledInput } from "@/components/ui/Form";
 
 interface RecipeElementFormProps {
   name: string;

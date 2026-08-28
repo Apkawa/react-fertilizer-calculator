@@ -2,11 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import Root from "./Root";
-import { store } from "./redux";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Root store={store} />
+    <Root />
   </React.StrictMode>,
   document.getElementById("root"),
 );

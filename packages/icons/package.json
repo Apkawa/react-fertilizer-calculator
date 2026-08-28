@@ -8,11 +8,14 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "react": "^16.13.1",
     "rebass": "^4.0.7",
     "theme-ui": "^0.3.1"
   },
+  "peerDependencies": {
+    "react": "catalog:"
+  },
   "devDependencies": {
+    "react": "catalog:",
     "@testing-library/react": "12.1.5",
     "@theme-ui/presets": "^0.3.0",
     "@types/node": "^12.0.0",

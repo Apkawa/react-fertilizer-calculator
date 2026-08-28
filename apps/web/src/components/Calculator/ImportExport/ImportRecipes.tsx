@@ -1,8 +1,7 @@
 import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { IconButton } from "@fertilizer/icons";
 import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { recipePush } from "@/components/Calculator/actions";
+import { useStore } from "@/store";
 import { csvParse } from "@/utils/csv";
 
 type ImportRecipesProps = {};
@@ -11,7 +10,6 @@ const COLUMNS = ["id", ...FERTILIZER_ELEMENT_NAMES];
 
 export function ImportRecipes(props: ImportRecipesProps) {
   const buttonRef = createRef<HTMLButtonElement>();
-  const dispatch = useDispatch();
   const [size, setSize] = useState({ width: 0, height: 0 });
   useEffect(() => {
     const newSize = {
@@ -29,7 +27,7 @@ export function ImportRecipes(props: ImportRecipesProps) {
       p.splice(0, 1);
     }
     for (const { id, ...npk } of p) {
-      dispatch(recipePush({ name: id, elements: npk }));
+      useStore.getState().pushRecipe({ name: id, elements: npk });
     }
   };
 

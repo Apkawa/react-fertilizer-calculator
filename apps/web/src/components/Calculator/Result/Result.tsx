@@ -3,27 +3,20 @@ import { buildFertilizerFromSolution } from "@fertilizer/calculator/fertilizer";
 import { getEmptyElements, getNPKDetailInfo } from "@fertilizer/calculator/helpers";
 import { IconButton } from "@fertilizer/icons";
 import React, { type FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Button, Card, Flex, Heading, Text } from "rebass";
-import { getFormValues } from "redux-form";
 import styled from "styled-components";
-import { fertilizerPush } from "@/components/Calculator/actions";
 import {
   AddEdit as FertilizerAddEditForm,
   formToFertilizer,
   getInitialValues,
 } from "@/components/Calculator/FertilizerManager/AddEdit";
-import { FERTILIZER_EDIT_FORM_NAME } from "@/components/Calculator/FertilizerManager/constants";
-import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";
 import { MixerModal } from "@/components/Calculator/Mixer/Mixer";
 import { ResultDilution } from "@/components/Calculator/Result/ResultDilution";
 import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
-import { useFormValues } from "@/hooks/ReduxForm";
+import { useStore } from "@/store";
 import { round, sum } from "@/utils";
-import { REDUX_FORM_NAME } from "../constants";
 import { Element } from "../FertilizerSelect/SelectedListItem";
 import { StyledBalanceCell } from "../Options/Recipe";
-import type { CalculatorFormValues, CalculatorState } from "../types";
 import { useFertilizerSolutionGroup } from "./hooks";
 import { ResultFertilizerList } from "./ResultFertilizerList";
 
@@ -36,9 +29,11 @@ const StyledList = styled.ul`
 `;
 
 export const Result: FunctionComponent<ResultProps> = () => {
-  const { fertilizers, result } = useSelector<any>((state) => state.calculator) as CalculatorState;
+  // Слайс калькулятора (те же поля, что у redux state.calculator)
+  const { fertilizers, result } = useStore((s) => s.calculator);
 
-  const { solution_volume } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues;
+  // Объем раствора из формы расчёта (null-safe: форма может быть пустая)
+  const solution_volume = useStore((s) => s.calculator.calculationForm?.solution_volume);
 
   const fertilizerWeightGroups = useFertilizerSolutionGroup();
 
@@ -49,10 +44,10 @@ export const Result: FunctionComponent<ResultProps> = () => {
   // const liquidFertilizersVolume = round(sum((result?.fertilizers || []).map(f => f.volume || 0)), 1)
   const totalWeight = round(sum((result?.fertilizers || []).map((f) => f.weight || 0)), 2);
 
-  const [formValues] = useFormValues<AddEditFormType>(FERTILIZER_EDIT_FORM_NAME);
-  const dispatch = useDispatch();
+  // Форма редактора удобрения (zustand: слайс fertilizerEdit)
+  const formValues = useStore((s) => s.fertilizerEdit);
   const onSave = (modal: ModalActions) => {
-    dispatch(fertilizerPush(formToFertilizer(formValues)));
+    useStore.getState().pushFertilizer(formToFertilizer(formValues));
     modal.close();
   };
   const complexFertilizer = buildFertilizerFromSolution("", {
@@ -113,7 +108,7 @@ export const Result: FunctionComponent<ResultProps> = () => {
             </li>
           ))}
           <li>Всего солей: {totalWeight} г.</li>
-          <li>Концентрация солей: {round(totalWeight / solution_volume, 2)} г/л</li>
+          <li>Концентрация солей: {round(totalWeight / (solution_volume ?? 1), 2)} г/л</li>
         </StyledList>
         <ResultDilution />
         {result?.stats && (

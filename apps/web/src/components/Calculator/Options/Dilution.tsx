@@ -1,22 +1,15 @@
 import { type Concentration, normalizeConcentration } from "@fertilizer/calculator/dilution";
 import { Label } from "@rebass/forms";
 import React, { type FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Card, Flex, Text } from "rebass";
-import { change, getFormValues } from "redux-form";
-import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
-import type { CalculatorFormValues } from "@/components/Calculator/types";
-import { Checkbox } from "@/components/ui/ReduxForm/Checkbox";
-import { Input } from "@/components/ui/ReduxForm/Input";
-import { decimal, number } from "@/components/ui/ReduxForm/normalizers";
+import { Checkbox, Input, number, StyledInput } from "@/components/ui/Form";
+import { useStore } from "@/store";
 
 type DilutionProps = {};
 
 export const Dilution: FunctionComponent<DilutionProps> = () => {
-  const { dilution_enabled, dilution_concentration } = useSelector(
-    getFormValues(REDUX_FORM_NAME),
-  ) as CalculatorFormValues;
-  const dispatch = useDispatch();
+  const form = useStore((s) => s.calculator.calculationForm);
+  const { setFieldValue } = useStore.getState();
 
   const onChange = (field: string) => (event: any) => {
     if (!event.target.value) {
@@ -28,16 +21,16 @@ export const Dilution: FunctionComponent<DilutionProps> = () => {
     if (field === "k") {
       newCon.k = k;
     } else {
-      newCon = { ...dilution_concentration, [field]: k };
+      newCon = { ...(form?.dilution_concentration ?? {}), [field]: k };
       delete newCon.k;
     }
     const newConcentration = normalizeConcentration(newCon);
-    dispatch(change(REDUX_FORM_NAME, "dilution_concentration", newConcentration));
+    setFieldValue("dilution_concentration", newConcentration);
   };
   return (
     <Card>
       <Checkbox name="dilution_enabled" label="Разбавление концентрата" />
-      <Flex flexDirection="column" style={{ display: dilution_enabled ? "flex" : "none" }}>
+      <Flex flexDirection="column" style={{ display: form?.dilution_enabled ? "flex" : "none" }}>
         <Flex alignItems="center" justifyContent="space-between">
           <Label htmlFor="dilution_volume">Объем, л</Label>
           <Input
@@ -59,50 +52,50 @@ export const Dilution: FunctionComponent<DilutionProps> = () => {
         </Flex>
         <Flex alignItems="center" paddingTop={2}>
           <Text fontSize={"2rem"}>1:</Text>
-          <Input
+          <StyledInput
             name="dilution_concentration.k"
             type="number"
             width={"auto"}
             step="0.1"
             min="1"
             max="2000"
-            normalize={decimal}
             style={{
               textAlign: "center",
             }}
             autoComplete="off"
+            value={form?.dilution_concentration?.k ?? ""}
             onChange={onChange("k")}
           />
         </Flex>
         <Flex alignItems={"center"}>
           Или
-          <Input
+          <StyledInput
             name="dilution_concentration.v_1"
             type="number"
             width={"4rem"}
             step="0.1"
             min="0"
             max="50000"
-            normalize={decimal}
             style={{
               textAlign: "center",
             }}
             autoComplete="off"
+            value={form?.dilution_concentration?.v_1 ?? ""}
             onChange={onChange("v_1")}
           />
           мл на
-          <Input
+          <StyledInput
             name="dilution_concentration.v_2"
             type="number"
             width={"4rem"}
             step="1"
             min="0"
             max="1000000"
-            normalize={decimal}
             style={{
               textAlign: "center",
             }}
             autoComplete="off"
+            value={form?.dilution_concentration?.v_2 ?? ""}
             onChange={onChange("v_2")}
           />
           мл. рабочего раствора

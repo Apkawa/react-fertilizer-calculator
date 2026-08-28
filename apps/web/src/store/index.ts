@@ -49,8 +49,10 @@ export interface AppActions {
   resetRecipes(): void;
   // Импорт состояния (формат @fertilizer/calculator/format)
   importState(payload: ExportStateType): void;
-  // Форма редактора удобрения: значение + пересчёт npk из composition
+  // Форма редактора удобрения: значение (dot-path) + пересчёт npk из composition
   setFertilizerEditField(name: string, value: unknown): void;
+  // Форма редактора удобрения: запись всей формы (инициализация модалки, б/ initialValues redux-form)
+  setFertilizerEdit(form: AddEditFormType): void;
   // Форма миксера
   setMixerField(name: string, value: unknown): void;
   // Полный сброс к дефолтам (херметичность тестов)
@@ -117,7 +119,7 @@ export function createAppStore() {
       if (!form?.fertilizers?.length) {
         set((s) => ({
           calculator: { ...s.calculator, process: false, error: true },
-          fertilizersError: "Need fertilizers!",
+          fertilizersError: "Выберите удобрения",
         }));
         return;
       }
@@ -215,7 +217,14 @@ export function createAppStore() {
 
     setFertilizerEditField: (name, value) =>
       set((s) => {
-        const form: AddEditFormType = { ...s.fertilizerEdit, [name]: value };
+        // Вложенные поля (composition.N.formula, npk.N) — dot-path через setIn; прочее — верхний уровень
+        const form: AddEditFormType = name.includes(".")
+          ? (setIn(
+              s.fertilizerEdit as unknown as Record<string, unknown>,
+              name,
+              value,
+            ) as unknown as AddEditFormType)
+          : { ...s.fertilizerEdit, [name]: value };
         // Пересчёт npk из composition (аналог updateFertilizerForm в saga менеджера)
         if (form.composition_enable) {
           const npk = normalizeFertilizer(
@@ -231,6 +240,8 @@ export function createAppStore() {
         }
         return { fertilizerEdit: form };
       }),
+
+    setFertilizerEdit: (form) => set(() => ({ fertilizerEdit: { ...form } })),
 
     setMixerField: (name, value) =>
       set((s) => ({ mixerOptions: { ...s.mixerOptions, [name]: value } })),

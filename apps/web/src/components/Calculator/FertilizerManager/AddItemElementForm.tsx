@@ -2,14 +2,14 @@ import { NPKOxides } from "@fertilizer/calculator/constants";
 import type { Elements } from "@fertilizer/calculator/types";
 import React, { type FunctionComponent } from "react";
 import { Flex } from "rebass";
-import { Input } from "@/components/ui/ReduxForm/Input";
-import { decimal } from "@/components/ui/ReduxForm/normalizers";
+import { decimal, Input } from "@/components/ui/Form";
 
 interface RecipeElementFormProps {
   name: keyof Elements;
   disabled?: boolean;
 }
 
+// Поле элемента в форме удобрения: значение по dot-path (npk.<name>) из глобального стора
 export const AddItemElementForm: FunctionComponent<RecipeElementFormProps> = (props) => {
   const { name, disabled } = props;
   let displayName: string = name;

@@ -23,11 +23,10 @@ import { Input } from "@rebass/forms";
 import React, { type ChangeEvent, useEffect, useState } from "react";
 import { Box, Button, Flex } from "rebass";
 import { StyledBalanceCell } from "@/components/Calculator/Options/Recipe";
-import type { CalculatorFormValues } from "@/components/Calculator/types";
+import { decimal } from "@/components/ui/Form";
 import type { ModalActions } from "@/components/ui/Modal/Modal";
 import { NumberInput as StyledInput } from "@/components/ui/RebassWidgets/Number";
-import { decimal } from "@/components/ui/ReduxForm/normalizers";
-import { useFormName, useFormValues } from "@/hooks/ReduxForm";
+import { useStore } from "@/store";
 import { entries, round } from "@/utils";
 
 interface RecipeTuneFormProps {
@@ -41,13 +40,16 @@ const IMPORTANT_CELLS = ["K:N", "K:Ca", "K:Mg", "NH4:NO3", "P", "Cl", "EC", "B"]
 const BLOCKING_CELLS = ["N:Ca", "Ca:N", "Ca:K", "Ca:Mg", "Mg:K", "Mg:Ca"];
 
 export function RecipeTuneForm(props: RecipeTuneFormProps) {
-  const formValue = useFormValues<CalculatorFormValues>(useFormName())[0];
-  const [recipe, setRecipe] = useState(formValue.recipe);
+  // Значения рецепта из глобального стора (расчётный form), фолбэк на пустой профиль
+  const form = useStore((s) => s.calculator.calculationForm);
+  const [recipe, setRecipe] = useState<NeedElements>(form?.recipe ?? {});
   const recipeInfo = getNPKDetailInfo(recipe as Elements);
   const [ratio, setRatio] = useState(recipeInfo.ratio);
   const [EC, setEC] = useState(recipeInfo.EC);
 
-  const [profileString, setProfileString] = useState(HPGFormat.stringifyProfile(formValue.recipe));
+  const [profileString, setProfileString] = useState(
+    HPGFormat.stringifyProfile(form?.recipe ?? {}),
+  );
 
   const onChangeRecipe = (el: FERTILIZER_ELEMENT_NAMES, value: number) => {
     const newRecipe = { ...recipe, [el]: value };
@@ -231,7 +233,7 @@ function RecipeInput(props: RecipeInputProps) {
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
-      const val = decimal(e.target.value);
+      const val = decimal(e.target.value) as number;
       onChange && onChange(val);
     }
   };

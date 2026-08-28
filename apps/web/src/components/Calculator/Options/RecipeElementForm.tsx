@@ -1,7 +1,6 @@
 import React, { type FunctionComponent } from "react";
 import { Box, Flex } from "rebass";
-import { Input } from "@/components/ui/ReduxForm/Input";
-import { number } from "@/components/ui/ReduxForm/normalizers";
+import { Input, number } from "@/components/ui/Form";
 
 interface RecipeElementFormProps {
   name: string;

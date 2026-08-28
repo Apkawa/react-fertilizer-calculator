@@ -1,13 +1,12 @@
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import Root from "../Root";
-import { store } from "../redux/index";
 
-// Смоук-тест: настоящий корень приложения (Redux + HashRouter + theme-ui)
+// Смоук-тест: настоящий корень приложения (zustand + HashRouter + theme-ui)
 // рендерится в jsdom, лениво загруженный Калькулятор успевает смонтироваться,
 // константы сборки (__VERSION__ и др.) подставляются в футер.
 test("app smoke: root renders and calculator mounts", async () => {
-  const { container } = render(<Root store={store} />);
+  const { container } = render(<Root />);
   await waitFor(
     () => {
       // корневая обвязка

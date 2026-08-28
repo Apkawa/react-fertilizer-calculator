@@ -9,7 +9,7 @@
     "test": "pnpm -C packages/calculator test && pnpm -C packages/icons test && pnpm -C apps/web test",
     "test:e2e": "playwright test tests/e2e",
     "test:smoke": "playwright test tests/smoke",
-    "lint": "biome check apps packages",
+    "lint": "biome check apps packages --diagnostic-level=error",
     "type": "tsc -p packages/calculator && tsc -p packages/icons && tsc -p apps/web",
     "analyze": "pnpm build && source-map-explorer 'apps/web/build/assets/*.js'",
     "jupyter": "jupyter-notebook docs/"

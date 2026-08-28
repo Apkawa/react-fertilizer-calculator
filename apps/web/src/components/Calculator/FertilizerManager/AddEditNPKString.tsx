@@ -3,8 +3,7 @@ import type { NPKElements } from "@fertilizer/calculator/types";
 import { Input } from "@rebass/forms";
 import React, { type ChangeEvent, type FunctionComponent, useEffect, useState } from "react";
 import { Flex } from "rebass";
-import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";
-import { useFormName, useFormValues } from "@/hooks/ReduxForm";
+import { useStore } from "@/store";
 
 interface AddEditNPKStringProps {
   npk?: NPKElements;
@@ -12,7 +11,8 @@ interface AddEditNPKStringProps {
 }
 
 export const AddEditNPKString: FunctionComponent<AddEditNPKStringProps> = (props) => {
-  const { composition_enable } = useFormValues<AddEditFormType>(useFormName())[0];
+  // Форма удобрения — глобальный стор (аналог useFormValues)
+  const { composition_enable } = useStore((s) => s.fertilizerEdit);
   const { npk, onChange } = props;
   // TODO разобрать useReducer вместо useState
   const [value, setValue] = useState<string | undefined>(npk && stringifyProfile(npk));

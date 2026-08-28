@@ -47,9 +47,10 @@
 
 ### 2. Перенос компонентов
 
-- Поля форм: `ui/ReduxForm/{Input,Checkbox,Radio}` превращаются из `Field`-обёрток redux-form в **контролируемые компоненты**: `name` (dot-path) → `value` из стора, `onChange` → `setFieldValue`. `normalize` применяется на записи. `FieldArray`-компоненты (SelectedList, AddEditCompositionList) получают значения/`push`/`remove` из стора.
-- `meta.error` (`SelectedList`) → ошибка из стора (guard расчёта).
-- `connect`/`useSelector`/`useDispatch` → `useXStore`-селекторы; `hooks/ReduxForm.ts` → читает/пишет стор.
+- **`components/ui/ReduxForm/` удаляется целиком** (HOC `ReduxField`, `WrapperInputType`, `renderReduxField`, redux-form-типы — нагромождения/костыли). Вместо них чистая zustand-форма: `store/form-context.tsx` (`FormProvider`/`useFormContext` — аналог `ReduxFormContext`, знает «какая форма»), `store/use-form-field.ts` (`useFormField(name) → {value,setValue}` — name dot-path → value из стора, `onChange` → `setFieldValue`, `normalize` на записи). Чистые поля `components/ui/Form/{Input,Checkbox,Radio}.tsx`.
+- Сохраняем идею «гигаформы»: компоненты могут быть разбросаны где угодно и не требуют прокидывания событий/пропсов — состояние читается/пишется глобально из стора.
+- `FieldArray`-компоненты (SelectedList, AddEditCompositionList) получают значения/`push`/`remove` из стора; `meta.error` (`SelectedList`) → ошибка из стора (guard расчёта).
+- `connect`/`useSelector`/`useDispatch` → `useStore`-селекторы; `hooks/ReduxForm.ts` убирается (`useFormValues`/`useReduxForm` заменены `useFormField`+`useFormContext`).
 - `test-utils/render.tsx` (убрать Provider), `test-utils/form.tsx` (убрать reduxForm-HOC; wrapper = обёртка в стор), шов `test-utils/state.ts` → zustand.
 - Тесты стадии 0 проходят **без изменений текста** (меняется только шов).
 - Критерий: `pnpm test` (все vitest, включая тесты стадии 0) зелёный; поведение DOM без изменений.

@@ -1,35 +1,41 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Flex } from "rebass";
-import type { ReduxFieldArrayType } from "../../ui/ReduxForm/types";
-import type { CalculatorState } from "../types";
+import { useStore } from "@/store";
 import { AddItem } from "./AddItem";
 import { SelectedListItem } from "./SelectedListItem";
 import type { FertilizerType } from "./types";
 
-type SelectedListProps = {};
+// Контроллируемый список выбранных удобрений: состояние и запись — из zustand-стора
+// (замена redux-form FieldArray + syncErrors).
+export const SelectedList = () => {
+  const form = useStore((s) => s.calculator.calculationForm);
+  const result = useStore((s) => s.calculator.result);
+  const fertilizersError = useStore((s) => s.fertilizersError);
+  const { setFieldValue } = useStore.getState();
 
-export const SelectedList: ReduxFieldArrayType<SelectedListProps, FertilizerType> = ({
-  fields,
-  meta: { error },
-}) => {
-  const { calculationForm, result } = useSelector<any>(
-    (state) => state.calculator,
-  ) as CalculatorState;
-  const fertilizers = calculationForm?.fertilizers || [];
+  const fertilizers = form?.fertilizers || [];
 
   const calculatedFertilizersWeights = Object.fromEntries(
     (result?.fertilizers || []).map((f) => [f.id, f]),
   );
 
+  // Добавление с дедупликацией по id (замена fields.push)
   const onAddHandler = (item: FertilizerType) => {
     for (const f of fertilizers) {
       if (f.id === item.id) {
         return;
       }
     }
-    fields.push(item);
+    setFieldValue("fertilizers", [...fertilizers, item]);
   };
+
+  const onRemove = (index: number) => {
+    setFieldValue(
+      "fertilizers",
+      fertilizers.filter((_, i) => i !== index),
+    );
+  };
+
   return (
     <Flex sx={{ flexDirection: "column" }} width="auto">
       <AddItem onAdd={onAddHandler} />
@@ -41,13 +47,13 @@ export const SelectedList: ReduxFieldArrayType<SelectedListProps, FertilizerType
           },
         }}
       >
-        {error ? <span>{error}</span> : null}
+        {fertilizersError ? <span>{fertilizersError}</span> : null}
         {fertilizers.map((item, index) => (
           <SelectedListItem
             item={item}
             key={item.id}
             weight={calculatedFertilizersWeights[item.id]}
-            onRemove={() => fields.remove(index)}
+            onRemove={() => onRemove(index)}
           />
         ))}
       </Flex>

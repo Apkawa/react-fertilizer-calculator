@@ -1,25 +1,21 @@
 import { IconButton } from "@fertilizer/icons";
 import React, { type ComponentType } from "react";
-import { useSelector } from "react-redux";
 import { Button, Flex } from "rebass";
-import { getFormValues } from "redux-form";
-import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
 import { type MixerFormType, MixerOptionsForm } from "@/components/Calculator/Mixer/MixerForm";
-import type { CalculatorFormValues, CalculatorState } from "@/components/Calculator/types";
 import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
-import { useFormValues } from "@/hooks/ReduxForm";
+import { useStore } from "@/store";
 
 export const MixerModal: ComponentType = () => {
-  const { fertilizers, mixerOptions } = useSelector(
-    getFormValues(REDUX_FORM_NAME),
-  ) as CalculatorFormValues;
-  const { result } = useSelector<any>((state) => state.calculator) as CalculatorState;
+  // Форма расчёта (null-safe): выбранные удобрения + параметры миксера
+  const form = useStore((s) => s.calculator.calculationForm);
+  const result = useStore((s) => s.calculator.result);
 
-  const initialMixerOptions = {
-    ...mixerOptions,
-    fertilizers,
+  const initialMixerOptions: MixerFormType = {
+    ...form?.mixerOptions,
+    fertilizers: form?.fertilizers ?? [],
   };
-  const [formValues] = useFormValues<MixerFormType>("mixerOptions");
+  // Форма миксера (zustand: слайс mixerOptions)
+  const formValues = useStore((s) => s.mixerOptions);
 
   function onSave(modal: ModalActions) {
     const weights = Object.fromEntries((result?.fertilizers || []).map((f) => [f.id, f]));

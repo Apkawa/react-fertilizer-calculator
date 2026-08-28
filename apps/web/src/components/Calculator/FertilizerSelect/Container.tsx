@@ -1,14 +1,7 @@
 import React from "react";
-import { FieldArray } from "redux-form";
-import { required } from "../../ui/ReduxForm/validators";
 import { SelectedList } from "./SelectedList";
 
+// Обёртка секции: контроллируемый список удобрений из zustand-стора (без redux-form).
 export const Container = () => {
-  return (
-    <FieldArray<{}>
-      name={"fertilizers"}
-      component={SelectedList}
-      validate={required("Выберите удобрения")}
-    />
-  );
+  return <SelectedList />;
 };

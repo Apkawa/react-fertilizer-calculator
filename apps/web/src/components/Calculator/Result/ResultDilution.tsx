@@ -5,23 +5,23 @@ import {
 } from "@fertilizer/calculator/dilution";
 import { ppmToEC } from "@fertilizer/calculator/helpers";
 import React from "react";
-import { useSelector } from "react-redux";
 import { Flex, Heading } from "rebass";
-import { getFormValues } from "redux-form";
-import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
 import { useFertilizerSolutionGroup, usePPM } from "@/components/Calculator/Result/hooks";
 import type { CalculatorFormValues } from "@/components/Calculator/types";
+import { useStore } from "@/store";
 import { round } from "@/utils";
 
 type DilutionResultProps = {};
 
 export function ResultDilution(props: DilutionResultProps) {
+  // Форма расчёта (null-safe): дефолты совпадают с дефолтами initialValues redux-form
+  const form = useStore((s) => s.calculator.calculationForm);
   const {
     dilution_enabled,
     solution_concentration = normalizeConcentration(1),
     solution_volume = 1,
     dilution_concentration = normalizeConcentration(1),
-  } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues;
+  } = (form ?? {}) as CalculatorFormValues;
 
   const fertilizerWeightGroups = useFertilizerSolutionGroup();
   const ppm = usePPM();

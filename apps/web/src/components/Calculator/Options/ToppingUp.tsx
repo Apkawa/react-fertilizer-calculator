@@ -1,20 +1,14 @@
 import { Label } from "@rebass/forms";
 import React, { type FunctionComponent } from "react";
-import { useSelector } from "react-redux";
 import { Card, Flex } from "rebass";
-import { getFormValues } from "redux-form";
-import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
-import type { CalculatorFormValues } from "@/components/Calculator/types";
-import { Checkbox } from "@/components/ui/ReduxForm/Checkbox";
-import { Input } from "@/components/ui/ReduxForm/Input";
-import { decimal, number } from "@/components/ui/ReduxForm/normalizers";
+import { Checkbox, decimal, Input, number } from "@/components/ui/Form";
+import { useStore } from "@/store";
 
 type ToppingUpProps = {};
 
 export const ToppingUp: FunctionComponent<ToppingUpProps> = () => {
-  const { topping_up_enabled } = useSelector(
-    getFormValues(REDUX_FORM_NAME),
-  ) as CalculatorFormValues;
+  const form = useStore((s) => s.calculator.calculationForm);
+  const topping_up_enabled = form?.topping_up_enabled;
   return (
     <Card>
       <Checkbox name="topping_up_enabled" label="Долив раствора" />

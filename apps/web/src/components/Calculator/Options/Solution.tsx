@@ -1,21 +1,15 @@
 import { type Concentration, normalizeConcentration } from "@fertilizer/calculator/dilution";
 import { Label } from "@rebass/forms";
 import React, { type FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Card, Flex, Heading, Text } from "rebass";
-import { change, getFormValues } from "redux-form";
-import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
-import type { CalculatorFormValues } from "@/components/Calculator/types";
-import { Input } from "../../ui/ReduxForm/Input";
-import { decimal } from "../../ui/ReduxForm/normalizers";
+import { decimal, Input, StyledInput } from "@/components/ui/Form";
+import { useStore } from "@/store";
 
 type SolutionVolumeProps = {};
 
 export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
-  const { topping_up_enabled, solution_concentration } = useSelector(
-    getFormValues(REDUX_FORM_NAME),
-  ) as CalculatorFormValues;
-  const dispatch = useDispatch();
+  const form = useStore((s) => s.calculator.calculationForm);
+  const { setFieldValue } = useStore.getState();
 
   const onChange = (field: string) => (event: any) => {
     if (!event.target.value) {
@@ -27,11 +21,11 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
     if (field === "k") {
       newCon.k = k;
     } else {
-      newCon = { ...solution_concentration, [field]: k };
+      newCon = { ...form?.solution_concentration, [field]: k };
       delete newCon.k;
     }
     const newConcentration = normalizeConcentration(newCon);
-    dispatch(change(REDUX_FORM_NAME, "solution_concentration", newConcentration));
+    setFieldValue("solution_concentration", newConcentration);
   };
   return (
     <Card>
@@ -40,7 +34,7 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
         <Flex alignItems="center" justifyContent="space-between">
           <Label htmlFor="solution_volume">Объем, л</Label>
           <Input
-            disabled={topping_up_enabled}
+            disabled={form?.topping_up_enabled}
             name="solution_volume"
             width="4rem"
             type="number"
@@ -59,51 +53,51 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
         </Flex>
         <Flex alignItems="center" paddingTop={2}>
           <Text fontSize={"2rem"}>1:</Text>
-          <Input
-            disabled={topping_up_enabled}
+          <StyledInput
+            disabled={form?.topping_up_enabled}
             name="solution_concentration.k"
             type="number"
             step="0.01"
             width={"auto"}
             min="1"
             max="1000"
-            normalize={decimal}
             style={{
               textAlign: "center",
             }}
             autoComplete="off"
+            value={form?.solution_concentration?.k ?? ""}
             onChange={onChange("k")}
           />
         </Flex>
         <Flex alignItems={"center"} paddingTop={2}>
           Или
-          <Input
-            disabled={topping_up_enabled}
+          <StyledInput
+            disabled={form?.topping_up_enabled}
             name="solution_concentration.v_1"
             width="4rem"
             type="number"
             step="0.01"
             min="1"
-            normalize={decimal}
             style={{
               textAlign: "center",
             }}
             autoComplete="off"
+            value={form?.solution_concentration?.v_1 ?? ""}
             onChange={onChange("v_1")}
           />{" "}
           мл на
-          <Input
-            disabled={topping_up_enabled}
+          <StyledInput
+            disabled={form?.topping_up_enabled}
             name="solution_concentration.v_2"
             width="4rem"
             type="number"
             step="0.01"
             min="0"
-            normalize={decimal}
             style={{
               textAlign: "center",
             }}
             autoComplete="off"
+            value={form?.solution_concentration?.v_2 ?? ""}
             onChange={onChange("v_2")}
           />{" "}
           мл рабочего раствора

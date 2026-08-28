@@ -2,6 +2,10 @@ packages:
   - apps/*
   - packages/*
 
+catalog:
+  react: ^16.13.1
+  react-dom: ^16.13.1
+
 allowBuilds:
   '@scarf/scarf': false
   core-js: false

@@ -1,6 +1,6 @@
 import React, { type FunctionComponent } from "react";
 import { Card, Flex, Heading } from "rebass";
-import { Checkbox } from "../../ui/ReduxForm/Checkbox";
+import { Checkbox } from "@/components/ui/Form";
 
 type IgnoreElementProps = {};
 

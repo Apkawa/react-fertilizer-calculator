@@ -3,18 +3,16 @@ import { getEmptyElements, getNPKDetailInfo } from "@fertilizer/calculator/helpe
 import type { Elements, NeedElements } from "@fertilizer/calculator/types";
 import { IconButton } from "@fertilizer/icons";
 import React, { type FunctionComponent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Box, Card, Flex, Heading, Text } from "rebass";
-import { recipePush, recipeRemove } from "@/components/Calculator/actions";
 import { DEFAULT_MICRO_RECIPE } from "@/components/Calculator/constants/recipes";
 import {
   getOptimalRatioDisplay,
   RecipeTuneForm,
 } from "@/components/Calculator/Options/RecipeTuneForm";
-import type { CalculatorState, Recipe as RecipeType } from "@/components/Calculator/types";
+import type { Recipe as RecipeType } from "@/components/Calculator/types";
 import { Dropdown } from "@/components/ui/Dropdown/Dropdown";
 import { Modal } from "@/components/ui/Modal/Modal";
-import { useFormName, useFormValues } from "@/hooks/ReduxForm";
+import { useStore } from "@/store";
 import { round } from "@/utils";
 import { getRecipeFieldName, RecipeElementForm } from "./RecipeElementForm";
 
@@ -39,14 +37,12 @@ export const StyledBalanceCell: FunctionComponent<StyledBalanceCellProps> = (pro
 type RecipeProps = {};
 
 export const Recipe: FunctionComponent<RecipeProps> = () => {
-  const { recipes = [] } = useSelector<any>((state) => state.calculator) as CalculatorState;
+  const { recipes = [] } = useStore((s) => s.calculator);
+  const form = useStore((s) => s.calculator.calculationForm);
 
-  const [values, setValue] = useFormValues<{ recipe: Elements }>(useFormName());
   const [selected, setSelected] = useState<RecipeType | undefined>(recipes?.[0]);
 
-  const dispatch = useDispatch();
-
-  const NPKBalance = getNPKDetailInfo(values.recipe || getEmptyElements());
+  const NPKBalance = getNPKDetailInfo((form?.recipe ?? getEmptyElements()) as Elements);
 
   const onChangeHandler = (item: RecipeType | null) => {
     item && setSelected(item);
@@ -54,8 +50,9 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
   };
 
   const setRecipe = (elements: NeedElements) => {
+    const { setFieldValue } = useStore.getState();
     for (const [name, value] of Object.entries(elements)) {
-      setValue(getRecipeFieldName(name), value);
+      setFieldValue(getRecipeFieldName(name), value);
     }
   };
   const resetRecipe = () => {
@@ -75,11 +72,11 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
     if (!selected) {
       return;
     }
-    const recipe = { ...selected, elements: values.recipe };
-    dispatch(recipePush(recipe));
+    const recipe = { ...selected, elements: form?.recipe ?? {} };
+    useStore.getState().pushRecipe(recipe);
   };
   const onRemoveItemHandler = (item: RecipeType) => {
-    dispatch(recipeRemove(item));
+    useStore.getState().removeRecipe(item);
   };
   return (
     <Card>

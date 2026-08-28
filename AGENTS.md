@@ -7,7 +7,7 @@
 - **pnpm workspace**: `apps/*` + `packages/*` (see `pnpm-workspace.yaml`), one lockfile, single Node/pnpm at the root.
 - **`apps/web`** (`@fertilizer/web`) — the React PWA: everything that used to be the repo root's `src/`.
 - React 16 + TypeScript 7 (strict) on **Vite** (@vitejs/plugin-react, JSX classic runtime) + vite-plugin-pwa.
-- State management: **Redux + redux-form + redux-saga**, persisted to `localStorage` (`reduxState`).
+- State management: **zustand** (`apps/web/src/store/`, imported as `@/store`), persisted to `localStorage` (`appState`; legacy `reduxState` is auto-migrated on load). No redux / redux-form / redux-saga.
 - UI: **theme-ui / rebass** + styled-components. Routing: react-router (HashRouter) + `@loadable/component` (lazy-loaded pages).
 - Calculations live in the pure source package **`packages/calculator`** (`@fertilizer/calculator`, algorithm from [siv237/HPG](https://github.com/siv237/HPG)) with no UI dependencies — it is consumed as TypeScript source (no build step) and bundled by the app's Vite.
 - Deploys to GitHub Pages (workflow: master → site root, other branches → subfolder).
@@ -42,9 +42,8 @@ pnpm-workspace.yaml       # packages: ['apps/*', 'packages/*']
 apps/web/                 # @fertilizer/web — the React PWA (all deps of the app)
   src/
     components/Calculator/# calculator UI: Form, FertilizerManager, Mixer, ImportExport, Diary, Options, Result
-      actions.ts / reducers.ts / saga.ts  # local redux slice
     pages/                # pages (lazy-loaded): Calculator, Help, ChemFormula, DensityCalculator, Example, NotFound
-    redux/                # root store: calculator + redux-form; localStorage persistence
+    store/                # zustand store: calculator + fertilizerEdit + mixerOptions + fertilizersError; localStorage persistence (appState)
     docs/                 # reference .md files — imported with ?raw, displayed in Help
     hooks/, utils/, themes/
     test-utils/           # test helpers (render/form) — app bindings
@@ -99,7 +98,7 @@ Calculation tests in `packages/calculator/src/__tests__/` are reference tests; d
 
 - TypeScript strict; linter is **Biome** (`biome.json`, `pnpm lint`). Committing without a passing lint/test/type/build is not allowed (enforced by husky).
 - New calculation logic goes into `packages/calculator` as pure functions with colocated tests; do not move it into the app's components.
-- The calculator Redux slice lives in `apps/web/src/components/Calculator/*` (actions/reducers/saga); the `CalculatorState` type is defined there as well.
+- App state is the zustand store `apps/web/src/store/` (`@/store`): a `calculator` slice + `fertilizerEdit` / `mixerOptions` form states + `fertilizersError`. The `CalculatorState` type is in `apps/web/src/components/Calculator/types.d.ts`. Form fields are controlled through `@/store/form-context` (`FormProvider` + `useFormField` dot-path fields, `@/components/ui/Form` inputs) — no prop-drilling, global state read/write.
 - UI is built on theme-ui/rebass; themes are in `apps/web/src/themes`. Do not introduce new UI libraries without necessity.
 - New pages: create `apps/web/src/pages/<Name>/` and register it in `apps/web/src/pages/index.ts` (loadable) and `Root.tsx` (Route).
 - Reference texts: `apps/web/src/docs/**/*.md`, displayed on the Help page.
