@@ -2,6 +2,8 @@
 
 import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import tailwindcss from "@tailwindcss/vite";
+import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
@@ -53,8 +55,13 @@ export default defineConfig({
     __COMMIT_REF_NAME__: JSON.stringify(buildInfo.refName),
   },
   plugins: [
+    // tailwindcss v4 (preflight + утилиты) и vanilla-extract (компиляция .css.ts) —
+    // CSS собирается во время сборки; порядок: tailwind до vanilla-extract.
+    // Автоматически действуют и для vitest (vitest.config расширяет vite.config).
+    tailwindcss(),
     // tsconfig jsx: "react" (classic runtime); в каждом файле `import React`.
     react({ jsxRuntime: "classic" }),
+    vanillaExtractPlugin(),
     // Старый CopyPlugin: {from: 'docs/**/*.{jpg,png,jpeg}', context: 'src/'}
     // → картинки из src/docs копируются в build/docs/** (Help transformImageUri мапит на ./docs/<slug>/).
     // stripBase: 1 — убираем ведущий сегмент 'src/', чтобы путь под outDir совпал со старым.

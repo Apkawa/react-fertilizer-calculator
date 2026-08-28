@@ -1,0 +1,11 @@
+/* Базовые стили приложения: tailwindcss v4 (без preflight) + переменные темы @fertilizer/ui. */
+/*
+ * Preflight включён не будет, пока жив theme-ui/rebass: глобальные стили theme-ui
+ * (h1–h6, table, ...) ломаются preflight-скидкой (h1 → font-size/weight: inherit, margin: 0).
+ * Проверено A/B на странице help (2026-08-28): с preflight h1 = 16px/400/0, без = 32px/700/21px.
+ * После миграции компонентов и удаления ThemeProvider (Stage 5/7) вернуть полный
+ * `@import "tailwindcss";`.
+ */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "@fertilizer/ui/theme.css";

@@ -1,0 +1,44 @@
+/* Базовая тема (@fertilizer/ui): замена пресету polaris theme-ui.
+   CSS-переменные потребляются компонентами packages/ui и утилитами tailwindcss.
+   Тёмный режим: html[data-theme="dark"] — атрибут ставит useColorMode (src/use-color-mode.ts). */
+:root {
+  /* Цвета (светлая схема, polaris) */
+  --color-text: #454f5b;
+  --color-background: #fff;
+  --color-primary: #5c6ac4;
+  --color-secondary: #006fbb;
+  --color-highlight: #47c1bf;
+  --color-muted: #e6e6e6;
+  --color-gray: #dfe3e8;
+  --color-accent: #f49342;
+  --color-darken: #00044c;
+  /* Цвета элементов питания (результаты калькулятора) */
+  --color-no3: #05ad11;
+  --color-nh4: #fff;
+  --color-p: #dbc403;
+  --color-k: #e07206;
+  --color-ca: #d1c7c7;
+  --color-mg: #ab0ae0;
+  --color-s: #fff;
+  /* Типографика (polaris) */
+  --font-body:
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-heading:
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-mono: Menlo, monospace;
+  --line-height-body: 1.75;
+  --line-height-heading: 1.25;
+  --font-weight-body: 400;
+  --font-weight-heading: 600;
+  /* Тени (добавлены в тему приложения поверх polaris) */
+  --shadow-small: 0 0 4px rgba(0, 0, 0, 0.125);
+  --shadow-large: 0 0 24px rgba(0, 0, 0, 0.125);
+}
+
+:root[data-theme="dark"] {
+  --color-text: #9d9d9d; /* override приложения (в polaris: #3e4155) */
+  --color-background: #000639;
+  --color-primary: #9c6ade;
+  --color-secondary: #b4e1fa;
+  --color-highlight: #b7ecec;
+}

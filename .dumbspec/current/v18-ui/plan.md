@@ -19,15 +19,15 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** v1 `docs(spec): v18-ui — research, spec, plan (react 18 + packages/ui, vanilla-extract + tailwind)`; v2 `docs(spec): v18-ui — drop React 18 scope, align with zustand/React-16 baseline`
 
 ## Stage 1 — Build env: `packages/ui` skeleton + vanilla-extract + tailwind
-- [ ] Create `packages/ui` (`@fertilizer/ui`): package.json (source package: `main`/`exports` → `./src/*.ts`, deps `@vanilla-extract/css`, react via catalog), tsconfig (mirror `packages/icons`), `src/index.ts`
-- [ ] Root `package.json`: `pnpm test` + `tsc -p packages/ui` in `type`
-- [ ] `apps/web` devDeps: `@vanilla-extract/css`, `@vanilla-extract/vite-plugin`, `tailwindcss`, `@tailwindcss/vite`; wire plugins in `vite.config.ts`
-- [ ] Theme: `packages/ui/src/theme.css` — polaris palette → CSS variables (`:root` + dark variant via `data-` attribute), exported subpath; app entry CSS (`apps/web/src/styles/app.css`) with `@import "tailwindcss"` + theme; imported in `index.tsx`
-- [ ] `useColorMode` hook in `packages/ui` (localStorage, migrates legacy theme-ui key once) + its test (red → green); `packages/ui` vitest wired with the vanilla-extract plugin
-- [ ] Tailwind preflight on: run `pnpm build`, playwright smoke — if visible regression on still-rebass components, switch to selective `tailwindcss/*` imports (no preflight) until Stage 5 and note it
+- [x] Create `packages/ui` (`@fertilizer/ui`): package.json (source package: `main`/`exports` → `./src/*.ts` + `./theme.css`, deps `@vanilla-extract/css`, react via catalog), tsconfig (mirror `packages/icons`), `src/index.ts`; `apps/web` depends on it (`workspace:*`)
+- [x] Root `package.json`: `pnpm test` + `tsc -p packages/ui` in `type`
+- [x] `apps/web` devDeps: `@vanilla-extract/vite-plugin`, `tailwindcss`, `@tailwindcss/vite`; wire plugins in `vite.config.ts` (vite 8: `tailwindcss(), react({jsxRuntime:"classic"}), vanillaExtractPlugin(), …`)
+- [x] Theme: `packages/ui/src/theme.css` — polaris palette → CSS variables (`:root` + dark via `html[data-theme="dark"]`), exported subpath; app entry CSS (`apps/web/src/styles/app.css`); imported in `index.tsx`
+- [x] `useColorMode` hook in `packages/ui` (localStorage, migrates legacy theme-ui key once) + 5 green tests; `packages/ui` vitest wired with the vanilla-extract plugin
+- [x] Preflight check: A/B on the help page in a real browser — with full `@import "tailwindcss"` (preflight on) `h1` collapsed to 16px/400/margin 0 (theme-ui global styles lost to preflight); without preflight the baseline returns (32px/700/21px). → kept selective imports: `tailwindcss/theme.css` + `tailwindcss/utilities.css` (NO preflight) until Stage 5/7 — decision + re-enable note live in the `app.css` comment
 
 **Criterion:** `pnpm full-check` green; build output contains tailwind + vanilla-extract CSS; `useColorMode` test green.
-**Commit:**
+**Commit:** `feat(ui): stage 1 — packages/ui skeleton, vanilla-extract + tailwind env, theme.css, useColorMode (no-preflight tailwind until Stage 5/7)`
 
 ## Stage 2 — Atoms in `packages/ui` (+ Form controls)
 - [ ] Port tests: `RebassWidgets/Number.test` + `Form/{Input,Checkbox,Radio}` render-smoke → `packages/ui` (red: no components yet)

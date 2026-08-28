@@ -10,6 +10,7 @@ allowBuilds:
   '@scarf/scarf': false
   core-js: false
   core-js-pure: false
+  esbuild: true
   husky: true
 # Перенесено из yarn.lock: точные версии резолва старых диапазонов.
 # Сгенерировано: node tools/yarnlock2overrides.js yarn.lock -
@@ -18,8 +19,10 @@ allowBuilds:
 
 
 # pnpm >= 10 блокирует build-скрипты без явного согласия.
-# husky нужен для git-hooks (pre-commit full-check); core-js — баннер.
+# husky нужен для git-hooks (pre-commit full-check); core-js — баннер;
+# esbuild — postinstall кладёт бинарь платформы (нужен Vite/vitest).
 onlyBuiltDependencies:
   - husky
   - core-js
   - core-js-pure
+  - esbuild
