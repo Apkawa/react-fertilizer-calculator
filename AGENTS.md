@@ -147,3 +147,4 @@ cd <project> && export …three env vars above… && playwright-cli -s=ui open h
 
 - Before using the `subagent` / `subagent_fork` tools, load the skill **`subagents-local`** (`.agents/skills/subagents-local/SKILL.md`).
 - The local LLM allows only one concurrent agent — hand large tasks to subagents **sequentially**: one active subagent at a time; wait for its run to settle (sync result / settlement notice) before starting the next; never launch several subagents in the same message.
+- As soon as a task is dispatched to a subagent, immediately stop all other work and wait for its result; do not interleave any other activity with its run — continue only after the subagent has reported back (sync result or settlement notice).
