@@ -30,13 +30,15 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `feat(ui): stage 1 — packages/ui skeleton, vanilla-extract + tailwind env, theme.css, useColorMode (no-preflight tailwind until Stage 5/7)`
 
 ## Stage 2 — Atoms in `packages/ui` (+ Form controls)
-- [ ] Port tests: `RebassWidgets/Number.test` + `Form/{Input,Checkbox,Radio}` render-smoke → `packages/ui` (red: no components yet)
-- [ ] Implement presentational atoms: `Input`, `NumberInput` (spinner CSS from RebassWidgets), `Button`, `Card`, text primitives, `Label`, `Checkbox`, `Radio` — vanilla-extract classes (layer below tailwind utilities)
-- [ ] Rewire `ui/Form/{Input,Checkbox,Radio}` on the new atoms — `useFormField`/FormProvider wiring unchanged
-- [ ] App: point imports at `@fertilizer/ui`; drop `@rebass/forms`/`rebass` imports in migrated files
+- [x] Port tests: `RebassWidgets/Number.test` + `Form/{Input,Checkbox,Radio}` render-smoke → `packages/ui` (red: no components yet)
+- [x] Implement presentational atoms: `Input`, `NumberInput` (spinner CSS from RebassWidgets), `Button`, `Card`, text primitives, `Label`, `Checkbox`, `Radio` — vanilla-extract classes (layer below tailwind utilities)
+- [x] Rewire `ui/Form/{Input,Checkbox,Radio}` on the new atoms — `useFormField`/FormProvider wiring unchanged
+- [x] App: point imports at `@fertilizer/ui`; drop `@rebass/forms`/`rebass` imports in migrated files
 
 **Criterion:** `pnpm full-check` green; migrated files import `@fertilizer/ui` only; no `@rebass/forms` in them.
-**Commit:**
+**Commit:** `feat(ui): stage 2 — VE atoms (Input/NumberInput/Button/Card/Label/Checkbox/Radio/Heading/Text) in packages/ui + Form controls rewired (rebass forms out)`
+
+Note: `ui/Form/{Input,Checkbox,Radio}` now import `@fertilizer/ui` only (+ react + store glue). `RebassWidgets/` deleted. `RecipeTuneForm` NumberInput → `@fertilizer/ui` (its `rebass` Box/Button/Flex + plain `@rebass/forms` Input remain — Calculator, Stage 5). Verified in prod build: inputs styled (padding 8 / border `--color-text` / radius 0), layout props (width/maxWidth/flex/marginRight) mapped, `@layer components` below tailwind utilities.
 
 ## Stage 3 — Composite ui components → `packages/ui`
 - [ ] Port tests: `Dropdown.test`, `Modal.test`, `Sidebar.test`, `TabMenu.test` → `packages/ui` (red)

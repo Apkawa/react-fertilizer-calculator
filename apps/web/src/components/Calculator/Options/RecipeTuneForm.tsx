@@ -19,13 +19,13 @@ import {
   OPTIMAL_RATIO,
 } from "@fertilizer/calculator/ratio";
 import type { Elements, NeedElements } from "@fertilizer/calculator/types";
+import { type NumberInputChangeEvent, NumberInput as StyledInput } from "@fertilizer/ui";
 import { Input } from "@rebass/forms";
-import React, { type ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Flex } from "rebass";
 import { StyledBalanceCell } from "@/components/Calculator/Options/Recipe";
 import { decimal } from "@/components/ui/Form";
 import type { ModalActions } from "@/components/ui/Modal/Modal";
-import { NumberInput as StyledInput } from "@/components/ui/RebassWidgets/Number";
 import { useStore } from "@/store";
 import { entries, round } from "@/utils";
 
@@ -231,9 +231,9 @@ export function getOptimalRatioDisplay(name: string): string | null {
 function RecipeInput(props: RecipeInputProps) {
   const { name, label, onChange, value = 0, step = 0.01 } = props;
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: NumberInputChangeEvent) => {
     if (e.target.value) {
-      const val = decimal(e.target.value) as number;
+      const val = decimal(String(e.target.value)) as number;
       onChange && onChange(val);
     }
   };

@@ -1,8 +1,8 @@
-import { Label, Radio as RebassRadio, type RadioProps as RebassRadioProps } from "@rebass/forms";
+import { Label, Radio as UiRadio, type RadioProps as UiRadioProps } from "@fertilizer/ui";
 import React, { type ChangeEvent, type FunctionComponent } from "react";
 import { useFormField } from "@/store/use-form-field";
 
-export interface RadioProps extends Omit<RebassRadioProps, "name" | "value" | "checked"> {
+export interface RadioProps extends Omit<UiRadioProps, "name" | "value" | "checked"> {
   /** Dot-path поля (общее для группы радио) внутри текущей формы */
   name: string;
   /** Значение конкретного радио */
@@ -29,9 +29,8 @@ export const Radio: FunctionComponent<RadioProps> = ({
   };
   return (
     <Label>
-      {/* biome-ignore lint/suspicious/noExplicitAny: styled(RebassRadio) конфликтует по пропсу `css` */}
-      <RebassRadio
-        {...(props as any)}
+      <UiRadio
+        {...props}
         name={name}
         value={radioValue}
         checked={value === normalizeValue(radioValue)}
