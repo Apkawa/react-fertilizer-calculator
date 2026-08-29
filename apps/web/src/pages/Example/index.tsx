@@ -1,6 +1,5 @@
-import { Dropdown } from "@fertilizer/ui";
+import { Button, Dropdown } from "@fertilizer/ui";
 import React, { type FunctionComponent, useState } from "react";
-import { Box, Button, Flex } from "rebass";
 
 type indexProps = {};
 
@@ -30,8 +29,8 @@ const Example: FunctionComponent<indexProps> = () => {
         }}
         renderValue={(item) => item?.name || ""}
         renderItem={(props) => (
-          <Flex justifyContent="space-between" width="100%" alignItems="center">
-            <Box>{props.item.name}</Box>
+          <div className="flex justify-between items-center w-full">
+            <div>{props.item.name}</div>
             <Button
               onClick={(e) => {
                 e.stopPropagation();
@@ -43,7 +42,7 @@ const Example: FunctionComponent<indexProps> = () => {
             >
               X
             </Button>
-          </Flex>
+          </div>
         )}
       />
       <p>{value}</p>

@@ -1,6 +1,6 @@
 import { Icon } from "@fertilizer/icons";
+import { useColorMode } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
-import { useColorMode } from "theme-ui";
 
 type ColorModeProps = {};
 

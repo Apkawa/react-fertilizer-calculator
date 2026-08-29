@@ -9,3 +9,6 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 @import "@fertilizer/ui/theme.css";
+/* Утилиты tailwind, используемые внутри пакетов (className в packages/src),
+ * авто-детект источников из каталога приложения их не видит — подключаем явно. */
+@source "../../../../packages/ui/src";

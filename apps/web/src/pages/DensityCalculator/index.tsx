@@ -3,11 +3,9 @@ import {
   getDensityFromConcentration,
 } from "@fertilizer/calculator/density-calculator";
 import { DATA_KEYS } from "@fertilizer/calculator/density-calculator/constants";
-import { Dropdown } from "@fertilizer/ui";
-import { Input, Label } from "@rebass/forms";
+import { Dropdown, Heading, Input, Label, Text } from "@fertilizer/ui";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, Flex, Heading, Text } from "rebass";
 import { round } from "@/utils";
 
 interface RouterParams {
@@ -68,59 +66,46 @@ export default () => {
   }, [history, value, density, concentration]);
 
   return (
-    <Flex
-      sx={{
-        justifyContent: "center",
-      }}
-    >
-      <Box width="936px">
-        <Flex
-          sx={{
-            justifyContent: "space-between",
-            "@media screen and (max-width: 1350px)": {
-              justifyContent: "flex-start",
-            },
-          }}
-        >
+    <div className="flex justify-center">
+      <div style={{ width: 936 }}>
+        <div className="flex">
           <Heading>Калькулятор плотности</Heading>
-        </Flex>
-        <Flex flexDirection="column">
-          <Box width="300px">
-            <Label flexDirection="column">
+        </div>
+        <div className="flex flex-col gap-2">
+          <div style={{ width: 300 }}>
+            <Label className="flex flex-col">
               Соль
               <Dropdown items={DATA_KEYS} onChange={onChangeFormula} value={value} />
             </Label>
-          </Box>
-          <Label flexDirection="column">
+          </div>
+          <Label className="flex flex-col">
             Концентрация
             <Input
+              className="w-40"
               type="number"
               step="0.1"
               min={0}
               max={2000}
               value={concentration || 0}
               onChange={(event) => onChangeConcentration(event.target.value)}
-              minWidth="5em"
-              width="10em"
             />
-            <Text sx={{ whiteSpace: "nowrap" }}>г/л</Text>
+            <Text className="whitespace-nowrap">г/л</Text>
           </Label>
-          <Label flexDirection="column">
+          <Label className="flex flex-col">
             Плотность
             <Input
+              className="w-40"
               type="number"
               step="0.0001"
               min={0}
               max={2}
               value={density || 0}
               onChange={(event) => onChangeDensity(event.target.value)}
-              minWidth="5em"
-              width="10em"
             />
-            <Text sx={{ whiteSpace: "nowrap" }}>г/мл</Text>
+            <Text className="whitespace-nowrap">г/мл</Text>
           </Label>
-        </Flex>
-      </Box>
-    </Flex>
+        </div>
+      </div>
+    </div>
   );
 };

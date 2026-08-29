@@ -1,7 +1,6 @@
 import { ForkMeOnGitHub } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
 import { Route, HashRouter as Router, Switch } from "react-router-dom";
-import { Box, Flex, Text } from "rebass";
 import { ThemeProvider } from "theme-ui";
 import { TabMenu } from "@/components/navigation/TabMenu";
 import pages from "./pages";
@@ -12,20 +11,16 @@ const Root: FunctionComponent = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Router>
-        <Flex justifyContent="space-between">
-          <Box padding={1}>
+        <div className="flex justify-between">
+          <div className="p-1">
             <TabMenu />
-          </Box>
+          </div>
           <ForkMeOnGitHub />
-        </Flex>
-        <Flex flexDirection="column" margin={2}>
-          <Box flex={1}>
-            <Flex
-              sx={{
-                justifyContent: "center",
-              }}
-            >
-              <Box width="936px">
+        </div>
+        <div className="flex flex-col m-2">
+          <div className="flex-1">
+            <div className="flex justify-center">
+              <div style={{ width: 936 }}>
                 <Switch>
                   <Route path={["/formula/:formula?/:percent?"]} component={pages.ChemFormula} />
                   <Route
@@ -37,15 +32,15 @@ const Root: FunctionComponent = () => {
                   <Route path="/" component={pages.Calculator} />
                   <Route path="*" component={pages.NotFound} />
                 </Switch>
-              </Box>
-            </Flex>
-          </Box>
-          <Flex justifyContent={"flex-end"} marginTop="auto" flex={1}>
-            <Text fontSize={1}>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-end mt-auto flex-1">
+            <span className="text-base">
               {__VERSION__}-{__COMMIT_REF_NAME__} {__COMMIT_HASH__} [{__COMMIT_DATE__}]
-            </Text>
-          </Flex>
-        </Flex>
+            </span>
+          </div>
+        </div>
       </Router>
     </ThemeProvider>
   );

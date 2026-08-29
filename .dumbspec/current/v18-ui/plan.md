@@ -55,14 +55,17 @@ Note: `ui/Form/{Input,Checkbox,Radio}` now import `@fertilizer/ui` only (+ react
 **Commit:** `feat(ui): move Dropdown/Modal/Sidebar/TabMenu/ForkMe to packages/ui (vanilla-extract + tailwind)`
 
 ## Stage 4 — App shell: Root, pages, ColorModeToggle, test-utils
-- [ ] `Root.tsx`: Box/Flex/Text → `packages/ui`/utilities; **keep `ThemeProvider`** (Calculator/rebass still consume theme)
-- [ ] `pages`: Example, Help, ChemFormula, DensityCalculator, App shell — rebass/@rebass/forms/`sx` → primitives/utilities
-- [ ] `ColorModeToggle`: new `useColorMode` (no theme-ui)
-- [ ] `test-utils/render.tsx`: keep `ThemeProvider` for now (still needed by Calculator smoke tests)
-- [ ] Deps: none removable yet (theme-ui/rebass still used by Calculator)
+- [x] `Root.tsx`: Box/Flex/Text → `packages/ui`/utilities; **keep `ThemeProvider`** (Calculator/rebass still consume theme)
+- [x] `pages`: Example, Help, ChemFormula, DensityCalculator, App shell — rebass/@rebass/forms/`sx` → primitives/utilities
+- [x] `ColorModeToggle`: new `useColorMode` (no theme-ui)
+- [x] `test-utils/render.tsx`: keep `ThemeProvider` for now (still needed by Calculator smoke tests)
+- [x] Deps: none removable yet (theme-ui/rebass still used by Calculator)
+
+**Chevron-фикс (найдено в Stage 4, браузер):** Tailwind v4 auto-детект видит только `apps/web` — утилиты из `className` в `packages/ui/src` не генерировались (`right-0`/`top-0` отсутствовали → chevron Dropdown падал под инпут). Лечение: `@source "../../../../packages/ui/src"` в `apps/web/src/styles/app.css` (после всех `@import`), обёртка chevron `absolute right-0 top-0`, `dropdownChevronClass` + flex-центрирование. Biome 2.5 не парсит `@source` без `css.parser.tailwindDirectives: true` в `biome.json`.
+**DropdownItem:** `<button>` → `<div role="option">` + `role="listbox"` на списке (в пункте Example есть кнопка X — `<button>` в `<button>` невалидно; a11y-правила Biome проходят на option-диве).
 
 **Criterion:** `pnpm full-check` green; no rebass imports outside `components/Calculator/**` + `components/ui/Form/**` + `components/ui/styled.ts`.
-**Commit:**
+**Commit:** `feat(web): migrate app shell (Root, pages, ColorModeToggle) to packages/ui + tailwind`
 
 ## Stage 5 — Calculator migration (biggest)
 - [ ] `components/Calculator/**`: rebass → `packages/ui` + tailwind; `sx` sites (incl. `mobileStyles` in `index.tsx` → responsive utilities, then delete `ui/styled.ts`)

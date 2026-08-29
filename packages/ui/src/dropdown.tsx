@@ -60,16 +60,18 @@ function DropdownItem<T>(props: { value: T; index: number }) {
     }
   };
 
+  // role="option": пункт списка выбора (внутри может быть свой интерактивный контент,
+  // напр. кнопка удаления — <button> в <button> недопустим).
   return (
-    <button
-      type="button"
+    <div
+      role="option"
       tabIndex={disabled ? -1 : 0}
       className={cx(dropdownItemClass, disabled && dropdownItemDisabledClass)}
       onClick={onClickHandler}
       onKeyDown={onKeyDownHandler}
     >
       {renderItem()}
-    </button>
+    </div>
   );
 }
 
@@ -84,7 +86,7 @@ function DropdownList<T>(props: { items: T[] }) {
   }, []);
 
   return (
-    <div className={dropdownListClass} style={{ maxHeight: height * 5 }}>
+    <div role="listbox" className={dropdownListClass} style={{ maxHeight: height * 5 }}>
       <div className="flex flex-col">
         {Array.from(items).map((s, i) => (
           <div ref={i === 0 ? itemRef : null} key={String(s)}>
@@ -182,7 +184,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
             onKeyDown={onKeyDownInputHandler}
             onBlur={onBlurInputHandler}
           />
-          <div className="absolute right-0">
+          <div className="absolute right-0 top-0">
             <Icon
               name="chevron-down"
               className={dropdownChevronClass}
