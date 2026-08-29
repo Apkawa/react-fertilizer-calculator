@@ -112,7 +112,7 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
 
   return (
     <div className="flex flex-col">
-      <div>
+      <div className="flex">
         {MACRO_ELEMENT_NAMES.map((el) => (
           <RecipeInput
             key={el}

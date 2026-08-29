@@ -27,11 +27,11 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `fix(ui): restore CSS layer order — preflight below components atoms`
 
 ## Stage 2 — Recipe-tune macro row in a line (issue 3)
-- [ ] Restore `flex` on the macro row `<div>` in `RecipeTuneForm.tsx`
-- [ ] Visual: «Настройка профиля» modal — top row of inputs renders horizontally
+- [x] Restore `flex` on the macro row `<div>` in `RecipeTuneForm.tsx`
+- [x] Visual: «Настройка профиля» modal — top row of inputs renders horizontally
 
 **Criterion:** playwright: the macro-row inputs share one horizontal row in the opened modal (row width >> row height, inputs side by side).
-**Commit:** (pending)
+**Commit:** `fix(calculator): recipe-tune macro row back to a flex row`
 
 ## Stage 3 — Hidden file input scoped to its button (issue 4)
 - [ ] Make the import button the positioned containing block in the three `ImportExport` sites (`position: relative` on the button; verify how IconButton/Button forwards className)
