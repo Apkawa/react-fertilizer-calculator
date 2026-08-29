@@ -17,7 +17,8 @@ React **остаётся на 16.13.1** (закреплён пnpm-catalog'ом) 
   - составные: `Dropdown` (+Item/List/context), `Modal` (+Container), `Sidebar` (+Container), `TabMenu` (react-router-tabs остаётся), `ForkMeOnGitHub`, `ImportCSV` (заглушка).
 - Форм-контроли (`ui/Form`, zustand/form-context): презентационная база → атомы `packages/ui`; контролируемые обёртки (`name`/`normalize`/`useFormField`) остаются в `apps/web` как тонкий glue — `FormProvider`/`useFormField` не меняются.
 - Темы: `polaris`-палитра → CSS-переменные (`:root` + тёмный вариант через `data-`атрибут), тёмный режим (`ColorModeToggle`) — хук `useColorMode` в `packages/ui` (localStorage, однократная миграция с legacy-ключа theme-ui).
-- В остальной части проекта (Root, pages/*, Calculator/*, test-utils) rebass/theme-ui/sx/`styled` заменяются компонентами `packages/ui` и утилитами tailwindcss; `sx={{...}}` (~28 мест) — на классы.
+- В остальной части проекта (Root, pages/*, Calculator/*, test-utils) rebass/theme-ui/sx/`styled` заменяются компонентами `packages/ui` и утилитами tailwindcss; `sx={{...}}` (16 мест в Calculator) — на классы.
+- **`Box`/`Flex` НЕ создаются как компоненты**: layout-обёртки (119 мест в Calculator) заменяются прямым `<div>`/`<span>` с tailwind-классами на элементе (чистый tailwind, без новой API). Замена «выкинуть rebass» понимается как: писать свои компоненты/классы в стиле tailwind, **не подглядывая в исходники rebass** — API `@fertilizer/ui` не клонирует пропсы rebass.
 - `packages/icons`: `Icon`/`IconButton` переписать на месте, без rebass/theme-ui.
 
 ### 2. Среда сборки
@@ -54,6 +55,9 @@ React **остаётся на 16.13.1** (закреплён пnpm-catalog'ом) 
 4. **packages/icons переписывается на месте** (без rebass/theme-ui), пакет остаётся автономным.
 5. **react-helmet оставляется** (body-overflow Modal/Sidebar; peer ок на React 16; runtime проверяется смоук-тестами).
 6. **`yarn.lock` и `react18-types-compat.d.ts` удаляются** на этапе очистки.
+7. **Box/Flex — не компоненты** (решено 2026-08-29): 119 мест в Calculator переписываются на `<div className="flex ...">` с tailwind-классами (`flex-col`/`items-*`/`justify-*`/`flex-wrap`/`flex-1`/`w-full`/`max-w-*`/`m-*`/`p-*`, арбитражные значения). Новый импорт в Calculator: `from "@fertilizer/ui"` — только `Button`/`Card`/`Heading`/`Text`.
+8. **Text/Heading остаются минимальные** (`div`/тег + `className`): rebass-пропсы коллсайтов (`fontSize`, `flex`, `textAlign`, `minWidth`, `sx`) → tailwind-классы (`text-xl`, `flex-1`, `text-center`, `min-w-[3em]`, `whitespace-nowrap`).
+9. **sx → tailwind**: 16 мест `sx={{...}}` → className (arbitrary values где нужно); `mobileStyles(...)` (media ≤800px) → вариант `max-[800px]:`; `apps/web/src/components/ui/styled.ts` удаляется.
 
 ## Подход
 

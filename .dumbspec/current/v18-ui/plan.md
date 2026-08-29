@@ -68,11 +68,16 @@ Note: `ui/Form/{Input,Checkbox,Radio}` now import `@fertilizer/ui` only (+ react
 **Commit:** `feat(web): migrate app shell (Root, pages, ColorModeToggle) to packages/ui + tailwind`
 
 ## Stage 5 — Calculator migration (biggest)
-- [ ] `components/Calculator/**`: rebass → `packages/ui` + tailwind; `sx` sites (incl. `mobileStyles` in `index.tsx` → responsive utilities, then delete `ui/styled.ts`)
-- [ ] `Result.tsx`: `StyledList` (styled-components) → class; `StyledBalanceCell` (Options/Recipe) → class; `ResultDilution`/`ResultFertilizerList`/`Mixer`/`ImportExport`/`FertilizerSelect`/`FertilizerManager`/`Options` — same
+- [x] Факты (2026-08-29): rebass в Calculator = 26 файлов: `Box`/`Flex` — 119 мест (layout-пропсы: `flexDirection`/`justifyContent`/`alignItems`/`flexWrap`/`flex`/`width`/`maxWidth` + шкала m/p), `Text`/`Heading` — ~15 мест (с `fontSize`/`flex`/`textAlign`/`minWidth`/`sx`), `Button`/`Card` — 20 мест; `sx` — 16 мест (включая `mobileStyles` в `index.tsx`); `styled-components` — только `StyledList` (`Result.tsx`); `ui/types.d.ts` — пустой файл
+- [ ] `Box`/`Flex` → plain `<div>` c tailwind-классами (без новой API: `flex`/`flex-col`/`items-*`/`justify-*`/`flex-wrap`, `flex-1`, `w-full`/`w-auto`/`max-w-*`, `m-*`/`p-*`, arbitrary values)
+- [ ] `from "rebass"` → `from "@fertilizer/ui"` (только `Button`/`Card`/`Heading`/`Text`)
+- [ ] `Text`/`Heading` коллсайты → className: `fontSize={2}` → `text-xl`, `fontSize="2rem"` → `text-[2rem]`, `flex` → `flex-1`, `textAlign` → `text-center`, `minWidth="3em"` → `min-w-[3em]`, `sx whiteSpace` → `whitespace-nowrap`
+- [ ] `Button`/`Card` коллсайты → className: `width="100%"` → `w-full`, `width="auto"` → `w-auto`, `my={2}`/`marginBottom={2}` → `my-2`/`mb-2` (без расширения API `packages/ui`)
+- [ ] `sx` (16 мест) → className/tailwind; `mobileStyles` в `index.tsx` → `max-[800px]:`; удалить `apps/web/src/components/ui/styled.ts` + пустой `types.d.ts`
+- [ ] `Result.tsx`: `StyledList` (styled-components) → класс
 - [ ] Form wiring (`FormProvider`/`useFormField`, `test-utils/form.tsx`, `@/store`) untouched
 
-**Criterion:** zero `rebass`/`@rebass`/`styled-components`/`@emotion`/`theme-ui` imports in `apps/web/src/components/**` + `packages/**`; `pnpm full-check` green.
+**Criterion:** zero `rebass`/`@rebass`/`styled-components`/`@emotion`/`theme-ui` imports in `apps/web/src/**` (`packages/icons` — Stage 6); smoke-тесты Calculator зелёные; `pnpm full-check` green.
 **Commit:**
 
 ## Stage 6 — `packages/icons` without rebass/theme-ui
