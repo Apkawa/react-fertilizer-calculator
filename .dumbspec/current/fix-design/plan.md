@@ -34,11 +34,11 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `fix(calculator): recipe-tune macro row back to a flex row`
 
 ## Stage 3 — Hidden file input scoped to its button (issue 4)
-- [ ] Make the import button the positioned containing block in the three `ImportExport` sites (`position: relative` on the button; verify how IconButton/Button forwards className)
-- [ ] Visual: file-input bounding rect == button rect; menu-icon click opens the sidebar (not the file dialog)
+- [x] Make the import button the positioned containing block in the three `ImportExport` sites (`position: relative` on the button; verify how IconButton/Button forwards className)
+- [x] Visual: file-input bounding rect == button rect; menu-icon click opens the sidebar (not the file dialog)
 
 **Criterion:** playwright: each `input[type=file]` rect is inside its import button's rect (top-left of viewport clear); clicking the menu icon opens the sidebar.
-**Commit:** (pending)
+**Commit:** `fix(calculator): scope hidden file input to its import button`
 
 ## Stage 4 — Help link tree (issue 6)
 - [ ] Markdown help tree: per-level indent + disc markers (app CSS, e.g. Help-page stylesheet)

@@ -48,7 +48,7 @@ export function ImportFertilizers(props: ImportFertilizersProps) {
   };
   return (
     <>
-      <IconButton ref={buttonRef} name="import">
+      <IconButton ref={buttonRef} name="import" className="relative">
         <input
           type="file"
           accept="text/csv, .csv"
