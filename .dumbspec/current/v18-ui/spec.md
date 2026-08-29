@@ -56,7 +56,7 @@ React **остаётся на 16.13.1** (закреплён пnpm-catalog'ом) 
 5. **react-helmet оставляется** (body-overflow Modal/Sidebar; peer ок на React 16; runtime проверяется смоук-тестами).
 6. **`yarn.lock` и `react18-types-compat.d.ts` удаляются** на этапе очистки.
 7. **Box/Flex — не компоненты** (решено 2026-08-29): 119 мест в Calculator переписываются на `<div className="flex ...">` с tailwind-классами (`flex-col`/`items-*`/`justify-*`/`flex-wrap`/`flex-1`/`w-full`/`max-w-*`/`m-*`/`p-*`, арбитражные значения). Новый импорт в Calculator: `from "@fertilizer/ui"` — только `Button`/`Card`/`Heading`/`Text`.
-8. **Text/Heading остаются минимальные** (`div`/тег + `className`): rebass-пропсы коллсайтов (`fontSize`, `flex`, `textAlign`, `minWidth`, `sx`) → tailwind-классы (`text-xl`, `flex-1`, `text-center`, `min-w-[3em]`, `whitespace-nowrap`).
+8. **Text/Heading остаются минимальные** (`div`/тег + `className`): rebass-пропсы коллсайтов (`fontSize`, `flex`, `textAlign`, `minWidth`, `sx`) → tailwind-классы (`text-base`/`text-[2rem]`, `flex-1`, `text-center`, `min-w-[3em]`, `whitespace-nowrap`); числовые `fontSize`/m-p — по индексным шкалам темы polaris (`space [0,4,8,16,32,64,128]` px, `fontSizes [12,14,16,20,24,32,48,64,96]` px).
 9. **sx → tailwind**: 16 мест `sx={{...}}` → className (arbitrary values где нужно); `mobileStyles(...)` (media ≤800px) → вариант `max-[800px]:`; `apps/web/src/components/ui/styled.ts` удаляется.
 
 ## Подход
