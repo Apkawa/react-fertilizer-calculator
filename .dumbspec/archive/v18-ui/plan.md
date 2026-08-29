@@ -104,4 +104,4 @@ Note (выполнение, оркестрация): 5 agents по группа�
 **Итог grep-контроля:** `grep -r "rebass\|theme-ui\|styled-components\|@emotion" apps packages` → 0 импортов/зависимостей; остаются только функциональные строки legacy-ключа localStorage `"theme-ui:mode"` в `packages/ui/src/use-color-mode.ts` (+ тест) — ключ реального localStorage, менять нельзя (миграция пользователей).
 
 **Playwright (real chromium, dev server):** smoke 7/7, e2e 3/3. Визуально (скриншот калькулятора, тёмная тема): layout цел, preflight не сломал, цвета элементов результата на месте.
-**Commit:**
+**Commit:** `cd27bd9` feat(ui): stage 7 — финальная уборка: theme-ui/rebass/styled-components удалены, preflight включён, useColorMode в Root
