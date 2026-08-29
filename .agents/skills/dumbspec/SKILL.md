@@ -37,10 +37,20 @@ Mapping by spec phase:
 
 | Spec phase                                          | Tool                                              |
 | --------------------------------------------------- | ------------------------------------------------- |
-| **Research** (Process step 6)                       | `ralph` — research is always done via ralph       |
+| **Research** (Process step 6)                       | `ralph` if the task is a single item; `workflow` if it spans multiple items (bug fixes, several features) |
 | **Gathering what to do** (context for a stage)      | `workflow` — collect the specific details needed before dispatching the work |
 | **Executing a sub-item** (each stage checkbox)      | `ralph` — each sub-item is dispatched to ralph; trivial sub-items may be bundled together, unrelated work never |
 | **Stage acceptance** (a stage's Criterion)          | `ralph` — a dedicated ralph loop that checks the observable Criterion |
+
+## Research rules
+
+Research (Process step 6) is **context collection**, not problem solving. It must stay superficial:
+
+1. **Scope — dependencies and files only.** Research means scanning the project for relevant code, dependencies, configuration, and existing structure; i.e. gathering context. No solutions are designed, evaluated, or implemented during research.
+2. **Constraints are facts, not guesses.** Record what is already fixed: the stack, the budget, compatibility, deadlines, and the existing code. Record constraints only as they appear in project files, configuration, or user input — do not invent or assume them.
+3. **Conform to existing solutions.** If the project already contains similar code or architecture, the spec must fit it — do not invent a parallel universe. Extend and reuse what exists.
+4. **Tool choice by task shape.** A single-item task is researched via `ralph` tool; a task spanning multiple items (bug fixes, several features) is researched via `workflow` tool.
+5. **Deep research goes into the plan, not into step 6.** If the initial (superficial) research reveals that a deep investigation is required — web search, digging into the problem, external references — that deep research is added to `spec.md` and to `plan.md` as a planned work item and performed as a stage, not inside the research step.
 
 ## Directory layout
 
@@ -101,7 +111,7 @@ Rules:
 3. **Create or update `draft.md`.** **MUST be the first file written on a new task.** Record the raw input verbatim. Do not rewrite, summarize, or interpret at this stage — no research, no source reading, no "let me check how it works" before this file exists.
 4. **Write the initial `spec.md`.** Produce a first pass of `spec.md` from `draft.md` alone — its scope, approach, and the questions already visible in the draft. This step only translates the draft: no research, no source reading. It is a working skeleton that will be refined in step 7.
 5. **Confirm refinement.** Ask the user whether to refine the draft (and the initial spec written from it) before proceeding. Apply any requested edits to `draft.md` and carry them into `spec.md`.
-6. **Research.** Begin only after step 5 is passed. Investigate feasibility, constraints, and options. **Important:** update `research.md` continuously as you go — do not defer writing findings until the end, so nothing is lost after context compaction.
+6. **Research.** Begin only after step 5 is passed. Collect context per the **Research rules** (superficial scan: dependencies, files, fixed constraints, existing solutions); the tool is chosen by task shape (`ralph` for a single item, `workflow` for multiple). **Important:** update `research.md` continuously as you go — do not defer writing findings until the end, so nothing is lost after context compaction.
 7. **Refine the specification.** Update `spec.md` from the draft together with the research results. Note that some items may turn out to be infeasible or costly based on the research; reflect this honestly in the spec.
 8. **Review the specification.** Work through `spec.md` and resolve any open questions or problems.
 9. **Write the plan.** If no blocking questions or problems remain, produce `plan.md`.
