@@ -1,10 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Root from "./Root";
-
-// Базовые стили: tailwindcss v4 + переменные темы @fertilizer/ui (packages/ui)
+// Базовые стили: tailwindcss v4 + переменные темы @fertilizer/ui (packages/ui).
+// ВАЖНО: импортировать ПЕРЕД ./Root — Root тянет атомы @fertilizer/ui
+// (vanilla-extract, @layer components). Тогда у tailwindcss v4
+// `@layer theme, base, components, utilities;` оказывается в начале CSS,
+// и minify сортирует слои в этом порядке (base=preflight не затирает атомы).
 import "./styles/app.css";
+
+import Root from "./Root";
 
 ReactDOM.render(
   <React.StrictMode>

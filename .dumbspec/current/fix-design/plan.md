@@ -18,13 +18,13 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `docs(spec): fix-design — research, spec, plan`
 
 ## Stage 1 — CSS layer-order fix (issues 1, 2, 5)
-- [ ] Red: build as-is, assert built CSS has the reversed layer order (components block before base/preflight, no leading declaration)
-- [ ] Green: fix bundle order so tailwind's `@layer theme, base, components, utilities;` declaration leads the final minified CSS (import order in `apps/web/src/index.tsx` — app.css before Root)
-- [ ] Rebuild; assert built CSS layer blocks are ordered `theme, base, components, utilities`
-- [ ] Visual (light): buttons look like buttons, inputs distinct from text, dropdown trigger row ~3rem box + list items padded
+- [x] Red: build as-is, assert built CSS has the reversed layer order (components block before base/preflight, no leading declaration)
+- [x] Green: fix bundle order so tailwind's `@layer theme, base, components, utilities;` declaration leads the final minified CSS (import order in `apps/web/src/index.tsx` — app.css before Root)
+- [x] Rebuild; assert built CSS layer blocks are ordered `theme, base, components, utilities`
+- [x] Visual (light): buttons look like buttons, inputs distinct from text, dropdown trigger row ~3rem box + list items padded
 
 **Criterion:** built CSS `@layer` order theme<base<components<utilities; playwright: `buttonClass`/`inputClass` boxes restored (padding/border/bg), dropdown trigger row is a bordered ~3rem box, dropdown list items padded.
-**Commit:** (pending)
+**Commit:** `fix(ui): restore CSS layer order — preflight below components atoms`
 
 ## Stage 2 — Recipe-tune macro row in a line (issue 3)
 - [ ] Restore `flex` on the macro row `<div>` in `RecipeTuneForm.tsx`
