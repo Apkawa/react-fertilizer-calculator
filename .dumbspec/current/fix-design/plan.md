@@ -41,12 +41,12 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `fix(calculator): scope hidden file input to its import button`
 
 ## Stage 4 — Help link tree (issue 6)
-- [ ] Markdown help tree: per-level indent + disc markers (app CSS, e.g. Help-page stylesheet)
-- [ ] Sidebar «Справка» tree: per-level indent (markers stay off via `.react-router-tabs ul`); keep NavTab link hit-areas
-- [ ] Visual: both trees render as indented trees
+- [x] Markdown help tree: per-level indent + disc markers (app CSS, e.g. Help-page stylesheet)
+- [x] Sidebar «Справка» tree: per-level indent (markers stay off via `.react-router-tabs ul`); keep NavTab link hit-areas
+- [x] Visual: both trees render as indented trees
 
 **Criterion:** playwright: nested `ul` in Help markdown has growing padding per depth + disc markers; sidebar Справка submenu shows per-level indentation; links still clickable.
-**Commit:** (pending)
+**Commit:** `fix(help): restore link-tree indentation, markers and link styling`
 
 ## Stage 5 — Dark theme readability (issue 7)
 - [ ] `body`: background-color + color from theme vars (theme.css or app CSS)

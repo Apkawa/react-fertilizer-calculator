@@ -8,6 +8,8 @@ import remarkGfm from "remark-gfm";
 import { LazyPromise } from "@/components/LazyPromise";
 import { useHelpPageMap } from "@/pages/Help/pages";
 
+import "./style.css";
+
 // Справка = собственные статичные .md из src/docs: рендерим markdown и сырой HTML
 // (rehype-raw), как раньше (v4 with-html). Sanitize — дефолтная схема + атрибут `style`
 // для span (цвета в chem_table и т.п.), т.к. докам можно доверять.
@@ -47,7 +49,7 @@ type HelpProps = {};
 export const Help: FunctionComponent<HelpProps> = () => {
   return (
     <div className="flex justify-center">
-      <div style={{ maxWidth: 960 }}>
+      <div className="help-content" style={{ maxWidth: 960 }}>
         {/* Пустой flex из старых verсий — рендера ничего, но держим для parity разметки */}
         <div />
         <Switch>

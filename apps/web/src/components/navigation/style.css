@@ -22,8 +22,11 @@
   cursor: default;
 }
 
+/* Дерево «Справка»: маркеры не нужны (как и раньше),
+   но indent на каждом уровне, чтобы submenu читалось деревом */
 .react-router-tabs ul {
   list-style-type: none;
+  padding-inline-start: 1.25em;
 }
 .react-router-tabs ul > li a {
   width: 100%;
