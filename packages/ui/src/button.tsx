@@ -4,7 +4,7 @@ import { buttonClass } from "./styles.css";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-// Кнопка (заменяет rebass Button); ref прокидывается до DOM-кнопки
+// Кнопка (заменяет легасную кнопку); ref прокидывается до DOM-кнопки
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ className, ...props }, ref) => (
   <button ref={ref} className={cx(buttonClass, className)} {...props} />
 ));

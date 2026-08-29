@@ -4,7 +4,7 @@ import { globalLayer, style } from "@vanilla-extract/css";
 // чтобы utility-классы могли переопределять стили атомов.
 globalLayer("components");
 
-// Текстовый/числовой инпут (эквивалент @rebass/forms Input в теме polaris:
+// Текстовый/числовой инпут (эквивалент легасного инпута формы в теме polaris:
 // border цветом текста, без радиуса, прозрачный фон; нативные спиннеры number
 // скрыты — у приложения свои кнопки спиннера)
 export const inputClass = style({
@@ -46,7 +46,7 @@ export const labelClass = style({
   },
 });
 
-// Кнопка (эквивалент rebass Button: primary фон, текст цветом фона, radius 4px)
+// Кнопка (эквивалент легасной кнопки: primary фон, текст цветом фона, radius 4px)
 export const buttonClass = style({
   "@layer": {
     components: {
@@ -67,7 +67,7 @@ export const buttonClass = style({
   },
 });
 
-// Карточка (эквивалент rebass Card в теме приложения: фон, тень small, p: 2)
+// Карточка (эквивалент легасной карточки в теме приложения: фон, тень small, p: 2)
 export const cardClass = style({
   "@layer": {
     components: {
@@ -78,7 +78,7 @@ export const cardClass = style({
   },
 });
 
-// Заголовок (эквивалент rebass Heading: h2 по умолчанию, без margin)
+// Заголовок (эквивалент легасного заголовка: h2 по умолчанию, без margin)
 export const headingClass = style({
   "@layer": {
     components: {
@@ -178,7 +178,7 @@ export const dropdownItemDisabledClass = style({
   },
 });
 
-// Список дропдауна (заменяет rebass Card в DropdownList; max-height — инлайном)
+// Список дропдауна (заменяет легасную карточку в DropdownList; max-height — инлайном)
 export const dropdownListClass = style({
   "@layer": {
     components: {
@@ -213,7 +213,7 @@ export const modalOverlayClass = style({
   },
 });
 
-// Карточка модалки (заменяет rebass Card внутри оверлея)
+// Карточка модалки (заменяет легасную карточку внутри оверлея)
 export const modalCardClass = style({
   "@layer": {
     components: {
@@ -259,7 +259,7 @@ export const sidebarOverlayUndockedClass = style({
   },
 });
 
-// Карточка сайдбара (заменяет rebass Card внутри оверлея)
+// Карточка сайдбара (заменяет легасную карточку внутри оверлея)
 export const sidebarCardClass = style({
   "@layer": {
     components: {
@@ -273,7 +273,7 @@ export const sidebarCardClass = style({
   },
 });
 
-// Ленточка "Fork me on GitHub" (заменяет styled-components)
+// Ленточка "Fork me on GitHub" (заменяет легасный inline-styled компонент)
 // Ленточка-обёртка (span): на широких экранах — абсолютный блок 200×200 в углу
 export const forkMeClass = style({
   "@layer": {

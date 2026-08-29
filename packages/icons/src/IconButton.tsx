@@ -19,7 +19,7 @@ const ALIGN_SELF: Record<string, string> = {
   end: "self-end",
   "flex-end": "self-end",
 };
-// Токены темы theme-ui (фон кнопки) → CSS-переменные @fertilizer/ui (theme.css)
+// Токены темы старой дизайн-системы (фон кнопки) → CSS-переменные @fertilizer/ui (theme.css)
 const BG_TOKENS: Record<string, string> = {
   primary: "var(--color-primary)",
   danger: "var(--color-danger)",
@@ -31,13 +31,13 @@ interface IconButtonProps extends PropsWithChildren<ButtonHTMLAttributes<HTMLBut
   /** Цвет иконки; по умолчанию — текущий цвет текста (currentColor). */
   color?: string;
   size?: number | string;
-  /** Лёгасный (rebass): space-шкала → padding. */
+  /** Лёгасный layout-проп (старая дизайн-система): space-шкала → padding. */
   padding?: number;
-  /** Лёгасный (rebass): flex alignSelf. */
+  /** Лёгасный layout-проп (старая дизайн-система): flex alignSelf. */
   alignSelf?: string;
-  /** Лёгасный (rebass): space-шкала → margin-right. */
+  /** Лёгасный layout-проп (старая дизайн-система): space-шкала → margin-right. */
   marginRight?: number;
-  /** Лёгасный (theme-ui): токен темы (primary/danger) или CSS-цвет. */
+  /** Лёгасный проп: токен темы (primary/danger) или CSS-цвет. */
   backgroundColor?: string;
 }
 

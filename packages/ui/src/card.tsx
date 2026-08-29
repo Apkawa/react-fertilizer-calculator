@@ -4,7 +4,7 @@ import { cardClass } from "./styles.css";
 
 export type CardProps = HTMLAttributes<HTMLDivElement>;
 
-// Карточка (заменяет rebass Card)
+// Карточка (заменяет легасную карточку)
 export const Card = ({ className, ...props }: CardProps) => (
   <div className={cx(cardClass, className)} {...props} />
 );

@@ -90,11 +90,18 @@ Note (выполнение, оркестрация): 5 agents по группа�
 **Commit:** `3cf6751` feat(ui): stage 6 — packages/icons without rebass/theme-ui
 
 ## Stage 7 — Final cleanup + docs
-- [ ] Remove `ThemeProvider` from `Root.tsx` + `test-utils/render.tsx` (themes/ dir: polaris preset consumption → CSS vars)
-- [ ] Remove deps: `rebass`, `@rebass/forms`, `@rebass/preset`, `theme-ui`, `@theme-ui/presets`, `styled-components`, `@emotion/styled`, `react-focus-lock`, `@types/rebass`, `@types/theme-ui`, `@types/rebass__forms`, `@types/styled-components`; `pnpm install` clean
-- [ ] Delete legacy `yarn.lock` and `apps/web/src/react18-types-compat.d.ts`
-- [ ] Docs: `AGENTS.md` (UI paragraph, structure tree with `packages/ui`, `type`/`test` scripts), root README if needed
-- [ ] Final: `pnpm full-check` + playwright smoke/e2e (real browser) visual check
+- [x] Remove `ThemeProvider` from `Root.tsx` + `test-utils/render.tsx` (themes/ dir: polaris preset consumption → CSS vars); `apps/web/src/themes/` deleted, `react18-types-compat.d.ts` и `@theme-ui/presets`-декларация из `types/globals.d.ts` удалены
+- [x] Remove deps: `rebass`, `@rebass/forms`, `@rebass/preset`, `theme-ui`, `@theme-ui/presets`, `styled-components`, `@emotion/styled`, `react-focus-lock`, `@types/rebass`, `@types/theme-ui`, `@types/rebass__forms`, `@types/styled-components`; `pnpm install` clean (lockfile: 0 упоминаний)
+- [x] Delete legacy `yarn.lock` и `apps/web/src/react18-types-compat.d.ts`
+- [x] Docs: `AGENTS.md` (UI-абзац, structure tree с `packages/ui`, `type`/`test` скрипты, source-пакеты), README — чист
+- [x] Final: `pnpm full-check` + playwright smoke/e2e (real browser) visual check
+- [x] Preflight re-enabled: `app.css` → полный `@import "tailwindcss"` (комментарий в файле обновлён)
 
-**Criterion:** `pnpm full-check` green; `grep -r "rebass\|theme-ui\|styled-components\|@emotion" apps packages` → no hits; smoke suite passes in browser.
+**Найдено в Stage 7 (регрессии, зафиксированы тестами):**
+1. **`useColorMode` жил только в сайдбаре** (TabMenu → ColorModeToggle): при узком окне (сайдбар за бургером) тема и миграция legacy-ключа не применялись при загрузке. Лечение: хук перенесён в `Root` (владеет режимом), `TabMenu`/`ColorModeToggle` получают `colorMode`/`onColorModeChange` пропсами. Тесты: 3 новых в `App.test.tsx` (legacy-ключ → `data-theme="dark"` + миграция; новый ключ; default) + обновлён `ColorModeToggle.test.tsx`. Проверено в реальном chromium: `theme-ui:mode=dark` → на load `data-theme="dark"`, ключ мигрирован в `ui:color-mode`, тёмные карточки.
+2. **e2e падал на `input[type="text"]`**: Dropdown-инпут не имел явного `type="text"` → селектор теста не матчил. Лечение: `type="text"` в `packages/ui` Dropdown (семантика не менялась).
+
+**Итог grep-контроля:** `grep -r "rebass\|theme-ui\|styled-components\|@emotion" apps packages` → 0 импортов/зависимостей; остаются только функциональные строки legacy-ключа localStorage `"theme-ui:mode"` в `packages/ui/src/use-color-mode.ts` (+ тест) — ключ реального localStorage, менять нельзя (миграция пользователей).
+
+**Playwright (real chromium, dev server):** smoke 7/7, e2e 3/3. Визуально (скриншот калькулятора, тёмная тема): layout цел, preflight не сломал, цвета элементов результата на месте.
 **Commit:**

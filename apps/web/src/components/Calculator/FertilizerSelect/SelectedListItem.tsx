@@ -7,7 +7,7 @@ import { Card, Text } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
 import type { FertilizerType } from "./types";
 
-// Фоновые цвета чипов элементов (были токенами bg={name} из темы theme-ui)
+// Фоновые цвета чипов элементов (были токенами bg={name} из легасной темы)
 const ELEMENT_BG: Partial<Record<FERTILIZER_ELEMENT_NAMES, string>> = {
   NO3: "#05AD11",
   NH4: "#FFF",

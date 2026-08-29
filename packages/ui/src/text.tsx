@@ -4,7 +4,7 @@ import { headingClass } from "./styles.css";
 
 export type TextProps = HTMLAttributes<HTMLDivElement>;
 
-// Текстовый блок (заменяет rebass Text; типографика наследуется от body)
+// Текстовый блок (заменяет легасный текстовый блок; типографика наследуется от body)
 export const Text = (props: TextProps) => <div {...props} />;
 
 export type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
@@ -15,7 +15,7 @@ export interface HeadingProps {
   children?: ReactNode;
 }
 
-// Заголовок (заменяет rebass Heading; по умолчанию h2)
+// Заголовок (заменяет легасный заголовок; по умолчанию h2)
 export const Heading = ({ as = "h2", className, ...props }: HeadingProps) => {
   const Tag = as;
   return <Tag className={cx(headingClass, className)} {...props} />;

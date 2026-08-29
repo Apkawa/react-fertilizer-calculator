@@ -178,6 +178,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
       <div className="flex flex-col" style={widthStyle} ref={containerRef}>
         <div className="relative">
           <input
+            type="text"
             className={inputClass}
             value={value}
             onChange={onChangeInputHandler}

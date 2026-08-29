@@ -2,7 +2,7 @@ import { Input as UiInput, type InputProps as UiInputProps } from "@fertilizer/u
 import React, { type ChangeEvent, type CSSProperties, type FunctionComponent } from "react";
 import { useFormField } from "@/store/use-form-field";
 
-// Лёгасные rebass-пропы раскладки, которые коньюмеры передают на поле формы:
+// Лёгасные пропы раскладки (старая дизайн-система), которые коньюмеры передают на поле формы:
 // width/maxWidth/flex — обычные CSS-значения, marginRight — токен space-шкалы
 interface LegacyLayout {
   width?: string;
@@ -11,7 +11,7 @@ interface LegacyLayout {
   marginRight?: number;
 }
 
-// rebass space-шкала (px): индекс токена → пиксели (polaris: [0,4,8,16,32,64,128])
+// space-шкала (px): индекс токена → пиксели (polaris: [0,4,8,16,32,64,128])
 const SPACE_SCALE = [0, 4, 8, 16, 32, 64, 128];
 
 const layoutStyle = (props: LegacyLayout & { style?: CSSProperties }): CSSProperties => {

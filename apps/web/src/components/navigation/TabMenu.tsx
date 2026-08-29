@@ -1,4 +1,4 @@
-import { Sidebar } from "@fertilizer/ui";
+import { type ColorMode, Sidebar } from "@fertilizer/ui";
 import React from "react";
 import { NavTab, RoutedTabs } from "react-router-tabs";
 import { ColorModeToggle } from "@/components/ColorModeToggle";
@@ -7,11 +7,14 @@ import "./style.css";
 import { useRouteMatch } from "react-router-dom";
 import { type HelpPageListType, useHelpPagesList } from "@/pages/Help/pages";
 
-type TabMenuProps = {};
+type TabMenuProps = {
+  colorMode: ColorMode;
+  onColorModeChange: (mode: ColorMode) => void;
+};
 
 // Верхнее меню приложения: роутинг (react-router-tabs) + страницы справки.
 // Живёт в приложении, а не в @fertilizer/ui: зависит от роутера, Help и ColorModeToggle.
-export function TabMenu(props: TabMenuProps) {
+export function TabMenu({ colorMode, onColorModeChange }: TabMenuProps) {
   return (
     <Sidebar>
       <RoutedTabs startPathWith={""} tabClassName="tab-link" activeTabClassName="active">
@@ -25,7 +28,7 @@ export function TabMenu(props: TabMenuProps) {
           <HelpPagesSubMenu />
         </div>
       </RoutedTabs>
-      <ColorModeToggle />
+      <ColorModeToggle colorMode={colorMode} onColorModeChange={onColorModeChange} />
     </Sidebar>
   );
 }

@@ -26,12 +26,12 @@ export interface NumberInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value" | "step"> {
   value?: number | string;
   step?: number | string;
-  /** CSS max-width (legacy rebass `maxWidth`) */
+  /** CSS max-width (legacy-проп `maxWidth` из старой дизайн-системы) */
   maxWidth?: string | number;
   onChange?: (event: NumberInputChangeEvent) => void;
 }
 
-// Числовой инпут со спиннером (портирован из ui/RebassWidgets/Number.tsx):
+// Числовой инпут со спиннером (портирован из легасного виджета числового поля):
 // кнопки ^/v показываются по фокусу и двигают значение на step
 export const NumberInput = (props: NumberInputProps) => {
   const {
@@ -99,7 +99,7 @@ export const NumberInput = (props: NumberInputProps) => {
     onChange?.({ target: { value: e.target.value } });
   };
 
-  // legacy rebass `maxWidth` + обычный style → инлайновый стиль
+  // legacy `maxWidth` + обычный style → инлайновый стиль
   const inputStyle: CSSProperties = { maxWidth, ...style };
 
   return (

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 
-/** Режим темы: светлая ("default") или тёмная ("dark") — замена useColorMode theme-ui. */
+/** Режим темы: светлая ("default") или тёмная ("dark") — замена легасного useColorMode. */
 export type ColorMode = "default" | "dark";
 
-/** Новый ключ localStorage (замена legacy-ключа theme-ui `theme-ui:mode`). */
+/** Новый ключ localStorage (замена legacy-ключа старой темы). */
 const STORAGE_KEY = "ui:color-mode";
 const LEGACY_KEY = "theme-ui:mode";
 
@@ -32,7 +32,7 @@ function isColorMode(value: string | null): value is ColorMode {
   return value === "default" || value === "dark";
 }
 
-/** Сохранённый режим: новый ключ, иначе legacy theme-ui; если нет ни того ни другого — светлая. */
+/** Сохранённый режим: новый ключ, иначе legacy-ключ; если нет ни того ни другого — светлая. */
 function getSavedMode(): ColorMode {
   const saved = window.localStorage.getItem(STORAGE_KEY) ?? window.localStorage.getItem(LEGACY_KEY);
   return isColorMode(saved) ? saved : "default";

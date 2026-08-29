@@ -8,7 +8,7 @@
 - **`apps/web`** (`@fertilizer/web`) — the React PWA: everything that used to be the repo root's `src/`.
 - React 16 + TypeScript 7 (strict) on **Vite** (@vitejs/plugin-react, JSX classic runtime) + vite-plugin-pwa.
 - State management: **zustand** (`apps/web/src/store/`, imported as `@/store`), persisted to `localStorage` (`appState`; legacy `reduxState` is auto-migrated on load). No redux / redux-form / redux-saga.
-- UI: **theme-ui / rebass** + styled-components. Routing: react-router (HashRouter) + `@loadable/component` (lazy-loaded pages).
+- UI: **@fertilizer/ui** (vanilla-extract + tailwindcss v4, тема — CSS-переменные `theme.css`, тёмный режим — `data-theme`) + **@fertilizer/icons** (SVG-иконки по имени). Routing: react-router (HashRouter) + `@loadable/component` (lazy-loaded pages).
 - Calculations live in the pure source package **`packages/calculator`** (`@fertilizer/calculator`, algorithm from [siv237/HPG](https://github.com/siv237/HPG)) with no UI dependencies — it is consumed as TypeScript source (no build step) and bundled by the app's Vite.
 - Deploys to GitHub Pages (workflow: master → site root, other branches → subfolder).
 
@@ -45,17 +45,24 @@ apps/web/                 # @fertilizer/web — the React PWA (all deps of the a
     pages/                # pages (lazy-loaded): Calculator, Help, ChemFormula, DensityCalculator, Example, NotFound
     store/                # zustand store: calculator + fertilizerEdit + mixerOptions + fertilizersError; localStorage persistence (appState)
     docs/                 # reference .md files — imported with ?raw, displayed in Help
-    hooks/, utils/, themes/
+    hooks/, utils/
     test-utils/           # test helpers (render/form) — app bindings
   vite.config.ts          # build: @/ alias, define constants, image copying, vite-plugin-pwa
   vitest.config.ts        # tests: jsdom + shared config from vite.config.ts
   server.js               # static server for build/ on :9005 (express)
 packages/
+  ui/                     # @fertilizer/ui — UI-атомы и составные компоненты (vanilla-extract + tailwindcss), source package
+    src/
+      styles.css.ts       # vanilla-extract-классы (слой `components`, ниже tailwind utilities)
+      theme.css           # тема CSS-переменными (светлая/тёмная: html[data-theme])
+      button.tsx, card.tsx, input.tsx, number-input.tsx, text.tsx, …
+      dropdown.tsx, modal.tsx, sidebar.tsx, tab-menu.tsx, fork-me.tsx
+      use-color-mode.ts   # data-theme + localStorage (мигрирует legacy-ключ)
   icons/                  # @fertilizer/icons — app icon set (SVG components chosen by name: Icon/IconButton), source package
     src/
       icons/              # 14 hand-drawn 24×24 SVG icons
-      Icon.tsx            # icon by name (svg wrapped in a div/Box)
-      IconButton.tsx      # button with icon by name
+      Icon.tsx            # icon by name (svg wrapped in a div)
+      IconButton.tsx      # button with icon by name (packages/ui Button)
       registry.ts         # name → icon component map
   calculator/             # @fertilizer/calculator — calculation core, pure logic
     src/
@@ -75,7 +82,7 @@ docs/                     # jupyter models of the calculations (model_v3, EDTA_F
 tools/mdb_convert.ts      # conversion utility
 ```
 
-- `packages/calculator` and `packages/icons` are **source packages**: `main`/`exports` point at `./src/*.ts` directly — no build step; the app depends on them as `workspace:*`. Vite bundles the TS source, `tsc` resolves it via `moduleResolution: bundler`. `@fertilizer/icons` is the app's icon set: `Icon`/`IconButton` render icons by name from `registry.ts` (14 own SVGs); the app's tsconfig includes each package's `src/**/*.d.ts` (ambient declarations for untyped deps) because the app pulls the packages' `.ts` files into its program.
+- `packages/calculator`, `packages/icons` and `packages/ui` are **source packages**: `main`/`exports` point at `./src/*.ts` directly — no build step; the app depends on them as `workspace:*`. Vite bundles the TS source, `tsc` resolves it via `moduleResolution: bundler`. `@fertilizer/icons` is the app's icon set: `Icon`/`IconButton` render icons by name from `registry.ts` (14 own SVGs); the app pulls the packages' `.ts` files into its program.
 - Alias `@/` → `apps/web/src/` (vite `resolve.alias` + tsconfig.paths.json). The app imports the package via `@fertilizer/calculator[/subpath]`.
 - Markdown `.md` files are imported with the `?raw` query (native Vite mechanism, `apps/web/src/pages/Help/pages.ts`).
 - Build-time constants (`__VERSION__`, `__COMMIT_HASH__`, `__COMMIT_DATE__`, `__COMMIT_REF_NAME__`) are injected via `define` in `apps/web/vite.config.ts` from `git` — git is required for builds.
@@ -99,7 +106,7 @@ Calculation tests in `packages/calculator/src/__tests__/` are reference tests; d
 - TypeScript strict; linter is **Biome** (`biome.json`, `pnpm lint`). Committing without a passing lint/test/type/build is not allowed (enforced by husky).
 - New calculation logic goes into `packages/calculator` as pure functions with colocated tests; do not move it into the app's components.
 - App state is the zustand store `apps/web/src/store/` (`@/store`): a `calculator` slice + `fertilizerEdit` / `mixerOptions` form states + `fertilizersError`. The `CalculatorState` type is in `apps/web/src/components/Calculator/types.d.ts`. Form fields are controlled through `@/store/form-context` (`FormProvider` + `useFormField` dot-path fields, `@/components/ui/Form` inputs) — no prop-drilling, global state read/write.
-- UI is built on theme-ui/rebass; themes are in `apps/web/src/themes`. Do not introduce new UI libraries without necessity.
+- UI is built on `@fertilizer/ui` (vanilla-extract + tailwindcss v4; тема — CSS-переменные `packages/ui/src/theme.css`, тёмный режим — `html[data-theme="dark"]`, хук `useColorMode`). Do not introduce new UI libraries without necessity.
 - New pages: create `apps/web/src/pages/<Name>/` and register it in `apps/web/src/pages/index.ts` (loadable) and `Root.tsx` (Route).
 - Reference texts: `apps/web/src/docs/**/*.md`, displayed on the Help page.
 - Jupyter models belong in `docs/` (python, repo root), not in the app or package sources.

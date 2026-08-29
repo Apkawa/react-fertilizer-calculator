@@ -4,7 +4,7 @@ import { inputClass } from "./styles.css";
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
-// Представительский инпут (заменяет @rebass/forms Input)
+// Представительский инпут (заменяет легасный инпут формы)
 export const Input = ({ className, ...props }: InputProps) => (
   <input className={cx(inputClass, className)} {...props} />
 );

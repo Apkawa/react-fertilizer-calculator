@@ -1,4 +1,4 @@
-/* Базовая тема (@fertilizer/ui): замена пресету polaris theme-ui.
+/* Базовая тема (@fertilizer/ui): замена легасному пресету polaris.
    CSS-переменные потребляются компонентами packages/ui и утилитами tailwindcss.
    Тёмный режим: html[data-theme="dark"] — атрибут ставит useColorMode (src/use-color-mode.ts). */
 :root {

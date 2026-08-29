@@ -28,7 +28,7 @@ test("новый ключ localStorage восстанавливается", () =
   expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
 });
 
-test("legacy-ключ theme-ui мигрируется в новый ключ", () => {
+test("legacy-ключ старой темы мигрируется в новый ключ", () => {
   localStorage.setItem("theme-ui:mode", "dark");
   const { getByTestId } = render(<Probe />);
   expect(getByTestId("mode").textContent).toBe("dark");
