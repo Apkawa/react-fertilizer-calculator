@@ -1,7 +1,6 @@
 import { NPKOxides } from "@fertilizer/calculator/constants";
 import type { Elements } from "@fertilizer/calculator/types";
 import React, { type FunctionComponent } from "react";
-import { Flex } from "rebass";
 import { decimal, Input } from "@/components/ui/Form";
 
 interface RecipeElementFormProps {
@@ -17,7 +16,7 @@ export const AddItemElementForm: FunctionComponent<RecipeElementFormProps> = (pr
     displayName = NPKOxides[name] as string;
   }
   return (
-    <Flex flexDirection="column" justifyContent="center" alignItems="center" width="4rem">
+    <div className="flex w-16 flex-col items-center justify-center">
       <label style={{ textAlign: "center" }} htmlFor={"npk-" + name}>
         {displayName}
       </label>
@@ -35,6 +34,6 @@ export const AddItemElementForm: FunctionComponent<RecipeElementFormProps> = (pr
         normalize={decimal}
         disabled={disabled}
       />
-    </Flex>
+    </div>
   );
 };

@@ -1,7 +1,6 @@
 import { type Concentration, normalizeConcentration } from "@fertilizer/calculator/dilution";
-import { Label } from "@rebass/forms";
+import { Card, Heading, Label, Text } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
-import { Card, Flex, Heading, Text } from "rebass";
 import { decimal, Input, StyledInput } from "@/components/ui/Form";
 import { useStore } from "@/store";
 
@@ -29,10 +28,11 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
   };
   return (
     <Card>
-      <Heading fontSize={2}>Раствор</Heading>
-      <Flex flexDirection="column">
-        <Flex alignItems="center" justifyContent="space-between">
-          <Label htmlFor="solution_volume">Объем, л</Label>
+      <Heading className="text-base">Раствор</Heading>
+      <div className="flex flex-col">
+        {/* Label оборачивает инпут — связь label/поле неявная (паттерн @fertilizer/ui) */}
+        <Label className="flex items-center justify-between">
+          Объем, л
           <Input
             disabled={form?.topping_up_enabled}
             name="solution_volume"
@@ -47,12 +47,11 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
             }}
             autoComplete="off"
           />
-        </Flex>
-        <Flex alignItems="center" justifyContent="space-between" paddingTop={2}>
-          <Label htmlFor="solution_concentration.k">Концентрация</Label>
-        </Flex>
-        <Flex alignItems="center" paddingTop={2}>
-          <Text fontSize={"2rem"}>1:</Text>
+        </Label>
+        {/* Подпись секции: инпуты концентрации стоят ниже */}
+        <Label className="flex items-center justify-between pt-2">Концентрация</Label>
+        <div className="flex items-center pt-2">
+          <Text className="text-[2rem]">1:</Text>
           <StyledInput
             disabled={form?.topping_up_enabled}
             name="solution_concentration.k"
@@ -68,8 +67,8 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
             value={form?.solution_concentration?.k ?? ""}
             onChange={onChange("k")}
           />
-        </Flex>
-        <Flex alignItems={"center"} paddingTop={2}>
+        </div>
+        <div className="flex items-center pt-2">
           Или
           <StyledInput
             disabled={form?.topping_up_enabled}
@@ -101,9 +100,9 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
             onChange={onChange("v_2")}
           />{" "}
           мл рабочего раствора
-        </Flex>
-        <Flex alignItems="center" justifyContent="space-between" paddingTop={2}></Flex>
-      </Flex>
+        </div>
+        <div className="flex items-center justify-between pt-2"></div>
+      </div>
     </Card>
   );
 };

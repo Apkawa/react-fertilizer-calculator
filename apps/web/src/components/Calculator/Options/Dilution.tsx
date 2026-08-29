@@ -1,7 +1,6 @@
 import { type Concentration, normalizeConcentration } from "@fertilizer/calculator/dilution";
-import { Label } from "@rebass/forms";
+import { Card, Label, Text } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
-import { Card, Flex, Text } from "rebass";
 import { Checkbox, Input, number, StyledInput } from "@/components/ui/Form";
 import { useStore } from "@/store";
 
@@ -30,9 +29,11 @@ export const Dilution: FunctionComponent<DilutionProps> = () => {
   return (
     <Card>
       <Checkbox name="dilution_enabled" label="Разбавление концентрата" />
-      <Flex flexDirection="column" style={{ display: form?.dilution_enabled ? "flex" : "none" }}>
-        <Flex alignItems="center" justifyContent="space-between">
-          <Label htmlFor="dilution_volume">Объем, л</Label>
+      {/* Блок показывается по чекбоксу: display из стора оставляем в style */}
+      <div className="flex flex-col" style={{ display: form?.dilution_enabled ? "flex" : "none" }}>
+        {/* Label оборачивает инпут — связь label/поле неявная (паттерн @fertilizer/ui) */}
+        <Label className="flex items-center justify-between">
+          Объем, л
           <Input
             name="dilution_volume"
             width="3rem"
@@ -46,12 +47,13 @@ export const Dilution: FunctionComponent<DilutionProps> = () => {
             }}
             autoComplete="off"
           />
-        </Flex>
-        <Flex>
-          <Label htmlFor="dilution_concentration.k">Концентрация</Label>
-        </Flex>
-        <Flex alignItems="center" paddingTop={2}>
-          <Text fontSize={"2rem"}>1:</Text>
+        </Label>
+        <div>
+          {/* Подпись секции: инпуты концентрации стоят ниже */}
+          <Label>Концентрация</Label>
+        </div>
+        <div className="flex items-center pt-2">
+          <Text className="text-[2rem]">1:</Text>
           <StyledInput
             name="dilution_concentration.k"
             type="number"
@@ -66,8 +68,8 @@ export const Dilution: FunctionComponent<DilutionProps> = () => {
             value={form?.dilution_concentration?.k ?? ""}
             onChange={onChange("k")}
           />
-        </Flex>
-        <Flex alignItems={"center"}>
+        </div>
+        <div className="flex items-center">
           Или
           <StyledInput
             name="dilution_concentration.v_1"
@@ -98,9 +100,9 @@ export const Dilution: FunctionComponent<DilutionProps> = () => {
             value={form?.dilution_concentration?.v_2 ?? ""}
             onChange={onChange("v_2")}
           />
-          мл. рабочего раствора
-        </Flex>
-      </Flex>
+          мл.рабочего раствора
+        </div>
+      </div>
     </Card>
   );
 };

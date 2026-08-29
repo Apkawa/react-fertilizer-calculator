@@ -69,16 +69,18 @@ Note: `ui/Form/{Input,Checkbox,Radio}` now import `@fertilizer/ui` only (+ react
 
 ## Stage 5 — Calculator migration (biggest)
 - [x] Факты (2026-08-29): rebass в Calculator = 26 файлов: `Box`/`Flex` — 119 мест (layout-пропсы: `flexDirection`/`justifyContent`/`alignItems`/`flexWrap`/`flex`/`width`/`maxWidth` + шкала m/p), `Text`/`Heading` — ~15 мест (с `fontSize`/`flex`/`textAlign`/`minWidth`/`sx`), `Button`/`Card` — 20 мест; `sx` — 16 мест (включая `mobileStyles` в `index.tsx`); `styled-components` — только `StyledList` (`Result.tsx`); `ui/types.d.ts` — пустой файл
-- [ ] `Box`/`Flex` → plain `<div>` c tailwind-классами (без новой API: `flex`/`flex-col`/`items-*`/`justify-*`/`flex-wrap`, `flex-1`, `w-full`/`w-auto`/`max-w-*`, `m-*`/`p-*`, arbitrary values)
-- [ ] `from "rebass"` → `from "@fertilizer/ui"` (только `Button`/`Card`/`Heading`/`Text`)
-- [ ] `Text`/`Heading` коллсайты → className (тема polaris, индексная шкала: `space [0,4,8,16,32,64,128]` px, `fontSizes [12,14,16,20,24,32,48,64,96]` px): `fontSize={2}` → `text-base` (16px), `fontSize="2rem"` → `text-[2rem]`, `flex` → `flex-1`, `textAlign` → `text-center`, `minWidth="3em"` → `min-w-[3em]`, `sx whiteSpace` → `whitespace-nowrap`; m/p-числа: 1→`-1`, 2→`-2`, 3→`-4`, 4→`-8`
-- [ ] `Button`/`Card` коллсайты → className: `width="100%"` → `w-full`, `width="auto"` → `w-auto`, `my={2}`/`marginBottom={2}` → `my-2`/`mb-2` (без расширения API `packages/ui`)
-- [ ] `sx` (16 мест) → className/tailwind; `mobileStyles` в `index.tsx` → `max-[800px]:`; удалить `apps/web/src/components/ui/styled.ts` + пустой `types.d.ts`
-- [ ] `Result.tsx`: `StyledList` (styled-components) → класс
-- [ ] Form wiring (`FormProvider`/`useFormField`, `test-utils/form.tsx`, `@/store`) untouched
+- [x] `Box`/`Flex` → plain `<div>` c tailwind-классами (без новой API: `flex`/`flex-col`/`items-*`/`justify-*`/`flex-wrap`, `flex-1`, `w-full`/`w-auto`/`max-w-*`, `m-*`/`p-*`, arbitrary values)
+- [x] `from "rebass"` → `from "@fertilizer/ui"` (только `Button`/`Card`/`Heading`/`Text`/`Label`)
+- [x] `Text`/`Heading` коллсайты → className (тема polaris, индексная шкала: `space [0,4,8,16,32,64,128]` px, `fontSizes [12,14,16,20,24,32,48,64,96]` px): `fontSize={2}` → `text-base` (16px), `fontSize="2rem"` → `text-[2rem]`, `flex` → `flex-1`, `textAlign` → `text-center`, `minWidth="3em"` → `min-w-[3em]`, `sx whiteSpace` → `whitespace-nowrap`; m/p-числа: 1→`-1`, 2→`-2`, 3→`-4`, 4→`-8`
+- [x] `Button`/`Card` коллсайты → className: `width="100%"` → `w-full`, `width="auto"` → `w-auto`, `my={2}`/`marginBottom={2}` → `my-2`/`mb-2` (без расширения API `packages/ui`)
+- [x] `sx` (16 мест) → className/tailwind; `mobileStyles` в `index.tsx` → `max-[800px]:`; удалить `apps/web/src/components/ui/styled.ts` + пустой `types.d.ts`
+- [x] `Result.tsx`: `StyledList` (styled-components) → класс
+- [x] Form wiring (`FormProvider`/`useFormField`, `test-utils/form.tsx`, `@/store`) untouched
 
-**Criterion:** zero `rebass`/`@rebass`/`styled-components`/`@emotion`/`theme-ui` imports in `apps/web/src/**` (`packages/icons` — Stage 6); smoke-тесты Calculator зелёные; `pnpm full-check` green.
-**Commit:**
+Note (выполнение, оркестрация): 5 agents по группам файлов (shell+importexport, options, fertilizermanager, fertilizerselect, mixer+result), последовательно; каждый — `pnpm type` + `pnpm -C apps/web test` + `pnpm lint` + grep-контроль. Доп-факты: `@rebass/forms` `Input` (AddEditNPKString, RecipeTuneForm) → `StyledInput` из `ui/Form`; `Label` (AddEdit/Solution/Dilution/ToppingUp) → `Label` из `@fertilizer/ui`; `htmlFor` не типится в `@types/react` 16.9 → лейблы обернули инпуты (конвенция `ui/Form`, старые for/id были dangling). `bg={name}` (токен темы) → local-мапа `ELEMENT_BG` + inline-style (SelectedListItem). Один пропуск agent'а (`FertilizerManager/AddItemElementForm.tsx`) допущен на верификации в main-сессии.
+
+**Criterion:** zero `rebass`/`@rebass`/`styled-components`/`@emotion`/`theme-ui` imports in `apps/web/src/components/**` (Root/themes/test-utils — Stage 7; `packages/icons` — Stage 6); smoke-тесты Calculator зелёные; `pnpm full-check` green.
+**Commit:** `feat(web): stage 5 — Calculator on tailwind + packages/ui (rebass/theme-ui/styled-components out of apps/web)`
 
 ## Stage 6 — `packages/icons` without rebass/theme-ui
 - [ ] `Icon`/`IconButton`: rewrite on vanilla-extract (no rebass `Box`/`Button`); port/adjust icon tests incl. PNG-baseline test (`rsvg-convert`)

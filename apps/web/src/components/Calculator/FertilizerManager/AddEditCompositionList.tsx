@@ -1,5 +1,5 @@
+import { Card } from "@fertilizer/ui";
 import React from "react";
-import { Card, Flex } from "rebass";
 import { decimal, Input } from "@/components/ui/Form";
 import { useStore } from "@/store";
 
@@ -24,16 +24,16 @@ export const AddEditCompositionList = () => {
   };
 
   return (
-    <Card width="100%">
-      <Flex>
+    <Card className="w-full">
+      <div className="flex">
         <button type="button" onClick={addRow}>
           +
         </button>
-      </Flex>
-      <Flex flexDirection="column">
+      </div>
+      <div className="flex flex-col">
         {composition.map((_, i) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: строки списка позиционные (dot-path по индексу в zustand-сторе) — другого устойчивого id нет
-          <Flex key={i} width="100%">
+          <div key={i} className="flex w-full">
             <Input name={"composition." + i + ".formula"} flex={2} placeholder={"NH4NO3"} />
             <Input
               name={"composition." + i + ".percent"}
@@ -48,9 +48,9 @@ export const AddEditCompositionList = () => {
             <button type="button" onClick={() => removeRow(i)}>
               -
             </button>
-          </Flex>
+          </div>
         ))}
-      </Flex>
+      </div>
     </Card>
   );
 };

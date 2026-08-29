@@ -1,8 +1,7 @@
 import { parseProfileStringToNPK, stringifyProfile } from "@fertilizer/calculator/profile";
 import type { NPKElements } from "@fertilizer/calculator/types";
-import { Input } from "@rebass/forms";
 import React, { type ChangeEvent, type FunctionComponent, useEffect, useState } from "react";
-import { Flex } from "rebass";
+import { StyledInput } from "@/components/ui/Form";
 import { useStore } from "@/store";
 
 interface AddEditNPKStringProps {
@@ -31,21 +30,15 @@ export const AddEditNPKString: FunctionComponent<AddEditNPKStringProps> = (props
     onChange && onChange(elements);
   };
   return (
-    <Flex
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      width={"100%"}
-      padding={2}
-    >
+    <div className="flex flex-col justify-center items-center w-full p-2">
       {/* biome-ignore lint/a11y/noLabelWithoutControl: пустой label — только вертикальный отступ; htmlFor/id прокидываются до DOM-инпута через обёртку */}
       <label style={{ textAlign: "center" }} htmlFor="npk-string"></label>
-      <Input
+      <StyledInput
         id="npk-string"
         disabled={composition_enable}
         placeholder={'Быстрое редактирование в формате "NO3=10 P2O5=12 K=5"'}
         value={value}
-        type="string"
+        type="text"
         autoComplete="off"
         style={{
           textAlign: "center",
@@ -57,6 +50,6 @@ export const AddEditNPKString: FunctionComponent<AddEditNPKStringProps> = (props
           setValue(props.npk && stringifyProfile(props.npk));
         }}
       />
-    </Flex>
+    </div>
   );
 };

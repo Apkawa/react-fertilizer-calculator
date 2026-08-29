@@ -1,8 +1,7 @@
 import { MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
-import { Label } from "@rebass/forms";
+import { Label, Text } from "@fertilizer/ui";
 import React, { type FunctionComponent, useEffect } from "react";
-import { Box, Flex, Text } from "rebass";
 import type { FertilizerInfo } from "@/components/Calculator/types";
 import { Checkbox, decimal, Input, number } from "@/components/ui/Form";
 import { useStore } from "@/store";
@@ -79,45 +78,45 @@ export const AddEdit: FunctionComponent<AddEditProps> = (props) => {
   return (
     <FormProvider formName={FERTILIZER_EDIT_FORM_NAME}>
       <form>
-        <Flex flexDirection="column">
+        <div className="flex flex-col">
           <Input name="id" title="Name" label="Name" />
-          <Box>Макроэлементы</Box>
-          <Flex>
+          <div>Макроэлементы</div>
+          <div className="flex">
             {MACRO_ELEMENT_NAMES.map((el) => (
               <AddItemElementForm key={el} name={el} disabled={formValues.composition_enable} />
             ))}
-          </Flex>
-          <Box>Микроэлементы</Box>
-          <Flex>
+          </div>
+          <div>Микроэлементы</div>
+          <div className="flex">
             {MICRO_ELEMENT_NAMES.map((el) => (
               <AddItemElementForm key={el} name={el} disabled={formValues.composition_enable} />
             ))}
-          </Flex>
-          <Flex>
+          </div>
+          <div className="flex">
             <AddEditNPKString
               npk={formValues.npk}
               onChange={(npk) => {
                 useStore.getState().setFertilizerEditField("npk", npk);
               }}
             />
-          </Flex>
+          </div>
 
-          <Flex>
+          <div className="flex">
             <Checkbox name="composition_enable" label="Формула" />
-          </Flex>
+          </div>
           {formValues.composition_enable ? (
-            <Flex>
+            <div className="flex">
               <AddEditCompositionList />
-            </Flex>
+            </div>
           ) : null}
-          <Flex alignItems="center">
-            <Box width="auto" marginRight={2}>
+          <div className="flex items-center">
+            <div className="w-auto mr-2">
               <Checkbox name="solution_density_enable" label="Раствор" />
-            </Box>
+            </div>
             {formValues.solution_density_enable ? (
-              <Flex flexDirection="column">
-                <Flex alignItems="flex-end">
-                  <Label flexDirection="column">
+              <div className="flex flex-col">
+                <div className="flex items-end">
+                  <Label className="flex flex-col">
                     Концентрация
                     <Input
                       name="solution_concentration"
@@ -129,11 +128,11 @@ export const AddEdit: FunctionComponent<AddEditProps> = (props) => {
                       width="5em"
                       marginRight={2}
                     />
-                    <Text sx={{ whiteSpace: "nowrap" }}>г/л</Text>
+                    <Text className="whitespace-nowrap">г/л</Text>
                   </Label>
-                </Flex>
-                <Flex alignItems="flex-end">
-                  <Label flexDirection="column">
+                </div>
+                <div className="flex items-end">
+                  <Label className="flex flex-col">
                     Плотность
                     <Input
                       name="solution_density"
@@ -146,13 +145,13 @@ export const AddEdit: FunctionComponent<AddEditProps> = (props) => {
                       marginRight={2}
                     />
                   </Label>
-                  <Text sx={{ whiteSpace: "nowrap" }}>г/л</Text>
-                </Flex>
-              </Flex>
+                  <Text className="whitespace-nowrap">г/л</Text>
+                </div>
+              </div>
             ) : null}
-          </Flex>
-          <Flex>
-            <Label flexDirection="column">
+          </div>
+          <div className="flex">
+            <Label className="flex flex-col">
               Миксер, номер помпы
               <Input
                 name="pump_number"
@@ -165,8 +164,8 @@ export const AddEdit: FunctionComponent<AddEditProps> = (props) => {
                 maxWidth={"3em"}
               />
             </Label>
-          </Flex>
-        </Flex>
+          </div>
+        </div>
       </form>
     </FormProvider>
   );

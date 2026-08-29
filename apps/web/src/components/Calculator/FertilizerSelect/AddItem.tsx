@@ -1,7 +1,6 @@
 import { IconButton } from "@fertilizer/icons";
-import { Dropdown } from "@fertilizer/ui";
+import { Card, Dropdown } from "@fertilizer/ui";
 import React, { type FunctionComponent, useState } from "react";
-import { Box, Card, Flex } from "rebass";
 import { useStore } from "@/store";
 import type { FertilizerType } from "./types";
 
@@ -27,17 +26,17 @@ export const AddItem: FunctionComponent<AddItemProps> = ({ onAdd }) => {
   };
   return (
     <Card>
-      <Flex flexDirection="column">
-        <Flex justifyContent="space-between">
-          <Box flex={1} pr={2}>
+      <div className="flex flex-col">
+        <div className="flex justify-between">
+          <div className="flex-1 pr-2">
             <Dropdown<FertilizerType>
               value={selected}
               items={fertilizers}
               onChange={onChangeHandler}
               checkDisabledItem={(item) => fertilizersIDs.includes(item?.id || "")}
               renderItem={({ item }) => (
-                <Flex flex={1} justifyContent="space-between">
-                  <Box>{item.id}</Box>
+                <div className="flex flex-1 justify-between">
+                  <div>{item.id}</div>
                   <IconButton
                     onClick={(event) => {
                       event.stopPropagation();
@@ -45,13 +44,13 @@ export const AddItem: FunctionComponent<AddItemProps> = ({ onAdd }) => {
                     }}
                     name="plus"
                   />
-                </Flex>
+                </div>
               )}
               renderValue={(item) => item?.id || ""}
             />
-          </Box>
-        </Flex>
-      </Flex>
+          </div>
+        </div>
+      </div>
     </Card>
   );
 };

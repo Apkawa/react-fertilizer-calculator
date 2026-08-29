@@ -2,10 +2,8 @@ import { MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES } from "@fertilizer/calculator
 import { buildFertilizerFromSolution } from "@fertilizer/calculator/fertilizer";
 import { getEmptyElements, getNPKDetailInfo } from "@fertilizer/calculator/helpers";
 import { IconButton } from "@fertilizer/icons";
-import { Modal, type ModalActions } from "@fertilizer/ui";
+import { Button, Card, Heading, Modal, type ModalActions, Text } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
-import { Button, Card, Flex, Heading, Text } from "rebass";
-import styled from "styled-components";
 import {
   AddEdit as FertilizerAddEditForm,
   formToFertilizer,
@@ -21,12 +19,6 @@ import { useFertilizerSolutionGroup } from "./hooks";
 import { ResultFertilizerList } from "./ResultFertilizerList";
 
 type ResultProps = {};
-
-const StyledList = styled.ul`
-  @media screen and (min-width: 800px) {
-    width: 75%;
-  }
-`;
 
 export const Result: FunctionComponent<ResultProps> = () => {
   // Слайс калькулятора (те же поля, что у redux state.calculator)
@@ -58,9 +50,9 @@ export const Result: FunctionComponent<ResultProps> = () => {
 
   return (
     <Card>
-      <Flex alignItems="center" flexDirection="column" width="100%">
-        <Heading fontSize={2}>Результат расчета</Heading>
-        <Flex justifyContent="space-around" width="100%">
+      <div className="flex w-full flex-col items-center">
+        <Heading className="text-base">Результат расчета</Heading>
+        <div className="flex w-full justify-around">
           {elements &&
             MACRO_ELEMENT_NAMES.map((k) => (
               <Element
@@ -70,8 +62,8 @@ export const Result: FunctionComponent<ResultProps> = () => {
                 delta={round(deltaElements[k])}
               />
             ))}
-        </Flex>
-        <Flex justifyContent="space-around" width="100%">
+        </div>
+        <div className="flex w-full justify-around">
           {elements &&
             MICRO_ELEMENT_NAMES.map((k) => (
               <Element
@@ -81,8 +73,8 @@ export const Result: FunctionComponent<ResultProps> = () => {
                 delta={round(deltaElements[k] * 1000)}
               />
             ))}
-        </Flex>
-        <Flex justifyContent="space-around">
+        </div>
+        <div className="flex justify-around">
           <StyledBalanceCell
             name="ΔΣ I"
             value={NPKBalance.ion_balance}
@@ -96,8 +88,9 @@ export const Result: FunctionComponent<ResultProps> = () => {
           <StyledBalanceCell name="K:N" value={NPKBalance.ratio.K.N} />
           <StyledBalanceCell name="K:Ca" value={NPKBalance.ratio.K.Ca} />
           <StyledBalanceCell name="K:Mg" value={NPKBalance.ratio.K.Mg} />
-        </Flex>
-        <StyledList>
+        </div>
+        {/* Список расчёта: полный на узких экранах, 75% от карточки на широких (было styled-ul) */}
+        <ul className="min-[800px]:w-3/4">
           <li>Для {solution_volume}л раствора</li>
           {fertilizerWeightGroups.map(([g, f_weights]) => (
             <li key={g}>
@@ -109,16 +102,16 @@ export const Result: FunctionComponent<ResultProps> = () => {
           ))}
           <li>Всего солей: {totalWeight} г.</li>
           <li>Концентрация солей: {round(totalWeight / (solution_volume ?? 1), 2)} г/л</li>
-        </StyledList>
+        </ul>
         <ResultDilution />
         {result?.stats && (
           <Text>
             Обработано вариантов: {result?.stats.count} Время: {result?.stats.time} сек
           </Text>
         )}
-        <Flex>
+        <div className="flex">
           {result?.fertilizers ? (
-            <Flex>
+            <div className="flex">
               <Modal
                 button={({ modal }) => (
                   <IconButton
@@ -134,21 +127,21 @@ export const Result: FunctionComponent<ResultProps> = () => {
                 container={({ modal }) => (
                   <>
                     <FertilizerAddEditForm initialValues={getInitialValues(complexFertilizer)} />
-                    <Flex justifyContent="flex-end">
+                    <div className="flex justify-end">
                       <Button type="button" onClick={() => onSave(modal)}>
                         Save
                       </Button>
-                    </Flex>
+                    </div>
                   </>
                 )}
               />
-            </Flex>
+            </div>
           ) : null}
-          <Flex>
+          <div className="flex">
             <MixerModal />
-          </Flex>
-        </Flex>
-      </Flex>
+          </div>
+        </div>
+      </div>
     </Card>
   );
 };

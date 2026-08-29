@@ -46,13 +46,7 @@ export function ImportRecipes(props: ImportRecipesProps) {
   };
   return (
     <>
-      <IconButton
-        sx={{
-          position: "relative",
-        }}
-        ref={buttonRef}
-        name="import"
-      >
+      <IconButton ref={buttonRef} name="import">
         <input
           type="file"
           accept="text/csv, .csv"

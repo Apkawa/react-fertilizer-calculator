@@ -1,5 +1,4 @@
 import React, { type FunctionComponent, useEffect } from "react";
-import { Flex } from "rebass";
 import type { FertilizerInfo, MixerOptions } from "@/components/Calculator/types";
 import { Input } from "@/components/ui/Form";
 import { useStore } from "@/store";
@@ -32,9 +31,9 @@ export const MixerOptionsForm: FunctionComponent<MixerFormProps> = (props) => {
   return (
     <FormProvider formName="mixerOptions">
       <form>
-        <Flex flexDirection="column">
+        <div className="flex flex-col">
           <Input name="url" title="URL" label="URL" />
-        </Flex>
+        </div>
       </form>
     </FormProvider>
   );

@@ -4,8 +4,8 @@ import {
   normalizeConcentration,
 } from "@fertilizer/calculator/dilution";
 import { ppmToEC } from "@fertilizer/calculator/helpers";
+import { Heading } from "@fertilizer/ui";
 import React from "react";
-import { Flex, Heading } from "rebass";
 import { useFertilizerSolutionGroup, usePPM } from "@/components/Calculator/Result/hooks";
 import type { CalculatorFormValues } from "@/components/Calculator/types";
 import { useStore } from "@/store";
@@ -50,8 +50,8 @@ export function ResultDilution(props: DilutionResultProps) {
 
   return (
     <>
-      <Flex flexDirection="column" width="75%">
-        <Heading fontSize={2}>Разбавление</Heading>
+      <div className="flex w-3/4 flex-col">
+        <Heading className="text-base">Разбавление</Heading>
         <ul>
           {dilution.map((d) => (
             <li key={d.id}>
@@ -63,7 +63,7 @@ export function ResultDilution(props: DilutionResultProps) {
             <b>TDS:</b> {newPpm} ppm; <b>EC:</b> {ppmToEC(newPpm, 1)} мСм/см
           </li>
         </ul>
-      </Flex>
+      </div>
     </>
   );
 }

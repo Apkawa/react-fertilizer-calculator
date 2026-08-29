@@ -5,7 +5,6 @@ import {
 import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
 import type { Elements } from "@fertilizer/calculator/types";
 import React, { type FunctionComponent, useEffect, useState } from "react";
-import { Flex } from "rebass";
 import type { FertilizerInfo } from "@/components/Calculator/types";
 import { AddItemElementForm } from "./AddItemElementForm";
 
@@ -40,8 +39,8 @@ export const AddItemFertilizerEditForm: FunctionComponent<AddItemFertilizerEditF
   }, [fertilizer]);
 
   return (
-    <Flex>
-      <Flex>
+    <div className="flex">
+      <div className="flex">
         {MACRO_ELEMENT_NAMES.map((el) => (
           <AddItemElementForm
             key={el}
@@ -51,7 +50,7 @@ export const AddItemFertilizerEditForm: FunctionComponent<AddItemFertilizerEditF
             onChange={(v) => onChangeHandler(el, v)}
           />
         ))}
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   );
 };

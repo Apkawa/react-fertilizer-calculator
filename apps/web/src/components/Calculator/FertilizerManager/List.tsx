@@ -1,8 +1,7 @@
 import { IconButton } from "@fertilizer/icons";
-import { Modal, type ModalActions } from "@fertilizer/ui";
+import { Button, Card, Heading, Modal, type ModalActions } from "@fertilizer/ui";
 import React from "react";
 import { ReactSortable } from "react-sortablejs";
-import { Box, Button, Card, Flex, Heading } from "rebass";
 import { AddEdit, formToFertilizer } from "@/components/Calculator/FertilizerManager/AddEdit";
 import { ExportFertilizers } from "@/components/Calculator/ImportExport/ExportFertilizers";
 import { ImportFertilizers } from "@/components/Calculator/ImportExport/ImportFertilizers";
@@ -22,8 +21,8 @@ export function List(props: ListProps) {
   }
 
   return (
-    <Flex flexDirection="column">
-      <Flex>
+    <div className="flex flex-col">
+      <div className="flex">
         <Modal
           button={({ modal }) => (
             <IconButton
@@ -37,15 +36,15 @@ export function List(props: ListProps) {
           container={({ modal }) => (
             <>
               <AddEdit />
-              <Flex justifyContent="flex-end">
+              <div className="flex justify-end">
                 <Button type="button" onClick={() => onAdd(modal)}>
                   Save
                 </Button>
-              </Flex>
+              </div>
             </>
           )}
         />
-      </Flex>
+      </div>
       <ReactSortable
         list={fertilizers}
         setList={(newList) => useStore.getState().setFertilizers(newList)}
@@ -55,28 +54,18 @@ export function List(props: ListProps) {
         ))}
       </ReactSortable>
       <Card>
-        <Heading fontSize={2}>Импорт/Экспорт</Heading>
-        <Flex flexDirection="column" p={3}>
-          <Flex
-            alignItems="center"
-            paddingBottom={2}
-            justifyContent="space-between"
-            flexWrap="wrap"
-          >
-            <Box
-              sx={{
-                "&>*": {
-                  marginLeft: 1,
-                },
-              }}
-            >
+        <Heading className="text-base">Импорт/Экспорт</Heading>
+        <div className="flex flex-col p-4">
+          <div className="flex items-center pb-2 justify-between flex-wrap">
+            {/* Левый отступ у всех дочерних элементов (marginLeft у children) */}
+            <div className="[&>*]:ml-2">
               <ImportFertilizers />
               <ExportFertilizers />
               <IconButton name="restart" onClick={() => useStore.getState().resetFertilizers()} />
-            </Box>
-          </Flex>
-        </Flex>
+            </div>
+          </div>
+        </div>
       </Card>
-    </Flex>
+    </div>
   );
 }

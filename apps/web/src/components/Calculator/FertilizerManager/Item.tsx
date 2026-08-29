@@ -1,9 +1,8 @@
 import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
 import { IconButton } from "@fertilizer/icons";
-import { Modal, type ModalActions } from "@fertilizer/ui";
+import { Button, Card, Modal, type ModalActions, Text } from "@fertilizer/ui";
 import React from "react";
-import { Box, Button, Card, Flex, Text } from "rebass";
 import type { FertilizerInfo } from "@/components/Calculator/types";
 import { useStore } from "@/store";
 import { Element } from "../FertilizerSelect/SelectedListItem";
@@ -28,10 +27,10 @@ export function Item(props: ItemProps) {
   };
   return (
     <>
-      <Card width={"auto"} marginBottom={2}>
-        <Flex justifyContent={"space-between"} alignItems="center">
-          <Box flex={1}>
-            <Text flex={1}>
+      <Card className="w-auto mb-2">
+        <div className="flex justify-between items-center">
+          <div className="flex-1">
+            <Text className="flex-1">
               {fertilizer.id} &nbsp;
               {fertilizer.solution_concentration &&
                 `[жидкий ${fertilizer.solution_concentration} г/л]`}{" "}
@@ -41,7 +40,7 @@ export function Item(props: ItemProps) {
               </span>{" "}
               &nbsp;
             </Text>
-            <Flex>
+            <div className="flex">
               {FERTILIZER_ELEMENT_NAMES.map((name) => {
                 const v = normalizedFertilizer.elements[name];
                 if (!v) {
@@ -49,9 +48,9 @@ export function Item(props: ItemProps) {
                 }
                 return <Element name={name} key={name} value={v} isOxide />;
               })}
-            </Flex>
-          </Box>
-          <Flex>
+            </div>
+          </div>
+          <div className="flex">
             <Modal
               button={({ modal }) => (
                 <IconButton
@@ -65,11 +64,11 @@ export function Item(props: ItemProps) {
               container={({ modal }) => (
                 <>
                   <AddEdit fertilizer={fertilizer} />
-                  <Flex justifyContent="flex-end">
+                  <div className="flex justify-end">
                     <Button type="button" onClick={() => onSave(modal)}>
                       Save
                     </Button>
-                  </Flex>
+                  </div>
                 </>
               )}
             />
@@ -80,8 +79,8 @@ export function Item(props: ItemProps) {
               backgroundColor={"danger"}
               onClick={onRemove}
             />
-          </Flex>
-        </Flex>
+          </div>
+        </div>
       </Card>
     </>
   );

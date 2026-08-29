@@ -1,7 +1,6 @@
 import { IconButton } from "@fertilizer/icons";
-import { Modal, type ModalActions } from "@fertilizer/ui";
+import { Button, Modal, type ModalActions } from "@fertilizer/ui";
 import React, { type ComponentType } from "react";
-import { Button, Flex } from "rebass";
 import { type MixerFormType, MixerOptionsForm } from "@/components/Calculator/Mixer/MixerForm";
 import { useStore } from "@/store";
 
@@ -44,11 +43,11 @@ export const MixerModal: ComponentType = () => {
       container={({ modal }) => (
         <>
           <MixerOptionsForm initialValues={initialMixerOptions} />
-          <Flex justifyContent="flex-end">
+          <div className="flex justify-end">
             <Button type="button" onClick={() => onSave(modal)}>
               Приготовить
             </Button>
-          </Flex>
+          </div>
         </>
       )}
     />

@@ -1,5 +1,4 @@
 import React from "react";
-import { Flex } from "rebass";
 import { useStore } from "@/store";
 import { AddItem } from "./AddItem";
 import { SelectedListItem } from "./SelectedListItem";
@@ -37,16 +36,10 @@ export const SelectedList = () => {
   };
 
   return (
-    <Flex sx={{ flexDirection: "column" }} width="auto">
+    <div className="flex w-auto flex-col">
       <AddItem onAdd={onAddHandler} />
-      <Flex
-        sx={{
-          flexDirection: "column",
-          "& > *": {
-            marginTop: "8px !important",
-          },
-        }}
-      >
+      {/* Верхний отступ у всех дочерних элементов (marginTop у children) */}
+      <div className="flex flex-col [&>*]:mt-2">
         {fertilizersError ? <span>{fertilizersError}</span> : null}
         {fertilizers.map((item, index) => (
           <SelectedListItem
@@ -56,7 +49,7 @@ export const SelectedList = () => {
             onRemove={() => onRemove(index)}
           />
         ))}
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   );
 };

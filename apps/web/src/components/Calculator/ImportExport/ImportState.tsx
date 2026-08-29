@@ -42,13 +42,7 @@ export function ImportState(props: ImportStateProps) {
   };
   return (
     <>
-      <IconButton
-        sx={{
-          position: "relative",
-        }}
-        ref={buttonRef}
-        name="import"
-      >
+      <IconButton ref={buttonRef} name="import">
         <input
           type="file"
           accept={ACCEPT_FORMATS}

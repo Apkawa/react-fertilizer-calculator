@@ -1,7 +1,6 @@
 import { IconButton } from "@fertilizer/icons";
+import { Card, Heading, Text } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
-import { Box, Card, Flex, Heading, Text } from "rebass";
-import { mobileStyles } from "@/components/ui/styled";
 import { useStore } from "@/store";
 import { FormProvider } from "@/store/form-context";
 import { REDUX_FORM_NAME } from "./constants";
@@ -28,69 +27,43 @@ export const CalculatorContainer: FunctionComponent<CalculatorProps> = () => {
           useStore.getState().calculate();
         }}
       >
-        <Flex
-          sx={{
-            flexDirection: "row",
-            ...mobileStyles({
-              flexDirection: "column-reverse",
-            }),
-          }}
-        >
-          <Box
-            flex={1}
-            sx={{
-              marginRight: 2,
-              ...mobileStyles({
-                marginRight: 0,
-              }),
-            }}
-          >
+        {/* На десктопе колонки стоят рядом; на экранах ≤800px раскладка перевёрнута — снизу вверх */}
+        <div className="flex max-[800px]:flex-col-reverse">
+          <div className="mr-2 flex-1 max-[800px]:mr-0">
             <FertilizerSelect />
-          </Box>
-          <Flex flexDirection="column" flex={1}>
-            <Box flex={1} marginBottom={2}>
+          </div>
+          <div className="flex flex-1 flex-col">
+            <div className="mb-2 flex-1">
               <Recipe />
-            </Box>
-            <Box flex={1}>
+            </div>
+            <div className="flex-1">
               <Result />
-            </Box>
-            <Box flex={1}>
+            </div>
+            <div className="flex-1">
               <Options />
-            </Box>
+            </div>
             <Card>
-              <Heading fontSize={2}>Импорт/Экспорт</Heading>
-              <Flex flexDirection="column" p={3}>
-                <Flex alignItems="center" justifyContent="space-between" flexWrap="wrap">
+              <Heading className="text-base">Импорт/Экспорт</Heading>
+              <div className="flex flex-col p-4">
+                <div className="flex flex-wrap items-center justify-between">
                   <Text>Рецепты</Text>
-                  <Box
-                    sx={{
-                      "&>*": {
-                        marginLeft: 1,
-                      },
-                    }}
-                  >
+                  <div className="[&>*]:ml-1">
                     <ImportRecipes />
                     <ExportRecipes />
                     <IconButton name="restart" onClick={() => recipeReset()} />
-                  </Box>
-                </Flex>
-                <Flex alignItems="center" justifyContent="space-between" flexWrap="wrap">
+                  </div>
+                </div>
+                <div className="flex flex-wrap items-center justify-between">
                   <Text>Настройки</Text>
-                  <Box
-                    sx={{
-                      "&>*": {
-                        marginLeft: 1,
-                      },
-                    }}
-                  >
+                  <div className="[&>*]:ml-1">
                     <ImportState />
                     <ExportState />
-                  </Box>
-                </Flex>
-              </Flex>
+                  </div>
+                </div>
+              </div>
             </Card>
-          </Flex>
-        </Flex>
+          </div>
+        </div>
       </form>
     </FormProvider>
   );
