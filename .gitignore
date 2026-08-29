@@ -35,6 +35,7 @@ yarn-error.log*
 /playwright-report/
 .pnpm-cache/
 .cache/
+.tmp/
 tsconfig.tsbuildinfo
 
 # tsc incremental build state (не коммитим артефакты сборки)

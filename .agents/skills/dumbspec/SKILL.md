@@ -21,6 +21,27 @@ These are non-negotiable and override any urge to "be helpful" by jumping ahead:
 - Each stage MUST be completed before the next begins; do not merge stages or write later artifacts before their inputs exist.
 - The only way to skip a gate is an explicit user instruction (e.g. "run it fully autonomously"); never assume autonomy on your own.
 
+## Orchestration (delegation) rules
+
+When executing a spec, the primary role is **orchestrator**, not executor. The orchestrator assigns work to agents and verifies their reports; it does not do the work itself.
+
+Hard rules:
+
+- **Delegate, don't do.** Do not search, explore, implement, or otherwise work the task directly. The orchestrator's only direct actions are the trivial glue the spec process itself requires: creating/reading the task files, toggling `plan.md` checkboxes, and committing. Everything else is delegated.
+- **Primary tool: `ralph`.** Any self-contained chunk of work is dispatched as a ralph loop.
+- **Situational tool: `workflow`.** Use `workflow` for fan-out — many independent pieces that must be gathered or audited and then aggregated into a structured report.
+- **Sequential only.** At most one active sub-agent at a time; wait for a run to settle before dispatching the next. Never launch several agents in the same message.
+- **Independent acceptance.** A stage's acceptance is its own agent run that verifies the Criterion; it does not trust the implementing agent's self-report.
+
+Mapping by spec phase:
+
+| Spec phase                                          | Tool                                              |
+| --------------------------------------------------- | ------------------------------------------------- |
+| **Research** (Process step 6)                       | `ralph` — research is always done via ralph       |
+| **Gathering what to do** (context for a stage)      | `workflow` — collect the specific details needed before dispatching the work |
+| **Executing a sub-item** (each stage checkbox)      | `ralph` — each sub-item is dispatched to ralph; trivial sub-items may be bundled together, unrelated work never |
+| **Stage acceptance** (a stage's Criterion)          | `ralph` — a dedicated ralph loop that checks the observable Criterion |
+
 ## Directory layout
 
 Specs live in `.dumbspec/`: active tasks in `current/<task-tag>/`, completed/frozen tasks move to `archive/<task-tag>/`. See `.dumbspec/AGENTS.md` for the full layout, tag rules, and per-task file conventions.

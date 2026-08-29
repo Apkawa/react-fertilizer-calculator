@@ -110,6 +110,7 @@ Calculation tests in `packages/calculator/src/__tests__/` are reference tests; d
 - New pages: create `apps/web/src/pages/<Name>/` and register it in `apps/web/src/pages/index.ts` (loadable) and `Root.tsx` (Route).
 - Reference texts: `apps/web/src/docs/**/*.md`, displayed on the Help page.
 - Jupyter models belong in `docs/` (python, repo root), not in the app or package sources.
+- **Temporary files go in `./.tmp/`:** all temporary/scratch project files — screenshots, logs, ralph reports, scratch notes, intermediate artifacts — MUST be created in `./.tmp/` (repo root, git-ignored). Never scatter them across the working tree or tracked directories.
 - The language of in-project comments is Russian; preserve that style.
 
 ## Development Principles
