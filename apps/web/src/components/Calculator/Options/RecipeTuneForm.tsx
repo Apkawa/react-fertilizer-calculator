@@ -19,13 +19,16 @@ import {
   OPTIMAL_RATIO,
 } from "@fertilizer/calculator/ratio";
 import type { Elements, NeedElements } from "@fertilizer/calculator/types";
-import { type NumberInputChangeEvent, NumberInput as StyledInput } from "@fertilizer/ui";
+import {
+  type ModalActions,
+  type NumberInputChangeEvent,
+  NumberInput as StyledInput,
+} from "@fertilizer/ui";
 import { Input } from "@rebass/forms";
 import React, { useEffect, useState } from "react";
 import { Box, Button, Flex } from "rebass";
 import { StyledBalanceCell } from "@/components/Calculator/Options/Recipe";
 import { decimal } from "@/components/ui/Form";
-import type { ModalActions } from "@/components/ui/Modal/Modal";
 import { useStore } from "@/store";
 import { entries, round } from "@/utils";
 

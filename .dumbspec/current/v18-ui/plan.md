@@ -41,16 +41,18 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 Note: `ui/Form/{Input,Checkbox,Radio}` now import `@fertilizer/ui` only (+ react + store glue). `RebassWidgets/` deleted. `RecipeTuneForm` NumberInput → `@fertilizer/ui` (its `rebass` Box/Button/Flex + plain `@rebass/forms` Input remain — Calculator, Stage 5). Verified in prod build: inputs styled (padding 8 / border `--color-text` / radius 0), layout props (width/maxWidth/flex/marginRight) mapped, `@layer components` below tailwind utilities.
 
 ## Stage 3 — Composite ui components → `packages/ui`
-- [ ] Port tests: `Dropdown.test`, `Modal.test`, `Sidebar.test`, `TabMenu.test` → `packages/ui` (red)
-- [ ] `Dropdown` (+Item/List/context): emotion `IconDown` → classes, `sx` → utilities, `disabled` variant (was `styled`+`css`)
-- [ ] `Modal`/`ModalContainer`: drop `@emotion/styled` (overlay → class; dynamic `top` → inline style), keep `react-helmet` body-overflow + `createPortal`
-- [ ] `Sidebar`/`SidebarContainer`: same pattern; `docked` → class variants
-- [ ] `TabMenu`: keep react-router-tabs + `style.css`; `Flex` → primitives
-- [ ] `ForkMeOnGitHub`: styled-components → vanilla-extract; `csv/ImportCSV` stub → move (or delete if unreferenced — verify refs first)
-- [ ] Remove moved code from `apps/web/src/components/ui` (keep `Form/` glue + `styled.ts` until Stage 5 + `types.d.ts` until Stage 7)
+- [x] Port tests: `Dropdown.test`, `Modal.test`, `Sidebar.test`, `TabMenu.test` → `packages/ui` (red)
+- [x] `Dropdown` (+Item/List/context): emotion `IconDown` → classes, `sx` → utilities, `disabled` variant (was `styled`+`css`)
+- [x] `Modal`/`ModalContainer`: drop `@emotion/styled` (overlay → class; dynamic `top` → inline style), keep `react-helmet` body-overflow + `createPortal`
+- [x] `Sidebar`/`SidebarContainer`: same pattern; `docked` → class variants
+- [x] `TabMenu`: keep react-router-tabs + `style.css`; `Flex` → primitives (relocated to `components/navigation/`)
+- [x] `ForkMeOnGitHub`: styled-components → vanilla-extract (`forkMeClass` span + `forkMeLinkClass` `a`, media query)
+- [x] Remove moved code from `apps/web/src/components/ui` (keep `Form/` glue + `styled.ts` until Stage 5 + `types.d.ts` until Stage 7)
+
+**VE `@layer` specifics (discovered this stage):** simple pseudos = direct keys (`.hover`); nested pseudos = `selectors` object (`&:hover::before`); media = `@media` map; `selectors` **cannot** use combinators (`> a` rejected at runtime) → child elements (ForkMe `<a>`) get their own class on the element. Dropdown items became real `<button type="button">` (a11y rules); Sidebar overlay keeps `onClick` with a `biome-ignore` (a backdrop can't be a `<button>` that wraps the card).
 
 **Criterion:** `apps/web/src/components/ui` contains only `Form/` (+`styled.ts` until Stage 5, `types.d.ts` until Stage 7); `pnpm full-check` green.
-**Commit:**
+**Commit:** `feat(ui): move Dropdown/Modal/Sidebar/TabMenu/ForkMe to packages/ui (vanilla-extract + tailwind)`
 
 ## Stage 4 — App shell: Root, pages, ColorModeToggle, test-utils
 - [ ] `Root.tsx`: Box/Flex/Text → `packages/ui`/utilities; **keep `ThemeProvider`** (Calculator/rebass still consume theme)

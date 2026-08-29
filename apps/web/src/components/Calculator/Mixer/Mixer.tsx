@@ -1,8 +1,8 @@
 import { IconButton } from "@fertilizer/icons";
+import { Modal, type ModalActions } from "@fertilizer/ui";
 import React, { type ComponentType } from "react";
 import { Button, Flex } from "rebass";
 import { type MixerFormType, MixerOptionsForm } from "@/components/Calculator/Mixer/MixerForm";
-import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
 import { useStore } from "@/store";
 
 export const MixerModal: ComponentType = () => {

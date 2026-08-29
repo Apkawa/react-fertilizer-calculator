@@ -1,7 +1,7 @@
 import { IconButton } from "@fertilizer/icons";
+import { Dropdown } from "@fertilizer/ui";
 import React, { type FunctionComponent, useState } from "react";
 import { Box, Card, Flex } from "rebass";
-import { Dropdown } from "@/components/ui/Dropdown/Dropdown";
 import { useStore } from "@/store";
 import type { FertilizerType } from "./types";
 

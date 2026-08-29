@@ -1,10 +1,10 @@
 import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
 import { IconButton } from "@fertilizer/icons";
+import { Modal, type ModalActions } from "@fertilizer/ui";
 import React from "react";
 import { Box, Button, Card, Flex, Text } from "rebass";
 import type { FertilizerInfo } from "@/components/Calculator/types";
-import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
 import { useStore } from "@/store";
 import { Element } from "../FertilizerSelect/SelectedListItem";
 import { AddEdit, formToFertilizer } from "./AddEdit";

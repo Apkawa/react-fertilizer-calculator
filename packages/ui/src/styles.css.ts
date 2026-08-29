@@ -117,3 +117,229 @@ export const spinnerButtonClass = style({
     },
   },
 });
+
+// ────────────── Составные компоненты (Stage 3) ──────────────
+
+// Шеврон дропдауна (заменяет styled(Icon) `IconDown`: цвет текста, h 3rem, opacity)
+export const dropdownChevronClass = style({
+  "@layer": {
+    components: {
+      color: "var(--color-text)",
+      height: "3rem",
+      opacity: "0.5",
+      ":hover": { opacity: "0.7" },
+    },
+  },
+});
+
+// Пункт дропдауна (заменяет ItemContainer: Flex + sx с ::before-подсветкой hover)
+export const dropdownItemClass = style({
+  "@layer": {
+    components: {
+      position: "relative",
+      zIndex: 1,
+      padding: 8,
+      display: "flex",
+      // Сброс нативных стилей <button> (элемент пункта — настоящая кнопка)
+      border: 0,
+      background: "transparent",
+      appearance: "none",
+      textAlign: "left",
+      font: "inherit",
+      cursor: "pointer",
+      "::before": {
+        content: '""',
+        position: "absolute",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: -1,
+        opacity: "0",
+        backgroundColor: "var(--color-highlight)",
+      },
+      selectors: {
+        "&:hover::before": { opacity: "0.1" },
+      },
+    },
+  },
+});
+
+// Отключённый пункт дропдауна (заменяет styled(Box) c disabled-вариантом)
+export const dropdownItemDisabledClass = style({
+  "@layer": {
+    components: {
+      pointerEvents: "none",
+      opacity: "0.4",
+    },
+  },
+});
+
+// Список дропдауна (заменяет rebass Card в DropdownList; max-height — инлайном)
+export const dropdownListClass = style({
+  "@layer": {
+    components: {
+      backgroundColor: "var(--color-background)",
+      boxShadow: "var(--shadow-small)",
+      padding: 0,
+      overflowY: "auto",
+      zIndex: 3,
+    },
+  },
+});
+
+// Оверлей модалки (заменяет styled(Flex) StyledOverlay; top — инлайном)
+export const modalOverlayClass = style({
+  "@layer": {
+    components: {
+      overflowY: "auto",
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      left: 0,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(255, 255, 255, 0.5)",
+      zIndex: 999,
+      "@media": {
+        "screen and (max-height: 500px), screen and (max-width: 500px)": {
+          alignItems: "initial",
+        },
+      },
+    },
+  },
+});
+
+// Карточка модалки (заменяет rebass Card внутри оверлея)
+export const modalCardClass = style({
+  "@layer": {
+    components: {
+      backgroundColor: "#fff",
+      boxShadow: "var(--shadow-small)",
+      padding: 8,
+      height: "max-content",
+    },
+  },
+});
+
+// Оверлей сайдбара, докнутый (закреплён слева, узкий)
+export const sidebarOverlayClass = style({
+  "@layer": {
+    components: {
+      overflowY: "auto",
+      position: "absolute",
+      height: "100%",
+      top: 0,
+      left: 0,
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "stretch",
+      zIndex: 999,
+      width: "fit-content",
+      // Сброс нативных стилей <button> (оверлей — кнопка «закрыть по клику»)
+      border: 0,
+      background: "transparent",
+      appearance: "none",
+      textAlign: "left",
+      font: "inherit",
+    },
+  },
+});
+
+// Оверлей сайдбара, не докнут (на весь экран, с полупрозрачным фоном)
+export const sidebarOverlayUndockedClass = style({
+  "@layer": {
+    components: {
+      width: "100%",
+      backgroundColor: "rgba(255, 255, 255, 0.5)",
+    },
+  },
+});
+
+// Карточка сайдбара (заменяет rebass Card внутри оверлея)
+export const sidebarCardClass = style({
+  "@layer": {
+    components: {
+      backgroundColor: "#fff",
+      boxShadow: "var(--shadow-small)",
+      padding: 8,
+      height: "100vh",
+      width: "300px",
+      marginRight: 8,
+    },
+  },
+});
+
+// Ленточка "Fork me on GitHub" (заменяет styled-components)
+// Ленточка-обёртка (span): на широких экранах — абсолютный блок 200×200 в углу
+export const forkMeClass = style({
+  "@layer": {
+    components: {
+      "@media": {
+        "screen and (min-width: 800px)": {
+          position: "absolute",
+          display: "block",
+          top: 0,
+          right: 0,
+          width: 200,
+          overflow: "hidden",
+          height: 200,
+          zIndex: 100,
+        },
+      },
+    },
+  },
+});
+
+// Ссылка-ленточка (a): чёрная плашка с белыми «складками», на hover — красная
+export const forkMeLinkClass = style({
+  "@layer": {
+    components: {
+      background: "#000",
+      color: "#fff",
+      textDecoration: "none",
+      fontFamily: "arial, sans-serif",
+      textAlign: "center",
+      fontWeight: "bold",
+      padding: "5px 40px",
+      fontSize: "1rem",
+      lineHeight: "2rem",
+      position: "relative",
+      transition: "0.5s",
+      ":hover": {
+        background: "#c11",
+        color: "#fff",
+      },
+      "::before": {
+        content: '""',
+        width: "100%",
+        display: "block",
+        position: "absolute",
+        top: 1,
+        left: 0,
+        height: 1,
+        background: "#fff",
+      },
+      "::after": {
+        content: '""',
+        width: "100%",
+        display: "block",
+        position: "absolute",
+        left: 0,
+        bottom: 1,
+        top: "auto",
+        height: 1,
+        background: "#fff",
+      },
+      "@media": {
+        "screen and (min-width: 800px)": {
+          position: "absolute",
+          top: 40,
+          right: -50,
+          transform: "rotate(45deg)",
+          boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.8)",
+        },
+      },
+    },
+  },
+});

@@ -1,9 +1,9 @@
+import { ForkMeOnGitHub } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
 import { Route, HashRouter as Router, Switch } from "react-router-dom";
 import { Box, Flex, Text } from "rebass";
 import { ThemeProvider } from "theme-ui";
-import { TabMenu } from "@/components/ui/TabMenu/TabMenu";
-import { ForkMeOnGitHub } from "./components/ui/ForkMeOnGitHub";
+import { TabMenu } from "@/components/navigation/TabMenu";
 import pages from "./pages";
 import { defaultTheme } from "./themes";
 

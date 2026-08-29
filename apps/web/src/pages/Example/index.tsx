@@ -1,6 +1,6 @@
+import { Dropdown } from "@fertilizer/ui";
 import React, { type FunctionComponent, useState } from "react";
 import { Box, Button, Flex } from "rebass";
-import { Dropdown } from "../../components/ui/Dropdown/Dropdown";
 
 type indexProps = {};
 

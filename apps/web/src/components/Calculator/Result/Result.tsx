@@ -2,6 +2,7 @@ import { MACRO_ELEMENT_NAMES, MICRO_ELEMENT_NAMES } from "@fertilizer/calculator
 import { buildFertilizerFromSolution } from "@fertilizer/calculator/fertilizer";
 import { getEmptyElements, getNPKDetailInfo } from "@fertilizer/calculator/helpers";
 import { IconButton } from "@fertilizer/icons";
+import { Modal, type ModalActions } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
 import { Button, Card, Flex, Heading, Text } from "rebass";
 import styled from "styled-components";
@@ -12,7 +13,6 @@ import {
 } from "@/components/Calculator/FertilizerManager/AddEdit";
 import { MixerModal } from "@/components/Calculator/Mixer/Mixer";
 import { ResultDilution } from "@/components/Calculator/Result/ResultDilution";
-import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
 import { useStore } from "@/store";
 import { round, sum } from "@/utils";
 import { Element } from "../FertilizerSelect/SelectedListItem";

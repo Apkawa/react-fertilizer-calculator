@@ -3,11 +3,11 @@ import {
   getDensityFromConcentration,
 } from "@fertilizer/calculator/density-calculator";
 import { DATA_KEYS } from "@fertilizer/calculator/density-calculator/constants";
+import { Dropdown } from "@fertilizer/ui";
 import { Input, Label } from "@rebass/forms";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Box, Flex, Heading, Text } from "rebass";
-import { Dropdown } from "@/components/ui/Dropdown/Dropdown";
 import { round } from "@/utils";
 
 interface RouterParams {

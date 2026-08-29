@@ -2,6 +2,7 @@ import { FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES } from "@fertilizer/calcu
 import { getEmptyElements, getNPKDetailInfo } from "@fertilizer/calculator/helpers";
 import type { Elements, NeedElements } from "@fertilizer/calculator/types";
 import { IconButton } from "@fertilizer/icons";
+import { Dropdown, Modal } from "@fertilizer/ui";
 import React, { type FunctionComponent, useState } from "react";
 import { Box, Card, Flex, Heading, Text } from "rebass";
 import { DEFAULT_MICRO_RECIPE } from "@/components/Calculator/constants/recipes";
@@ -10,8 +11,6 @@ import {
   RecipeTuneForm,
 } from "@/components/Calculator/Options/RecipeTuneForm";
 import type { Recipe as RecipeType } from "@/components/Calculator/types";
-import { Dropdown } from "@/components/ui/Dropdown/Dropdown";
-import { Modal } from "@/components/ui/Modal/Modal";
 import { useStore } from "@/store";
 import { round } from "@/utils";
 import { getRecipeFieldName, RecipeElementForm } from "./RecipeElementForm";

@@ -1,11 +1,11 @@
 import { IconButton } from "@fertilizer/icons";
+import { Modal, type ModalActions } from "@fertilizer/ui";
 import React from "react";
 import { ReactSortable } from "react-sortablejs";
 import { Box, Button, Card, Flex, Heading } from "rebass";
 import { AddEdit, formToFertilizer } from "@/components/Calculator/FertilizerManager/AddEdit";
 import { ExportFertilizers } from "@/components/Calculator/ImportExport/ExportFertilizers";
 import { ImportFertilizers } from "@/components/Calculator/ImportExport/ImportFertilizers";
-import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
 import { useStore } from "@/store";
 import { Item } from "./Item";
 
