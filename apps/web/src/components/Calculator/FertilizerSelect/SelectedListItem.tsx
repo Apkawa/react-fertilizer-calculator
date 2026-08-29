@@ -3,7 +3,7 @@ import { FERTILIZER_ELEMENT_NAMES, NPKOxides } from "@fertilizer/calculator/cons
 import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
 import type { Elements } from "@fertilizer/calculator/types";
 import { IconButton } from "@fertilizer/icons";
-import { Card, Text } from "@fertilizer/ui";
+import { Card, cx, Text } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
 import type { FertilizerType } from "./types";
 
@@ -31,10 +31,16 @@ export const Element: FunctionComponent<ElementProps> = (props) => {
   if (isOxide && Object.hasOwn(NPKOxides, name)) {
     displayName = NPKOxides[name] as string;
   }
+  const bg = ELEMENT_BG[name];
+  // Чипы без фона (Cl и микроэлементы): наследуем цвет темы,
+  // text-black — только на цветном фоне
   return (
     <div
-      className="flex-1 mx-[2px] min-w-[2.1em] max-w-[4em] px-1 text-sm text-black"
-      style={{ backgroundColor: ELEMENT_BG[name] }}
+      className={cx(
+        "flex-1 mx-[2px] min-w-[2.1em] max-w-[4em] px-1 text-sm",
+        bg ? "text-black" : undefined,
+      )}
+      style={bg ? { backgroundColor: bg } : undefined}
     >
       <div className="flex flex-col items-center">
         <div>{displayName}</div>
