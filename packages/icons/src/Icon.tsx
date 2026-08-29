@@ -1,8 +1,7 @@
-import React, { forwardRef, useEffect, useState } from "react";
-import { Box, type BoxProps } from "rebass";
+import React, { forwardRef, type HTMLAttributes, useEffect, useState } from "react";
 import { type IconName, icons } from "./registry";
 
-interface IconProps extends Omit<BoxProps, "css"> {
+interface IconProps extends HTMLAttributes<HTMLDivElement> {
   /** Имя иконки из реестра (plus, trash, close, …). */
   name: IconName;
   /** Цвет иконки; по умолчанию — текущий цвет текста (currentColor). */
@@ -13,7 +12,7 @@ interface IconProps extends Omit<BoxProps, "css"> {
 
 /**
  * Иконка из собственного набора, выбирается по имени.
- * svg обёрнут в Box (div) — e2e-селекторы playwright ждут div с единственным svg-ребёнком.
+ * svg обёрнут в div — e2e-селекторы playwright ждут div с единственным svg-ребёнком.
  */
 export const Icon = forwardRef<HTMLDivElement, IconProps>((props, ref) => {
   const { name, size = "1.5em", color, children, ...extraProps } = props;
@@ -27,8 +26,8 @@ export const Icon = forwardRef<HTMLDivElement, IconProps>((props, ref) => {
 
   const IconComponent = icons[name];
   return (
-    <Box {...extraProps} ref={ref}>
+    <div {...extraProps} ref={ref}>
       <IconComponent size={containerSize} color={color} />
-    </Box>
+    </div>
   );
 });

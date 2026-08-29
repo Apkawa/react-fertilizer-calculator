@@ -83,11 +83,11 @@ Note (выполнение, оркестрация): 5 agents по группа�
 **Commit:** `feat(web): stage 5 — Calculator on tailwind + packages/ui (rebass/theme-ui/styled-components out of apps/web)`
 
 ## Stage 6 — `packages/icons` without rebass/theme-ui
-- [ ] `Icon`/`IconButton`: rewrite on vanilla-extract (no rebass `Box`/`Button`); port/adjust icon tests incl. PNG-baseline test (`rsvg-convert`)
-- [ ] `packages/icons`: package.json (drop `rebass`/`theme-ui`/`@theme-ui/presets`/`@types/rebass`/`@types/theme-ui`, add `@vanilla-extract/css`), vitest config with the vanilla-extract plugin, `test-utils/render.tsx` without `ThemeProvider`
+- [x] `Icon`/`IconButton`: rewrite on vanilla-extract (no rebass `Box`/`Button`); port/adjust icon tests incl. PNG-baseline test (`rsvg-convert`)
+- [x] `packages/icons`: package.json (drop `rebass`/`theme-ui`/`@theme-ui/presets`/`@types/rebass`/`@types/theme-ui`, add `@vanilla-extract/css`), vitest config with the vanilla-extract plugin, `test-utils/render.tsx` without `ThemeProvider`
 
 **Criterion:** `pnpm -C packages/icons test` + full `pnpm full-check` green; no rebass/theme-ui in `packages/icons`.
-**Commit:**
+**Commit:** `74db727` feat(ui): stage 6 — packages/icons without rebass/theme-ui
 
 ## Stage 7 — Final cleanup + docs
 - [ ] Remove `ThemeProvider` from `Root.tsx` + `test-utils/render.tsx` (themes/ dir: polaris preset consumption → CSS vars)
