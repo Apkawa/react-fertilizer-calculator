@@ -49,12 +49,12 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `fix(help): restore link-tree indentation, markers and link styling`
 
 ## Stage 5 — Dark theme readability (issue 7)
-- [ ] `body`: background-color + color from theme vars (theme.css or app CSS)
-- [ ] Move hardcoded white surfaces to theme vars: `modalCardClass`, `sidebarCardClass`, `.nav-tab` colors
-- [ ] Visual (dark): no black-on-navy; page/card/modal/sidebar all readable; light mode unaffected
+- [x] `body`: background-color + color from theme vars (theme.css or app CSS)
+- [x] Move hardcoded white surfaces to theme vars: `modalCardClass`, `sidebarCardClass`, `.nav-tab` colors
+- [x] Visual (dark): no black-on-navy; page/card/modal/sidebar all readable; light mode unaffected
 
 **Criterion:** playwright (dark): computed body bg `#000639` + text `#9d9d9d`; cards/modal/sidebar readable (no black text on dark navy); light mode unchanged.
-**Commit:** (pending)
+**Commit:** `fix(ui): theme page background/text and hardcoded white surfaces`
 
 ## Stage 6 — Final verification + archive
 - [ ] `pnpm full-check` green

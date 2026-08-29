@@ -43,3 +43,10 @@
   --color-secondary: #b4e1fa;
   --color-highlight: #b7ecec;
 }
+
+/* Тело страницы: фон и цвет текста по умолчанию из переменных темы
+   (не в слое — поверх preflight tailwind). */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}

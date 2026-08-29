@@ -217,7 +217,7 @@ export const modalOverlayClass = style({
 export const modalCardClass = style({
   "@layer": {
     components: {
-      backgroundColor: "#fff",
+      backgroundColor: "var(--color-background)",
       boxShadow: "var(--shadow-small)",
       padding: 8,
       height: "max-content",
@@ -263,7 +263,7 @@ export const sidebarOverlayUndockedClass = style({
 export const sidebarCardClass = style({
   "@layer": {
     components: {
-      backgroundColor: "#fff",
+      backgroundColor: "var(--color-background)",
       boxShadow: "var(--shadow-small)",
       padding: 8,
       height: "100vh",
