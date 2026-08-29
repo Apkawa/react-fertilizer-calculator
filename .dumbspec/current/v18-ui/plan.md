@@ -87,7 +87,7 @@ Note (выполнение, оркестрация): 5 agents по группа�
 - [x] `packages/icons`: package.json (drop `rebass`/`theme-ui`/`@theme-ui/presets`/`@types/rebass`/`@types/theme-ui`, add `@vanilla-extract/css`), vitest config with the vanilla-extract plugin, `test-utils/render.tsx` without `ThemeProvider`
 
 **Criterion:** `pnpm -C packages/icons test` + full `pnpm full-check` green; no rebass/theme-ui in `packages/icons`.
-**Commit:** `74db727` feat(ui): stage 6 — packages/icons without rebass/theme-ui
+**Commit:** `3cf6751` feat(ui): stage 6 — packages/icons without rebass/theme-ui
 
 ## Stage 7 — Final cleanup + docs
 - [ ] Remove `ThemeProvider` from `Root.tsx` + `test-utils/render.tsx` (themes/ dir: polaris preset consumption → CSS vars)
