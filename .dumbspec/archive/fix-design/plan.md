@@ -59,9 +59,9 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `fix(calculator): result-table chips without bg use theme text color`
 
 ## Stage 6 — Final verification + archive
-- [ ] `pnpm full-check` green
-- [ ] Playwright visual audit light + dark: Calculator, Help, DensityCalculator, Example — all 7 issues hold
-- [ ] Move task dir `current/fix-design/` → `archive/fix-design/`
+- [x] `pnpm full-check` green
+- [x] Playwright visual audit light + dark: Calculator, Help, DensityCalculator, Example — all 7 issues hold
+- [x] Move task dir `current/fix-design/` → `archive/fix-design/`
 
 **Criterion:** full-check green; audit confirms all 7 issues in both themes; task archived.
-**Commit:** (pending)
+**Commit:** `docs(spec): fix-design — final verification green, archive task`
