@@ -66,11 +66,13 @@ Stage 3 notes: unique id via module counter + `useState` initializer (React 16, 
 Stage 4 notes: ralph-прогон worker'а отменён пользователем — единственным источником красных combobox-нарушений была страница Example с «голым» Dropdown; страница выпилена (user) вместе со своими a11y-кейсами, open-dropdown case оставлен `test.skip`-заглушкой («потом допилим»). Сделано: combobox-семантика Dropdown (label-проп → имя триггера, aria-expanded, aria-controls, option — прямые дети listbox, пункты без tabindex — interactive-контролы внутри строк), Form/Input — aria-label из label-пропа + bug-фикс приоритета (явный aria-label коньюмера раньше затирали `aria-label={label}` после spread — поэтому 8 доз элементов в рецепте были без имени), aria-label у solution/recipe-element/chem-инпутов, file-инпуты вынесены из `<button>` (nested-interactive) + aria-label, контраст чипа Mg → белый текст. Gate: `pnpm test:e2e` 10 passed / 1 skipped (a11y: violations === [] на 5 маршрутах + open modal + open sidebar), `pnpm full-check` green.
 
 ## Stage 5 — e2e locator cleanup + final verification
-- [ ] Replace fragile locators in existing e2e tests (`div:has(> svg)` hamburger, `xpath=..//svg` chevron, `ancestor::div[1]//button` row buttons, `tests/e2e/shared.ts`) with role-based `getByRole("button", { name })` / `getByRole("link", { name })`
-- [ ] Full green: `pnpm full-check` (test + lint + type + build)
-- [ ] Full green: `pnpm test:e2e` + `pnpm test:smoke` (incl. a11y cases)
-- [ ] playwright-cli spot-check: open the app, navigate all tabs/controls by accessible names only — no DOM-lokei fallback needed (the acceptance criterion from the draft)
-- [ ] Mark this plan `[x]` as work lands; record any deviations from this plan in the commit messages
+- [x] Replace fragile locators in existing e2e tests (`div:has(> svg)` hamburger, `xpath=..//svg` chevron, `ancestor::div[1]//button` row buttons, `tests/e2e/shared.ts`) with role-based `getByRole("button", { name })` / `getByRole("link", { name })`
+- [x] Full green: `pnpm full-check` (test + lint + type + build)
+- [x] Full green: `pnpm test:e2e` + `pnpm test:smoke` (incl. a11y cases)
+- [x] playwright-cli spot-check: open the app, navigate all tabs/controls by accessible names only — no DOM-lokei fallback needed (the acceptance criterion from the draft)
+- [x] Mark this plan `[x]` as work lands; record any deviations from this plan in the commit messages
 
 **Criterion (task acceptance, from spec.md):** (1) a11y e2e `violations === []` on routes + open overlays; (2) `pnpm full-check` green; (3) playwright-cli navigation by names works without fragile DOM locators.
 **Commit:** `test(e2e): role-based locators; a11y suite green`
+
+Stage 5 notes: замена локейторов только в `tests/` (tests/e2e/navigation.test.ts: бургер `div:has(> svg)` → button «Меню»; tests/e2e/shared.ts: combobox «Добавить удобрение» + scoped «Открыть список», строки `getByRole("option", { name })` + button «Добавить» — xpath/ancestor убраны). Оставлено осознанно: `li`-фильтр resultItem (Chrome стрипит listitem-роли из-за `list-style:none`, имя строки динамическое — комментарий в коде) и одношаговый `..`-скоуп у шеврона (шеврон — sibling combobox'а, на странице два «Открыть список»). Gates: `pnpm test:e2e` 10 passed / 1 skipped, `pnpm test:smoke` 6 passed, `pnpm full-check` green. playwright-cli spot-check (транскрипт `.tmp/stage5-spot-check.md`): все 5 табов сайдбара по `role=link` + имя, «Меню», «Переключить тему», модалка «Добавить»→«Закрыть», дропдаун «Открыть список» + строка option — только по доступным именам. Deviation: текст плана ссылается на `tests/smoke/navigation.test.ts` — опечатка, сценарий живёт в `tests/e2e/navigation.test.ts` (по подтверждению acceptance).
