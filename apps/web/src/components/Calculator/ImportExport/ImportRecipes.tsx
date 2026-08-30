@@ -9,7 +9,7 @@ type ImportRecipesProps = {};
 const COLUMNS = ["id", ...FERTILIZER_ELEMENT_NAMES];
 
 export function ImportRecipes(props: ImportRecipesProps) {
-  const buttonRef = createRef<HTMLButtonElement>();
+  const buttonRef = createRef<HTMLSpanElement>();
   const [size, setSize] = useState({ width: 0, height: 0 });
   useEffect(() => {
     const newSize = {
@@ -46,10 +46,14 @@ export function ImportRecipes(props: ImportRecipesProps) {
   };
   return (
     <>
-      <IconButton ref={buttonRef} name="import" aria-label="Импорт рецептов" className="relative">
+      {/* a11y (stage 4): file-инпут был вложен внутрь <button> (nested-interactive).
+          Теперь инпут — сосед кнопки и накрывает её: клик по иконке открывает диалог. */}
+      <span ref={buttonRef} className="relative inline-block">
+        <IconButton name="import" aria-label="Импорт рецептов" />
         <input
           type="file"
           accept="text/csv, .csv"
+          aria-label="Импорт рецептов"
           onChange={(event) => handleOnChange(event)}
           style={{
             top: 0,
@@ -59,7 +63,7 @@ export function ImportRecipes(props: ImportRecipesProps) {
             ...size,
           }}
         />
-      </IconButton>
+      </span>
     </>
   );
 }

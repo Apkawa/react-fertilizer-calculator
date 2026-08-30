@@ -32,6 +32,7 @@ export const AddItem: FunctionComponent<AddItemProps> = ({ onAdd }) => {
             <Dropdown<FertilizerType>
               value={selected}
               items={fertilizers}
+              label="Добавить удобрение"
               onChange={onChangeHandler}
               checkDisabledItem={(item) => fertilizersIDs.includes(item?.id || "")}
               renderItem={({ item }) => (

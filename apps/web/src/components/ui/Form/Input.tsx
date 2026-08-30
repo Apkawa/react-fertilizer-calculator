@@ -53,6 +53,8 @@ export const Input: FunctionComponent<InputProps> = ({
   flex,
   marginRight,
   style,
+  // Явный aria-label от коньюмера — в приоритете над label-пропом
+  "aria-label": ariaLabel,
   ...props
 }) => {
   const { value, setValue } = useFormField(name);
@@ -66,6 +68,9 @@ export const Input: FunctionComponent<InputProps> = ({
       value={(value ?? "") as string | number}
       onChange={handleChange}
       lang="en-US"
+      // Доступное имя: явный aria-label от коньюмера, иначе label-проп
+      // (placeholder лишь визуальная подсказка, не имя)
+      aria-label={ariaLabel ?? label}
       placeholder={props.placeholder || label}
       style={layoutStyle({ width, maxWidth, flex, marginRight, style })}
     />

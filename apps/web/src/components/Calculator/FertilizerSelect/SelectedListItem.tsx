@@ -18,6 +18,12 @@ const ELEMENT_BG: Partial<Record<FERTILIZER_ELEMENT_NAMES, string>> = {
   S: "#FFF",
 };
 
+// Элементы, у которых чёрный текст на фоне не даёт контраст WCAG AA (4.5:1) —
+// им нужен белый текст: Mg #AB0AE0 (чёрный ≈ 3.9:1, белый ≈ 5.5:1).
+const WHITE_TEXT_ELEMENTS: Partial<Record<FERTILIZER_ELEMENT_NAMES, boolean>> = {
+  Mg: true,
+};
+
 interface ElementProps {
   name: keyof Elements;
   isOxide?: boolean;
@@ -33,13 +39,11 @@ export const Element: FunctionComponent<ElementProps> = (props) => {
   }
   const bg = ELEMENT_BG[name];
   // Чипы без фона (Cl и микроэлементы): наследуем цвет темы,
-  // text-black — только на цветном фоне
+  // чёрный текст — только на светлом цветном фоне, белый — на тёмном (WCAG AA)
+  const textClass = bg ? (WHITE_TEXT_ELEMENTS[name] ? "text-white" : "text-black") : undefined;
   return (
     <div
-      className={cx(
-        "flex-1 mx-[2px] min-w-[2.1em] max-w-[4em] px-1 text-sm",
-        bg ? "text-black" : undefined,
-      )}
+      className={cx("flex-1 mx-[2px] min-w-[2.1em] max-w-[4em] px-1 text-sm", textClass)}
       style={bg ? { backgroundColor: bg } : undefined}
     >
       <div className="flex flex-col items-center">

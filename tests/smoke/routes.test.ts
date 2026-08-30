@@ -23,7 +23,6 @@ const routes: RouteCase[] = [
   },
   { name: "chem formula parser", url: "/#/formula/NaCl", marker: /Атомная масса/ },
   { name: "density calculator", url: "/#/density/NaCl/", marker: /Калькулятор плотности/ },
-  { name: "example", url: "/#/example", marker: /On the other hand, we denounce/ },
   { name: "help", url: "/#/help/how_to_use", marker: /Расчет растворов для гидропоники/ },
   // NotFound (pages/NotFound) на самом деле недостижим: Route path="/" в Root.tsx
   // матчит любой путь раньше catch-all. Известная особенность приложения — smoke здесь

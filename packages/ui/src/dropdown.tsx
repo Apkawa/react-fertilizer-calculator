@@ -33,9 +33,16 @@ interface DropdownContextInterface<T = any> {
 
 const DropdownContext: Context<DropdownContextInterface<any>> = React.createContext({});
 
+// Счётчик для уникальных id списков: в React 16 нет useId,
+// а id нужен для aria-controls (стабильный на время жизни инстанса).
+let listboxIdCounter = 0;
+
 // ── Пункт списка ──
-function DropdownItem<T>(props: { value: T; index: number }) {
-  const { value, index } = props;
+// a11y (stage 4): обёртка пункта неинтерактивна (без tabIndex/onClick/onKeyDown) —
+// nested-interactive: интерактивный контрол в строке — кнопки внутри renderItem,
+// клик по телу пункта ничего не выбирает.
+function DropdownItem<T>(props: { value: T; index: number; nodeRef?: React.Ref<HTMLDivElement> }) {
+  const { value, index, nodeRef } = props;
   const ctx = useContext(DropdownContext);
   const disabled = ctx.checkDisabledItem ? Boolean(ctx.checkDisabledItem(value)) : false;
 
@@ -47,28 +54,12 @@ function DropdownItem<T>(props: { value: T; index: number }) {
     return value + "";
   };
 
-  const onClickHandler = () => {
-    if (ctx.onItemClick) {
-      ctx.onItemClick(value);
-    }
-  };
-  // Клавиатурный выбор (Enter/Space) — паритет с кликом.
-  const onKeyDownHandler = (e: KeyboardEvent) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      onClickHandler();
-    }
-  };
-
-  // role="option": пункт списка выбора (внутри может быть свой интерактивный контент,
-  // напр. кнопка удаления — <button> в <button> недопустим).
   return (
+    // biome-ignore lint/a11y/useFocusableInteractive: пункт вне tab-порядка (axe nested-interactive)
     <div
+      ref={nodeRef}
       role="option"
-      tabIndex={disabled ? -1 : 0}
       className={cx(dropdownItemClass, disabled && dropdownItemDisabledClass)}
-      onClick={onClickHandler}
-      onKeyDown={onKeyDownHandler}
     >
       {renderItem()}
     </div>
@@ -76,7 +67,10 @@ function DropdownItem<T>(props: { value: T; index: number }) {
 }
 
 // ── Список (позиционируется внутри обёртки; max-height ограничивает высоту) ──
-function DropdownList<T>(props: { items: T[] }) {
+// a11y (stage 4): aria-required-children — прямыми детьми listbox являются только
+// элементы role="option" (<hr>-разделители неинтерактивны); aria-input-field-name —
+// доступное имя из label-пропа (триггер и список называются одинаково).
+function DropdownList<T>(props: { items: T[]; listboxId: string; label?: string }) {
   const items = props.items;
   const itemRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(0);
@@ -86,15 +80,19 @@ function DropdownList<T>(props: { items: T[] }) {
   }, []);
 
   return (
-    <div role="listbox" className={dropdownListClass} style={{ maxHeight: height * 5 }}>
-      <div className="flex flex-col">
-        {Array.from(items).map((s, i) => (
-          <div ref={i === 0 ? itemRef : null} key={String(s)}>
-            <DropdownItem<T> value={s} index={i} />
-            {i < items.length - 1 ? <hr style={{ margin: 0 }} /> : null}
-          </div>
-        ))}
-      </div>
+    <div
+      id={props.listboxId}
+      role="listbox"
+      aria-label={props.label}
+      className={cx(dropdownListClass, "flex flex-col")}
+      style={{ maxHeight: height * 5 }}
+    >
+      {Array.from(items).map((s, i) => (
+        <React.Fragment key={String(s)}>
+          <DropdownItem<T> value={s} index={i} nodeRef={i === 0 ? itemRef : undefined} />
+          {i < items.length - 1 ? <hr style={{ margin: 0 }} /> : null}
+        </React.Fragment>
+      ))}
     </div>
   );
 }
@@ -109,10 +107,12 @@ export interface DropdownProps<T> {
   onEdit?: (value: string) => void;
   onChange?: (item: ItemType<T>) => void;
   width?: number;
+  /** Доступное имя контрола (aria-label триггера и открытого списка) */
+  label?: string;
 }
 
 export function Dropdown<T>(props: DropdownProps<T>) {
-  const { width } = props;
+  const { width, label } = props;
   const renderValue: RenderValueCallback<T> = (item) => {
     if (props.renderValue) {
       return props.renderValue(item);
@@ -121,6 +121,8 @@ export function Dropdown<T>(props: DropdownProps<T>) {
   };
 
   const [opened, setOpened] = useState(false);
+  // Стабильный уникальный id списка (инициализатор useState — один раз на инстанс).
+  const [listboxId] = useState(() => `dropdown-list-${++listboxIdCounter}`);
   const [item, setItem] = useState<ItemType<T> | null>(props.value || null);
   const [value, setValue] = useState(renderValue(props.value || null));
   const [editing, setEditing] = useState(false);
@@ -179,6 +181,12 @@ export function Dropdown<T>(props: DropdownProps<T>) {
         <div className="relative">
           <input
             type="text"
+            // a11y (stage 4): семантика combobox — доступное имя (label-проп),
+            // состояние раскрытия и ссылка на список (aria-controls).
+            role="combobox"
+            aria-expanded={opened}
+            aria-controls={listboxId}
+            aria-label={label}
             className={inputClass}
             value={value}
             onChange={onChangeInputHandler}
@@ -200,7 +208,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
         </div>
         <div className="relative">
           <div className="absolute flex flex-col w-full">
-            {opened && <DropdownList<T> items={props.items} />}
+            {opened && <DropdownList<T> items={props.items} listboxId={listboxId} label={label} />}
           </div>
         </div>
       </div>

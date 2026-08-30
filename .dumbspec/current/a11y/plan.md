@@ -53,15 +53,17 @@ Stage 2 notes: names — close «Закрыть», hamburger «Меню», chevr
 Stage 3 notes: unique id via module counter + `useState` initializer (React 16, no useId); focus: first focusable inside, else dialog container `tabIndex=-1`; restore to `document.activeElement` captured on open; e2e open-modal now asserts `getByRole("dialog")` visible before the axe scan; open-modal case has zero dialog-rule violations (remaining: color-contrast, label (file input), nested-interactive — Stage 4 classes).
 
 ## Stage 4 — Dropdown combobox semantics + app form control names
-- [ ] Red: extend `packages/ui/src/dropdown.test.tsx` — trigger has `role="combobox"`-style semantics: `aria-expanded` (false/true), `aria-controls` to the open listbox, trigger `aria-label`
-- [ ] Green: `packages/ui/src/dropdown.tsx` — minimal combobox wiring axe auto-rules ask for (keep existing `listbox`/`option` roles)
-- [ ] Red: app `Form/Input` render-smoke — `label` prop also becomes `aria-label` (placeholder stays as-is)
-- [ ] Green: `apps/web/src/components/ui/Form/Input.tsx` — `aria-label` from `label`
-- [ ] Remaining route-scan violations: fix whatever the axe scan still reports (headings order, contrast, misc) as found — no pre-invented list
-- [ ] `pnpm full-check` green
+- [x] Red: extend `packages/ui/src/dropdown.test.tsx` — trigger has `role="combobox"`-style semantics: `aria-expanded` (false/true), `aria-controls` to the open listbox, trigger `aria-label`
+- [x] Green: `packages/ui/src/dropdown.tsx` — minimal combobox wiring axe auto-rules ask for (keep existing `listbox`/`option` roles)
+- [x] Red: app `Form/Input` render-smoke — `label` prop also becomes `aria-label` (placeholder stays as-is)
+- [x] Green: `apps/web/src/components/ui/Form/Input.tsx` — `aria-label` from `label`
+- [x] Remaining route-scan violations: fix whatever the axe scan still reports (headings order, contrast, misc) as found — no pre-invented list
+- [x] `pnpm full-check` green
 
-**Criterion:** `pnpm test:e2e` a11y cases: **`violations === []`** on all routes AND in open-modal / open-dropdown / open-sidebar states.
+**Criterion:** `pnpm test:e2e` a11y cases: **`violations === []`** on all routes AND in open-modal / open-sidebar states (open-dropdown — отложен, `test.skip`).
 **Commit:** `fix(a11y): combobox semantics and form control names`
+
+Stage 4 notes: ralph-прогон worker'а отменён пользователем — единственным источником красных combobox-нарушений была страница Example с «голым» Dropdown; страница выпилена (user) вместе со своими a11y-кейсами, open-dropdown case оставлен `test.skip`-заглушкой («потом допилим»). Сделано: combobox-семантика Dropdown (label-проп → имя триггера, aria-expanded, aria-controls, option — прямые дети listbox, пункты без tabindex — interactive-контролы внутри строк), Form/Input — aria-label из label-пропа + bug-фикс приоритета (явный aria-label коньюмера раньше затирали `aria-label={label}` после spread — поэтому 8 доз элементов в рецепте были без имени), aria-label у solution/recipe-element/chem-инпутов, file-инпуты вынесены из `<button>` (nested-interactive) + aria-label, контраст чипа Mg → белый текст. Gate: `pnpm test:e2e` 10 passed / 1 skipped (a11y: violations === [] на 5 маршрутах + open modal + open sidebar), `pnpm full-check` green.
 
 ## Stage 5 — e2e locator cleanup + final verification
 - [ ] Replace fragile locators in existing e2e tests (`div:has(> svg)` hamburger, `xpath=..//svg` chevron, `ancestor::div[1]//button` row buttons, `tests/e2e/shared.ts`) with role-based `getByRole("button", { name })` / `getByRole("link", { name })`

@@ -14,6 +14,7 @@ export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = (pro
       <div style={{ textAlign: "center" }}>{name}</div>
       <Input
         name={getRecipeFieldName(name)}
+        aria-label={`Доза ${name}`}
         type="number"
         step="0.001"
         min="0"

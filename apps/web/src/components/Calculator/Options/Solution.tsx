@@ -55,6 +55,7 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
           <StyledInput
             disabled={form?.topping_up_enabled}
             name="solution_concentration.k"
+            aria-label="Коэффициент разведения"
             type="number"
             step="0.01"
             width={"auto"}
@@ -73,6 +74,7 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
           <StyledInput
             disabled={form?.topping_up_enabled}
             name="solution_concentration.v_1"
+            aria-label="Миллилитры концентрата"
             width="4rem"
             type="number"
             step="0.01"
@@ -88,6 +90,7 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
           <StyledInput
             disabled={form?.topping_up_enabled}
             name="solution_concentration.v_2"
+            aria-label="Миллилитры рабочего раствора"
             width="4rem"
             type="number"
             step="0.01"

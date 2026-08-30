@@ -8,5 +8,4 @@ export default {
   Calculator: loadable(() => import("./Calculator")),
   ChemFormula: loadable(() => import("./ChemFormula")),
   DensityCalculator: loadable(() => import("./DensityCalculator")),
-  Example: loadable(() => import("./Example")),
 };

@@ -6,7 +6,7 @@ import { useStore } from "@/store";
 type ImportStateProps = {};
 
 export function ImportState(props: ImportStateProps) {
-  const buttonRef = createRef<HTMLButtonElement>();
+  const buttonRef = createRef<HTMLSpanElement>();
   const [size, setSize] = useState({ width: 0, height: 0 });
   useEffect(() => {
     const newSize = {
@@ -42,10 +42,14 @@ export function ImportState(props: ImportStateProps) {
   };
   return (
     <>
-      <IconButton ref={buttonRef} name="import" aria-label="Импорт настроек" className="relative">
+      {/* a11y (stage 4): file-инпут был вложен внутрь <button> (nested-interactive).
+          Теперь инпут — сосед кнопки и накрывает её: клик по иконке открывает диалог. */}
+      <span ref={buttonRef} className="relative inline-block">
+        <IconButton name="import" aria-label="Импорт настроек" />
         <input
           type="file"
           accept={ACCEPT_FORMATS}
+          aria-label="Импорт настроек"
           onChange={(event) => handleOnChange(event)}
           style={{
             top: 0,
@@ -56,7 +60,7 @@ export function ImportState(props: ImportStateProps) {
           }}
           title={"Импорт настроек"}
         />
-      </IconButton>
+      </span>
     </>
   );
 }

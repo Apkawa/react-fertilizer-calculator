@@ -84,6 +84,7 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
             <Dropdown<RecipeType>
               value={selected}
               items={recipes}
+              label="Рецепт"
               onChange={onChangeHandler}
               onEdit={onEditHandler}
               renderItem={({ item }) => (

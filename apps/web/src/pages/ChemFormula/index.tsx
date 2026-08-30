@@ -74,6 +74,7 @@ export default () => {
         <div className="flex gap-1">
           <Input
             className="flex-1"
+            aria-label="Формула"
             value={value}
             placeholder={"MgSO4*7H2O"}
             onChange={(event) => onChangeHandler(event.target.value)}
@@ -81,6 +82,7 @@ export default () => {
           />
           <Input
             className="w-24"
+            aria-label="Процент"
             type="number"
             step="0.1"
             min={0}
