@@ -19,7 +19,6 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.8",
-    "@vanilla-extract/vite-plugin": "^5.2.6",
     "jsdom": "^30.0.1",
     "react-dom": "^16.13.1",
     "typescript": "7.0.2",

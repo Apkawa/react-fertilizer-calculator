@@ -1,0 +1,7 @@
+/* Подпись поля формы (чекбокс/радио + текст рядом) */
+@layer components {
+  .ui-label {
+    display: flex;
+    align-items: center;
+  }
+}

@@ -34,7 +34,6 @@
   "devDependencies": {
     "@biomejs/biome": "^2.5.10",
     "@tailwindcss/vite": "^4.3.3",
-    "@vanilla-extract/vite-plugin": "^5.2.6",
     "@playwright/test": "^1.62.1",
     "@testing-library/jest-dom": "7.0.1",
     "@testing-library/react": "12.1.5",

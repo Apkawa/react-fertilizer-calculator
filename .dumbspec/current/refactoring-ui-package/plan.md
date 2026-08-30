@@ -20,13 +20,13 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `docs(spec): refactoring-ui-package — research, spec, plan`
 
 ## Stage 1 — Per-component folders + plain CSS (vanilla-extract out)
-- [ ] Split `src/styles.css.ts` into per-component `style.css` (native `@layer components`, `ui-`-prefixed class names, 1:1 mapping of the 18 class consts)
-- [ ] Move the 12 components into `src/<Component>/index.tsx` (Button, Card, Checkbox, Dropdown, ForkMeOnGitHub, Input, Label, Modal, NumberInput, Radio, Sidebar, Text); each with its `style.css` and `import "./style.css"`
-- [ ] Move unit tests to `src/<Component>/test.tsx` (split `primitives.test.tsx` per component; `use-color-mode.test.tsx` stays flat)
-- [ ] Barrel `src/index.ts` keeps the exact public API; flat files (`cx.ts`, `number-utils.ts`, hooks, `theme.css`) stay at `src/`
-- [ ] Remove `@vanilla-extract/css` + `@vanilla-extract/vite-plugin` (packages/ui deps, apps/web vite plugin + dep, lockfile)
-- [ ] `global.d.ts` with `declare module "*.css"` for tsc
-- [ ] `pnpm test` (jsdom) + `pnpm type` + `pnpm lint` + `pnpm build` green
+- [x] Split `src/styles.css.ts` into per-component `style.css` (native `@layer components`, `ui-`-prefixed class names, 1:1 mapping of the 18 class consts)
+- [x] Move the 12 components into `src/<Component>/index.tsx` (Button, Card, Checkbox, Dropdown, ForkMeOnGitHub, Input, Label, Modal, NumberInput, Radio, Sidebar, Text); each with its `style.css` and `import "./style.css"`
+- [x] Move unit tests to `src/<Component>/test.tsx` (split `primitives.test.tsx` per component; `use-color-mode.test.tsx` stays flat)
+- [x] Barrel `src/index.ts` keeps the exact public API; flat files (`cx.ts`, `number-utils.ts`, hooks, `theme.css`) stay at `src/`
+- [x] Remove `@vanilla-extract/css` + `@vanilla-extract/vite-plugin` (packages/ui deps, apps/web vite plugin + dep, lockfile)
+- [x] `global.d.ts` with `declare module "*.css"` for tsc
+- [x] `pnpm test` (jsdom) + `pnpm type` + `pnpm lint` + `pnpm build` green
 
 **Criterion:** tree matches the spec layout; public API of `@fertilizer/ui` unchanged; `pnpm full-check` green; apps/web renders with the same DOM (jsdom app tests unchanged and green).
 **Commit:** `refactor(ui): per-component folders with plain-CSS styles`

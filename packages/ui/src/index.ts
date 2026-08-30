@@ -1,7 +1,7 @@
-// Публичный API @fertilizer/ui: UI-атомы и составные компоненты (vanilla-extract + tailwindcss)
-export { Button, type ButtonProps } from "./button";
-export { Card, type CardProps } from "./card";
-export { Checkbox, type CheckboxProps } from "./checkbox";
+// Публичный API @fertilizer/ui: UI-атомы и составные компоненты (покомпонентные папки)
+export { Button, type ButtonProps } from "./Button";
+export { Card, type CardProps } from "./Card";
+export { Checkbox, type CheckboxProps } from "./Checkbox";
 export { cx } from "./cx";
 export {
   Dropdown,
@@ -10,14 +10,14 @@ export {
   type ItemType,
   type RenderItemCallback,
   type RenderValueCallback,
-} from "./dropdown";
-export { ForkMeOnGitHub } from "./fork-me";
-export { Input, type InputProps } from "./input";
-export { Label, type LabelProps } from "./label";
-export { Modal, type ModalActions, type ModalProps } from "./modal";
-export { NumberInput, type NumberInputChangeEvent, type NumberInputProps } from "./number-input";
-export { Radio, type RadioProps } from "./radio";
-export { Sidebar, type SidebarActions, type SidebarProps } from "./sidebar";
-export { Heading, type HeadingProps, Text } from "./text";
+} from "./Dropdown";
+export { ForkMeOnGitHub } from "./ForkMeOnGitHub";
+export { Input, type InputProps } from "./Input";
+export { Label, type LabelProps } from "./Label";
+export { Modal, type ModalActions, type ModalProps } from "./Modal";
+export { NumberInput, type NumberInputChangeEvent, type NumberInputProps } from "./NumberInput";
+export { Radio, type RadioProps } from "./Radio";
+export { Sidebar, type SidebarActions, type SidebarProps } from "./Sidebar";
+export { Heading, type HeadingProps, Text } from "./Text";
 export { type ColorMode, useColorMode } from "./use-color-mode";
 export { useWindowSize } from "./use-window-size";
