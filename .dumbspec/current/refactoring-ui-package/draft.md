@@ -6,12 +6,30 @@
 - Button
   - style.css
   - index.tsx
-  - test.tsx
-  - test_e2e.ts
+  - test.tsx - юнит тесты компонентов
+  - browser.test.ts - для регрессионных тестов посредством vitest/browser
 
-2) Улучшить тесты, добавить регрессионные тесты используя vitest + vitest/browser + @vitest/browser-playwright
+2) Улучшить тесты, добавить регрессионные тесты используя vitest + vitest/browser + @vitest/browser-playwright + vitest-browser-react
 
-https://vitest.dev/guide/browser/
-https://main.vitest.dev/guide/browser/visual-regression-testing.html#test-specific-elements
+Документация тут:
+`.dumbspec/current/refactoring-ui-package/docs/vite-browser`
 
-3) Проработать момент отладки  компонентов в изолированной среде
+Ну типа так, думаю
+```ts
+import { render } from 'vitest-browser-react'
+import { expect, test } from 'vitest'
+
+test('counter button increments the count', async () => {
+  const screen = await render(<Component count={1} />)
+
+  await screen.getByRole('button', { name: 'Increment' }).click()
+
+  await expect.element(screen.getByText('Count is 2')).toBeVisible()
+})
+```
+
+3) Добавить storybook для всех компонентов в packages/ui
+
+`.dumbspec/current/refactoring-ui-package/docs/storybook-react-vite.md`
++ еще документации, если непонятно:
+`.tmp/storybook/docs`
