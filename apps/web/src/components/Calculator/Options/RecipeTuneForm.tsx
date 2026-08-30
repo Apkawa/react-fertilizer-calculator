@@ -191,7 +191,7 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
           />
         ))}
       </div>
-      <div className="my-2">
+      <div className="my-1">
         <StyledInput
           value={profileString}
           onChange={(e) => setProfileString(e.target.value)}

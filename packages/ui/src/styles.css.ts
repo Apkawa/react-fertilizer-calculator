@@ -46,12 +46,15 @@ export const labelClass = style({
   },
 });
 
-// Кнопка (эквивалент легасной кнопки: primary фон, текст цветом фона, radius 4px)
+// Кнопка (эквивалент легасной кнопки: primary фон, текст цветом фона, radius 4px).
+// Контейнер — flex: иконка + подпись стоят в одну строку по центру по вертикали.
 export const buttonClass = style({
   "@layer": {
     components: {
       appearance: "none",
-      display: "inline-block",
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
       padding: "8px 16px",
       fontFamily: "inherit",
       fontSize: "inherit",
@@ -213,14 +216,24 @@ export const modalOverlayClass = style({
   },
 });
 
-// Карточка модалки (заменяет легасную карточку внутри оверлея)
+// Карточка модалки (заменяет легасную карточку внутри оверлея):
+// ~80% ширины/высоты экрана, по центру экрана (оверлей — flex center);
+// на мобильном (max-width 500px) — на всю область.
 export const modalCardClass = style({
   "@layer": {
     components: {
       backgroundColor: "var(--color-background)",
       boxShadow: "var(--shadow-small)",
       padding: 8,
-      height: "max-content",
+      width: "80%",
+      maxHeight: "80%",
+      overflowY: "auto",
+      "@media": {
+        "screen and (max-width: 500px)": {
+          width: "100%",
+          maxHeight: "100%",
+        },
+      },
     },
   },
 });
