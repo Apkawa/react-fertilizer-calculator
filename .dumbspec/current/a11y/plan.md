@@ -19,14 +19,16 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `docs(spec): a11y — draft + research + spec`
 
 ## Stage 1 — a11y e2e tests (red baseline)
-- [ ] Add `@axe-core/playwright` to root `package.json` devDependencies (next to `@playwright/test`); `pnpm install` (single lockfile, no build step)
-- [ ] New `tests/e2e/a11y.test.ts`: axe scan (`AxeBuilder`, tags `wcag2a` + `wcag2aa`) per main route: `/`, `/fertilizers`, `/formula/NaCl`, `/density/NaCl/`, `/example`, `/help/how_to_use` (HashRouter URLs `/#/…`, `page.goto` then wait for app ready)
-- [ ] Open-overlay cases as separate `test(...)` blocks: open a Modal (click its icon trigger), open a Dropdown, open Sidebar (narrow viewport) — axe scan **in the open state**
-- [ ] Failure output: print rule id + impact + target for each violation (readable diff)
-- [ ] Verify **red**: run `pnpm test:e2e` — a11y cases fail on current code with the violation list (this is the TDD red baseline for the whole task)
+- [x] Add `@axe-core/playwright` to root `package.json` devDependencies (next to `@playwright/test`); `pnpm install` (single lockfile, no build step)
+- [x] New `tests/e2e/a11y.test.ts`: axe scan (`AxeBuilder`, tags `wcag2a` + `wcag2aa`) per main route: `/`, `/fertilizers`, `/formula/NaCl`, `/density/NaCl/`, `/example`, `/help/how_to_use` (HashRouter URLs `/#/…`, `page.goto` then wait for app ready)
+- [x] Open-overlay cases as separate `test(...)` blocks: open a Modal (click its icon trigger), open a Dropdown, open Sidebar (narrow viewport) — axe scan **in the open state**
+- [x] Failure output: print rule id + impact + target for each violation (readable diff)
+- [x] Verify **red**: run `pnpm test:e2e` — a11y cases fail on current code with the violation list (this is the TDD red baseline for the whole task)
 
 **Criterion:** a11y test cases live in `tests/e2e/`, run against the dev server (`webServer`), and currently **fail** with a readable violations report.
 **Commit:** `test(e2e): a11y — axe-core scans (routes + open overlays), red baseline`
+
+Stage 1 notes: red baseline = 7/9 a11y cases failing (calculator 25, fertilizers 40, chem 2, example 1, open-modal 35, open-dropdown 6, open-sidebar 22 violations); density/help routes already clean; fragile icon locators isolated in local helpers for Stage 5 swap; dropdown opened via chevron `dispatchEvent("click")` (chevron is the only toggle; on /#/example the ForkMeOnGitHub ribbon intercepts real clicks — layout quirk noted).
 
 ## Stage 2 — Icon-only controls: accessible names + real buttons
 - [ ] Red: collocated `*.test.tsx` render-smokes asserting: icon-only `IconButton` usages expose an accessible name; Modal close / Sidebar close / Dropdown chevron / ColorModeToggle render as `<button>` with aria-label (jsdom, part of `pnpm test`)
