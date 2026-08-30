@@ -20,6 +20,15 @@ test("components/ui/Icon smoke: иконка по имени рендеритс�
   expect(svg?.parentElement).toBe(div);
 });
 
+// a11y (stage 2): именованный icon-only IconButton — доступное имя с кнопки,
+// aria-label прокидывается до DOM-элемента (используется в местах вызова).
+test("components/ui/IconButton: aria-label прокидывается как доступное имя", () => {
+  const { container } = renderIcons(<IconButton name="plus" aria-label="Добавить" />);
+  const button = container.querySelector("button");
+  expect(button).not.toBeNull();
+  expect(button?.getAttribute("aria-label")).toBe("Добавить");
+});
+
 test("components/ui/IconButton: ref прокидывается до DOM-кнопки (ImportExport меряет offsetWidth)", () => {
   const ref = createRef<HTMLButtonElement>();
   renderIcons(

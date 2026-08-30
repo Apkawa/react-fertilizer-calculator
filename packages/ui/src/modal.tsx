@@ -79,7 +79,15 @@ export function Modal(props: ModalProps) {
         <ModalContainer>
           <div className="flex justify-between">
             <h2 className={headingClass}>{props.title}</h2>
-            <Icon name="close" onClick={modalActions.close} />
+            {/* Контрол закрытия — настоящая кнопка с доступным именем (a11y stage 2) */}
+            <button
+              type="button"
+              className="cursor-pointer bg-transparent p-0 border-0"
+              aria-label="Закрыть"
+              onClick={modalActions.close}
+            >
+              <Icon name="close" />
+            </button>
           </div>
           <div>{container(renderCbProps)}</div>
         </ModalContainer>

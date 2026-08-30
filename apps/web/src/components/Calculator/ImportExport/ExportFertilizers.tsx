@@ -24,7 +24,7 @@ export function ExportFertilizers(props: ExportFertilizersProps) {
   };
   return (
     <>
-      <IconButton onClick={doExport} name="export" />
+      <IconButton onClick={doExport} name="export" aria-label="Экспорт удобрений" />
     </>
   );
 }

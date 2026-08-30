@@ -105,8 +105,13 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
             />
           </div>
           <div>
-            <IconButton marginRight={1} name="save" onClick={onAddHandler} />
-            <IconButton name="broom" onClick={resetRecipe} />
+            <IconButton
+              marginRight={1}
+              name="save"
+              aria-label="Сохранить рецепт"
+              onClick={onAddHandler}
+            />
+            <IconButton name="broom" aria-label="Сбросить рецепт" onClick={resetRecipe} />
           </div>
         </div>
         <div className="flex justify-between">
@@ -117,7 +122,14 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
         <div className="flex justify-around">
           <Modal
             title="Настройка профиля"
-            button={({ modal }) => <IconButton marginRight={1} name="tune" onClick={modal.open} />}
+            button={({ modal }) => (
+              <IconButton
+                marginRight={1}
+                name="tune"
+                aria-label="Настройки рецепта"
+                onClick={modal.open}
+              />
+            )}
             container={({ modal }) => (
               <>
                 <RecipeTuneForm modal={modal} onSave={setRecipe} />

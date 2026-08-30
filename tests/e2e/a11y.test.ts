@@ -9,9 +9,9 @@ import type { AxeResults } from "axe-core";
 // доступных имён, кликабельные <div>, нет диалоговой/combobox-семантики),
 // поэтому тесты ожидаемо ПАДАЮТ, пока не сделаны фиксы (stages 2-4 плана).
 //
-// Локейторы иконочных контролов ниже хрупкие (доступных имён ещё нет) — это
-// приемлемо для этой ступени, в stage 5 они заменяются role-based
-// (сложены в хелперы ниже, чтобы менять было в одном месте).
+// Локейторы иконочных контролов сложены в хелперы ниже, чтобы менять было
+// в одном месте (stage 5 — финальная расчистка хрупких локейторов по проекту).
+// После stage 2 это уже role-based: у иконочных контролей есть доступные имена.
 
 const A11Y_TAGS = ["wcag2a", "wcag2aa"];
 
@@ -59,33 +59,33 @@ for (const route of routes) {
 }
 
 // ── Состояния с открытыми оверлеями ────────────────────────────────────────────────────
-// Хрупкие иконочные локейторы (доступных имён ещё нет) — в одном месте,
-// stage 5 заменит на getByRole("button", { name }).
+// Иконочные контролы адресуются по доступному имени (stage 2) — role-based
+// хелперы в одном месте, stage 5 пройдёт по ним финальную расчистку.
 
-// «Добавить удобрение» в FertilizerManager — icon-only IconButton:
-// первая кнопка страницы (стоит выше всех остальных контролов).
+// «Добавить» в FertilizerManager — icon-only IconButton с именем «Добавить»
+// (уникально на странице /fertilizers: плюс в дропдауне ещё не раскрыт).
 function addFertilizerTrigger(page: Page) {
-  return page.locator("button").first();
+  return page.getByRole("button", { name: "Добавить" });
 }
 
-// Бургер (открывает сайдбар) — первый div с единственным svg-ребёнком,
-// тот же локейтор, что и в navigation.test.ts.
+// Бургер (открывает сайдбар) — кнопка с именем «Меню».
 function hamburger(page: Page) {
-  return page.locator("div:has(> svg)").first();
+  return page.getByRole("button", { name: "Меню" });
 }
 
-// Шеврон дропдауна (открывает список) — svg в обёртке триггера,
-// тот же паттерн, что и в shared.ts (addFertilizers).
+// Шеврон дропдауна (открывает список) — кнопка с именем «Открыть список».
 function dropdownChevron(page: Page) {
-  const input = page.locator('input[type="text"]').first();
-  return input.locator("xpath=..").locator("svg");
+  return page.getByRole("button", { name: "Открыть список" });
 }
 
 test("a11y: open modal (fertilizer manager add)", async ({ page }) => {
   await openReadyPage(page, "/#/fertilizers", "Нитрат аммония (NH4NO3)");
   await addFertilizerTrigger(page).click();
-  // Модалка рендерится порталом в #modal-root — ждём оверлей.
+  // Модалка рендерится порталом в #modal-root — ждём оверлей
+  // и реально открытый контент (кнопка «Save» из контейнера модалки),
+  // чтобы axe не сканировал закрытое состояние.
   await expect(page.locator("#modal-root > div").first()).toBeVisible();
+  await expect(page.getByRole("button", { name: "Save" })).toBeVisible();
   expectNoViolations("open modal", await analyzePage(page));
 });
 
@@ -95,7 +95,7 @@ test("a11y: open dropdown (example page)", async ({ page }) => {
   // Шеврон на этой странице закрыт ленточкой "Fork me on GitHub"
   // (position:absolute, z-index:100, покрывает правый верхний угол документа) —
   // реальный клик перехватывает span-обёртка ленты, поэтому список открываем
-  // диспатчем события на саму иконку (здесь проверяем состояние открытого
+  // диспатчем события на саму кнопку (здесь проверяем состояние открытого
   // списка, а не кликабельность шеврона).
   await dropdownChevron(page).dispatchEvent("click");
   await expect(page.locator('[role="listbox"]')).toBeVisible();
@@ -109,8 +109,11 @@ test.describe("open sidebar", () => {
   test("a11y: open sidebar (narrow viewport)", async ({ page }) => {
     await openReadyPage(page, "/#/", "Результат расчета");
     await hamburger(page).click();
-    // Открытый сайдбар рендерится порталом в #sidebar-root — ждём оверлей.
+    // Открытый сайдбар рендерится порталом в #sidebar-root — ждём оверлей
+    // и реально открытый контент (тумблер темы — внутри открытого сайдбара),
+    // чтобы axe не сканировал закрытое состояние.
     await expect(page.locator("#sidebar-root > div").first()).toBeVisible();
+    await expect(page.getByRole("button", { name: "Переключить тему" })).toBeVisible();
     expectNoViolations("open sidebar", await analyzePage(page));
   });
 });

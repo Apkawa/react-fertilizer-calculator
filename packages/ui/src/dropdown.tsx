@@ -186,11 +186,16 @@ export function Dropdown<T>(props: DropdownProps<T>) {
             onBlur={onBlurInputHandler}
           />
           <div className="absolute right-0 top-0">
-            <Icon
-              name="chevron-down"
+            {/* Шеврон — настоящая кнопка с именем (a11y stage 2);
+                имя зависит от состояния: открыт/закрыт. */}
+            <button
+              type="button"
               className={dropdownChevronClass}
+              aria-label={opened ? "Закрыть список" : "Открыть список"}
               onClick={() => setOpened(!opened)}
-            />
+            >
+              <Icon name="chevron-down" />
+            </button>
           </div>
         </div>
         <div className="relative">

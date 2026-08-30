@@ -46,7 +46,7 @@ export function ImportRecipes(props: ImportRecipesProps) {
   };
   return (
     <>
-      <IconButton ref={buttonRef} name="import" className="relative">
+      <IconButton ref={buttonRef} name="import" aria-label="Импорт рецептов" className="relative">
         <input
           type="file"
           accept="text/csv, .csv"

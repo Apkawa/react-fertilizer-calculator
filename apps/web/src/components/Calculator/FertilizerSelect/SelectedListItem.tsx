@@ -95,7 +95,13 @@ export const SelectedListItem: FunctionComponent<SelectedListItemProps> = ({
               </Text>
             ) : null}
           </div>
-          <IconButton padding={1} alignSelf="center" name="close" onClick={() => onRemove()} />
+          <IconButton
+            padding={1}
+            alignSelf="center"
+            name="close"
+            aria-label="Удалить"
+            onClick={() => onRemove()}
+          />
         </div>
       </div>
     </Card>

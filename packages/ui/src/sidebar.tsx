@@ -121,11 +121,33 @@ export function Sidebar(props: SidebarProps) {
 
   return (
     <>
-      {button ? button(renderCbProps) : <Icon size={42} name="menu" onClick={actions.open} />}
+      {button ? (
+        button(renderCbProps)
+      ) : (
+        // Триггер открытия (бургер) — настоящая кнопка с именем (a11y stage 2)
+        <button
+          type="button"
+          className="cursor-pointer bg-transparent p-0 border-0"
+          aria-label="Меню"
+          onClick={actions.open}
+        >
+          <Icon size={42} name="menu" />
+        </button>
+      )}
       {closed ? null : (
         <SidebarContainer actions={actions} docked={docked}>
           <div className="flex justify-between">
-            {docked ? null : <Icon size={42} name="close" onClick={actions.close} />}
+            {docked ? null : (
+              // Контрол закрытия — настоящая кнопка с именем (a11y stage 2)
+              <button
+                type="button"
+                className="cursor-pointer bg-transparent p-0 border-0"
+                aria-label="Закрыть"
+                onClick={actions.close}
+              >
+                <Icon size={42} name="close" />
+              </button>
+            )}
             <h2 className={headingClass}>{props.title}</h2>
           </div>
           <div>{props.children}</div>

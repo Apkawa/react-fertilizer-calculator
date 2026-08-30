@@ -43,6 +43,7 @@ export const AddItem: FunctionComponent<AddItemProps> = ({ onAdd }) => {
                       onAddHandler(item);
                     }}
                     name="plus"
+                    aria-label="Добавить"
                   />
                 </div>
               )}

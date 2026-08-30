@@ -22,7 +22,7 @@ export function ExportRecipes(props: ExportRecipesProps) {
   };
   return (
     <>
-      <IconButton onClick={doExport} name="export" />
+      <IconButton onClick={doExport} name="export" aria-label="Экспорт рецептов" />
     </>
   );
 }

@@ -58,6 +58,7 @@ export function Item(props: ItemProps) {
                   alignSelf="center"
                   name="edit"
                   backgroundColor={"primary"}
+                  aria-label="Изменить"
                   onClick={modal.open}
                 />
               )}
@@ -77,6 +78,7 @@ export function Item(props: ItemProps) {
               alignSelf="center"
               name="trash"
               backgroundColor={"danger"}
+              aria-label="Удалить"
               onClick={onRemove}
             />
           </div>

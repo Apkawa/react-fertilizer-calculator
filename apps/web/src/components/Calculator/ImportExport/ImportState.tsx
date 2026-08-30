@@ -42,7 +42,7 @@ export function ImportState(props: ImportStateProps) {
   };
   return (
     <>
-      <IconButton ref={buttonRef} name="import" className="relative">
+      <IconButton ref={buttonRef} name="import" aria-label="Импорт настроек" className="relative">
         <input
           type="file"
           accept={ACCEPT_FORMATS}

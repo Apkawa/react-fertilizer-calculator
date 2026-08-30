@@ -30,6 +30,7 @@ export function List(props: ListProps) {
               alignSelf="center"
               name="plus"
               backgroundColor={"primary"}
+              aria-label="Добавить"
               onClick={modal.open}
             />
           )}
@@ -61,7 +62,11 @@ export function List(props: ListProps) {
             <div className="[&>*]:ml-2">
               <ImportFertilizers />
               <ExportFertilizers />
-              <IconButton name="restart" onClick={() => useStore.getState().resetFertilizers()} />
+              <IconButton
+                name="restart"
+                aria-label="Сбросить список"
+                onClick={() => useStore.getState().resetFertilizers()}
+              />
             </div>
           </div>
         </div>

@@ -28,7 +28,7 @@ export function ExportState(props: ExportStateProps) {
   };
   return (
     <>
-      <IconButton onClick={doExport} name="export" title={"Экспорт настроек"} />
+      <IconButton onClick={doExport} name="export" aria-label="Экспорт настроек" />
     </>
   );
 }

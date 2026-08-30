@@ -31,14 +31,16 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 Stage 1 notes: red baseline = 7/9 a11y cases failing (calculator 25, fertilizers 40, chem 2, example 1, open-modal 35, open-dropdown 6, open-sidebar 22 violations); density/help routes already clean; fragile icon locators isolated in local helpers for Stage 5 swap; dropdown opened via chevron `dispatchEvent("click")` (chevron is the only toggle; on /#/example the ForkMeOnGitHub ribbon intercepts real clicks — layout quirk noted).
 
 ## Stage 2 — Icon-only controls: accessible names + real buttons
-- [ ] Red: collocated `*.test.tsx` render-smokes asserting: icon-only `IconButton` usages expose an accessible name; Modal close / Sidebar close / Dropdown chevron / ColorModeToggle render as `<button>` with aria-label (jsdom, part of `pnpm test`)
-- [ ] Green: `aria-label` at every icon-only `IconButton` call site (Calculator form, FertilizerManager add/edit/trash, Result save, Mixer, Import/Export, etc.) — names in Russian, stable, unique per control
-- [ ] Green: clickable `Icon` divs → native `<button>`: `Modal` close (`packages/ui/src/modal.tsx`), `Sidebar` close, `Dropdown` chevron, `ColorModeToggle` (plus `aria-pressed`); Sidebar overlay stays a biome-ignored click surface (deliberate, not a control)
-- [ ] Green: a11y e2e `button-name`-class violations (and static-clickable-div findings) disappear
-- [ ] `pnpm full-check` green (test + lint + type + build)
+- [x] Red: collocated `*.test.tsx` render-smokes asserting: icon-only `IconButton` usages expose an accessible name; Modal close / Sidebar close / Dropdown chevron / ColorModeToggle render as `<button>` with aria-label (jsdom, part of `pnpm test`)
+- [x] Green: `aria-label` at every icon-only `IconButton` call site (Calculator form, FertilizerManager add/edit/trash, Result save, Mixer, Import/Export, etc.) — names in Russian, stable, unique per control
+- [x] Green: clickable `Icon` divs → native `<button>`: `Modal` close (`packages/ui/src/modal.tsx`), `Sidebar` close, `Dropdown` chevron, `ColorModeToggle` (plus `aria-pressed`); Sidebar overlay stays a biome-ignored click surface (deliberate, not a control)
+- [x] Green: a11y e2e `button-name`-class violations (and static-clickable-div findings) disappear
+- [x] `pnpm full-check` green (test + lint + type + build)
 
 **Criterion:** every icon-only control is a real `<button>` with a stable accessible name; `getByRole("button", { name })` works for all of them in playwright.
 **Commit:** `fix(ui): icon-only controls become labeled buttons`
+
+Stage 2 notes: names — close «Закрыть», hamburger «Меню», chevron «Открыть/Закрыть список», toggle «Переключить тему» (+`aria-pressed`), plus/«Добавить», edit/«Изменить», trash/«Удалить», «Импорт»/«Экспорт» ×3, «Сбросить …», «Сохранить рецепт», «Настройки рецепта». a11y e2e helpers moved to role-based locators; `button-name` = 0; remaining a11y red = label, color-contrast, nested-interactive, aria-input-field-name, aria-required-children (Stage 4 classes).
 
 ## Stage 3 — Modal: dialog semantics + focus
 - [ ] Red: extend `packages/ui/src/modal.test.tsx` — `role="dialog"`, `aria-modal="true"`, `aria-labelledby` pointing at the `<h2>` title; focus lands inside the dialog on open; focus restored to the trigger on close

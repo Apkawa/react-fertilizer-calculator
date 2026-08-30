@@ -48,7 +48,7 @@ export function ImportFertilizers(props: ImportFertilizersProps) {
   };
   return (
     <>
-      <IconButton ref={buttonRef} name="import" className="relative">
+      <IconButton ref={buttonRef} name="import" aria-label="Импорт удобрений" className="relative">
         <input
           type="file"
           accept="text/csv, .csv"

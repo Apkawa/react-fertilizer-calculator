@@ -50,7 +50,11 @@ export const CalculatorContainer: FunctionComponent<CalculatorProps> = () => {
                   <div className="[&>*]:ml-1">
                     <ImportRecipes />
                     <ExportRecipes />
-                    <IconButton name="restart" onClick={() => recipeReset()} />
+                    <IconButton
+                      name="restart"
+                      aria-label="Сбросить рецепты"
+                      onClick={() => recipeReset()}
+                    />
                   </div>
                 </div>
                 <div className="flex flex-wrap items-center justify-between">
