@@ -81,10 +81,10 @@ function dropdownChevron(page: Page) {
 test("a11y: open modal (fertilizer manager add)", async ({ page }) => {
   await openReadyPage(page, "/#/fertilizers", "Нитрат аммония (NH4NO3)");
   await addFertilizerTrigger(page).click();
-  // Модалка рендерится порталом в #modal-root — ждём оверлей
-  // и реально открытый контент (кнопка «Save» из контейнера модалки),
-  // чтобы axe не сканировал закрытое состояние.
-  await expect(page.locator("#modal-root > div").first()).toBeVisible();
+  // Модалка рендерится порталом в #modal-root — ждём открытый диалог
+  // (role=dialog, stage 3) и реально открытый контент (кнопка «Save» из
+  // контейнера модалки), чтобы axe не сканировал закрытое состояние.
+  await expect(page.getByRole("dialog")).toBeVisible();
   await expect(page.getByRole("button", { name: "Save" })).toBeVisible();
   expectNoViolations("open modal", await analyzePage(page));
 });

@@ -1,5 +1,5 @@
 import { Icon } from "@fertilizer/icons";
-import React, { type ReactNode, useEffect, useState } from "react";
+import React, { type ReactNode, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { Helmet } from "react-helmet";
 import { headingClass, modalCardClass, modalOverlayClass } from "./styles.css";
@@ -10,6 +10,14 @@ export interface ModalActions {
 }
 
 type RenderCb = (props: { modal: ModalActions }) => ReactNode;
+
+// Фокусируемые элементы диалога (первый из них получает фокус при открытии).
+const FOCUSABLE_SELECTOR =
+  "button, input, select, textarea, [href], [tabindex]:not([tabindex='-1'])";
+
+// Счётчик для уникальных id заголовков: в React 16 нет useId,
+// а id нужен для aria-labelledby (стабильный на время жизни инстанса).
+let titleIdCounter = 0;
 
 export interface ModalProps {
   opened?: boolean;
@@ -29,8 +37,12 @@ const useModalRoot = () => {
   return el;
 };
 
-function ModalContainer(props: { children: ReactNode }) {
-  const { children } = props;
+function ModalContainer(props: {
+  children: ReactNode;
+  cardRef: React.RefObject<HTMLDivElement>;
+  titleId: string;
+}) {
+  const { children, cardRef, titleId } = props;
   const modalRoot = useModalRoot();
   return ReactDOM.createPortal(
     <>
@@ -44,7 +56,19 @@ function ModalContainer(props: { children: ReactNode }) {
         </style>
       </Helmet>
       <div className={modalOverlayClass} style={{ top: `${window.pageYOffset}px` }}>
-        <div className={modalCardClass}>{children}</div>
+        {/* a11y (stage 3): диалоговая семантика — role/aria-modal/aria-labelledby;
+            tabIndex=-1: фокус при открытии уходит сюда, если внутри нет
+            фокусируемых элементов, но сам он в tab-порядке не участвует. */}
+        <div
+          ref={cardRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={titleId}
+          tabIndex={-1}
+          className={modalCardClass}
+        >
+          {children}
+        </div>
       </div>
     </>,
     modalRoot,
@@ -55,10 +79,37 @@ export function Modal(props: ModalProps) {
   const { opened = false, button, container } = props;
 
   const [closed, setClose] = useState(!opened);
+  // Стабильный уникальный id заголовка (инициализатор useState — один раз на инстанс).
+  const [titleId] = useState(() => `modal-title-${++titleIdCounter}`);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  // Элемент, у которого был фокус до открытия модалки (триггер) — вернём ему при закрытии.
+  const lastActiveRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     setClose(!opened);
   }, [opened]);
+
+  // a11y (stage 3): фокус-менеджмент по минимуму (без полного focus-trap — out of scope):
+  // при открытии запоминаем текущий фокус (триггер) и переносим его внутрь диалога
+  // (первый фокусируемый элемент, иначе сам диалог); при закрытии — возвращаем.
+  useEffect(() => {
+    if (closed) {
+      const prev = lastActiveRef.current;
+      lastActiveRef.current = null;
+      if (prev) {
+        prev.focus();
+      }
+      return;
+    }
+    // document.activeElement типизирован как Element — сузиваем до HTMLElement.
+    const active = document.activeElement;
+    lastActiveRef.current = active instanceof HTMLElement ? active : null;
+    const dialog = dialogRef.current;
+    if (dialog) {
+      const firstFocusable = dialog.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+      (firstFocusable ?? dialog).focus();
+    }
+  }, [closed]);
 
   useEffect(() => {
     if (closed && props.onClose) {
@@ -76,9 +127,11 @@ export function Modal(props: ModalProps) {
     <>
       {button && button(renderCbProps)}
       {closed ? null : (
-        <ModalContainer>
+        <ModalContainer cardRef={dialogRef} titleId={titleId}>
           <div className="flex justify-between">
-            <h2 className={headingClass}>{props.title}</h2>
+            <h2 id={titleId} className={headingClass}>
+              {props.title}
+            </h2>
             {/* Контрол закрытия — настоящая кнопка с доступным именем (a11y stage 2) */}
             <button
               type="button"

@@ -43,12 +43,14 @@ Stage 1 notes: red baseline = 7/9 a11y cases failing (calculator 25, fertilizers
 Stage 2 notes: names — close «Закрыть», hamburger «Меню», chevron «Открыть/Закрыть список», toggle «Переключить тему» (+`aria-pressed`), plus/«Добавить», edit/«Изменить», trash/«Удалить», «Импорт»/«Экспорт» ×3, «Сбросить …», «Сохранить рецепт», «Настройки рецепта». a11y e2e helpers moved to role-based locators; `button-name` = 0; remaining a11y red = label, color-contrast, nested-interactive, aria-input-field-name, aria-required-children (Stage 4 classes).
 
 ## Stage 3 — Modal: dialog semantics + focus
-- [ ] Red: extend `packages/ui/src/modal.test.tsx` — `role="dialog"`, `aria-modal="true"`, `aria-labelledby` pointing at the `<h2>` title; focus lands inside the dialog on open; focus restored to the trigger on close
-- [ ] Green: implement in `packages/ui/src/modal.tsx` (title → `id` + `aria-labelledby`; initial focus on first focusable/dialog; focus restore on close). **No full focus trap** (out of scope per spec — KISS, axe auto-rules do not require it)
-- [ ] Green: a11y e2e open-modal scan passes the dialog-related rules
+- [x] Red: extend `packages/ui/src/modal.test.tsx` — `role="dialog"`, `aria-modal="true"`, `aria-labelledby` pointing at the `<h2>` title; focus lands inside the dialog on open; focus restored to the trigger on close
+- [x] Green: implement in `packages/ui/src/modal.tsx` (title → `id` + `aria-labelledby`; initial focus on first focusable/dialog; focus restore on close). **No full focus trap** (out of scope per spec — KISS, axe auto-rules do not require it)
+- [x] Green: a11y e2e open-modal scan passes the dialog-related rules
 
 **Criterion:** open-modal axe scan clean for dialog rules; jsdom modal tests green; `pnpm full-check` green.
 **Commit:** `fix(ui): modal dialog semantics and focus management`
+
+Stage 3 notes: unique id via module counter + `useState` initializer (React 16, no useId); focus: first focusable inside, else dialog container `tabIndex=-1`; restore to `document.activeElement` captured on open; e2e open-modal now asserts `getByRole("dialog")` visible before the axe scan; open-modal case has zero dialog-rule violations (remaining: color-contrast, label (file input), nested-interactive — Stage 4 classes).
 
 ## Stage 4 — Dropdown combobox semantics + app form control names
 - [ ] Red: extend `packages/ui/src/dropdown.test.tsx` — trigger has `role="combobox"`-style semantics: `aria-expanded` (false/true), `aria-controls` to the open listbox, trigger `aria-label`
