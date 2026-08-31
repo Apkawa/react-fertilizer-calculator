@@ -54,11 +54,11 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `feat(ui): storybook for packages/ui components`
 
 ## Stage 4 — Docs + verification + archive
-- [ ] `AGENTS.md`: packages/ui structure (component folders, plain CSS), test commands (`test:browser` local/manual like e2e, `storybook`/`build-storybook`), vanilla-extract removal noted (incl. Storybook `--no-open` on headless WSL2, and the stale `tab-menu.tsx` line — it lives in apps/web, not packages/ui)
-- [ ] Cleanup: delete the redundant per-folder `packages/ui/src/<Component>/style.css.d.ts` (superseded by `src/global.d.ts`); fix the stale "vanilla-extract" comment in `apps/web/src/index.tsx`
-- [ ] Final `pnpm full-check` green
-- [ ] Local verification: `pnpm -C packages/ui test:browser` green; `build-storybook` green; optionally `pnpm test:e2e` (role locators — class names irrelevant)
-- [ ] Archive task: `git mv .dumbspec/current/refactoring-ui-package .dumbspec/archive/refactoring-ui-package` (plan fully `[x]`)
+- [x] `AGENTS.md`: packages/ui structure (component folders, plain CSS), test commands (`test:browser` local/manual like e2e, `storybook`/`build-storybook`), vanilla-extract removal noted (incl. Storybook `--no-open` on headless WSL2, and the stale `tab-menu.tsx` line — it lives in apps/web, not packages/ui)
+- [x] Cleanup: delete the redundant per-folder `packages/ui/src/<Component>/style.css.d.ts` (superseded by `src/global.d.ts`; consumer tsconfigs — `packages/icons`, `apps/web` — include `ui/src/**/*.d.ts` so the ambient declaration reaches their programs, same pattern as `packages/calculator/src/**/*.d.ts` in apps/web); fix the stale "vanilla-extract" comment in `apps/web/src/index.tsx`
+- [x] Final `pnpm full-check` green
+- [x] Local verification: `pnpm -C packages/ui test:browser` green; `build-storybook` green; `pnpm test:e2e` green (role locators — class names irrelevant)
+- [x] Archive task: `git mv .dumbspec/current/refactoring-ui-package .dumbspec/archive/refactoring-ui-package` (plan fully `[x]`)
 
 **Criterion:** everything green; AGENTS.md consistent with the new layout; task directory moved to `archive/`.
 **Commit:** `chore(spec): archive refactoring-ui-package`
