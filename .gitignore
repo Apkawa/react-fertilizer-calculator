@@ -15,6 +15,7 @@ node_modules/
 # production
 /apps/web/build
 build/
+storybook-static/
 
 # misc
 .DS_Store
@@ -35,6 +36,7 @@ yarn-error.log*
 /playwright-report/
 .pnpm-cache/
 .cache/
+.tmp/
 tsconfig.tsbuildinfo
 
 # tsc incremental build state (не коммитим артефакты сборки)

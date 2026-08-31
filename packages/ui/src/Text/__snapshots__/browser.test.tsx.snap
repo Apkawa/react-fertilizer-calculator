@@ -1,0 +1,6 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Text/Heading: ARIA-снапшот базового состояния 1`] = `
+- heading "Заголовок по умолчанию" [level=2]
+- text: текст
+`;

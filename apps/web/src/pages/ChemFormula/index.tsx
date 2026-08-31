@@ -6,10 +6,9 @@ import {
 } from "@fertilizer/calculator/constants";
 import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
 import type { Elements } from "@fertilizer/calculator/types";
-import { Input } from "@rebass/forms";
+import { Heading, Input } from "@fertilizer/ui";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, Flex, Heading } from "rebass";
 import { entries, round, sum, values } from "@/utils";
 
 type DecomposedChemFormulaInfo = {
@@ -67,49 +66,38 @@ export default () => {
   }, [history, percent, value]);
 
   return (
-    <Flex
-      sx={{
-        justifyContent: "center",
-      }}
-    >
-      <Box width="936px">
-        <Flex
-          sx={{
-            justifyContent: "space-between",
-            "@media screen and (max-width: 1350px)": {
-              justifyContent: "flex-start",
-            },
-          }}
-        >
+    <div className="flex justify-center">
+      <div style={{ width: 936 }}>
+        <div className="flex">
           <Heading>Парсер формул</Heading>
-        </Flex>
-        <Flex>
+        </div>
+        <div className="flex gap-1">
           <Input
+            className="flex-1"
+            aria-label="Формула"
             value={value}
             placeholder={"MgSO4*7H2O"}
             onChange={(event) => onChangeHandler(event.target.value)}
             onBlur={(event) => onBlurHandler(event.target.value)}
           />
           <Input
+            className="w-24"
+            aria-label="Процент"
             type="number"
             step="0.1"
             min={0}
             max={100}
             value={percent}
             onChange={(event) => setPercent(parseFloat(event.target.value))}
-            flex={1}
-            minWidth="5em"
           />
-        </Flex>
+        </div>
         {result ? (
-          <Flex flexDirection="column">
-            <Box>
+          <div className="flex flex-col">
+            <div>
               <b>Формула: </b> {result.formula}
-            </Box>
-            <Box>
-              <Heading fontSize={3} marginTop={3}>
-                Атомная масса
-              </Heading>
+            </div>
+            <div>
+              <Heading className="mt-4">Атомная масса</Heading>
               <table>
                 <thead>
                   <tr>
@@ -138,11 +126,9 @@ export default () => {
                   </tr>
                 </tbody>
               </table>
-            </Box>
-            <Box>
-              <Heading fontSize={3} marginTop={3}>
-                NPK оксидов
-              </Heading>
+            </div>
+            <div>
+              <Heading className="mt-4">NPK оксидов</Heading>
               <table
                 style={{
                   textAlign: "center",
@@ -164,11 +150,9 @@ export default () => {
                   </tr>
                 </tbody>
               </table>
-            </Box>
-            <Box>
-              <Heading fontSize={3} marginTop={3}>
-                NPK чистых веществ
-              </Heading>
+            </div>
+            <div>
+              <Heading className="mt-4">NPK чистых веществ</Heading>
               <table
                 style={{
                   textAlign: "center",
@@ -190,10 +174,10 @@ export default () => {
                   </tr>
                 </tbody>
               </table>
-            </Box>
-          </Flex>
+            </div>
+          </div>
         ) : null}
-      </Box>
-    </Flex>
+      </div>
+    </div>
   );
 };

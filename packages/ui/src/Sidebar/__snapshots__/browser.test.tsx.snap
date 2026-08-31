@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Sidebar: ARIA-снапшот базового состояния (закрыто — только бургер) 1`] = `
+- button "Меню"
+`;

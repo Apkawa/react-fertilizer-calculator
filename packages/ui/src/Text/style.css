@@ -1,0 +1,11 @@
+/* Заголовок (эквивалент легасного заголовка: h2 по умолчанию, без margin) */
+@layer components {
+  .ui-heading {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-heading);
+    line-height: var(--line-height-heading);
+    color: var(--color-text);
+  }
+}

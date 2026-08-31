@@ -2,19 +2,15 @@ import { FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES } from "@fertilizer/calcu
 import { getEmptyElements, getNPKDetailInfo } from "@fertilizer/calculator/helpers";
 import type { Elements, NeedElements } from "@fertilizer/calculator/types";
 import { IconButton } from "@fertilizer/icons";
+import { Card, Dropdown, Heading, Modal, Text } from "@fertilizer/ui";
 import React, { type FunctionComponent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Box, Card, Flex, Heading, Text } from "rebass";
-import { recipePush, recipeRemove } from "@/components/Calculator/actions";
 import { DEFAULT_MICRO_RECIPE } from "@/components/Calculator/constants/recipes";
 import {
   getOptimalRatioDisplay,
   RecipeTuneForm,
 } from "@/components/Calculator/Options/RecipeTuneForm";
-import type { CalculatorState, Recipe as RecipeType } from "@/components/Calculator/types";
-import { Dropdown } from "@/components/ui/Dropdown/Dropdown";
-import { Modal } from "@/components/ui/Modal/Modal";
-import { useFormName, useFormValues } from "@/hooks/ReduxForm";
+import type { Recipe as RecipeType } from "@/components/Calculator/types";
+import { useStore } from "@/store";
 import { round } from "@/utils";
 import { getRecipeFieldName, RecipeElementForm } from "./RecipeElementForm";
 
@@ -29,24 +25,22 @@ export const StyledBalanceCell: FunctionComponent<StyledBalanceCellProps> = (pro
   const title = `${props.title || ""} ${ratio || ""}`.trim();
 
   return (
-    <Flex flexDirection="column" m={1} title={title || undefined} alignItems="center">
-      <Heading fontSize={1}>{props.name}</Heading>
+    <div className="m-1 flex flex-col items-center" title={title || undefined}>
+      <Heading className="text-sm">{props.name}</Heading>
       <Text>{props.value}</Text>
-    </Flex>
+    </div>
   );
 };
 
 type RecipeProps = {};
 
 export const Recipe: FunctionComponent<RecipeProps> = () => {
-  const { recipes = [] } = useSelector<any>((state) => state.calculator) as CalculatorState;
+  const { recipes = [] } = useStore((s) => s.calculator);
+  const form = useStore((s) => s.calculator.calculationForm);
 
-  const [values, setValue] = useFormValues<{ recipe: Elements }>(useFormName());
   const [selected, setSelected] = useState<RecipeType | undefined>(recipes?.[0]);
 
-  const dispatch = useDispatch();
-
-  const NPKBalance = getNPKDetailInfo(values.recipe || getEmptyElements());
+  const NPKBalance = getNPKDetailInfo((form?.recipe ?? getEmptyElements()) as Elements);
 
   const onChangeHandler = (item: RecipeType | null) => {
     item && setSelected(item);
@@ -54,8 +48,9 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
   };
 
   const setRecipe = (elements: NeedElements) => {
+    const { setFieldValue } = useStore.getState();
     for (const [name, value] of Object.entries(elements)) {
-      setValue(getRecipeFieldName(name), value);
+      setFieldValue(getRecipeFieldName(name), value);
     }
   };
   const resetRecipe = () => {
@@ -75,28 +70,27 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
     if (!selected) {
       return;
     }
-    const recipe = { ...selected, elements: values.recipe };
-    dispatch(recipePush(recipe));
+    const recipe = { ...selected, elements: form?.recipe ?? {} };
+    useStore.getState().pushRecipe(recipe);
   };
   const onRemoveItemHandler = (item: RecipeType) => {
-    dispatch(recipeRemove(item));
+    useStore.getState().removeRecipe(item);
   };
   return (
     <Card>
-      <Flex flexDirection="column">
-        <Flex>
-          <Box flex={1} mx={2}>
+      <div className="flex flex-col">
+        <div className="flex">
+          <div className="mx-2 flex-1">
             <Dropdown<RecipeType>
               value={selected}
               items={recipes}
+              label="Рецепт"
               onChange={onChangeHandler}
               onEdit={onEditHandler}
               renderItem={({ item }) => (
-                <Flex flex={1} justifyContent="space-between">
-                  <Box width={3} backgroundColor={item.color || "gray"}></Box>
-                  <Box flex={1} mx={2}>
-                    {item.name}
-                  </Box>
+                <div className="flex flex-1 justify-between">
+                  <div className="w-4" style={{ backgroundColor: item.color || "gray" }}></div>
+                  <div className="mx-2 flex-1">{item.name}</div>
                   <button
                     type="button"
                     onClick={(event) => {
@@ -106,25 +100,37 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
                   >
                     -
                   </button>
-                </Flex>
+                </div>
               )}
               renderValue={(item) => item?.name || ""}
             />
-          </Box>
-          <Box>
-            <IconButton marginRight={1} name="save" onClick={onAddHandler} />
-            <IconButton name="broom" onClick={resetRecipe} />
-          </Box>
-        </Flex>
-        <Flex justifyContent="space-between">
+          </div>
+          <div>
+            <IconButton
+              marginRight={1}
+              name="save"
+              aria-label="Сохранить рецепт"
+              onClick={onAddHandler}
+            />
+            <IconButton name="broom" aria-label="Сбросить рецепт" onClick={resetRecipe} />
+          </div>
+        </div>
+        <div className="flex justify-between">
           {MACRO_ELEMENT_NAMES.map((n) => (
             <RecipeElementForm key={n} name={n} />
           ))}
-        </Flex>
-        <Flex justifyContent="space-around">
+        </div>
+        <div className="flex justify-around">
           <Modal
             title="Настройка профиля"
-            button={({ modal }) => <IconButton marginRight={1} name="tune" onClick={modal.open} />}
+            button={({ modal }) => (
+              <IconButton
+                marginRight={1}
+                name="tune"
+                aria-label="Настройки рецепта"
+                onClick={modal.open}
+              />
+            )}
             container={({ modal }) => (
               <>
                 <RecipeTuneForm modal={modal} onSave={setRecipe} />
@@ -141,8 +147,8 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
           <StyledBalanceCell name="K:N" value={NPKBalance.ratio.K.N} />
           <StyledBalanceCell name="K:Ca" value={NPKBalance.ratio.K.Ca} />
           <StyledBalanceCell name="K:Mg" value={NPKBalance.ratio.K.Mg} />
-        </Flex>
-      </Flex>
+        </div>
+      </div>
     </Card>
   );
 };

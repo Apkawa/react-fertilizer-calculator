@@ -1,59 +1,48 @@
+import { ForkMeOnGitHub, useColorMode } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
-import { Provider } from "react-redux";
 import { Route, HashRouter as Router, Switch } from "react-router-dom";
-import { Box, Flex, Text } from "rebass";
-import { ThemeProvider } from "theme-ui";
-import { TabMenu } from "@/components/ui/TabMenu/TabMenu";
-import { ForkMeOnGitHub } from "./components/ui/ForkMeOnGitHub";
+import { TabMenu } from "@/components/navigation/TabMenu";
 import pages from "./pages";
-import { defaultTheme } from "./themes";
 
-type RootProps = {
-  store: any;
-};
+// Корневой компонент: без тем-провайдера (тема — CSS-переменные @fertilizer/ui)
+// и без react-redux Provider (состояние — глобальный zustand-стор).
+// Режим цвета живёт здесь: применяется к <html> при монтировании,
+// независимо от того, открыт ли сайдбар.
+const Root: FunctionComponent = () => {
+  const [colorMode, setColorMode] = useColorMode();
 
-const Root: FunctionComponent<RootProps> = ({ store }) => {
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={defaultTheme}>
-        <Router>
-          <Flex justifyContent="space-between">
-            <Box padding={1}>
-              <TabMenu />
-            </Box>
-            <ForkMeOnGitHub />
-          </Flex>
-          <Flex flexDirection="column" margin={2}>
-            <Box flex={1}>
-              <Flex
-                sx={{
-                  justifyContent: "center",
-                }}
-              >
-                <Box width="936px">
-                  <Switch>
-                    <Route path={["/formula/:formula?/:percent?"]} component={pages.ChemFormula} />
-                    <Route
-                      path={["/density/:formula?/:concentration?/:density?/"]}
-                      component={pages.DensityCalculator}
-                    />
-                    <Route path="/example" component={pages.Example} />
-                    <Route path="/help/:slug*" component={pages.Help} />
-                    <Route path="/" component={pages.Calculator} />
-                    <Route path="*" component={pages.NotFound} />
-                  </Switch>
-                </Box>
-              </Flex>
-            </Box>
-            <Flex justifyContent={"flex-end"} marginTop="auto" flex={1}>
-              <Text fontSize={1}>
-                {__VERSION__}-{__COMMIT_REF_NAME__} {__COMMIT_HASH__} [{__COMMIT_DATE__}]
-              </Text>
-            </Flex>
-          </Flex>
-        </Router>
-      </ThemeProvider>
-    </Provider>
+    <Router>
+      <div className="flex justify-between">
+        <div className="p-1">
+          <TabMenu colorMode={colorMode} onColorModeChange={setColorMode} />
+        </div>
+        <ForkMeOnGitHub />
+      </div>
+      <div className="flex flex-col m-2">
+        <div className="flex-1">
+          <div className="flex justify-center">
+            <div style={{ width: 936 }}>
+              <Switch>
+                <Route path={["/formula/:formula?/:percent?"]} component={pages.ChemFormula} />
+                <Route
+                  path={["/density/:formula?/:concentration?/:density?/"]}
+                  component={pages.DensityCalculator}
+                />
+                <Route path="/help/:slug*" component={pages.Help} />
+                <Route path="/" component={pages.Calculator} />
+                <Route path="*" component={pages.NotFound} />
+              </Switch>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-end mt-auto flex-1">
+          <span className="text-base">
+            {__VERSION__}-{__COMMIT_REF_NAME__} {__COMMIT_HASH__} [{__COMMIT_DATE__}]
+          </span>
+        </div>
+      </div>
+    </Router>
   );
 };
 

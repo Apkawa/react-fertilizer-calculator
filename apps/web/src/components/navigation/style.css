@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+.nav-tab {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--color-background);
+  display: inline-block;
+  padding: 10px 25px;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-gray);
+  text-decoration: none;
+}
+
+/* Hover: полупрозрачная подложка поверх фона темы (затемнение в светлой,
+   осветление в тёмной) — читается в обеих темах. */
+.nav-tab:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="dark"] .nav-tab:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.nav-tab.active {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  border: 1px solid var(--color-gray);
+  border-top: 2px solid orange; /* deliberate-акцент */
+  border-bottom: 1px solid var(--color-background);
+  cursor: default;
+}
+
+/* Дерево «Справка»: маркеры не нужны (как и раньше),
+   но indent на каждом уровне, чтобы submenu читалось деревом */
+.react-router-tabs ul {
+  list-style-type: none;
+  padding-inline-start: 1.25em;
+}
+.react-router-tabs ul > li a {
+  width: 100%;
+}

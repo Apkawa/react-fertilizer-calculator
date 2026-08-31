@@ -1,17 +1,12 @@
 import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
 import { IconButton } from "@fertilizer/icons";
+import { Button, Card, Modal, type ModalActions, Text } from "@fertilizer/ui";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { Box, Button, Card, Flex, Text } from "rebass";
-import { fertilizerPush, fertilizerRemove } from "@/components/Calculator/actions";
-import { FERTILIZER_EDIT_FORM_NAME } from "@/components/Calculator/FertilizerManager/constants";
-import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";
 import type { FertilizerInfo } from "@/components/Calculator/types";
-import { Modal, type ModalActions } from "@/components/ui/Modal/Modal";
-import { useFormValues } from "@/hooks/ReduxForm";
+import { useStore } from "@/store";
 import { Element } from "../FertilizerSelect/SelectedListItem";
-import { AddEdit, formToFertilizer, getInitialValues } from "./AddEdit";
+import { AddEdit, formToFertilizer } from "./AddEdit";
 
 interface ItemProps {
   fertilizer: FertilizerInfo;
@@ -20,21 +15,22 @@ interface ItemProps {
 export function Item(props: ItemProps) {
   const { fertilizer } = props;
   const normalizedFertilizer = normalizeFertilizer(fertilizer, false);
-  const [formValues] = useFormValues<AddEditFormType>(FERTILIZER_EDIT_FORM_NAME);
-  const dispatch = useDispatch();
+  // Форма удобрения — глобальный стор (аналог useFormValues)
+  const formValues = useStore((s) => s.fertilizerEdit);
+
   const onRemove = () => {
-    dispatch(fertilizerRemove(fertilizer));
+    useStore.getState().removeFertilizer(fertilizer);
   };
   const onSave = (modal: ModalActions) => {
-    dispatch(fertilizerPush(formToFertilizer(formValues)));
+    useStore.getState().pushFertilizer(formToFertilizer(formValues));
     modal.close();
   };
   return (
     <>
-      <Card width={"auto"} marginBottom={2}>
-        <Flex justifyContent={"space-between"} alignItems="center">
-          <Box flex={1}>
-            <Text flex={1}>
+      <Card className="w-auto mb-2">
+        <div className="flex justify-between items-center">
+          <div className="flex-1">
+            <Text className="flex-1">
               {fertilizer.id} &nbsp;
               {fertilizer.solution_concentration &&
                 `[жидкий ${fertilizer.solution_concentration} г/л]`}{" "}
@@ -44,7 +40,7 @@ export function Item(props: ItemProps) {
               </span>{" "}
               &nbsp;
             </Text>
-            <Flex>
+            <div className="flex">
               {FERTILIZER_ELEMENT_NAMES.map((name) => {
                 const v = normalizedFertilizer.elements[name];
                 if (!v) {
@@ -52,9 +48,9 @@ export function Item(props: ItemProps) {
                 }
                 return <Element name={name} key={name} value={v} isOxide />;
               })}
-            </Flex>
-          </Box>
-          <Flex>
+            </div>
+          </div>
+          <div className="flex">
             <Modal
               button={({ modal }) => (
                 <IconButton
@@ -62,17 +58,18 @@ export function Item(props: ItemProps) {
                   alignSelf="center"
                   name="edit"
                   backgroundColor={"primary"}
+                  aria-label="Изменить"
                   onClick={modal.open}
                 />
               )}
               container={({ modal }) => (
                 <>
-                  <AddEdit initialValues={getInitialValues(fertilizer)} />
-                  <Flex justifyContent="flex-end">
+                  <AddEdit fertilizer={fertilizer} />
+                  <div className="flex justify-end">
                     <Button type="button" onClick={() => onSave(modal)}>
                       Save
                     </Button>
-                  </Flex>
+                  </div>
                 </>
               )}
             />
@@ -81,10 +78,11 @@ export function Item(props: ItemProps) {
               alignSelf="center"
               name="trash"
               backgroundColor={"danger"}
+              aria-label="Удалить"
               onClick={onRemove}
             />
-          </Flex>
-        </Flex>
+          </div>
+        </div>
       </Card>
     </>
   );

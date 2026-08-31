@@ -1,0 +1,8 @@
+/* Карточка (эквивалент легасной карточки в теме приложения: фон, тень small, p: 2) */
+@layer components {
+  .ui-card {
+    background-color: var(--color-background);
+    box-shadow: var(--shadow-small);
+    padding: 8px;
+  }
+}

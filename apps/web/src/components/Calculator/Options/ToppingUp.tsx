@@ -1,27 +1,22 @@
-import { Label } from "@rebass/forms";
+import { Card, Label } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
-import { useSelector } from "react-redux";
-import { Card, Flex } from "rebass";
-import { getFormValues } from "redux-form";
-import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
-import type { CalculatorFormValues } from "@/components/Calculator/types";
-import { Checkbox } from "@/components/ui/ReduxForm/Checkbox";
-import { Input } from "@/components/ui/ReduxForm/Input";
-import { decimal, number } from "@/components/ui/ReduxForm/normalizers";
+import { Checkbox, decimal, Input, number } from "@/components/ui/Form";
+import { useStore } from "@/store";
 
 type ToppingUpProps = {};
 
 export const ToppingUp: FunctionComponent<ToppingUpProps> = () => {
-  const { topping_up_enabled } = useSelector(
-    getFormValues(REDUX_FORM_NAME),
-  ) as CalculatorFormValues;
+  const form = useStore((s) => s.calculator.calculationForm);
+  const topping_up_enabled = form?.topping_up_enabled;
   return (
     <Card>
       <Checkbox name="topping_up_enabled" label="Долив раствора" />
       {topping_up_enabled ? (
-        <Flex flexDirection="column" style={{ display: topping_up_enabled ? "flex" : "none" }}>
-          <Flex alignItems="center" justifyContent="space-between">
-            <Label htmlFor="topping_up.newSolution.volume">Новый объем, л</Label>
+        // Блок показывается по чекбоксу: display из стора оставляем в style
+        <div className="flex flex-col" style={{ display: topping_up_enabled ? "flex" : "none" }}>
+          {/* Label оборачивает инпут — связь label/поле неявная (паттерн @fertilizer/ui) */}
+          <Label className="flex items-center justify-between">
+            Новый объем, л
             <Input
               name="topping_up.newSolution.volume"
               width="3rem"
@@ -36,9 +31,9 @@ export const ToppingUp: FunctionComponent<ToppingUpProps> = () => {
               }}
               autoComplete="off"
             />
-          </Flex>
-          <Flex alignItems="center" justifyContent="space-between">
-            <Label htmlFor="topping_up.currentSolution.volume">Текущий объем, л</Label>
+          </Label>
+          <Label className="flex items-center justify-between">
+            Текущий объем, л
             <Input
               name="topping_up.currentSolution.volume"
               width="3rem"
@@ -52,9 +47,9 @@ export const ToppingUp: FunctionComponent<ToppingUpProps> = () => {
               }}
               autoComplete="off"
             />
-          </Flex>
-          <Flex alignItems="center" justifyContent="space-between" paddingTop={2}>
-            <Label htmlFor="topping_up.currentSolution.EC">Текущий EC, мСм/см</Label>
+          </Label>
+          <Label className="flex items-center justify-between pt-2">
+            Текущий EC, мСм/см
             <Input
               name="topping_up.currentSolution.EC"
               width="3rem"
@@ -68,11 +63,9 @@ export const ToppingUp: FunctionComponent<ToppingUpProps> = () => {
               }}
               autoComplete="off"
             />
-          </Flex>
-          <Flex alignItems="center" justifyContent="space-between" paddingTop={2}>
-            <Label htmlFor="topping_up.currentSolution.profileEC">
-              EC профиля раствора, мСм/см
-            </Label>
+          </Label>
+          <Label className="flex items-center justify-between pt-2">
+            EC профиля раствора, мСм/см
             <Input
               name="topping_up.currentSolution.profileEC"
               width="3rem"
@@ -86,11 +79,9 @@ export const ToppingUp: FunctionComponent<ToppingUpProps> = () => {
               }}
               autoComplete="off"
             />
-          </Flex>
-          <Flex alignItems="center" justifyContent="space-between" paddingTop={2}>
-            <Label htmlFor="topping_up.currentSolution.profileSaltsConcentration">
-              Концентрация солей профиля раствора, г/л
-            </Label>
+          </Label>
+          <Label className="flex items-center justify-between pt-2">
+            Концентрация солей профиля раствора, г/л
             <Input
               name="topping_up.currentSolution.profileSaltsConcentration"
               width="3rem"
@@ -104,8 +95,8 @@ export const ToppingUp: FunctionComponent<ToppingUpProps> = () => {
               }}
               autoComplete="off"
             />
-          </Flex>
-        </Flex>
+          </Label>
+        </div>
       ) : null}
     </Card>
   );

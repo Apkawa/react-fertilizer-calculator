@@ -1,0 +1,26 @@
+/* Текстовый/числовой инпут (эквивалент легасного инпута формы в теме polaris:
+ * border цветом текста, без радиуса, прозрачный фон; нативные спиннеры number
+ * скрыты — у приложения свои кнопки спиннера) */
+@layer components {
+  .ui-input {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: var(--color-text);
+    background-color: transparent;
+    border: 1px solid var(--color-text);
+    border-radius: 0;
+  }
+
+  .ui-input::-webkit-inner-spin-button,
+  .ui-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    width: 0;
+    height: 0;
+  }
+}

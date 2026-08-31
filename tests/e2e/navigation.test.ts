@@ -10,11 +10,11 @@ test("navigation: sidebar links lead to live pages", async ({ page }) => {
   await expect(page.getByText("Результат расчета").first()).toBeVisible();
 
   // Сайдбар: при ширине < 1650px не докнутый — открывается бургером
-  // (первый на странице div с единственным svg-ребёнком).
+  // (кнопка с доступным именем «Меню», a11y stage 2).
   // Открытый сайдбар рендерится порталом в #sidebar-root; клик по любой ссылке
   // всплывает в overlay и закрывает сайдбар (поведение оверлея) —
   // поэтому перед каждым шагом открываем его заново.
-  const hamburger = page.locator("div:has(> svg)").first();
+  const hamburger = page.getByRole("button", { name: "Меню" });
   const clickSidebarLink = async (tab: string) => {
     await hamburger.click();
     await page.getByRole("link", { name: tab }).click();

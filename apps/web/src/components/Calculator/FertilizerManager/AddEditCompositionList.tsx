@@ -1,32 +1,42 @@
-import type { FertilizerComposition } from "@fertilizer/calculator/types";
+import { Card } from "@fertilizer/ui";
 import React from "react";
-import { Card, Flex } from "rebass";
-import { Input } from "@/components/ui/ReduxForm/Input";
-import { decimal } from "@/components/ui/ReduxForm/normalizers";
-import type { ReduxFieldArrayType } from "@/components/ui/ReduxForm/types";
+import { decimal, Input } from "@/components/ui/Form";
+import { useStore } from "@/store";
 
-type AddEditCompositionListProps = {};
+// Контролируемый список строк состава (zustand, вместо FieldArray redux-form):
+// читает/пишет массив `composition` глобальной формы по dot-path (composition.<i>.*).
+export const AddEditCompositionList = () => {
+  const form = useStore((s) => s.fertilizerEdit);
+  const { setFertilizerEditField } = useStore.getState();
+  const composition = form.composition || [];
 
-type AddEditCompositionListType = ReduxFieldArrayType<
-  AddEditCompositionListProps,
-  FertilizerComposition
->;
-export const AddEditCompositionList: AddEditCompositionListType = (props) => {
-  const { fields } = props;
+  // Новая строка (аналог fields.push)
+  const addRow = () => {
+    setFertilizerEditField("composition", [...composition, { formula: "", percent: 98 }]);
+  };
+
+  // Удаление строки (аналог fields.remove)
+  const removeRow = (i: number) => {
+    setFertilizerEditField(
+      "composition",
+      composition.filter((_, idx) => idx !== i),
+    );
+  };
+
   return (
-    <Card width="100%">
-      <Flex>
-        <button type="button" onClick={() => fields.push({ formula: "", percent: 98 })}>
+    <Card className="w-full">
+      <div className="flex">
+        <button type="button" onClick={addRow}>
           +
         </button>
-      </Flex>
-      <Flex flexDirection="column">
-        {fields.map((f, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: поля массива redux-form позиционные (имена по индексу) — другого устойчивого id нет
-          <Flex key={i} width="100%">
-            <Input name={`${f}.formula`} flex={2} placeholder={"NH4NO3"} />
+      </div>
+      <div className="flex flex-col">
+        {composition.map((_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: строки списка позиционные (dot-path по индексу в zustand-сторе) — другого устойчивого id нет
+          <div key={i} className="flex w-full">
+            <Input name={"composition." + i + ".formula"} flex={2} placeholder={"NH4NO3"} />
             <Input
-              name={`${f}.percent`}
+              name={"composition." + i + ".percent"}
               type="number"
               step="0.1"
               min="0"
@@ -35,12 +45,12 @@ export const AddEditCompositionList: AddEditCompositionListType = (props) => {
               normalize={decimal}
               flex={1}
             />
-            <button type="button" onClick={() => fields.remove(i)}>
+            <button type="button" onClick={() => removeRow(i)}>
               -
             </button>
-          </Flex>
+          </div>
         ))}
-      </Flex>
+      </div>
     </Card>
   );
 };

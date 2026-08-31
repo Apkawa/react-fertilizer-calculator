@@ -1,8 +1,7 @@
 import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { IconButton } from "@fertilizer/icons";
 import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { recipePush } from "@/components/Calculator/actions";
+import { useStore } from "@/store";
 import { csvParse } from "@/utils/csv";
 
 type ImportRecipesProps = {};
@@ -10,8 +9,7 @@ type ImportRecipesProps = {};
 const COLUMNS = ["id", ...FERTILIZER_ELEMENT_NAMES];
 
 export function ImportRecipes(props: ImportRecipesProps) {
-  const buttonRef = createRef<HTMLButtonElement>();
-  const dispatch = useDispatch();
+  const buttonRef = createRef<HTMLSpanElement>();
   const [size, setSize] = useState({ width: 0, height: 0 });
   useEffect(() => {
     const newSize = {
@@ -29,7 +27,7 @@ export function ImportRecipes(props: ImportRecipesProps) {
       p.splice(0, 1);
     }
     for (const { id, ...npk } of p) {
-      dispatch(recipePush({ name: id, elements: npk }));
+      useStore.getState().pushRecipe({ name: id, elements: npk });
     }
   };
 
@@ -48,16 +46,14 @@ export function ImportRecipes(props: ImportRecipesProps) {
   };
   return (
     <>
-      <IconButton
-        sx={{
-          position: "relative",
-        }}
-        ref={buttonRef}
-        name="import"
-      >
+      {/* a11y (stage 4): file-инпут был вложен внутрь <button> (nested-interactive).
+          Теперь инпут — сосед кнопки и накрывает её: клик по иконке открывает диалог. */}
+      <span ref={buttonRef} className="relative inline-block">
+        <IconButton name="import" aria-label="Импорт рецептов" />
         <input
           type="file"
           accept="text/csv, .csv"
+          aria-label="Импорт рецептов"
           onChange={(event) => handleOnChange(event)}
           style={{
             top: 0,
@@ -67,7 +63,7 @@ export function ImportRecipes(props: ImportRecipesProps) {
             ...size,
           }}
         />
-      </IconButton>
+      </span>
     </>
   );
 }

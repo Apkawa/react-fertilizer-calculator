@@ -1,14 +1,12 @@
 import { ACCEPT_FORMATS, FORMATS_MAP } from "@fertilizer/calculator/format";
 import { IconButton } from "@fertilizer/icons";
 import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { loadStateStart } from "@/components/Calculator/actions";
+import { useStore } from "@/store";
 
 type ImportStateProps = {};
 
 export function ImportState(props: ImportStateProps) {
-  const buttonRef = createRef<HTMLButtonElement>();
-  const dispatch = useDispatch();
+  const buttonRef = createRef<HTMLSpanElement>();
   const [size, setSize] = useState({ width: 0, height: 0 });
   useEffect(() => {
     const newSize = {
@@ -25,7 +23,7 @@ export function ImportState(props: ImportStateProps) {
     if (FORMATS_MAP[ext]) {
       const f = new FORMATS_MAP[ext]();
       const p = f.import(data);
-      dispatch(loadStateStart(p));
+      useStore.getState().importState(p);
     }
   };
 
@@ -44,16 +42,14 @@ export function ImportState(props: ImportStateProps) {
   };
   return (
     <>
-      <IconButton
-        sx={{
-          position: "relative",
-        }}
-        ref={buttonRef}
-        name="import"
-      >
+      {/* a11y (stage 4): file-инпут был вложен внутрь <button> (nested-interactive).
+          Теперь инпут — сосед кнопки и накрывает её: клик по иконке открывает диалог. */}
+      <span ref={buttonRef} className="relative inline-block">
+        <IconButton name="import" aria-label="Импорт настроек" />
         <input
           type="file"
           accept={ACCEPT_FORMATS}
+          aria-label="Импорт настроек"
           onChange={(event) => handleOnChange(event)}
           style={{
             top: 0,
@@ -64,7 +60,7 @@ export function ImportState(props: ImportStateProps) {
           }}
           title={"Импорт настроек"}
         />
-      </IconButton>
+      </span>
     </>
   );
 }

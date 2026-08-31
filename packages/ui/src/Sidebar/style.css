@@ -1,0 +1,38 @@
+/* Сайдбар */
+@layer components {
+  /* Оверлей сайдбара, докнутый (закреплён слева, узкий) */
+  .ui-sidebar-overlay {
+    overflow-y: auto;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    z-index: 999;
+    width: fit-content;
+    /* Сброс нативных стилей <button> (оверлей — кнопка «закрыть по клику») */
+    border: 0;
+    background: transparent;
+    appearance: none;
+    text-align: left;
+    font: inherit;
+  }
+
+  /* Оверлей сайдбара, не докнут (на весь экран, с полупрозрачным фоном) */
+  .ui-sidebar-overlay-undocked {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* Карточка сайдбара (заменяет легасную карточку внутри оверлея) */
+  .ui-sidebar-card {
+    background-color: var(--color-background);
+    box-shadow: var(--shadow-small);
+    padding: 8px;
+    height: 100vh;
+    width: 300px;
+    margin-right: 8px;
+  }
+}

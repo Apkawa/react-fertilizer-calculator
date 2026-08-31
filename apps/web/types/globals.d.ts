@@ -19,6 +19,3 @@ declare module "*.svg" {
   const value: string;
   export default value;
 }
-
-// Зависимости без собственных деклараций типов.
-declare module "@theme-ui/presets";

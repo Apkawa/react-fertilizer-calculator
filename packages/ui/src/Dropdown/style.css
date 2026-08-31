@@ -1,0 +1,62 @@
+/* Дропдаун */
+@layer components {
+  /* Шеврон дропдауна (заменяет styled(Icon) `IconDown`: цвет текста, h 3rem, opacity) */
+  .ui-dropdown-chevron {
+    color: var(--color-text);
+    height: 3rem;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ui-dropdown-chevron:hover {
+    opacity: 0.7;
+  }
+
+  /* Пункт дропдауна (заменяет ItemContainer: Flex + sx с ::before-подсветкой hover) */
+  .ui-dropdown-item {
+    position: relative;
+    z-index: 1;
+    padding: 8px;
+    display: flex;
+    /* Сброс нативных стилей <button> (элемент пункта — настоящая кнопка) */
+    border: 0;
+    background: transparent;
+    appearance: none;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .ui-dropdown-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0;
+    background-color: var(--color-highlight);
+  }
+
+  .ui-dropdown-item:hover::before {
+    opacity: 0.1;
+  }
+
+  /* Отключённый пункт дропдауна (заменяет styled(Box) c disabled-вариантом) */
+  .ui-dropdown-item--disabled {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  /* Список дропдауна (заменяет легасную карточку в DropdownList; max-height — инлайном) */
+  .ui-dropdown-list {
+    background-color: var(--color-background);
+    box-shadow: var(--shadow-small);
+    padding: 0;
+    overflow-y: auto;
+    z-index: 3;
+  }
+}

@@ -19,15 +19,16 @@ import {
   OPTIMAL_RATIO,
 } from "@fertilizer/calculator/ratio";
 import type { Elements, NeedElements } from "@fertilizer/calculator/types";
-import { Input } from "@rebass/forms";
-import React, { type ChangeEvent, useEffect, useState } from "react";
-import { Box, Button, Flex } from "rebass";
+import {
+  Button,
+  type ModalActions,
+  NumberInput,
+  type NumberInputChangeEvent,
+} from "@fertilizer/ui";
+import React, { useEffect, useState } from "react";
 import { StyledBalanceCell } from "@/components/Calculator/Options/Recipe";
-import type { CalculatorFormValues } from "@/components/Calculator/types";
-import type { ModalActions } from "@/components/ui/Modal/Modal";
-import { NumberInput as StyledInput } from "@/components/ui/RebassWidgets/Number";
-import { decimal } from "@/components/ui/ReduxForm/normalizers";
-import { useFormName, useFormValues } from "@/hooks/ReduxForm";
+import { decimal, StyledInput } from "@/components/ui/Form";
+import { useStore } from "@/store";
 import { entries, round } from "@/utils";
 
 interface RecipeTuneFormProps {
@@ -41,13 +42,16 @@ const IMPORTANT_CELLS = ["K:N", "K:Ca", "K:Mg", "NH4:NO3", "P", "Cl", "EC", "B"]
 const BLOCKING_CELLS = ["N:Ca", "Ca:N", "Ca:K", "Ca:Mg", "Mg:K", "Mg:Ca"];
 
 export function RecipeTuneForm(props: RecipeTuneFormProps) {
-  const formValue = useFormValues<CalculatorFormValues>(useFormName())[0];
-  const [recipe, setRecipe] = useState(formValue.recipe);
+  // Значения рецепта из глобального стора (расчётный form), фолбэк на пустой профиль
+  const form = useStore((s) => s.calculator.calculationForm);
+  const [recipe, setRecipe] = useState<NeedElements>(form?.recipe ?? {});
   const recipeInfo = getNPKDetailInfo(recipe as Elements);
   const [ratio, setRatio] = useState(recipeInfo.ratio);
   const [EC, setEC] = useState(recipeInfo.EC);
 
-  const [profileString, setProfileString] = useState(HPGFormat.stringifyProfile(formValue.recipe));
+  const [profileString, setProfileString] = useState(
+    HPGFormat.stringifyProfile(form?.recipe ?? {}),
+  );
 
   const onChangeRecipe = (el: FERTILIZER_ELEMENT_NAMES, value: number) => {
     const newRecipe = { ...recipe, [el]: value };
@@ -107,8 +111,8 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
   }, [recipe]);
 
   return (
-    <Flex flexDirection={"column"}>
-      <Flex>
+    <div className="flex flex-col">
+      <div className="flex">
         {MACRO_ELEMENT_NAMES.map((el) => (
           <RecipeInput
             key={el}
@@ -120,8 +124,8 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
           />
         ))}
         <RecipeInput name={"EC"} label={"EC"} value={EC} onChange={onChangeEC} />
-      </Flex>
-      <Flex justifyContent="space-around">
+      </div>
+      <div className="flex justify-around">
         <StyledBalanceCell
           name="ΔΣ I"
           value={recipeInfo.ion_balance}
@@ -142,8 +146,8 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
           name="K:Ca:Mg"
           value={getMultiElementRatio(recipe, ["K", "Ca", "Mg"]).display}
         />
-      </Flex>
-      <Flex>
+      </div>
+      <div>
         <table>
           <thead>
             <tr>
@@ -174,8 +178,8 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
             ))}
           </tbody>
         </table>
-      </Flex>
-      <Flex justifyContent="space-around">
+      </div>
+      <div className="flex justify-around">
         {MICRO_ELEMENT_NAMES.map((el) => (
           <RecipeInput
             key={el}
@@ -186,23 +190,23 @@ export function RecipeTuneForm(props: RecipeTuneFormProps) {
             step={1}
           />
         ))}
-      </Flex>
-      <Flex marginY={2}>
-        <Input
+      </div>
+      <div className="my-1">
+        <StyledInput
           value={profileString}
           onChange={(e) => setProfileString(e.target.value)}
           onBlur={(e) => onChangeProfileString(e.target.value)}
         />
-      </Flex>
-      <Flex justifyContent="space-between">
+      </div>
+      <div className="flex justify-between">
         <Button type="button" onClick={props.modal.close}>
           Cancel
         </Button>
         <Button type="button" onClick={onSaveHandler}>
           Save
         </Button>
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   );
 }
 
@@ -229,9 +233,9 @@ export function getOptimalRatioDisplay(name: string): string | null {
 function RecipeInput(props: RecipeInputProps) {
   const { name, label, onChange, value = 0, step = 0.01 } = props;
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: NumberInputChangeEvent) => {
     if (e.target.value) {
-      const val = decimal(e.target.value);
+      const val = decimal(String(e.target.value)) as number;
       onChange && onChange(val);
     }
   };
@@ -251,9 +255,9 @@ function RecipeInput(props: RecipeInputProps) {
   }
 
   return (
-    <Flex flexDirection="column" justifyContent="center" alignItems="center" maxWidth="6rem">
-      {label ? <Box style={{ textAlign: "center" }}>{label}</Box> : null}
-      <StyledInput
+    <div className="flex max-w-24 flex-col items-center justify-center">
+      {label ? <div style={{ textAlign: "center" }}>{label}</div> : null}
+      <NumberInput
         onChange={onChangeHandler}
         name={name}
         value={value}
@@ -272,6 +276,6 @@ function RecipeInput(props: RecipeInputProps) {
           borderColor: "black",
         }}
       />
-    </Flex>
+    </div>
   );
 }

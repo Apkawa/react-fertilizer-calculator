@@ -1,19 +1,19 @@
+import { Card, Heading } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
-import { Card, Flex, Heading } from "rebass";
-import { Checkbox } from "../../ui/ReduxForm/Checkbox";
+import { Checkbox } from "@/components/ui/Form";
 
 type IgnoreElementProps = {};
 
 export const IgnoreElement: FunctionComponent<IgnoreElementProps> = () => {
   return (
     <Card>
-      <Flex flexDirection="column">
-        <Heading fontSize={2}>Игнорировать</Heading>
+      <div className="flex flex-col">
+        <Heading className="text-base">Игнорировать</Heading>
         <Checkbox name="ignore.Ca" label="Кальций" />
         <Checkbox name="ignore.Mg" label="Магний" />
         <Checkbox name="ignore.S" label="Сера" />
         <Checkbox name="ignore.Cl" label="Хлор" />
-      </Flex>
+      </div>
     </Card>
   );
 };

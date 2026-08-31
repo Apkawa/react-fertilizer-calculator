@@ -1,7 +1,5 @@
 import React, { type FunctionComponent } from "react";
-import { Box, Flex } from "rebass";
-import { Input } from "@/components/ui/ReduxForm/Input";
-import { number } from "@/components/ui/ReduxForm/normalizers";
+import { Input, number } from "@/components/ui/Form";
 
 interface RecipeElementFormProps {
   name: string;
@@ -12,10 +10,11 @@ export const getRecipeFieldName = (name: string) => `recipe.${name}`;
 export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = (props) => {
   const { name } = props;
   return (
-    <Flex flexDirection="column" justifyContent="center" alignItems="center" maxWidth="3rem">
-      <Box style={{ textAlign: "center" }}>{name}</Box>
+    <div className="flex max-w-12 flex-col items-center justify-center">
+      <div style={{ textAlign: "center" }}>{name}</div>
       <Input
         name={getRecipeFieldName(name)}
+        aria-label={`Доза ${name}`}
         type="number"
         step="0.001"
         min="0"
@@ -27,6 +26,6 @@ export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = (pro
           textAlign: "center",
         }}
       />
-    </Flex>
+    </div>
   );
 };

@@ -3,6 +3,11 @@
   "javascript": {
     "jsxRuntime": "reactClassic"
   },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
   "formatter": {
     "enabled": true,
     "lineWidth": 100,
@@ -12,7 +17,12 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "preset": "recommended"
+      "preset": "recommended",
+      "a11y": {
+        "recommended": true,
+        "useButtonType": "error",
+        "useAltText": "error"
+      }
     }
   },
   "assist": {

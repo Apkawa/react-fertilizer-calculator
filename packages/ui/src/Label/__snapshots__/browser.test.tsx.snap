@@ -1,0 +1,6 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Label: ARIA-снапшот базового состояния 1`] = `
+- text: Вес, г
+- checkbox "Вес, г"
+`;

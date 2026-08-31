@@ -1,22 +1,20 @@
 import type { FertilizerWeights } from "@fertilizer/calculator";
 import { groupFertilizerBySolution } from "@fertilizer/calculator/dilution";
 import { calculatePPM } from "@fertilizer/calculator/helpers";
-import { useSelector } from "react-redux";
-import { getFormValues } from "redux-form";
-import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
-import type { CalculatorFormValues, CalculatorState } from "@/components/Calculator/types";
+import { useStore } from "@/store";
 import { entries, toMap } from "@/utils";
 
 export function usePPM() {
-  const { result } = useSelector<any>((state) => state.calculator) as CalculatorState;
-  const { solution_volume } = useSelector(getFormValues(REDUX_FORM_NAME)) as CalculatorFormValues;
+  const result = useStore((s) => s.calculator.result);
+  // Объем раствора из формы (null-safe: дефолт расчёта PPM совпадает с дефолтом функции)
+  const solution_volume = useStore((s) => s.calculator.calculationForm?.solution_volume);
   const fertilizerWeights = (result?.fertilizers || []).map((f) => ({ ...f }));
-  const ppm = calculatePPM(fertilizerWeights, solution_volume);
+  const ppm = calculatePPM(fertilizerWeights, solution_volume ?? 1);
   return ppm;
 }
 
 export function useFertilizerSolutionGroup() {
-  const { fertilizers, result } = useSelector<any>((state) => state.calculator) as CalculatorState;
+  const { fertilizers, result } = useStore((s) => s.calculator);
 
   const fertilizersWeights = (result?.fertilizers || []).map((f) => ({ ...f }));
 

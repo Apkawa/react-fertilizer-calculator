@@ -1,9 +1,7 @@
 import { IconButton } from "@fertilizer/icons";
+import { Card, Dropdown } from "@fertilizer/ui";
 import React, { type FunctionComponent, useState } from "react";
-import { useSelector } from "react-redux";
-import { Box, Card, Flex } from "rebass";
-import { Dropdown } from "@/components/ui/Dropdown/Dropdown";
-import type { CalculatorState } from "../types";
+import { useStore } from "@/store";
 import type { FertilizerType } from "./types";
 
 interface AddItemProps {
@@ -11,8 +9,8 @@ interface AddItemProps {
 }
 
 export const AddItem: FunctionComponent<AddItemProps> = ({ onAdd }) => {
-  const { fertilizers } = useSelector<any>((state) => state.calculator) as CalculatorState;
-  const { calculationForm } = useSelector<any>((state) => state.calculator) as CalculatorState;
+  // Состояние калькулятора из zustand-стора (замена useSelector).
+  const { fertilizers, calculationForm } = useStore((s) => s.calculator);
 
   const [selected, setSelected] = useState<FertilizerType | undefined>(fertilizers[0]);
 
@@ -28,31 +26,33 @@ export const AddItem: FunctionComponent<AddItemProps> = ({ onAdd }) => {
   };
   return (
     <Card>
-      <Flex flexDirection="column">
-        <Flex justifyContent="space-between">
-          <Box flex={1} pr={2}>
+      <div className="flex flex-col">
+        <div className="flex justify-between">
+          <div className="flex-1 pr-2">
             <Dropdown<FertilizerType>
               value={selected}
               items={fertilizers}
+              label="Добавить удобрение"
               onChange={onChangeHandler}
               checkDisabledItem={(item) => fertilizersIDs.includes(item?.id || "")}
               renderItem={({ item }) => (
-                <Flex flex={1} justifyContent="space-between">
-                  <Box>{item.id}</Box>
+                <div className="flex flex-1 justify-between">
+                  <div>{item.id}</div>
                   <IconButton
                     onClick={(event) => {
                       event.stopPropagation();
                       onAddHandler(item);
                     }}
                     name="plus"
+                    aria-label="Добавить"
                   />
-                </Flex>
+                </div>
               )}
               renderValue={(item) => item?.id || ""}
             />
-          </Box>
-        </Flex>
-      </Flex>
+          </div>
+        </div>
+      </div>
     </Card>
   );
 };

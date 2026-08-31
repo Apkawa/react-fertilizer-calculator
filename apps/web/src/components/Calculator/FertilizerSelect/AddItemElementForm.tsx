@@ -1,6 +1,5 @@
 import React, { type FunctionComponent, useEffect, useState } from "react";
-import { Flex } from "rebass";
-import { StyledInput } from "@/components/ui/ReduxForm/Input";
+import { StyledInput } from "@/components/ui/Form";
 
 interface RecipeElementFormProps {
   name: string;
@@ -27,8 +26,8 @@ export const AddItemElementForm: FunctionComponent<RecipeElementFormProps> = (pr
   };
 
   return (
-    <Flex flexDirection="column" justifyContent="center" alignItems="center" width="4rem">
-      <label style={{ textAlign: "center" }} htmlFor={"element-" + name}>
+    <div className="flex w-16 flex-col items-center justify-center">
+      <label className="text-center" htmlFor={"element-" + name}>
         {name}
       </label>
       <StyledInput
@@ -47,6 +46,6 @@ export const AddItemElementForm: FunctionComponent<RecipeElementFormProps> = (pr
           textAlign: "center",
         }}
       />
-    </Flex>
+    </div>
   );
 };

@@ -6,11 +6,11 @@
     "full-check": "pnpm test && pnpm lint && pnpm type && pnpm build",
     "start": "pnpm -C apps/web start",
     "build": "pnpm -C apps/web build",
-    "test": "pnpm -C packages/calculator test && pnpm -C packages/icons test && pnpm -C apps/web test",
+    "test": "pnpm -C packages/calculator test && pnpm -C packages/icons test && pnpm -C packages/ui test && pnpm -C apps/web test",
     "test:e2e": "playwright test tests/e2e",
     "test:smoke": "playwright test tests/smoke",
-    "lint": "biome check apps packages",
-    "type": "tsc -p packages/calculator && tsc -p packages/icons && tsc -p apps/web",
+    "lint": "biome check apps packages --diagnostic-level=error",
+    "type": "tsc -p packages/calculator && tsc -p packages/icons && tsc -p packages/ui && tsc -p apps/web",
     "analyze": "pnpm build && source-map-explorer 'apps/web/build/assets/*.js'",
     "jupyter": "jupyter-notebook docs/"
   },
@@ -24,6 +24,7 @@
     "pnpm": ">=11.22.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@biomejs/biome": "^2.5.10",
     "@playwright/test": "^1.62.1",
     "husky": "^4.3.0",

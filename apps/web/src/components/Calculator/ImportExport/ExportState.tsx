@@ -1,16 +1,13 @@
 import type { ExportStateType } from "@fertilizer/calculator/format/types";
 import { IconButton } from "@fertilizer/icons";
 import React from "react";
-import { useSelector } from "react-redux";
-import type { CalculatorState } from "@/components/Calculator/types";
+import { useStore } from "@/store";
 import { saveData } from "@/utils/downloads";
 
-type ExportRecipesProps = {};
+type ExportStateProps = {};
 
-export function ExportState(props: ExportRecipesProps) {
-  const { calculationForm, result, fertilizers, recipes } = useSelector<any>(
-    (state) => state.calculator,
-  ) as CalculatorState;
+export function ExportState(props: ExportStateProps) {
+  const { calculationForm, result, fertilizers, recipes } = useStore((s) => s.calculator);
   const doExport = () => {
     const created = new Date().toISOString();
     const state: ExportStateType = {
@@ -31,7 +28,7 @@ export function ExportState(props: ExportRecipesProps) {
   };
   return (
     <>
-      <IconButton onClick={doExport} name="export" title={"Экспорт настроек"} />
+      <IconButton onClick={doExport} name="export" aria-label="Экспорт настроек" />
     </>
   );
 }

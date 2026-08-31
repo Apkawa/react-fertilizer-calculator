@@ -6,8 +6,6 @@ import {
   CalculateToppingUpResult,
 } from "@fertilizer/calculator/helpers";
 import { FertilizerInfo as _FertilizerInfo, NeedElements } from "@fertilizer/calculator/types";
-import { InferValuesTypes } from "@/redux-helpers/types";
-import * as actions from "./actions";
 
 export interface FertilizerInfo extends _FertilizerInfo {
   pump_number?: number;
@@ -51,5 +49,3 @@ export interface Recipe {
   color?: string;
   elements: NeedElements;
 }
-
-export type ActionTypes = ReturnType<InferValuesTypes<typeof actions>>;

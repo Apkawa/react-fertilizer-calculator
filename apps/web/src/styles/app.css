@@ -1,0 +1,8 @@
+/* Базовые стили приложения: tailwindcss v4 (полный, preflight включён) + переменные темы @fertilizer/ui.
+ * Preflight был отключён на время миграции (глобальные стили legacy-темы конфликтовали с preflight-
+ * скидками; A/B на странице help, 2026-08-28) и возвращён в Stage 7 после удаления legacy-темы. */
+@import "tailwindcss";
+@import "@fertilizer/ui/theme.css";
+/* Утилиты tailwind, используемые внутри пакетов (className в packages/src),
+ * авто-детект источников из каталога приложения их не видит — подключаем явно. */
+@source "../../../../packages/ui/src";

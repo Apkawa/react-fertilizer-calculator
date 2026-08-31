@@ -2,6 +2,7 @@
 
 import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
@@ -53,6 +54,10 @@ export default defineConfig({
     __COMMIT_REF_NAME__: JSON.stringify(buildInfo.refName),
   },
   plugins: [
+    // tailwindcss v4 (preflight + утилиты) — CSS (включая plain-CSS из пакетов)
+    // собирается во время сборки.
+    // Автоматически действуют и для vitest (vitest.config расширяет vite.config).
+    tailwindcss(),
     // tsconfig jsx: "react" (classic runtime); в каждом файле `import React`.
     react({ jsxRuntime: "classic" }),
     // Старый CopyPlugin: {from: 'docs/**/*.{jpg,png,jpeg}', context: 'src/'}

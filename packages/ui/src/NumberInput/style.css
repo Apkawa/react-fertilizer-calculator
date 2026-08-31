@@ -1,0 +1,20 @@
+/* Числовой инпут со спиннером */
+@layer components {
+  /* Обёртка числового инпута: кнопки спиннера позиционируются абсолютно */
+  .ui-number-input-wrapper {
+    position: relative;
+    display: block;
+  }
+
+  /* Кнопка спиннера числового инпута (прозрачная накладка 3em сверху/снизу) */
+  .ui-spinner-button {
+    position: absolute;
+    height: 3em;
+    z-index: 30;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    color: var(--color-text);
+  }
+}

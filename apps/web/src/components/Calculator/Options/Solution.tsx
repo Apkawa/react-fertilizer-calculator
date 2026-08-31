@@ -1,21 +1,14 @@
 import { type Concentration, normalizeConcentration } from "@fertilizer/calculator/dilution";
-import { Label } from "@rebass/forms";
+import { Card, Heading, Label, Text } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Card, Flex, Heading, Text } from "rebass";
-import { change, getFormValues } from "redux-form";
-import { REDUX_FORM_NAME } from "@/components/Calculator/constants";
-import type { CalculatorFormValues } from "@/components/Calculator/types";
-import { Input } from "../../ui/ReduxForm/Input";
-import { decimal } from "../../ui/ReduxForm/normalizers";
+import { decimal, Input, StyledInput } from "@/components/ui/Form";
+import { useStore } from "@/store";
 
 type SolutionVolumeProps = {};
 
 export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
-  const { topping_up_enabled, solution_concentration } = useSelector(
-    getFormValues(REDUX_FORM_NAME),
-  ) as CalculatorFormValues;
-  const dispatch = useDispatch();
+  const form = useStore((s) => s.calculator.calculationForm);
+  const { setFieldValue } = useStore.getState();
 
   const onChange = (field: string) => (event: any) => {
     if (!event.target.value) {
@@ -27,20 +20,21 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
     if (field === "k") {
       newCon.k = k;
     } else {
-      newCon = { ...solution_concentration, [field]: k };
+      newCon = { ...form?.solution_concentration, [field]: k };
       delete newCon.k;
     }
     const newConcentration = normalizeConcentration(newCon);
-    dispatch(change(REDUX_FORM_NAME, "solution_concentration", newConcentration));
+    setFieldValue("solution_concentration", newConcentration);
   };
   return (
     <Card>
-      <Heading fontSize={2}>Раствор</Heading>
-      <Flex flexDirection="column">
-        <Flex alignItems="center" justifyContent="space-between">
-          <Label htmlFor="solution_volume">Объем, л</Label>
+      <Heading className="text-base">Раствор</Heading>
+      <div className="flex flex-col">
+        {/* Label оборачивает инпут — связь label/поле неявная (паттерн @fertilizer/ui) */}
+        <Label className="flex items-center justify-between">
+          Объем, л
           <Input
-            disabled={topping_up_enabled}
+            disabled={form?.topping_up_enabled}
             name="solution_volume"
             width="4rem"
             type="number"
@@ -53,63 +47,65 @@ export const Solution: FunctionComponent<SolutionVolumeProps> = () => {
             }}
             autoComplete="off"
           />
-        </Flex>
-        <Flex alignItems="center" justifyContent="space-between" paddingTop={2}>
-          <Label htmlFor="solution_concentration.k">Концентрация</Label>
-        </Flex>
-        <Flex alignItems="center" paddingTop={2}>
-          <Text fontSize={"2rem"}>1:</Text>
-          <Input
-            disabled={topping_up_enabled}
+        </Label>
+        {/* Подпись секции: инпуты концентрации стоят ниже */}
+        <Label className="flex items-center justify-between pt-2">Концентрация</Label>
+        <div className="flex items-center pt-2">
+          <Text className="text-[2rem]">1:</Text>
+          <StyledInput
+            disabled={form?.topping_up_enabled}
             name="solution_concentration.k"
+            aria-label="Коэффициент разведения"
             type="number"
             step="0.01"
             width={"auto"}
             min="1"
             max="1000"
-            normalize={decimal}
             style={{
               textAlign: "center",
             }}
             autoComplete="off"
+            value={form?.solution_concentration?.k ?? ""}
             onChange={onChange("k")}
           />
-        </Flex>
-        <Flex alignItems={"center"} paddingTop={2}>
+        </div>
+        <div className="flex items-center pt-2">
           Или
-          <Input
-            disabled={topping_up_enabled}
+          <StyledInput
+            disabled={form?.topping_up_enabled}
             name="solution_concentration.v_1"
+            aria-label="Миллилитры концентрата"
             width="4rem"
             type="number"
             step="0.01"
             min="1"
-            normalize={decimal}
             style={{
               textAlign: "center",
             }}
             autoComplete="off"
+            value={form?.solution_concentration?.v_1 ?? ""}
             onChange={onChange("v_1")}
           />{" "}
           мл на
-          <Input
-            disabled={topping_up_enabled}
+          <StyledInput
+            disabled={form?.topping_up_enabled}
             name="solution_concentration.v_2"
+            aria-label="Миллилитры рабочего раствора"
             width="4rem"
             type="number"
             step="0.01"
             min="0"
-            normalize={decimal}
             style={{
               textAlign: "center",
             }}
             autoComplete="off"
+            value={form?.solution_concentration?.v_2 ?? ""}
             onChange={onChange("v_2")}
           />{" "}
           мл рабочего раствора
-        </Flex>
-        <Flex alignItems="center" justifyContent="space-between" paddingTop={2}></Flex>
-      </Flex>
+        </div>
+        <div className="flex items-center justify-between pt-2"></div>
+      </div>
     </Card>
   );
 };

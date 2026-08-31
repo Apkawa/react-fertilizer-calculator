@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Radio: ARIA-снапшот базового состояния 1`] = `
+- radio "Вариант 1"
+`;

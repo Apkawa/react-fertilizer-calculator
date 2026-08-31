@@ -1,5 +1,5 @@
+import { Button } from "@fertilizer/ui";
 import React, { type ComponentType } from "react";
-import { Box, Button, Flex } from "rebass";
 import { Accuracy } from "./Accuracy";
 import { Dilution } from "./Dilution";
 import { IgnoreElement } from "./IgnoreElement";
@@ -10,31 +10,27 @@ type OptionsProps = {};
 
 export const Options: ComponentType<OptionsProps> = () => {
   return (
-    <Flex flexDirection="column">
-      <Box flex={1}>
-        <Button width="100%" my={2} type="submit">
+    <div className="flex flex-col">
+      <div className="flex-1">
+        <Button className="my-2 w-full" type="submit">
           Calculate
         </Button>
-      </Box>
-      <Box my={2}>
+      </div>
+      <div className="my-2">
         <Solution />
-      </Box>
-      <Box my={2}>
+      </div>
+      <div className="my-2">
         <ToppingUp />
-      </Box>
-      <Box my={2}>
+      </div>
+      <div className="my-2">
         <Dilution />
-      </Box>
-      <Flex
-        sx={{
-          "& > *": { flex: 1 },
-        }}
-      >
+      </div>
+      <div className="[&>*]:flex-1">
         <IgnoreElement />
-        <Box marginLeft={2}>
+        <div className="ml-2">
           <Accuracy />
-        </Box>
-      </Flex>
-    </Flex>
+        </div>
+      </div>
+    </div>
   );
 };

@@ -21,6 +21,37 @@ These are non-negotiable and override any urge to "be helpful" by jumping ahead:
 - Each stage MUST be completed before the next begins; do not merge stages or write later artifacts before their inputs exist.
 - The only way to skip a gate is an explicit user instruction (e.g. "run it fully autonomously"); never assume autonomy on your own.
 
+## Orchestration (delegation) rules
+
+When executing a spec, the primary role is **orchestrator**, not executor. The orchestrator assigns work to agents and verifies their reports; it does not do the work itself.
+
+Hard rules:
+
+- **Delegate, don't do.** Do not search, explore, implement, or otherwise work the task directly. The orchestrator's only direct actions are the trivial glue the spec process itself requires: creating/reading the task files, toggling `plan.md` checkboxes, and committing. Everything else is delegated.
+- **Primary tool: `ralph`.** Any self-contained chunk of work is dispatched as a ralph loop.
+- **Situational tool: `workflow`.** Use `workflow` for fan-out — many independent pieces that must be gathered or audited and then aggregated into a structured report.
+- **Sequential only.** At most one active sub-agent at a time; wait for a run to settle before dispatching the next. Never launch several agents in the same message.
+- **Independent acceptance.** A stage's acceptance is its own agent run that verifies the Criterion; it does not trust the implementing agent's self-report.
+
+Mapping by spec phase:
+
+| Spec phase                                          | Tool                                              |
+| --------------------------------------------------- | ------------------------------------------------- |
+| **Research** (Process step 6)                       | `ralph` if the task is a single item; `workflow` if it spans multiple items (bug fixes, several features) |
+| **Gathering what to do** (context for a stage)      | `workflow` — collect the specific details needed before dispatching the work |
+| **Executing a sub-item** (each stage checkbox)      | `ralph` — each sub-item is dispatched to ralph; trivial sub-items may be bundled together, unrelated work never |
+| **Stage acceptance** (a stage's Criterion)          | `ralph` — a dedicated ralph loop that checks the observable Criterion |
+
+## Research rules
+
+Research (Process step 6) is **context collection**, not problem solving. It must stay superficial:
+
+1. **Scope — dependencies and files only.** Research means scanning the project for relevant code, dependencies, configuration, and existing structure; i.e. gathering context. No solutions are designed, evaluated, or implemented during research.
+2. **Constraints are facts, not guesses.** Record what is already fixed: the stack, the budget, compatibility, deadlines, and the existing code. Record constraints only as they appear in project files, configuration, or user input — do not invent or assume them.
+3. **Conform to existing solutions.** If the project already contains similar code or architecture, the spec must fit it — do not invent a parallel universe. Extend and reuse what exists.
+4. **Tool choice by task shape.** A single-item task is researched via `ralph` tool; a task spanning multiple items (bug fixes, several features) is researched via `workflow` tool.
+5. **Deep research goes into the plan, not into step 6.** If the initial (superficial) research reveals that a deep investigation is required — web search, digging into the problem, external references — that deep research is added to `spec.md` and to `plan.md` as a planned work item and performed as a stage, not inside the research step.
+
 ## Directory layout
 
 Specs live in `.dumbspec/`: active tasks in `current/<task-tag>/`, completed/frozen tasks move to `archive/<task-tag>/`. See `.dumbspec/AGENTS.md` for the full layout, tag rules, and per-task file conventions.
@@ -80,7 +111,7 @@ Rules:
 3. **Create or update `draft.md`.** **MUST be the first file written on a new task.** Record the raw input verbatim. Do not rewrite, summarize, or interpret at this stage — no research, no source reading, no "let me check how it works" before this file exists.
 4. **Write the initial `spec.md`.** Produce a first pass of `spec.md` from `draft.md` alone — its scope, approach, and the questions already visible in the draft. This step only translates the draft: no research, no source reading. It is a working skeleton that will be refined in step 7.
 5. **Confirm refinement.** Ask the user whether to refine the draft (and the initial spec written from it) before proceeding. Apply any requested edits to `draft.md` and carry them into `spec.md`.
-6. **Research.** Begin only after step 5 is passed. Investigate feasibility, constraints, and options. **Important:** update `research.md` continuously as you go — do not defer writing findings until the end, so nothing is lost after context compaction.
+6. **Research.** Begin only after step 5 is passed. Collect context per the **Research rules** (superficial scan: dependencies, files, fixed constraints, existing solutions); the tool is chosen by task shape (`ralph` for a single item, `workflow` for multiple). **Important:** update `research.md` continuously as you go — do not defer writing findings until the end, so nothing is lost after context compaction.
 7. **Refine the specification.** Update `spec.md` from the draft together with the research results. Note that some items may turn out to be infeasible or costly based on the research; reflect this honestly in the spec.
 8. **Review the specification.** Work through `spec.md` and resolve any open questions or problems.
 9. **Write the plan.** If no blocking questions or problems remain, produce `plan.md`.

@@ -2,12 +2,13 @@ import { defaultSchema } from "hast-util-sanitize";
 import React, { type FunctionComponent } from "react";
 import ReactMarkdown from "react-markdown";
 import { Switch, useParams } from "react-router-dom";
-import { Box, Flex } from "rebass";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
 import { LazyPromise } from "@/components/LazyPromise";
 import { useHelpPageMap } from "@/pages/Help/pages";
+
+import "./style.css";
 
 // Справка = собственные статичные .md из src/docs: рендерим markdown и сырой HTML
 // (rehype-raw), как раньше (v4 with-html). Sanitize — дефолтная схема + атрибут `style`
@@ -47,19 +48,14 @@ type HelpProps = {};
 
 export const Help: FunctionComponent<HelpProps> = () => {
   return (
-    <Flex justifyContent={"center"}>
-      <Box maxWidth="960px">
-        <Flex
-          sx={{
-            float: "right",
-            margin: 3,
-            marginTop: 5,
-          }}
-        ></Flex>
+    <div className="flex justify-center">
+      <div className="help-content" style={{ maxWidth: 960 }}>
+        {/* Пустой flex из старых verсий — рендера ничего, но держим для parity разметки */}
+        <div />
         <Switch>
           <LazyHelpPage />
         </Switch>
-      </Box>
-    </Flex>
+      </div>
+    </div>
   );
 };

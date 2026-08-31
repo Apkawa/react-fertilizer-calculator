@@ -2,8 +2,7 @@ import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { buildNPKFertilizer } from "@fertilizer/calculator/fertilizer";
 import { IconButton } from "@fertilizer/icons";
 import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { fertilizerPush } from "@/components/Calculator/actions";
+import { useStore } from "@/store";
 import { csvParse } from "@/utils/csv";
 
 type ImportFertilizersProps = {};
@@ -11,8 +10,7 @@ type ImportFertilizersProps = {};
 const COLUMNS = ["id", ...FERTILIZER_ELEMENT_NAMES];
 
 export function ImportFertilizers(props: ImportFertilizersProps) {
-  const buttonRef = createRef<HTMLButtonElement>();
-  const dispatch = useDispatch();
+  const buttonRef = createRef<HTMLSpanElement>();
   const [size, setSize] = useState({ width: 0, height: 0 });
   useEffect(() => {
     const newSize = {
@@ -31,7 +29,7 @@ export function ImportFertilizers(props: ImportFertilizersProps) {
     }
     for (const { id, ...npk } of p) {
       const f = buildNPKFertilizer(id, npk);
-      dispatch(fertilizerPush(f));
+      useStore.getState().pushFertilizer(f);
     }
   };
 
@@ -50,16 +48,14 @@ export function ImportFertilizers(props: ImportFertilizersProps) {
   };
   return (
     <>
-      <IconButton
-        sx={{
-          position: "relative",
-        }}
-        ref={buttonRef}
-        name="import"
-      >
+      {/* a11y (stage 4): file-инпут был вложен внутрь <button> (nested-interactive).
+          Теперь инпут — сосед кнопки и накрывает её: клик по иконке открывает диалог. */}
+      <span ref={buttonRef} className="relative inline-block">
+        <IconButton name="import" aria-label="Импорт удобрений" />
         <input
           type="file"
           accept="text/csv, .csv"
+          aria-label="Импорт удобрений"
           onChange={(event) => handleOnChange(event)}
           style={{
             top: 0,
@@ -69,7 +65,7 @@ export function ImportFertilizers(props: ImportFertilizersProps) {
             ...size,
           }}
         />
-      </IconButton>
+      </span>
     </>
   );
 }

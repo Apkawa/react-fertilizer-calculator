@@ -1,15 +1,8 @@
-import { normalizeConcentration } from "@fertilizer/calculator/dilution";
 import { IconButton } from "@fertilizer/icons";
-import React from "react";
-import { connect, useDispatch } from "react-redux";
-import { Box, Card, Flex, Heading, Text } from "rebass";
-import { Form, reduxForm } from "redux-form";
-import { DEFAULT_MICRO_RECIPE, DEFAULT_RECIPES } from "@/components/Calculator/constants/recipes";
-import { Recipe } from "@/components/Calculator/Options/Recipe";
-import { mobileStyles } from "@/components/ui/styled";
-import type { RootState } from "@/redux/types";
-import type { ReduxFormType } from "../ui/ReduxForm/types";
-import { calculateStart, recipeReset } from "./actions";
+import { Card, Heading, Text } from "@fertilizer/ui";
+import React, { type FunctionComponent } from "react";
+import { useStore } from "@/store";
+import { FormProvider } from "@/store/form-context";
 import { REDUX_FORM_NAME } from "./constants";
 import FertilizerSelect from "./FertilizerSelect";
 import { ExportRecipes } from "./ImportExport/ExportRecipes";
@@ -17,113 +10,67 @@ import { ExportState } from "./ImportExport/ExportState";
 import { ImportRecipes } from "./ImportExport/ImportRecipes";
 import { ImportState } from "./ImportExport/ImportState";
 import { Options } from "./Options/Options";
+import { Recipe } from "./Options/Recipe";
 import { Result } from "./Result/Result";
-import type { CalculatorFormValues } from "./types";
 
 type CalculatorProps = {};
 
-const initialValues: CalculatorFormValues = {
-  accuracy: 0.2,
-  solution_volume: 1,
-  solution_concentration: normalizeConcentration(100),
-  recipe: { ...DEFAULT_RECIPES[0].elements, ...DEFAULT_MICRO_RECIPE, Cl: 0 },
-  fertilizers: [],
-  dilution_enabled: false,
-  dilution_concentration: normalizeConcentration(1),
-  topping_up_enabled: false,
-  mixerOptions: {},
-};
-export const CalculatorContainer: ReduxFormType<CalculatorProps, CalculatorFormValues> = ({
-  handleSubmit,
-}) => {
-  const dispatch = useDispatch();
+// Главная форма калкулятора: FormProvider (calculatorOptions) + <form> для submit (кнопка Calculate).
+// Поля формы (Options, FertilizerSelect) читают/пишут глобальный zustand-стор через useFormField.
+export const CalculatorContainer: FunctionComponent<CalculatorProps> = () => {
+  const recipeReset = useStore((s) => s.resetRecipes);
   return (
-    <Form
-      onSubmit={handleSubmit(() => {
-        dispatch(calculateStart());
-      })}
-    >
-      <Flex
-        sx={{
-          flexDirection: "row",
-          ...mobileStyles({
-            flexDirection: "column-reverse",
-          }),
+    <FormProvider formName={REDUX_FORM_NAME}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          useStore.getState().calculate();
         }}
       >
-        <Box
-          flex={1}
-          sx={{
-            marginRight: 2,
-            ...mobileStyles({
-              marginRight: 0,
-            }),
-          }}
-        >
-          <FertilizerSelect />
-        </Box>
-        <Flex flexDirection="column" flex={1}>
-          <Box flex={1} marginBottom={2}>
-            <Recipe />
-          </Box>
-          <Box flex={1}>
-            <Result />
-          </Box>
-          <Box flex={1}>
-            <Options />
-          </Box>
-          <Card>
-            <Heading fontSize={2}>Импорт/Экспорт</Heading>
-            <Flex flexDirection="column" p={3}>
-              <Flex alignItems="center" justifyContent="space-between" flexWrap="wrap">
-                <Text>Рецепты</Text>
-                <Box
-                  sx={{
-                    "&>*": {
-                      marginLeft: 1,
-                    },
-                  }}
-                >
-                  <ImportRecipes />
-                  <ExportRecipes />
-                  <IconButton name="restart" onClick={() => dispatch(recipeReset())} />
-                </Box>
-              </Flex>
-              <Flex alignItems="center" justifyContent="space-between" flexWrap="wrap">
-                <Text>Настройки</Text>
-                <Box
-                  sx={{
-                    "&>*": {
-                      marginLeft: 1,
-                    },
-                  }}
-                >
-                  <ImportState />
-                  <ExportState />
-                </Box>
-              </Flex>
-            </Flex>
-          </Card>
-        </Flex>
-      </Flex>
-    </Form>
+        {/* На десктопе колонки стоят рядом; на экранах ≤800px раскладка перевёрнута — снизу вверх */}
+        <div className="flex max-[800px]:flex-col-reverse">
+          <div className="mr-2 flex-1 max-[800px]:mr-0">
+            <FertilizerSelect />
+          </div>
+          <div className="flex flex-1 flex-col">
+            <div className="mb-2 flex-1">
+              <Recipe />
+            </div>
+            <div className="flex-1">
+              <Result />
+            </div>
+            <div className="flex-1">
+              <Options />
+            </div>
+            <Card>
+              <Heading className="text-base">Импорт/Экспорт</Heading>
+              <div className="flex flex-col p-4">
+                <div className="flex flex-wrap items-center justify-between">
+                  <Text>Рецепты</Text>
+                  <div className="[&>*]:ml-1">
+                    <ImportRecipes />
+                    <ExportRecipes />
+                    <IconButton
+                      name="restart"
+                      aria-label="Сбросить рецепты"
+                      onClick={() => recipeReset()}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-wrap items-center justify-between">
+                  <Text>Настройки</Text>
+                  <div className="[&>*]:ml-1">
+                    <ImportState />
+                    <ExportState />
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </form>
+    </FormProvider>
   );
 };
 
-const InitializerCalculator = reduxForm<CalculatorFormValues>({
-  form: REDUX_FORM_NAME,
-  initialValues,
-  enableReinitialize: true,
-})(CalculatorContainer);
-
-const ReduxCalculator = connect((state: RootState) => {
-  const formValues: CalculatorFormValues = state.calculator?.calculationForm || initialValues;
-  return {
-    initialValues: {
-      ...formValues,
-      recipe: { Cl: 0, ...DEFAULT_MICRO_RECIPE, ...formValues.recipe },
-    },
-  };
-})(InitializerCalculator);
-
-export default ReduxCalculator;
+export default CalculatorContainer;
