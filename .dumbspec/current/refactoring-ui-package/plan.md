@@ -32,12 +32,12 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `refactor(ui): per-component folders with plain-CSS styles`
 
 ## Stage 2 — vitest browser mode + regression tests (chromium)
-- [ ] Red: write `browser.test.tsx` for all 12 components first (behavior: render/click/focus/typing; + `toMatchAriaSnapshot()` of the base state) — failing while no browser project exists
-- [ ] Add devDeps to packages/ui: `@vitest/browser-playwright@4.1.11` (exact peer of vitest 4.1.11), `@playwright/test@^1.62.1` (install with `pnpm_config_store_dir=./.pnpm-cache/v11 pnpm install`)
-- [ ] `vitest.config.ts`: `@vitejs/plugin-react` (classic runtime) + `test.projects` = `node` (jsdom, unit tests) + `browser` (chromium headless, `provider: playwright()`, instances chromium, viewport 1280×720, include `src/**/browser.test.tsx`)
-- [ ] Scripts: `test` → `vitest run --project node`, `test:browser` → `vitest run --project browser`, `test:watch` → `vitest`
-- [ ] Green: `pnpm -C packages/ui test:browser` passes in chromium; ARIA `.snap` baselines created and kept
-- [ ] `pnpm test` (root) still green — only the `node` project runs (full-check/CI unaffected)
+- [x] Red: write `browser.test.tsx` for all 12 components first (behavior: render/click/focus/typing; + `toMatchAriaSnapshot()` of the base state) — failing while no browser project exists
+- [x] Add devDeps to packages/ui: `@vitest/browser-playwright@4.1.11` (exact peer of vitest 4.1.11), `@playwright/test@^1.62.1` (install with `pnpm_config_store_dir=./.pnpm-cache/v11 pnpm install`)
+- [x] `vitest.config.ts`: `@vitejs/plugin-react` (classic runtime) + `test.projects` = `node` (jsdom, unit tests) + `browser` (chromium headless, `provider: playwright()`, instances chromium, viewport 1280×720, include `src/**/browser.test.tsx`)
+- [x] Scripts: `test` → `vitest run --project node`, `test:browser` → `vitest run --project browser`, `test:watch` → `vitest`
+- [x] Green: `pnpm -C packages/ui test:browser` passes in chromium; ARIA `.snap` baselines created and kept
+- [x] `pnpm test` (root) still green — only the `node` project runs (full-check/CI unaffected)
 
 **Criterion:** `pnpm -C packages/ui test:browser` green for all 12 components in real chromium; root `pnpm test` green with node project only; committed `.snap` baselines.
 **Commit:** `test(ui): browser-mode regression tests (vitest/browser + playwright)`
