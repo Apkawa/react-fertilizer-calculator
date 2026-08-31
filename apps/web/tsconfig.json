@@ -22,6 +22,8 @@
     "./src/**/*",
     // @fertilizer/calculator — source-пакет: приложение тянет его .ts напрямую,
     // амбиентная декларация его зависимостей входит в программу приложения.
-    "../../packages/calculator/src/**/*.d.ts"
+    "../../packages/calculator/src/**/*.d.ts",
+    // @fertilizer/ui — source-пакет: амбиентная декларация .css-импортов входит в программу приложения.
+    "../../packages/ui/src/**/*.d.ts"
   ]
 }
