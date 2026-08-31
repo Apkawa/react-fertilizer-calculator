@@ -32,11 +32,12 @@
     "storybook": "10.5.10",
     "typescript": "7.0.2",
     "vite": "8.2.2",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.11",
+    "tailwindcss": "^4.3.3"
   },
   "scripts": {
-    "build-storybook": "storybook build",
-    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
+    "storybook": "storybook dev -p 6006 --no-open",
     "test": "vitest run --project node",
     "test:browser": "vitest run --project browser",
     "test:watch": "vitest"
