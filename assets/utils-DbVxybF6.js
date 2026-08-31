@@ -1,0 +1,1 @@
+var e=Object.keys,t=Object.entries,n=Object.values;function r(e){return e.reduce((e,t)=>e+t,0)}function i(e,t=0){let n=10**t;return Math.round((e+2**-52)*n)/n}function a(e){return Math.floor(e.valueOf())===e.valueOf()?0:e.toString().split(`.`)[1].length||0}function o(e){let t=parseFloat(e);return isNaN(t)?e:t}export{r as a,i,t as n,o,e as r,n as s,a as t};
