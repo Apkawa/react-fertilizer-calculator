@@ -15,6 +15,7 @@ node_modules/
 # production
 /apps/web/build
 build/
+storybook-static/
 
 # misc
 .DS_Store

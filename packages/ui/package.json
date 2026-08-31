@@ -17,6 +17,8 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",
+    "@storybook/react": "10.5.10",
+    "@storybook/react-vite": "10.5.10",
     "@testing-library/react": "12.1.5",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
@@ -27,10 +29,14 @@
     "jsdom": "^30.0.1",
     "react": "catalog:",
     "react-dom": "^16.13.1",
+    "storybook": "10.5.10",
     "typescript": "7.0.2",
+    "vite": "8.2.2",
     "vitest": "^4.1.11"
   },
   "scripts": {
+    "build-storybook": "storybook build",
+    "storybook": "storybook dev -p 6006",
     "test": "vitest run --project node",
     "test:browser": "vitest run --project browser",
     "test:watch": "vitest"

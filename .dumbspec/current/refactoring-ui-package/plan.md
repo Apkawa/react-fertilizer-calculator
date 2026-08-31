@@ -43,18 +43,19 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 **Commit:** `test(ui): browser-mode regression tests (vitest/browser + playwright)`
 
 ## Stage 3 — Storybook for all packages/ui components
-- [ ] Add devDeps: `storybook@10.5.10`, `@storybook/react-vite@10.5.10` (+ `onlyBuiltDependencies` entries if new build scripts appear)
-- [ ] `packages/ui/.storybook/`: `main.ts` (`framework: '@storybook/react-vite'`, stories `../src/**/*.stories.tsx`, classic JSX, theme.css in preview) + `preview.ts`
-- [ ] `<Component>.stories.tsx` for all 12 components (base state + main variants: open states, props)
-- [ ] Scripts: `storybook` → `storybook dev -p 6006`, `build-storybook` → `storybook build`
-- [ ] `pnpm -C packages/ui build-storybook` exits 0; `tsc -p packages/ui` still green (stories type-check)
-- [ ] Dev-server smoke (playwright-cli): storybook page renders, stories of all 12 components present
+- [x] Add devDeps: `storybook@10.5.10`, `@storybook/react-vite@10.5.10` (+ `onlyBuiltDependencies` entries if new build scripts appear)
+- [x] `packages/ui/.storybook/`: `main.ts` (`framework: '@storybook/react-vite'`, stories `../src/**/*.stories.tsx`, classic JSX, theme.css in preview) + `preview.ts`
+- [x] `<Component>.stories.tsx` for all 12 components (base state + main variants: open states, props)
+- [x] Scripts: `storybook` → `storybook dev -p 6006`, `build-storybook` → `storybook build`
+- [x] `pnpm -C packages/ui build-storybook` exits 0; `tsc -p packages/ui` still green (stories type-check)
+- [x] Dev-server smoke (playwright-cli): storybook page renders, stories of all 12 components present
 
 **Criterion:** `build-storybook` succeeds; Storybook dev server shows a story for every component in `packages/ui`; app `full-check` still green.
 **Commit:** `feat(ui): storybook for packages/ui components`
 
 ## Stage 4 — Docs + verification + archive
-- [ ] `AGENTS.md`: packages/ui structure (component folders, plain CSS), test commands (`test:browser` local/manual like e2e, `storybook`/`build-storybook`), vanilla-extract removal noted
+- [ ] `AGENTS.md`: packages/ui structure (component folders, plain CSS), test commands (`test:browser` local/manual like e2e, `storybook`/`build-storybook`), vanilla-extract removal noted (incl. Storybook `--no-open` on headless WSL2, and the stale `tab-menu.tsx` line — it lives in apps/web, not packages/ui)
+- [ ] Cleanup: delete the redundant per-folder `packages/ui/src/<Component>/style.css.d.ts` (superseded by `src/global.d.ts`); fix the stale "vanilla-extract" comment in `apps/web/src/index.tsx`
 - [ ] Final `pnpm full-check` green
 - [ ] Local verification: `pnpm -C packages/ui test:browser` green; `build-storybook` green; optionally `pnpm test:e2e` (role locators — class names irrelevant)
 - [ ] Archive task: `git mv .dumbspec/current/refactoring-ui-package .dumbspec/archive/refactoring-ui-package` (plan fully `[x]`)
