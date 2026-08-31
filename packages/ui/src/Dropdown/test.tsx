@@ -2,6 +2,9 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { Dropdown } from "./index";
 
+// Значение инпута-комбобокса (getByRole возвращает HTMLElement).
+const comboboxValue = () => (screen.getByRole("combobox") as HTMLInputElement).value;
+
 test("Dropdown smoke: дропдаун рендерит выбранное значение", () => {
   const { container } = render(<Dropdown<string> items={["a", "b"]} value="a" />);
   const input = container.querySelector("input");
@@ -49,14 +52,70 @@ test("Dropdown: у listbox есть пункты role=option прямыми де
   }
 });
 
-// a11y (stage 4): nested-interactive — пункт не самостоятельный интерактивный
-// элемент: у обёртки нет tabindex, клик по телу пункта ничего не выбирает
-// (интерактивные контролы — кнопки внутри строк).
-test("Dropdown: пункты не фокусируемы и не выбираются кликом по телу", () => {
-  render(<Dropdown<string> items={["a", "b"]} value="a" />);
+// Кликабельность пунктов: клик по телу пункта выбирает значение — инпут
+// показывает выбранное, onChange вызывается, список закрывается.
+test("Dropdown: клик по пункту выбирает значение и закрывает список", () => {
+  const onChange = vi.fn();
+  render(<Dropdown<string> items={["a", "b", "c"]} value="a" onChange={onChange} />);
   fireEvent.click(screen.getByRole("button", { name: "Открыть список" }));
-  const option = screen.getAllByRole("option")[0];
-  expect(option.hasAttribute("tabindex")).toBe(false);
-  fireEvent.click(option);
-  expect(screen.getByRole("listbox")).not.toBeNull();
+  fireEvent.click(screen.getAllByRole("option")[1]);
+  expect(onChange).toHaveBeenCalledWith("b");
+  const input = screen.getByRole("combobox") as HTMLInputElement;
+  expect(input.value).toBe("b");
+  expect(screen.queryByRole("listbox")).toBeNull();
+});
+
+// a11y (useKeyWithClickEvents): у пункта с onClick есть клавиатурный
+// эквивалент — пункт фокусируем (tabIndex) и выбирается по Enter/Space.
+test("Dropdown: пункт фокусируем и выбирается по Enter", () => {
+  const onChange = vi.fn();
+  render(<Dropdown<string> items={["a", "b"]} value="a" onChange={onChange} />);
+  fireEvent.click(screen.getByRole("button", { name: "Открыть список" }));
+  const option = screen.getAllByRole("option")[1];
+  expect(option.getAttribute("tabindex")).toBe("0");
+  fireEvent.keyDown(option, { key: "Enter" });
+  expect(onChange).toHaveBeenCalledWith("b");
+  expect(comboboxValue()).toBe("b");
+});
+
+// Отключённый пункт (checkDisabledItem) кликом не выбирается.
+test("Dropdown: клик по отключённому пункту ничего не выбирает", () => {
+  const onChange = vi.fn();
+  render(
+    <Dropdown<string>
+      items={["a", "b"]}
+      value="a"
+      onChange={onChange}
+      checkDisabledItem={(item) => item === "b"}
+    />,
+  );
+  fireEvent.click(screen.getByRole("button", { name: "Открыть список" }));
+  fireEvent.click(screen.getAllByRole("option")[1]);
+  expect(onChange).not.toHaveBeenCalled();
+  expect(comboboxValue()).toBe("a");
+});
+
+// Пункты с собственными контролами (renderItem): их обработчики делают
+// stopPropagation — клик по кнопке внутри строки не выбирает пункт.
+test("Dropdown: кнопка внутри renderItem не выбирает пункт", () => {
+  const onChange = vi.fn();
+  render(
+    <Dropdown<string>
+      items={["a", "b"]}
+      value="a"
+      onChange={onChange}
+      renderItem={({ item }) => (
+        <span>
+          {item}
+          <button type="button" onClick={(event) => event.stopPropagation()}>
+            x
+          </button>
+        </span>
+      )}
+    />,
+  );
+  fireEvent.click(screen.getByRole("button", { name: "Открыть список" }));
+  fireEvent.click(screen.getAllByRole("option")[1].querySelector("button")!);
+  expect(onChange).not.toHaveBeenCalled();
+  expect(comboboxValue()).toBe("a");
 });

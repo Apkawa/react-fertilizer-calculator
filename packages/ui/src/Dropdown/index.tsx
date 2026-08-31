@@ -32,9 +32,11 @@ const DropdownContext: Context<DropdownContextInterface<any>> = React.createCont
 let listboxIdCounter = 0;
 
 // ── Пункт списка ──
-// a11y (stage 4): обёртка пункта неинтерактивна (без tabIndex/onClick/onKeyDown) —
-// nested-interactive: интерактивный контрол в строке — кнопки внутри renderItem,
-// клик по телу пункта ничего не выбирает.
+// Клик по телу пункта выбирает значение (disabled-пункт кликом не выбирается).
+// Клик-выбору есть клавиатурный эквивалент: пункт фокусируем (tabIndex=0)
+// и выбирает его Enter/Space (a11y useKeyWithClickEvents). Кнопки внутри
+// renderItem остаются своими: их обработчики делают stopPropagation, так
+// что клик по контролу строки пункт не выбирает.
 function DropdownItem<T>(props: { value: T; index: number; nodeRef?: React.Ref<HTMLDivElement> }) {
   const { value, index, nodeRef } = props;
   const ctx = useContext(DropdownContext);
@@ -49,10 +51,21 @@ function DropdownItem<T>(props: { value: T; index: number; nodeRef?: React.Ref<H
   };
 
   return (
-    // biome-ignore lint/a11y/useFocusableInteractive: пункт вне tab-порядка (axe nested-interactive)
     <div
       ref={nodeRef}
       role="option"
+      tabIndex={disabled ? undefined : 0}
+      onClick={disabled ? undefined : () => ctx.onItemClick?.(value)}
+      // a11y: у пункта с onClick есть клавиатурный эквивалент (Enter/Space).
+      onKeyDown={(event) => {
+        if (disabled) {
+          return;
+        }
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          ctx.onItemClick?.(value);
+        }
+      }}
       className={cx("ui-dropdown-item", disabled && "ui-dropdown-item--disabled")}
     >
       {renderItem()}

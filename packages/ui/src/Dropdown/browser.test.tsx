@@ -32,6 +32,17 @@ test("Dropdown: шеврон открывает список, aria-expanded пе
   await expect.element(combobox).toHaveAttribute("aria-expanded", "false");
 });
 
+test("Dropdown: клик по пункту списка выбирает значение", async () => {
+  const { screen } = mountBrowser(
+    <Dropdown<string> items={["a", "b", "c"]} value="a" label="Выбор значения" />,
+  );
+  await screen.getByRole("button", { name: "Открыть список" }).click();
+  // Реальный клик по телу пункта: значение меняется, список закрывается
+  await screen.getByRole("option").nth(1).click();
+  await expect.element(screen.getByRole("combobox")).toHaveValue("b");
+  await expect.element(screen.getByRole("listbox")).not.toBeInTheDocument();
+});
+
 test("Dropdown: ARIA-снапшот базового состояния", async () => {
   const { screen } = mountBrowser(
     <Dropdown<string> items={["a", "b"]} value="a" label="Выбор значения" />,
