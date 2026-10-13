@@ -8,10 +8,11 @@ interface LazyPromiseProps<T> {
 }
 
 export function LazyPromise<T>(props: LazyPromiseProps<T>) {
-  const { lazy, component: Component, loading: Loading = <></> } = props;
+  const { lazy, component: Component, loading: Loading } = props;
   const [result, setResult] = useState<T | undefined>(undefined);
 
   lazy().then((result) => setResult(result));
 
-  return <>{result ? <Component result={result} /> : Loading}</>;
+  // Loading — это ComponentType: рендерим его элементом (React 18: children: ReactNode)
+  return <>{result ? <Component result={result} /> : Loading ? <Loading /> : null}</>;
 }

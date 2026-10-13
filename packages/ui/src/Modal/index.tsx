@@ -39,7 +39,8 @@ const useModalRoot = () => {
 
 function ModalContainer(props: {
   children: ReactNode;
-  cardRef: React.RefObject<HTMLDivElement>;
+  // React 19: useRef<T | null>(null) теперь даёт RefObject<T | null>.
+  cardRef: React.RefObject<HTMLDivElement | null>;
   titleId: string;
 }) {
   const { children, cardRef, titleId } = props;

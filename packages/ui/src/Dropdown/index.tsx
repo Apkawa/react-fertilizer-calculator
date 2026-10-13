@@ -94,8 +94,11 @@ function DropdownList<T>(props: { items: T[]; listboxId: string; label?: string 
       className={cx("ui-dropdown-list", "flex flex-col")}
       style={{ maxHeight: height * 5 }}
     >
+      {/* Ключ — индекс: пункты могут быть объектами (без стабильного id),
+          а список статичный (не сортируется) — индекс уникален и достаточен.
+          (key={String(item)} для объектов давал дубли "[object Object]".) */}
       {Array.from(items).map((s, i) => (
-        <React.Fragment key={String(s)}>
+        <React.Fragment key={i}>
           <DropdownItem<T> value={s} index={i} nodeRef={i === 0 ? itemRef : undefined} />
           {i < items.length - 1 ? <hr style={{ margin: 0 }} /> : null}
         </React.Fragment>

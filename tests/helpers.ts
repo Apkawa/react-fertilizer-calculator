@@ -1,15 +1,21 @@
 import type { Page } from "@playwright/test";
 
-// Dev-предупреждения React 16 (только dev-режим) — известный шум, не ошибки приложения:
-// - "Warning: Using UNSAFE_…" — redux-form (Form/Field/FieldArray) на legacy lifecycles;
-// - "Warning: Encountered two children with the same key" — DropdownList вешает
+// Dev-предупреждения React (только dev-режим) — известный шум, не ошибки приложения:
+// - "Using UNSAFE_…" — react-helmet на legacy lifecycles (UNSAFE_componentWillMount);
+// - "Encountered two children with the same key" — DropdownList вешает
 //   key={String(item)}; для объектов (список удобрений) все ключи одинаковые;
-// - "Warning: Each child in a list should have a unique "key" prop" — Fragment
+// - "Each child in a list should have a unique "key" prop" — Fragment
 //   без key в RenderHelpPages (TabMenu.tsx).
-export const isKnownDevWarning = (text: string) =>
-  text.startsWith("Warning: Using UNSAFE_") ||
-  text.startsWith("Warning: Encountered two children with the same key") ||
-  text.startsWith("Warning: Each child in a list should have a unique");
+// React 19 больше не вешает префикс "Warning: " на эти сообщения, поэтому
+// матчим по содержимому (присутствующий префикс отбрасываем).
+export const isKnownDevWarning = (text: string) => {
+  const t = text.replace(/^Warning:\s*/, "");
+  return (
+    t.startsWith("Using UNSAFE_") ||
+    t.startsWith("Encountered two children with the same key") ||
+    t.startsWith("Each child in a list should have a unique")
+  );
+};
 
 /**
  * Следит за console.error и pageerror (непойманные исключения).
