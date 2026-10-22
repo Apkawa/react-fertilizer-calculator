@@ -3,15 +3,18 @@
   "private": true,
   "scripts": {
     "preversion": "pnpm full-check",
-    "full-check": "pnpm test && pnpm lint && pnpm type && pnpm build",
+    "full-check": "pnpm test && pnpm format:fix && pnpm lint && pnpm type && pnpm build",
     "start": "pnpm -C apps/web start",
     "build": "pnpm -C apps/web build",
     "test": "pnpm -C packages/calculator test && pnpm -C packages/icons test && pnpm -C packages/ui test && pnpm -C apps/web test",
     "test:e2e": "playwright test tests/e2e",
     "test:smoke": "playwright test tests/smoke",
+    "format": "biome format apps packages --diagnostic-level=error",
+    "format:fix": "pnpm format --fix",
     "lint": "biome check apps packages --diagnostic-level=error",
     "type": "tsc -p packages/calculator && tsc -p packages/icons && tsc -p packages/ui && tsc -p apps/web",
     "analyze": "pnpm build && source-map-explorer 'apps/web/build/assets/*.js'",
+    "storybook": "pnpm -C packages/ui storybook",
     "jupyter": "jupyter-notebook docs/"
   },
   "husky": {

@@ -2,10 +2,10 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 
 // Базовые стили: tailwindcss v4 + переменные темы @fertilizer/ui (packages/ui).
-// ВАЖНО: импортировать ПЕРЕД ./Root — Root тянет атомы @fertilizer/ui
-// (plain CSS: style.css компонентов, @layer components). Тогда у tailwindcss v4
-// `@layer theme, base, components, utilities;` оказывается в начале CSS,
-// и minify сортирует слои в этом порядке (base=preflight не затирает атомы).
+// ВАЖНО: импортировать ПЕРЕД ./Root — сначала должен загрузиться tailwindcss v4,
+// чтобы preflight (слой `base`) и переменные темы были доступны. Атомы
+// @fertilizer/ui теперь используют CSS-модули (без `@layer`), которые имеют
+// приоритет над preflight независимо от порядка.
 import "./styles/app.css";
 
 import Root from "./Root";

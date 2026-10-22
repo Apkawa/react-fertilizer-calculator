@@ -8,8 +8,9 @@ import React, {
   useState,
 } from "react";
 import { cx } from "../cx";
+import inputCss from "../Input/style.module.css";
 import { countDecimals, round } from "../number-utils";
-import "./style.css";
+import css from "./style.module.css";
 
 interface Size {
   width: number;
@@ -103,13 +104,13 @@ export const NumberInput = (props: NumberInputProps) => {
   const inputStyle: CSSProperties = { maxWidth, ...style };
 
   return (
-    <div className={cx("ui-number-input-wrapper", className)}>
+    <div className={cx(css.wrapper, className)}>
       {showBtn ? (
         <button
           ref={upButtonRef}
           type="button"
           aria-label="увеличить"
-          className="ui-spinner-button"
+          className={css.spinnerButton}
           style={{ top: `${offset}px`, width: spinnerWidth }}
           onClick={onUpButtonHandler}
         >
@@ -119,7 +120,7 @@ export const NumberInput = (props: NumberInputProps) => {
       <input
         ref={inputRef}
         name={name}
-        className="ui-input"
+        className={inputCss.input}
         {...inputProps}
         lang="en-US"
         value={value ?? ""}
@@ -133,7 +134,7 @@ export const NumberInput = (props: NumberInputProps) => {
           ref={downButtonRef}
           type="button"
           aria-label="уменьшить"
-          className="ui-spinner-button"
+          className={css.spinnerButton}
           style={{ bottom: `${offset}px`, width: spinnerWidth }}
           onClick={onDownButtonHandler}
         >

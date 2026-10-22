@@ -1,7 +1,7 @@
-/* Сайдбар */
 @layer components {
+  /* Сайдбар */
   /* Оверлей сайдбара, докнутый (закреплён слева, узкий) */
-  .ui-sidebar-overlay {
+  .sidebarOverlay {
     overflow-y: auto;
     position: absolute;
     height: 100%;
@@ -21,13 +21,13 @@
   }
 
   /* Оверлей сайдбара, не докнут (на весь экран, с полупрозрачным фоном) */
-  .ui-sidebar-overlay-undocked {
+  .sidebarOverlayUndocked {
     width: 100%;
     background-color: rgba(255, 255, 255, 0.5);
   }
 
   /* Карточка сайдбара (заменяет легасную карточку внутри оверлея) */
-  .ui-sidebar-card {
+  .sidebarCard {
     background-color: var(--color-background);
     box-shadow: var(--shadow-small);
     padding: 8px;

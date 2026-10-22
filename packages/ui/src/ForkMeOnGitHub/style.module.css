@@ -1,8 +1,9 @@
-/* Ленточка "Fork me on GitHub" (заменяет легасный inline-styled компонент) */
 @layer components {
+  /* Ленточка "Fork me on GitHub" (заменяет легасный inline-styled компонент) */
+
   /* Ленточка-обёртка (span): на широких экранах — абсолютный блок 200×200 в углу */
   @media screen and (min-width: 800px) {
-    .ui-fork-me {
+    .forkMe {
       position: absolute;
       display: block;
       top: 0;
@@ -15,7 +16,7 @@
   }
 
   /* Ссылка-ленточка (a): чёрная плашка с белыми «складками», на hover — красная */
-  .ui-fork-me-link {
+  .forkMeLink {
     background: #000;
     color: #fff;
     text-decoration: none;
@@ -29,12 +30,12 @@
     transition: 0.5s;
   }
 
-  .ui-fork-me-link:hover {
+  .forkMeLink:hover {
     background: #c11;
     color: #fff;
   }
 
-  .ui-fork-me-link::before {
+  .forkMeLink::before {
     content: "";
     width: 100%;
     display: block;
@@ -45,7 +46,7 @@
     background: #fff;
   }
 
-  .ui-fork-me-link::after {
+  .forkMeLink::after {
     content: "";
     width: 100%;
     display: block;
@@ -58,7 +59,7 @@
   }
 
   @media screen and (min-width: 800px) {
-    .ui-fork-me-link {
+    .forkMeLink {
       position: absolute;
       top: 40px;
       right: -50px;

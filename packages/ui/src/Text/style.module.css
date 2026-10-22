@@ -1,6 +1,6 @@
-/* Заголовок (эквивалент легасного заголовка: h2 по умолчанию, без margin) */
 @layer components {
-  .ui-heading {
+  /* Заголовок (эквивалент легасного заголовка: h2 по умолчанию, без margin) */
+  .heading {
     margin: 0;
     font-family: var(--font-heading);
     font-size: 0.875rem;

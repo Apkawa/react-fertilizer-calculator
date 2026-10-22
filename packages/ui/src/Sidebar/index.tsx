@@ -3,8 +3,9 @@ import React, { type KeyboardEvent, type ReactNode, useEffect, useState } from "
 import ReactDOM from "react-dom";
 import { Helmet } from "react-helmet";
 import { cx } from "../cx";
-import "./style.css";
+import textCss from "../Text/style.module.css";
 import { useWindowSize } from "../use-window-size";
+import css from "./style.module.css";
 
 export interface SidebarActions {
   open: () => void;
@@ -70,12 +71,12 @@ function SidebarContainer(props: {
       {/* biome-ignore lint/a11y/noStaticElementInteractions: оверлей — поверхность «закрыть по клику», не интерактивный контрол */}
       <div
         tabIndex={-1}
-        className={cx("ui-sidebar-overlay", !docked && "ui-sidebar-overlay-undocked")}
+        className={cx(css.sidebarOverlay, !docked && css.sidebarOverlayUndocked)}
         style={!docked ? { top: `${window.pageYOffset}px` } : undefined}
         onClick={onClickOverlay}
         onKeyDown={onKeyDownOverlay}
       >
-        <div className="ui-sidebar-card">{children}</div>
+        <div className={css.sidebarCard}>{children}</div>
       </div>
     </>,
     modalRoot,
@@ -143,7 +144,7 @@ export function Sidebar(props: SidebarProps) {
                 <Icon size={42} name="close" />
               </button>
             )}
-            <h2 className="ui-heading">{props.title}</h2>
+            <h2 className={textCss.heading}>{props.title}</h2>
           </div>
           <div>{props.children}</div>
         </SidebarContainer>

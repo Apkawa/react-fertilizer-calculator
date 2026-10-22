@@ -1,13 +1,13 @@
-/* Числовой инпут со спиннером */
 @layer components {
+  /* Числовой инпут со спиннером */
   /* Обёртка числового инпута: кнопки спиннера позиционируются абсолютно */
-  .ui-number-input-wrapper {
+  .wrapper {
     position: relative;
     display: block;
   }
 
   /* Кнопка спиннера числового инпута (прозрачная накладка 3em сверху/снизу) */
-  .ui-spinner-button {
+  .spinnerButton {
     position: absolute;
     height: 3em;
     z-index: 30;

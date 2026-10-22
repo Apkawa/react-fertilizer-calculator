@@ -1,0 +1,27 @@
+@layer components {
+  /* Оформление контента Справки (markdown из src/docs).
+     Preflight (слой base) сбросил браузерные стили ul/ol/a — восстанавливаем
+     вид дерева ссылок, но только внутри .helpContent (глобально не трогаем). */
+
+  .helpContent ul,
+  .helpContent ol {
+    /* padding-inline на каждом уровне — отступ накопительно по глубине */
+    padding-inline-start: 1.5em;
+    margin-block: 1em;
+  }
+
+  .helpContent ul {
+    list-style: disc;
+  }
+
+  .helpContent ol {
+    list-style: decimal;
+  }
+
+  /* Preflight сделал a{color:inherit;text-decoration:inherit} — возвращаем
+     вид ссылки: подчёркивание + темовая переменная (--color-secondary) */
+  .helpContent a {
+    color: var(--color-secondary);
+    text-decoration: underline;
+  }
+}

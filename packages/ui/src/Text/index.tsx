@@ -1,6 +1,6 @@
 import React, { type HTMLAttributes, type ReactNode } from "react";
 import { cx } from "../cx";
-import "./style.css";
+import css from "./style.module.css";
 
 export type TextProps = HTMLAttributes<HTMLDivElement>;
 
@@ -18,5 +18,5 @@ export interface HeadingProps {
 // Заголовок (заменяет легасный заголовок; по умолчанию h2)
 export const Heading = ({ as = "h2", className, ...props }: HeadingProps) => {
   const Tag = as;
-  return <Tag className={cx("ui-heading", className)} {...props} />;
+  return <Tag className={cx(css.heading, className)} {...props} />;
 };

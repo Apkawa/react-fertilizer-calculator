@@ -11,7 +11,8 @@ import React, {
   useState,
 } from "react";
 import { cx } from "../cx";
-import "./style.css";
+import inputCss from "../Input/style.module.css";
+import css from "./style.module.css";
 
 // ── Типы (переносятся из components/ui/Dropdown/types.d.ts) ──
 export type ItemType<T> = T | null;
@@ -66,7 +67,7 @@ function DropdownItem<T>(props: { value: T; index: number; nodeRef?: React.Ref<H
           ctx.onItemClick?.(value);
         }
       }}
-      className={cx("ui-dropdown-item", disabled && "ui-dropdown-item--disabled")}
+      className={cx(css.item, disabled && css.itemDisabled)}
     >
       {renderItem()}
     </div>
@@ -91,7 +92,7 @@ function DropdownList<T>(props: { items: T[]; listboxId: string; label?: string 
       id={props.listboxId}
       role="listbox"
       aria-label={props.label}
-      className={cx("ui-dropdown-list", "flex flex-col")}
+      className={cx(css.list, "flex flex-col")}
       style={{ maxHeight: height * 5 }}
     >
       {/* Ключ — индекс: пункты могут быть объектами (без стабильного id),
@@ -197,7 +198,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
             aria-expanded={opened}
             aria-controls={listboxId}
             aria-label={label}
-            className="ui-input"
+            className={inputCss.input}
             value={value}
             onChange={onChangeInputHandler}
             onKeyDown={onKeyDownInputHandler}
@@ -208,7 +209,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
                 имя зависит от состояния: открыт/закрыт. */}
             <button
               type="button"
-              className="ui-dropdown-chevron"
+              className={css.chevron}
               aria-label={opened ? "Закрыть список" : "Открыть список"}
               onClick={() => setOpened(!opened)}
             >

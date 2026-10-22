@@ -2,7 +2,8 @@ import { Icon } from "@fertilizer/icons";
 import React, { type ReactNode, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { Helmet } from "react-helmet";
-import "./style.css";
+import textCss from "../Text/style.module.css";
+import css from "./style.module.css";
 
 export interface ModalActions {
   open: () => void;
@@ -56,7 +57,7 @@ function ModalContainer(props: {
         `}
         </style>
       </Helmet>
-      <div className="ui-modal-overlay" style={{ top: `${window.pageYOffset}px` }}>
+      <div className={css.modalOverlay}>
         {/* a11y (stage 3): диалоговая семантика — role/aria-modal/aria-labelledby;
             tabIndex=-1: фокус при открытии уходит сюда, если внутри нет
             фокусируемых элементов, но сам он в tab-порядке не участвует. */}
@@ -66,7 +67,7 @@ function ModalContainer(props: {
           aria-modal="true"
           aria-labelledby={titleId}
           tabIndex={-1}
-          className="ui-modal-card"
+          className={css.modalCard}
         >
           {children}
         </div>
@@ -130,7 +131,7 @@ export function Modal(props: ModalProps) {
       {closed ? null : (
         <ModalContainer cardRef={dialogRef} titleId={titleId}>
           <div className="flex justify-between">
-            <h2 id={titleId} className="ui-heading">
+            <h2 id={titleId} className={textCss.heading}>
               {props.title}
             </h2>
             {/* Контрол закрытия — настоящая кнопка с доступным именем (a11y stage 2) */}

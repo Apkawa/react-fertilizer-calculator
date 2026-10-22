@@ -1,0 +1,7 @@
+@layer components {
+  /* Подпись поля формы (чекбокс/радио + текст рядом) */
+  .label {
+    display: flex;
+    align-items: center;
+  }
+}
