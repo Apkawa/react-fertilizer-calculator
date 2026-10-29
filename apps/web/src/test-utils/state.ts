@@ -6,7 +6,9 @@
  * redux-form + saga, но обращения идут к zustand-стору.
  */
 
+import type { CalculateResult, FertilizerWeights } from "@fertilizer/calculator";
 import type { ExportStateType } from "@fertilizer/calculator/format/types";
+import { getEmptyElements } from "@fertilizer/calculator/helpers";
 import type { FertilizerInfo } from "@fertilizer/calculator/types";
 import type { AddEditFormType } from "@/components/Calculator/FertilizerManager/types";
 import type { CalculatorState } from "@/components/Calculator/types";
@@ -26,6 +28,20 @@ export const setFormField = (name: string, value: unknown): void => {
 // Запуск расчета (минуя валидацию формы)
 export const calculateNow = (): void => {
   useStore.getState().calculate();
+};
+
+// Посев результата для render-smoke (без реального calculate()): массы
+// удобрений по id — единственный источник для merged-карточки (§3.1,
+// weightForId). Остальные поля результата — пустые.
+export const seedResult = (weights: FertilizerWeights[]): void => {
+  const result: CalculateResult = {
+    fertilizers: weights,
+    elements: getEmptyElements(),
+    deltaElements: getEmptyElements(),
+    score: 100,
+    stats: { time: 0, count: 0 },
+  };
+  useStore.setState((s) => ({ calculator: { ...s.calculator, result } }));
 };
 
 // Менеджер удобрений

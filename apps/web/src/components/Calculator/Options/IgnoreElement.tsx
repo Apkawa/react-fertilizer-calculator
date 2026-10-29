@@ -7,8 +7,11 @@ type IgnoreElementProps = {};
 export const IgnoreElement: FunctionComponent<IgnoreElementProps> = () => {
   return (
     <Card>
-      <div className="flex flex-col">
-        <Heading className="text-base">Игнорировать</Heading>
+      {/* Заголовок — канон Heading (h2, 1.125rem/600); чекбокс-ряды — канон §3.6:
+       * 2 колонки (<800px), 4 колонки (≥800px), gap ≥3; Checkbox из @fertilizer/ui
+       * даёт touch-цель ≥40px */}
+      <Heading>Игнорировать</Heading>
+      <div className="grid grid-cols-2 min-[800px]:grid-cols-4 gap-3">
         <Checkbox name="ignore.Ca" label="Кальций" />
         <Checkbox name="ignore.Mg" label="Магний" />
         <Checkbox name="ignore.S" label="Сера" />

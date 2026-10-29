@@ -1,11 +1,61 @@
+@layer theme, base, components, utilities;
 @layer components {
-  /* Оформление контента Справки (markdown из src/docs).
-     Preflight (слой base) сбросил браузерные стили ul/ol/a — восстанавливаем
-     вид дерева ссылок, но только внутри .helpContent (глобально не трогаем). */
+  /* Оформление контента Справки (markdown из src/docs) — канон типографики
+     design-guideline §5: body/control-текст 0.875rem/1.5 (--text); иерархия
+     заголовков h1 1.5rem … h6 0.75rem, вес 600, line-height 1.5 (та же шкала,
+     что Text/Heading в @fertilizer/ui); таблицы — th uppercase 0.75rem/600
+     --muted + рамки --border; код — monospace + подложка/рамка токенами.
+     Цветовых литералов нет (гайдлайн §4.4). Preflight (слой base) сбросил
+     браузерные стили h/p/table/code и ul/ol/a — восстанавливаем только
+     внутри .helpContent (глобально не трогаем). */
 
+  .helpContent {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  /* Иерархия заголовков markdown (§5): вес/интерлиней общие, размер — по тегу. */
+  .helpContent h1,
+  .helpContent h2,
+  .helpContent h3,
+  .helpContent h4,
+  .helpContent h5,
+  .helpContent h6 {
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text);
+    margin-block: 1.25em 0.5em;
+  }
+
+  .helpContent h1 {
+    font-size: 1.5rem;
+  }
+  .helpContent h2 {
+    font-size: 1.125rem;
+  }
+  .helpContent h3 {
+    font-size: 1rem;
+  }
+  .helpContent h4 {
+    font-size: 0.875rem;
+  }
+  .helpContent h5 {
+    font-size: 0.8125rem;
+  }
+  .helpContent h6 {
+    font-size: 0.75rem;
+  }
+
+  /* Абзацы: spacing между блоками (margin'ы смежных p схлопываются). */
+  .helpContent p {
+    margin-block: 0.75em;
+  }
+
+  /* Preflight сбросил маркеры списков — восстанавливаем дерево ссылок,
+     padding-inline на каждом уровне (отступ накопительно по глубине). */
   .helpContent ul,
   .helpContent ol {
-    /* padding-inline на каждом уровне — отступ накопительно по глубине */
     padding-inline-start: 1.5em;
     margin-block: 1em;
   }
@@ -19,9 +69,65 @@
   }
 
   /* Preflight сделал a{color:inherit;text-decoration:inherit} — возвращаем
-     вид ссылки: подчёркивание + темовая переменная (--color-secondary) */
+     вид ссылки: подчёркивание + core-токен темы --primary (theme.css) */
   .helpContent a {
-    color: var(--color-secondary);
+    color: var(--primary);
     text-decoration: underline;
+  }
+
+  /* Таблицы — канон дельт-таблицы макета (§5): шапка uppercase muted,
+     ряды с рамкой --border. display:block + overflow-x: широкая таблица
+     скролится внутри себя — страница без горизонтального переполнения
+     на 390px (§8). */
+  .helpContent table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    margin-block: 1em;
+  }
+
+  .helpContent th {
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+    padding: 0.375rem 0.5rem;
+    border-bottom: var(--border-width) solid var(--border);
+  }
+
+  .helpContent td {
+    padding: 0.375rem 0.5rem;
+    border-top: var(--border-width) solid var(--border);
+  }
+
+  /* Инлайн-код: monospace, лёгкая подложка карточки + рамка токенами. */
+  .helpContent code {
+    font-family: var(--font-mono);
+    padding: 0.15em 0.4em;
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    color: var(--text);
+  }
+
+  /* Блоки кода (pre > code): свой блок с подложкой/рамкой и внутренним
+     скроллом длинных строк; code внутри — без отдельной рамки-чипа. */
+  .helpContent pre {
+    display: block;
+    overflow-x: auto;
+    padding: 0.75rem 1rem;
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    margin-block: 1em;
+  }
+
+  .helpContent pre code {
+    padding: 0;
+    border: none;
+    background: transparent;
   }
 }

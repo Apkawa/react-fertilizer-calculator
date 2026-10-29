@@ -8,8 +8,10 @@ type AccuracyProps = {};
 export const Accuracy: FunctionComponent<AccuracyProps> = () => {
   return (
     <Card>
-      <div className="flex flex-col">
-        <Heading className="text-base">Точность</Heading>
+      {/* Заголовок — канон Heading (h2, 1.125rem/600); радио-ряды — канон §3.6:
+       * flex-wrap с gap ≥3; Radio из @fertilizer/ui даёт touch-цель ≥40px */}
+      <Heading>Точность</Heading>
+      <div className="flex flex-wrap gap-3">
         {ACCURACY_VARIANTS.map((a) => (
           <Radio key={a} name="accuracy" value={a} label={`${a} г.`} normalize={decimal} />
         ))}

@@ -21,3 +21,10 @@ test("Radio: onChange при выборе", () => {
   fireEvent.click(container.querySelector("input") as HTMLInputElement);
   expect(onChange).toHaveBeenCalledTimes(1);
 });
+
+// Stage 2 «restyle» (red-фаза): хук data-ui на самом input радио; красный.
+test('Radio: корень несёт хук data-ui="radio"', () => {
+  const { container } = render(<Radio name="a" value="1" onChange={() => {}} />);
+  const input = container.querySelector("input") as HTMLInputElement;
+  expect(input.getAttribute("data-ui")).toBe("radio");
+});

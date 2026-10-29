@@ -11,88 +11,76 @@ export const ToppingUp: FunctionComponent<ToppingUpProps> = () => {
   return (
     <Card>
       <Checkbox name="topping_up_enabled" label="Долив раствора" />
+      {/* Блок показывается по чекбоксу — аккордеон (§3.6): поля скрыты без галочки */}
       {topping_up_enabled ? (
-        // Блок показывается по чекбоксу: display из стора оставляем в style
-        <div className="flex flex-col" style={{ display: topping_up_enabled ? "flex" : "none" }}>
-          {/* Label оборачивает инпут — связь label/поле неявная (паттерн @fertilizer/ui) */}
-          <Label className="flex items-center justify-between">
+        <div className="flex flex-col gap-3">
+          {/* Строки полей — канон макета (§3.4): подпись слева, поле справа с
+           * фиксированной шириной и text-right, gap ≥3; Label оборачивает инпут —
+           * связь label/поле неявная (паттерн @fertilizer/ui). */}
+          <Label className="flex flex-wrap items-center justify-between gap-3">
             Новый объем, л
             <Input
               name="topping_up.newSolution.volume"
-              width="3rem"
+              className="w-24 min-w-0 text-right"
               type="number"
               step="0.1"
               min="1"
               pattern="^\d+$"
               normalize={number}
               required
-              style={{
-                textAlign: "center",
-              }}
               autoComplete="off"
             />
           </Label>
-          <Label className="flex items-center justify-between">
+          <Label className="flex flex-wrap items-center justify-between gap-3">
             Текущий объем, л
             <Input
               name="topping_up.currentSolution.volume"
-              width="3rem"
+              className="w-24 min-w-0 text-right"
               type="number"
               step="0.1"
               min="1"
               pattern="^\d+$"
               normalize={number}
-              style={{
-                textAlign: "center",
-              }}
               autoComplete="off"
             />
           </Label>
-          <Label className="flex items-center justify-between pt-2">
+          <Label className="flex flex-wrap items-center justify-between gap-3">
             Текущий EC, мСм/см
             <Input
               name="topping_up.currentSolution.EC"
-              width="3rem"
+              className="w-24 min-w-0 text-right"
               type="number"
               step="0.01"
               min="0"
               max="10"
               normalize={decimal}
-              style={{
-                textAlign: "center",
-              }}
               autoComplete="off"
             />
           </Label>
-          <Label className="flex items-center justify-between pt-2">
+          <Label className="flex flex-wrap items-center justify-between gap-3">
             EC профиля раствора, мСм/см
             <Input
               name="topping_up.currentSolution.profileEC"
-              width="3rem"
+              className="w-24 min-w-0 text-right"
               type="number"
               step="0.01"
               min="0"
               max="10"
               normalize={decimal}
-              style={{
-                textAlign: "center",
-              }}
               autoComplete="off"
             />
           </Label>
-          <Label className="flex items-center justify-between pt-2">
+          {/* Длинная подпись — поле шире (w-28, как ряд солей в каноне макета) */}
+          <Label className="flex flex-wrap items-center justify-between gap-3">
             Концентрация солей профиля раствора, г/л
             <Input
               name="topping_up.currentSolution.profileSaltsConcentration"
-              width="3rem"
+              className="w-28 min-w-0 text-right"
               type="number"
               step="0.01"
               min="0"
               max="10"
               normalize={decimal}
-              style={{
-                textAlign: "center",
-              }}
               autoComplete="off"
             />
           </Label>

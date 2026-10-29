@@ -46,16 +46,15 @@ export const LazyHelpPage: FunctionComponent<{}> = () => {
 
 type HelpProps = {};
 
+// Контент Справки живёт в общей рамке Root (§2.2: max-w 936 px-4, по центру) —
+// собственного контейнера ширины (легасный flex justify-center + inline
+// max-width 960) здесь нет, типографика markdown — css.helpContent.
 export const Help: FunctionComponent<HelpProps> = () => {
   return (
-    <div className="flex justify-center">
-      <div className={css.helpContent} style={{ maxWidth: 960 }}>
-        {/* Пустой flex из старых verсий — рендера ничего, но держим для parity разметки */}
-        <div />
-        <Switch>
-          <LazyHelpPage />
-        </Switch>
-      </div>
+    <div className={css.helpContent}>
+      <Switch>
+        <LazyHelpPage />
+      </Switch>
     </div>
   );
 };

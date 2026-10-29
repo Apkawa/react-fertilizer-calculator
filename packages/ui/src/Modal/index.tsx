@@ -67,6 +67,11 @@ function ModalContainer(props: {
           aria-modal="true"
           aria-labelledby={titleId}
           tabIndex={-1}
+          // Хук data-ui="modal" — на панели (диалоге), не на оверлее:
+          // оверлей — декоративный фон (закрашивается токенами), схемы
+          // мишатся на панель (рамка/ширина/тень) через
+          // `html[data-scheme=x] [data-ui=modal]`.
+          data-ui="modal"
           className={css.modalCard}
         >
           {children}

@@ -1,0 +1,160 @@
+/* ============================================================
+    Схема «Windows 95» — ТОЛЬКО переопределения токенов схемы
+    (перенос из apps/web-design/color-win95.css: цвета дословно;
+    классовые overrides макета — .btn bevel/серая подложка, квадратные
+    чипы — НЕ переносены: их закрывают токены --radius, --border-width,
+    --shadow-small/large и --btn-shadow и компоненты в Stage 2; белые
+    «утопленные» поля ввода перенесены ниже через [data-ui="input"]
+    исключение Stage 2 — подложка/рамка/утопленный bevel токенами не
+    выражаются). Чистый CSS, без @import.
+
+    Механизм специфичности: light `html[data-scheme="win95"]` (0-1-1)
+    перебивает default `:root` (0-1-0) из theme.css; dark
+    `html[data-scheme="win95"][data-theme="dark"]` (0-2-1) перебивает
+    media-fallback theme.css (0-2-0) — цвета схемы побеждают
+    (гайдлайн §4.2). Цветовые литералы — только здесь (гайдлайн §4.4).
+    ============================================================ */
+
+/* Светлая: серые поверхности #c0c0c0/#d4d0c8, чёрный текст,
+   navy primary #000080. */
+html[data-scheme="win95"] {
+  --bg: #c0c0c0;
+  --card: #d4d0c8;
+  --text: #000000;
+  --muted: #4a4a4a;
+  --border: #808080;
+  --primary: #000080;
+  --danger: #a00000;
+  --ok: #007a33;
+  --deficit: #b02a2a;
+  --excess: #b27900;
+
+  /* Палитра элементов — «классические» плоские цвета Win95 */
+  --el-no3: #008000;
+  --el-nh4: #008000;
+  --el-p: #a89000;
+  --el-k: #c05000;
+  --el-ca: #707070;
+  --el-mg: #800080;
+  --el-s: #707070;
+  --el-cl: #707070;
+  --el-micro: #707070; /* микро остаётся серым (т. заказчика) */
+
+  /* Shape: прямоугольные поверхности (radius 0), тонкая рамка 1px.
+     «Объём» — inset bevel вместо drop-тени (макет: светлый штрих
+     сверху-слева, тёмный снизу-справа): --shadow-small = тень карточки,
+     --shadow-large = тень модалки (bevel + drop), --btn-shadow = bevel
+     кнопки (:active инвертирует bevel — закроет Button в Stage 2).
+     Подложка/hover кнопки в макете — плоский серый (не primary-тон) и
+     рамка solid var(--border): tint-проценты кнопки это не выражают,
+     оставлены дефолты; разрыв закроет Stage 2 через data-ui
+     исключение (план Stage 1). */
+  --radius: 0;
+  --border-width: 1px;
+  --shadow-small: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #6e6e6e;
+  --shadow-large:
+    inset 1px 1px 0 #ffffff, inset -1px -1px 0 #6e6e6e,
+    0 2px 6px color-mix(in srgb, var(--text) 22%, transparent);
+  --btn-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #6e6e6e;
+}
+
+/* Тёмная: глубокий серый #26262e/#3a3a42; navy primary читается
+   только осветлённым (#7fa3d9). Bevel'ы тени — отдельные литералы
+   макета (более светлые штрихи сверху-слева), поэтому shape переопределён
+   здесь, а не выводится из light-блока. */
+html[data-scheme="win95"][data-theme="dark"] {
+  --bg: #26262e;
+  --card: #3a3a42;
+  --text: #f0f0f0;
+  --muted: #9a9aa4;
+  --border: #5c5c66;
+  --primary: #7fa3d9; /* navy на тёмном сером читается только осветлённым */
+  --danger: #ff5252;
+  --ok: #5cb87c;
+  --deficit: #ff6b66;
+  --excess: #d9a32f;
+
+  --el-no3: #5cb87c;
+  --el-nh4: #5cb87c;
+  --el-p: #d9b84f;
+  --el-k: #e0863f;
+  --el-ca: #999ba0;
+  --el-mg: #b277b8;
+  --el-s: #999ba0;
+  --el-cl: #999ba0;
+  --el-micro: #999ba0;
+
+  /* Bevel для тёмного варианта (макет: карточка — inset штрихи
+     #56565e/#14141c; модалка — те же + drop text 25%; кнопка —
+     #5f5f6a/#14141c). */
+  --shadow-small: inset 1px 1px 0 #56565e, inset -1px -1px 0 #14141c;
+  --shadow-large:
+    inset 1px 1px 0 #56565e, inset -1px -1px 0 #14141c,
+    0 2px 6px color-mix(in srgb, var(--text) 25%, transparent);
+  --btn-shadow: inset 1px 1px 0 #5f5f6a, inset -1px -1px 0 #14141c;
+}
+
+/* ------------------------------------------------------------
+   Редкое structural-исключение схемы (гайдлайн §4.3): подложка кнопки
+   и обёртки числового поля — плоский серый (--card), рамка solid
+   var(--border) БЕЗ primary-тонирования: tint-проценты --btn-* это не
+   выражают (см. комментарий в токенах light-блока). Адаптация
+   light/dark — через var(), без литералов. */
+html[data-scheme="win95"] [data-ui="button"],
+html[data-scheme="win95"] [data-ui="number-input"],
+html[data-scheme="win95"] [data-ui="number-input"] button {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+/* hover — затемнение серой подложки текстом (8%), без primary */
+html[data-scheme="win95"] [data-ui="button"]:hover,
+html[data-scheme="win95"] [data-ui="number-input"]:hover,
+html[data-scheme="win95"] [data-ui="number-input"] button:hover {
+  background: color-mix(in srgb, var(--text) 8%, var(--card));
+}
+
+/* :active — инверсия bevel'а: --btn-shadow уже inset-bevel схемы,
+   нажатие переворачивает его (светлый штрих снизу-справа). Литералы
+   здесь — редкое исключение схемы, допустимое гайдлайном §4.4. */
+html[data-scheme="win95"] [data-ui="button"]:active,
+html[data-scheme="win95"] [data-ui="number-input"] button:active {
+  box-shadow:
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #6e6e6e;
+}
+
+html[data-scheme="win95"][data-theme="dark"] [data-ui="button"]:active,
+html[data-scheme="win95"][data-theme="dark"] [data-ui="number-input"] button:active {
+  box-shadow:
+    inset -1px -1px 0 #5f5f6a,
+    inset 1px 1px 0 #14141c;
+}
+
+/* ------------------------------------------------------------
+    Поля ввода (перенос дословно из макета color-win95.css «Поля
+    ввода», Stage 2): белые «утопленные» — подложка белая (не --card
+    #d4d0c8), рамка #6e6e6e, bevel инвертирован (тёмный штрих
+    сверху-слева, светлый снизу-справа). radius 0 задаён токеном
+    --radius: 0, отдельное правило не нужно. Таргеты: хук
+    [data-ui="input"] и поле внутри NumberInput — поле рендерит тот же
+    .input без собственного хука (хук "number-input" на обёртке), поэтому
+    второе поле берётся перечислением селекторов (специфичность 0-2-1
+    против компонентного .input 0-1-0). Литералы допустимы в scheme-*.css
+    (§4.4). */
+html[data-scheme="win95"] [data-ui="input"],
+html[data-scheme="win95"] [data-ui="number-input"] input {
+  border: 1px solid #6e6e6e;
+  background: #ffffff;
+  box-shadow:
+    inset 1px 1px 0 #6e6e6e,
+    inset -1px -1px 0 #ffffff;
+}
+html[data-scheme="win95"][data-theme="dark"] [data-ui="input"],
+html[data-scheme="win95"][data-theme="dark"] [data-ui="number-input"] input {
+  border: 1px solid #14141c;
+  background: #2f2f37;
+  box-shadow:
+    inset 1px 1px 0 #14141c,
+    inset -1px -1px 0 #56565e;
+}

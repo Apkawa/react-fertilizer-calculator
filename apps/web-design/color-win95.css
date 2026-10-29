@@ -1,0 +1,140 @@
+/* ============================================================
+    Схема «Windows 95»: серые поверхности (#c0c0c0), чёрный текст,
+    navy #000080 primary. Прямоугольные кнопки/карточки (radius 0),
+    «объём» — inset box-shadow: светлый штрих сверху-слева, тёмный
+    снизу-справа; кнопки плоские серые. Тёмный вариант — глубокий
+    серый #26262e / #3a3a42 с более светлым bevel. Чипы — квадратные.
+    ============================================================ */
+html[data-scheme="win95"] {
+  --bg: #c0c0c0;
+  --card: #d4d0c8;
+  --text: #000000;
+  --muted: #4a4a4a;
+  --border: #808080;
+  --primary: #000080;
+  --danger: #a00000;
+  --ok: #007a33;
+  --deficit: #b02a2a;
+  --excess: #b27900;
+
+  /* Палитра элементов — «классические» плоские цвета Win95 */
+  --el-no3: #008000;
+  --el-nh4: #008000;
+  --el-p: #a89000;
+  --el-k: #c05000;
+  --el-ca: #707070;
+  --el-mg: #800080;
+  --el-s: #707070;
+  --el-cl: #707070;
+  --el-micro: #707070; /* микро остаётся серым (т. заказчика) */
+}
+
+html[data-scheme="win95"][data-theme="dark"] {
+  --bg: #26262e;
+  --card: #3a3a42;
+  --text: #f0f0f0;
+  --muted: #9a9aa4;
+  --border: #5c5c66;
+  --primary: #7fa3d9; /* navy на тёмном сером читается только осветлённым */
+  --danger: #ff5252;
+  --ok: #5cb87c;
+  --deficit: #ff6b66;
+  --excess: #d9a32f;
+
+  --el-no3: #5cb87c;
+  --el-nh4: #5cb87c;
+  --el-p: #d9b84f;
+  --el-k: #e0863f;
+  --el-ca: #999ba0;
+  --el-mg: #b277b8;
+  --el-s: #999ba0;
+  --el-cl: #999ba0;
+  --el-micro: #999ba0;
+}
+
+/* Кнопки: плоские серые, radius 0, bevel; hover — светлее;
+   active — «вдавливание» (bevel инвертирован). */
+html[data-scheme="win95"] .icon-btn,
+html[data-scheme="win95"] .btn,
+html[data-scheme="win95"] .hamburger {
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: #c0c0c0;
+  color: var(--text);
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #6e6e6e;
+}
+html[data-scheme="win95"] .icon-btn:hover,
+html[data-scheme="win95"] .btn:hover,
+html[data-scheme="win95"] .hamburger:hover { background: #cbcbcb; }
+html[data-scheme="win95"] .icon-btn:active,
+html[data-scheme="win95"] .btn:active,
+html[data-scheme="win95"] .hamburger:active {
+  box-shadow: inset -1px -1px 0 #ffffff, inset 1px 1px 0 #6e6e6e;
+}
+/* del hover: danger-тон поверх серой кнопки (базовое правило — transparent-подложка). */
+html[data-scheme="win95"] .icon-btn.del-btn:hover {
+  background: color-mix(in srgb, var(--danger) 22%, #c0c0c0);
+  color: var(--danger);
+}
+
+html[data-scheme="win95"][data-theme="dark"] .icon-btn,
+html[data-scheme="win95"][data-theme="dark"] .btn,
+html[data-scheme="win95"][data-theme="dark"] .hamburger {
+  background: #3a3a42;
+  box-shadow: inset 1px 1px 0 #5f5f6a, inset -1px -1px 0 #14141c;
+}
+html[data-scheme="win95"][data-theme="dark"] .icon-btn:hover,
+html[data-scheme="win95"][data-theme="dark"] .btn:hover,
+html[data-scheme="win95"][data-theme="dark"] .hamburger:hover { background: #44444c; }
+html[data-scheme="win95"][data-theme="dark"] .icon-btn:active,
+html[data-scheme="win95"][data-theme="dark"] .btn:active,
+html[data-scheme="win95"][data-theme="dark"] .hamburger:active {
+  box-shadow: inset -1px -1px 0 #5f5f6a, inset 1px 1px 0 #14141c;
+}
+html[data-scheme="win95"][data-theme="dark"] .icon-btn.del-btn:hover {
+  background: color-mix(in srgb, var(--danger) 22%, #3a3a42);
+  color: var(--danger);
+}
+
+/* Карточки и модалка: прямоугольные, bevel вместо drop-тени. */
+html[data-scheme="win95"] .card,
+html[data-scheme="win95"] .fertilizer-card,
+html[data-scheme="win95"] .details-card {
+  border: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #6e6e6e;
+}
+html[data-scheme="win95"] .modal-panel {
+  border: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #6e6e6e,
+    0 2px 6px color-mix(in srgb, var(--text) 22%, transparent);
+}
+html[data-scheme="win95"][data-theme="dark"] .card,
+html[data-scheme="win95"][data-theme="dark"] .fertilizer-card,
+html[data-scheme="win95"][data-theme="dark"] .details-card {
+  box-shadow: inset 1px 1px 0 #56565e, inset -1px -1px 0 #14141c;
+}
+html[data-scheme="win95"][data-theme="dark"] .modal-panel {
+  box-shadow: inset 1px 1px 0 #56565e, inset -1px -1px 0 #14141c,
+    0 2px 6px color-mix(in srgb, var(--text) 25%, transparent);
+}
+
+/* Поля ввода: белые, «утопленные» (bevel инвертирован), radius 0. */
+html[data-scheme="win95"] .input {
+  border: 1px solid #6e6e6e;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: inset 1px 1px 0 #6e6e6e, inset -1px -1px 0 #ffffff;
+}
+html[data-scheme="win95"][data-theme="dark"] .input {
+  border: 1px solid #14141c;
+  background: #2f2f37;
+  box-shadow: inset 1px 1px 0 #14141c, inset -1px -1px 0 #56565e;
+}
+
+/* Чипы, ячейки элементов, вкладки сайдбара — квадратные (radius 0). */
+html[data-scheme="win95"] .chip,
+html[data-scheme="win95"] .chip-el,
+html[data-scheme="win95"] .el-cell,
+html[data-scheme="win95"] .sidebar-tab { border-radius: 0; }

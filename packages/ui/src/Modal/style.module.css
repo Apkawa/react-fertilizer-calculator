@@ -1,3 +1,4 @@
+@layer theme, base, components, utilities;
 @layer components {
   /* Модалка */
 
@@ -5,7 +6,9 @@
    * position: fixed + inset: 0 — по всей видимой области (viewport),
    * поэтому не нужен инлайновый top и стилизации хоста портала.
    * flex-центрирование: без display: flex свойства align-items/justify-content
-   * были мёртвым кодом — карточка уходила в левый верхний угол. */
+   * были мёртвым кодом — карточка уходила в левый верхний угол.
+   * Затемнение — тон от --muted токеном (гайдлайн §4.4): легасный
+   * полупрозрачный белый литерал убран — в dark он светлил. */
   .modalOverlay {
     position: fixed;
     inset: 0;
@@ -13,20 +16,23 @@
     align-items: center;
     justify-content: center;
     padding: 16px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background: color-mix(in srgb, var(--muted) 40%, transparent);
     z-index: 999;
   }
 
-  /* Карточка модалки (заменяет легасную карточку внутри оверлея):
-   * ширина по контенту (width: auto), max-width: 100% не даёт ей выйти
-   * за область оверлея (с учётом padding); max-height: 100% + overflow: auto —
-   * внутренний скролл, когда контент не помещается. */
+  /* Карточка модалки — канон .modal-panel (гайдлайн §3.7): ширина
+   * min(560px, 100% - 2rem) (2rem — padding оверлея 16px с обеих сторон,
+   * на узких экранах — почти во всю ширину); подложка --card,
+   * рамка/радиус/тень — shape-токены (в win95 --shadow-large уже даёт
+   * inset-bevel — exception схемы не нужен). Внутренний скролл при
+   * переполнении — max-height/overflow сохранены из легаси. */
   .modalCard {
-    background-color: var(--color-background);
-    box-shadow: var(--shadow-small);
+    width: min(560px, calc(100% - 2rem));
+    background: var(--card);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-large);
     padding: 8px;
-    width: auto;
-    max-width: 100%;
     max-height: 100%;
     overflow: auto;
   }

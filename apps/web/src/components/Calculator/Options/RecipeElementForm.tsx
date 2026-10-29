@@ -1,5 +1,7 @@
+import { cx, Label } from "@fertilizer/ui";
 import React, { type FunctionComponent } from "react";
-import { Input, number } from "@/components/ui/Form";
+import { elementTintClass } from "@/components/Calculator/fertilizerRow";
+import { decimal, NumberInput } from "@/components/ui/Form";
 
 interface RecipeElementFormProps {
   name: string;
@@ -7,12 +9,17 @@ interface RecipeElementFormProps {
 
 export const getRecipeFieldName = (name: string) => `recipe.${name}`;
 
+// Ячейка дозы — канон макета (§3.4/§5): подпись над полем (field-label: 0.75rem,
+// --muted, mb 0.25rem), тон элемента (.el-* из theme.css, реестр fertilizerRow)
+// декоративен — задаёт только --el-tint и НЕ красит текст подписи (§5).
+// Поле — ui NumberInput на всю ширину ячейки (спиннер ^/v по фокусу, Round 6);
+// имя поля — aria-label («Доза <элемент>»).
 export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = (props) => {
   const { name } = props;
   return (
-    <div className="flex max-w-12 flex-col items-center justify-center">
-      <div style={{ textAlign: "center" }}>{name}</div>
-      <Input
+    <div className="min-w-0">
+      <Label className={cx("mb-1", elementTintClass(name))}>{name}</Label>
+      <NumberInput
         name={getRecipeFieldName(name)}
         aria-label={`Доза ${name}`}
         type="number"
@@ -20,11 +27,7 @@ export const RecipeElementForm: FunctionComponent<RecipeElementFormProps> = (pro
         min="0"
         max="999"
         autoComplete="off"
-        normalize={number}
-        maxWidth="3rem"
-        style={{
-          textAlign: "center",
-        }}
+        normalize={decimal}
       />
     </div>
   );

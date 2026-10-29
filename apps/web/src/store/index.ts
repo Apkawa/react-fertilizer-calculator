@@ -41,6 +41,8 @@ export interface AppActions {
   // Менеджер удобрений
   pushFertilizer(f: FertilizerInfo): void;
   removeFertilizer(f: FertilizerInfo): void;
+  // Чекбокс выбора в форме расчёта: добавить/обновить или снять копию по id (без пересчёта)
+  toggleFertilizer(f: FertilizerInfo, checked: boolean): void;
   setFertilizers(list: FertilizerInfo[]): void;
   resetFertilizers(): void;
   // Рецепты
@@ -60,6 +62,12 @@ export interface AppActions {
 }
 
 export type Store = AppState & AppActions;
+
+// Синхронизация выборки с новым списком библиотеки: порядок выборки следует
+// порядку библиотеки, копии сохранены verbatim (по id), id вне библиотеки удалены.
+function syncSelection(selection: FertilizerInfo[], library: FertilizerInfo[]): FertilizerInfo[] {
+  return library.flatMap((n) => selection.filter((s) => s.id === n.id));
+}
 
 // Установка значения по dot-path ("topping_up.currentSolution.volume" → вложенный объект)
 function setIn(
@@ -179,17 +187,77 @@ export function createAppStore() {
       }),
 
     removeFertilizer: (f) =>
+      set((s) => {
+        // Выборка: снять копию с тем же id (если форма существует)
+        const calculationForm = s.calculator.calculationForm
+          ? {
+              ...s.calculator.calculationForm,
+              fertilizers: s.calculator.calculationForm.fertilizers.filter((x) => x.id !== f.id),
+            }
+          : s.calculator.calculationForm;
+        return {
+          calculator: {
+            ...s.calculator,
+            fertilizers: s.calculator.fertilizers.filter((x) => x.id !== f.id),
+            calculationForm,
+          },
+        };
+      }),
+
+    toggleFertilizer: (f, checked) =>
+      set((s) => {
+        const form = s.calculator.calculationForm;
+        // Нет формы: снятие — ничего, установка — материализовать из дефолтов (как setFieldValue)
+        if (!form) {
+          if (!checked) return {};
+          const initial = getInitialFormValues();
+          return {
+            calculator: {
+              ...s.calculator,
+              calculationForm: {
+                ...initial,
+                fertilizers: updateOrPush(initial.fertilizers, f, "id"),
+              },
+            },
+          };
+        }
+        const fertilizers = checked
+          ? updateOrPush(form.fertilizers, f, "id")
+          : form.fertilizers.filter((x) => x.id !== f.id);
+        // Пересчёт (result/process/error) не трогаем — только выборка
+        return { calculator: { ...s.calculator, calculationForm: { ...form, fertilizers } } };
+      }),
+
+    setFertilizers: (list) =>
       set((s) => ({
         calculator: {
           ...s.calculator,
-          fertilizers: s.calculator.fertilizers.filter((x) => x.id !== f.id),
+          fertilizers: list,
+          calculationForm: s.calculator.calculationForm
+            ? {
+                ...s.calculator.calculationForm,
+                fertilizers: syncSelection(s.calculator.calculationForm.fertilizers, list),
+              }
+            : s.calculator.calculationForm,
         },
       })),
 
-    setFertilizers: (list) => set((s) => ({ calculator: { ...s.calculator, fertilizers: list } })),
-
     resetFertilizers: () =>
-      set((s) => ({ calculator: { ...s.calculator, fertilizers: [...defaultFertilizers] } })),
+      set((s) => ({
+        calculator: {
+          ...s.calculator,
+          fertilizers: [...defaultFertilizers],
+          calculationForm: s.calculator.calculationForm
+            ? {
+                ...s.calculator.calculationForm,
+                fertilizers: syncSelection(
+                  s.calculator.calculationForm.fertilizers,
+                  defaultFertilizers,
+                ),
+              }
+            : s.calculator.calculationForm,
+        },
+      })),
 
     pushRecipe: (r) =>
       set((s) => ({

@@ -1,21 +1,52 @@
+@layer theme, base, components, utilities;
 @layer components {
-  /* Кнопка (эквивалент легасной кнопки: primary фон, текст цветом фона, radius 4px).
-   * Контейнер — flex: иконка + подпись стоят в одну строку по центру по вертикали. */
+  /* Кнопка — канон макета (.btn/.icon-btn, гайдлайн §3.1): height 2.5rem,
+   * tint-подложка от primary через component-токены (--btn-tint-pct/hover/border),
+   * БЕЗ залитого primary-фона; рамка/радиус/тень — shape-токены схемы.
+   * Цветовых литералов нет: только var()/color-mix (гайдлайн §4.4).
+   * Контейнер — flex: иконка + подпись стоят в одну строку по центру. */
   .button {
     appearance: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 16px;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    height: 2.5rem;
+    padding: 0 1rem;
+    border: var(--border-width) solid
+      color-mix(in srgb, var(--primary) var(--btn-border-pct), transparent);
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--primary) var(--btn-tint-pct), transparent);
+    box-shadow: var(--btn-shadow);
+    color: var(--text);
     font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    color: var(--color-background);
-    background-color: var(--color-primary);
-    border: 0;
-    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+
+  /* hover — tint глубже (--btn-hover-pct из токенов схемы) */
+  .button:hover {
+    background: color-mix(in srgb, var(--primary) var(--btn-hover-pct), transparent);
+  }
+
+  /* active — лёгкое затемнение заливки hover (+8% от процента тонирования) */
+  .button:active {
+    background: color-mix(in srgb, var(--primary) calc(var(--btn-hover-pct) + 8%), transparent);
+  }
+
+  .button:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--primary) 60%, transparent);
+    outline-offset: 2px;
+  }
+
+  .button:disabled {
+    opacity: 0.5;
+    pointer-events: none;
   }
 }

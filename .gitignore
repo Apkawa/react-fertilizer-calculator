@@ -37,7 +37,10 @@ yarn-error.log*
 .pnpm-cache/
 .cache/
 .tmp/
+# vitest browser mode: скриншоты провалов — локальные артефакты
+/packages/ui/.vitest-attachments/
 tsconfig.tsbuildinfo
 
 # tsc incremental build state (не коммитим артефакты сборки)
 tsconfig.tsbuildinfo
+__screenshots__/

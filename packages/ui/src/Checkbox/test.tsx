@@ -16,3 +16,10 @@ test("Checkbox: onChange получает checked при клике", () => {
   fireEvent.click(container.querySelector("input") as HTMLInputElement);
   expect(onChange).toHaveBeenCalledTimes(1);
 });
+
+// Stage 2 «restyle» (red-фаза): хук data-ui на самом input чекбокса; красный.
+test('Checkbox: корень несёт хук data-ui="checkbox"', () => {
+  const { container } = render(<Checkbox onChange={() => {}} />);
+  const input = container.querySelector("input") as HTMLInputElement;
+  expect(input.getAttribute("data-ui")).toBe("checkbox");
+});

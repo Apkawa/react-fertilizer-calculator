@@ -5,8 +5,12 @@ import { ChevronDownIcon } from "./icons/chevronDown";
 import { CloseIcon } from "./icons/close";
 import { EditIcon } from "./icons/edit";
 import { ExportIcon } from "./icons/export";
+import { EyeIcon } from "./icons/eye";
+import { EyeOffIcon } from "./icons/eyeOff";
+import { GripIcon } from "./icons/grip";
 import { ImportIcon } from "./icons/import";
 import { MenuIcon } from "./icons/menu";
+import { MonitorIcon } from "./icons/monitor";
 import { MoonIcon } from "./icons/moon";
 import { PlusIcon } from "./icons/plus";
 import { RestartIcon } from "./icons/restart";
@@ -33,7 +37,14 @@ export const icons: Record<string, ComponentType<IconSvgProps>> = {
   close: CloseIcon,
   sun: SunIcon,
   moon: MoonIcon,
+  // «Система» — режим темы, следующий после sun/moon (redesign §5).
+  monitor: MonitorIcon,
   "chevron-down": ChevronDownIcon,
+  // Drag-handle ряда удобрения (6 точек, fill).
+  grip: GripIcon,
+  // Toggle фильтра списка удобрений: открыт = все ряды, закрыт = отмеченные.
+  eye: EyeIcon,
+  "eye-off": EyeOffIcon,
 };
 
 /** Имена собственных иконок (автодополнение prop `name`). */

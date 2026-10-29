@@ -1,0 +1,151 @@
+@layer theme, base, components, utilities;
+@layer components {
+  /* Рукоятка-грип ряда удобрений (канон макета .fert-grip, guideline §3.5):
+   * это НЕ кнопка канона — без рамки, подложки и тени, цвет --muted,
+   * cursor grab (:active — grabbing). Перебивает базу ui Button по
+   * специфичности: [data-ui="button"].fert-grip (0-2-0) против .button
+   * (0-1-0), hover (0-3-0) против .button:hover (0-2-0) — независимо от
+   * порядка правил в одном @layer components. Размер — ровно канон
+   * (style.css:200–211): ширина 1.5rem, высота 2.5rem = высота шапки ряда;
+   * вертикаль центрируется align-items ряда. */
+  [data-ui="button"].fert-grip {
+    width: 1.5rem;
+    min-height: 2.5rem;
+    padding: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+    color: var(--muted);
+    cursor: grab;
+  }
+
+  [data-ui="button"].fert-grip:hover {
+    background: none;
+    color: var(--text);
+  }
+
+  [data-ui="button"].fert-grip:active {
+    cursor: grabbing;
+  }
+
+  /* Иконка грипа — канон .fert-grip svg: 18px (style.css:213–217). width/height
+   * svg из svgProps (презентационные атрибуты) слабее любого CSS-правила. */
+  [data-ui="button"].fert-grip svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Шапка merged-карточки (§3.1): иконко-кнопки — канонический квадрат уже
+    * задан дефолтом IconButton (round 9), здесь правил нет; import-прокси
+    * (FileImportButton) — тоже IconButton, квадратный по умолчанию. */
+
+  /* Hover удаления — канон .icon-btn.del-btn:hover (§3.1, т. заказчика:
+   * delete правый край ряда, hover = tint danger + иконка --danger).
+   * Специфичность 0-3-0 перебивает .button:hover (0-2-0). */
+  [data-ui="button"].fert-del:hover {
+    background: color-mix(in srgb, var(--danger) 18%, transparent);
+    color: var(--danger);
+  }
+
+  /* Ряд merged-карточки (канон .fertilizer-card, style.css:186–192): подложка
+   * --bg (ряд лежит на карточке --card), padding 0.75rem, БЕЗ тени, gap 0.5rem.
+   * Рамка/радиус — shape-токены схемы (--border-width/--border/--radius =
+   * 1px/0.5rem в default — ровно как в макете). Шапка ряда — одна строка
+   * 2.5rem: CSS-grid задаёт канонический визуальный порядок (§3.1) поверх
+   * DOM-порядка (chips до кнопок — пин тестом):
+   * grip | чекбокс | имя | масса | edit | delete; чипы — вторая строка. */
+  [data-ui="card"].fert-row {
+    background: var(--bg);
+    box-shadow: none;
+    padding: 0.75rem;
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) auto auto auto;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+    align-items: center;
+  }
+
+  /* Позиции шапки ряда (макетный `flex items-center gap-2`) и состава:
+   * имя тянется (minmax(0,1fr)), delete — правый край (§3.5). */
+  [data-ui="card"].fert-row > .fert-grip {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  [data-ui="card"].fert-row > .fert-check {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  [data-ui="card"].fert-row > .fert-name {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  [data-ui="card"].fert-row > .fert-chips {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  [data-ui="card"].fert-row > .fert-weight {
+    grid-column: 4;
+    grid-row: 1;
+  }
+
+  /* edit — слева от delete; delete — правый край ряда. */
+  [data-ui="card"].fert-row > .fert-icon:not(.fert-del) {
+    grid-column: 5;
+    grid-row: 1;
+  }
+
+  [data-ui="card"].fert-row > .fert-del {
+    grid-column: 6;
+    grid-row: 1;
+  }
+
+  /* Имя ряда (канон .fert-name + text-sm font-semibold): вес 600 задаётся
+   * здесь, не utility-классом — utilities-слой перебивал бы font-weight 500
+   * снятого ряда (каскад: utilities > components). */
+  [data-ui="text"].fert-name {
+    font-weight: 600;
+  }
+
+  /* Чекбокс ряда (§3.1 + т. заказчика «придвиинуть к grip поплотнее»):
+   * визуальный контрол — база ui Checkbox 1rem, как чекбоксы «Игнорировать».
+   * Touch-цель ≥40px (§2.2) даёт label-обёртка 2.5rem × 2.5rem (min-height —
+   * :has-правило Checkbox в базе, клик по обёртке переключает контрол —
+   * паттерн канона). Плотность: box прижат к grip — сетка колонки считается
+   * по margin-box (2.5rem − margin-right −1.5rem = 1rem), имя идёт через
+   * канонический gap 0.5rem от box. accent-color --primary — в базе ui
+   * Checkbox. */
+  [data-ui="label"].fert-check {
+    width: 2.5rem;
+    justify-content: flex-start;
+    margin-right: -1.5rem;
+  }
+
+  /* Toggle eye в шапке (т. заказчика): режим «только отмеченные» — снятые
+   * ряды скрыты (display:none), но остаются в DOM: индексы react-sortablejs
+   * совпадают со списком стора, порядок перетаскивания не расходится. */
+  .hide-inactive .fert-row.is-inactive {
+    display: none;
+  }
+
+  /* Снятый ряд merged-карточки (§3.1, канон style.css:227–242): ряд
+   * приглушён (opacity 0.6), название — muted и легче, чипы состава —
+   * нейтральный tint от --muted (перебивает .element/el-*: специфичность
+   * 0-3-0 против 0-1-0). Литералов нет — только токены/color-mix. */
+  [data-ui="card"].is-inactive {
+    opacity: 0.6;
+  }
+
+  [data-ui="card"].is-inactive .fert-name {
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  [data-ui="card"].is-inactive [data-ui="chip"] {
+    background: color-mix(in srgb, var(--muted) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--muted) 30%, transparent);
+  }
+}

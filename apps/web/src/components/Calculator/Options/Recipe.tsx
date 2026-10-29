@@ -2,7 +2,7 @@ import { FERTILIZER_ELEMENT_NAMES, MACRO_ELEMENT_NAMES } from "@fertilizer/calcu
 import { getEmptyElements, getNPKDetailInfo } from "@fertilizer/calculator/helpers";
 import type { Elements, NeedElements } from "@fertilizer/calculator/types";
 import { IconButton } from "@fertilizer/icons";
-import { Card, Dropdown, Heading, Modal, Text } from "@fertilizer/ui";
+import { Card, Chip, Heading, Modal, Text } from "@fertilizer/ui";
 import React, { type FunctionComponent, useState } from "react";
 import { DEFAULT_MICRO_RECIPE } from "@/components/Calculator/constants/recipes";
 import {
@@ -59,13 +59,6 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
     ) as unknown as Elements;
     setRecipe(zeroValues);
   };
-  const onEditHandler = (value: string) => {
-    const zeroValues = Object.fromEntries(
-      FERTILIZER_ELEMENT_NAMES.map((el) => [el, selected?.elements[el] || 0]),
-    ) as unknown as Elements;
-    setSelected({ name: value, elements: zeroValues });
-  };
-
   const onAddHandler = () => {
     if (!selected) {
       return;
@@ -73,63 +66,50 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
     const recipe = { ...selected, elements: form?.recipe ?? {} };
     useStore.getState().pushRecipe(recipe);
   };
-  const onRemoveItemHandler = (item: RecipeType) => {
-    useStore.getState().removeRecipe(item);
-  };
   return (
     <Card>
       <div className="flex flex-col">
-        <div className="flex">
-          <div className="mx-2 flex-1">
-            <Dropdown<RecipeType>
-              value={selected}
-              items={recipes}
-              label="Рецепт"
-              onChange={onChangeHandler}
-              onEdit={onEditHandler}
-              renderItem={({ item }) => (
-                <div className="flex flex-1 justify-between">
-                  <div className="w-4" style={{ backgroundColor: item.color || "gray" }}></div>
-                  <div className="mx-2 flex-1">{item.name}</div>
-                  <button
-                    type="button"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      onRemoveItemHandler(item);
-                    }}
-                  >
-                    -
-                  </button>
-                </div>
-              )}
-              renderValue={(item) => item?.name || ""}
-            />
-          </div>
-          <div>
-            <IconButton
-              marginRight={1}
-              name="save"
-              aria-label="Сохранить рецепт"
-              onClick={onAddHandler}
-            />
+        {/* Выбор рецепта — канон макета (index.html §3.1): нативный select
+         * вместо Dropdown (merged-карточка «Удобрения» выводит дропдауны из
+         * калькулятора; appearance: auto — нативный список). Подложка/рамка —
+         * токены (литералов нет), touch-цель ≥40px как у поля (.input). */}
+        <div className="flex items-center gap-2">
+          <select
+            className="min-h-[2.5rem] min-w-0 flex-1 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-[0.875rem] text-[var(--text)]"
+            aria-label="Рецепт"
+            value={selected?.name ?? recipes[0]?.name ?? ""}
+            onChange={(event) => {
+              onChangeHandler(recipes.find((r) => r.name === event.target.value) ?? null);
+            }}
+          >
+            {recipes.map((r) => (
+              <option key={r.name} value={r.name}>
+                {r.name}
+              </option>
+            ))}
+          </select>
+          {/* Кнопки у select — icon-only IconButton по умолчанию квадратный
+           * (канон §3.1, round 9); пара — в flex-обёртке с gap-2 (§3.1). */}
+          <div className="flex shrink-0 items-center gap-2">
+            <IconButton name="save" aria-label="Сохранить рецепт" onClick={onAddHandler} />
             <IconButton name="broom" aria-label="Сбросить рецепт" onClick={resetRecipe} />
           </div>
         </div>
-        <div className="flex justify-between">
+        {/* Дозы макро — канон макета (§3.4/§2.1): <800px — 4 колонки × 2 ряда,
+         * ≥800px — 1 ряд × 8 колонок; количество полей — из MACRO_ELEMENT_NAMES */}
+        <div className="mt-3 grid grid-cols-4 min-[800px]:grid-cols-8 gap-2">
           {MACRO_ELEMENT_NAMES.map((n) => (
             <RecipeElementForm key={n} name={n} />
           ))}
         </div>
-        <div className="flex justify-around">
+        {/* Ряд баланса — чипы канона (§3.2): plain, flex-nowrap — всегда одна
+         * строка; подписи точные («ΔΣ I» и т.д.), значения — из данных профиля
+         * (getNPKDetailInfo). Chip title — тултип «Ионный баланс» на ΔΣ I. */}
+        <div className="mt-3 flex flex-nowrap items-center gap-2">
           <Modal
             title="Настройка профиля"
             button={({ modal }) => (
-              <IconButton
-                marginRight={1}
-                name="tune"
-                aria-label="Настройки рецепта"
-                onClick={modal.open}
-              />
+              <IconButton name="tune" aria-label="Настройки рецепта" onClick={modal.open} />
             )}
             container={({ modal }) => (
               <>
@@ -137,16 +117,12 @@ export const Recipe: FunctionComponent<RecipeProps> = () => {
               </>
             )}
           />
-          <StyledBalanceCell
-            name="ΔΣ I"
-            value={NPKBalance.ion_balance}
-            title={"Ионный баланс, дб == 0±5%"}
-          />
-          <StyledBalanceCell name="EC" value={NPKBalance.EC} />
-          <StyledBalanceCell name="%NH4" value={round(NPKBalance.ratio.NH4.NO3 * 100, 1)} />
-          <StyledBalanceCell name="K:N" value={NPKBalance.ratio.K.N} />
-          <StyledBalanceCell name="K:Ca" value={NPKBalance.ratio.K.Ca} />
-          <StyledBalanceCell name="K:Mg" value={NPKBalance.ratio.K.Mg} />
+          <Chip label="ΔΣ I" value={NPKBalance.ion_balance} title="Ионный баланс" />
+          <Chip label="EC" value={NPKBalance.EC} />
+          <Chip label="%NH4" value={round(NPKBalance.ratio.NH4.NO3 * 100, 1)} />
+          <Chip label="K:N" value={NPKBalance.ratio.K.N} />
+          <Chip label="K:Ca" value={NPKBalance.ratio.K.Ca} />
+          <Chip label="K:Mg" value={NPKBalance.ratio.K.Mg} />
         </div>
       </div>
     </Card>

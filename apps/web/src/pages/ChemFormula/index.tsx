@@ -6,10 +6,12 @@ import {
 } from "@fertilizer/calculator/constants";
 import { normalizeFertilizer } from "@fertilizer/calculator/fertilizer";
 import type { Elements } from "@fertilizer/calculator/types";
-import { Heading, Input } from "@fertilizer/ui";
+import { Card, Heading, Input, Label, Text } from "@fertilizer/ui";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { entries, round, sum, values } from "@/utils";
+
+import css from "./style.module.css";
 
 type DecomposedChemFormulaInfo = {
   [Atom in AtomNameType]?: {
@@ -65,23 +67,32 @@ export default () => {
     history.replace(`/formula/${value}/${percent}`);
   }, [history, percent, value]);
 
+  // Верстка — канон макета (guideline §2.2/§3.4/§5): Card-обёртка, заголовок
+  // страницы h1 (без override размера), секции h2, таблицы канона (css.table).
+  // Ширина — общая рамка Root (max-w 936 px-4), собственного width-контейнера
+  // нет. Логика парсинга/роутинга не изменена.
   return (
-    <div className="flex justify-center">
-      <div style={{ width: 936 }}>
-        <div className="flex">
-          <Heading>Парсер формул</Heading>
-        </div>
-        <div className="flex gap-1">
+    <Card>
+      <Heading as="h1">Парсер формул</Heading>
+      <div className="flex flex-col gap-3">
+        {/* Строки полей — канон (§3.4): подпись слева, контрол справа; на узком
+            экране контрол переносится на свою строку (flex-wrap) — переполнения
+            нет. Touch-высота инпутов — Input-канон (min-height 2.5rem). */}
+        <Label className="flex flex-wrap items-center justify-between gap-3">
+          Формула
           <Input
-            className="flex-1"
+            className="min-w-0 grow basis-40"
             aria-label="Формула"
             value={value}
             placeholder={"MgSO4*7H2O"}
             onChange={(event) => onChangeHandler(event.target.value)}
             onBlur={(event) => onBlurHandler(event.target.value)}
           />
+        </Label>
+        <Label className="flex flex-wrap items-center justify-between gap-3">
+          Процент
           <Input
-            className="w-24"
+            className="w-24 min-w-0 text-right"
             aria-label="Процент"
             type="number"
             step="0.1"
@@ -90,15 +101,15 @@ export default () => {
             value={percent}
             onChange={(event) => setPercent(parseFloat(event.target.value))}
           />
-        </div>
+        </Label>
         {result ? (
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
+            <Text>
+              <b>Формула:</b> {result.formula}
+            </Text>
             <div>
-              <b>Формула: </b> {result.formula}
-            </div>
-            <div>
-              <Heading className="mt-4">Атомная масса</Heading>
-              <table>
+              <Heading as="h2">Атомная масса</Heading>
+              <table className={css.table}>
                 <thead>
                   <tr>
                     <th>Атом</th>
@@ -128,13 +139,8 @@ export default () => {
               </table>
             </div>
             <div>
-              <Heading className="mt-4">NPK оксидов</Heading>
-              <table
-                style={{
-                  textAlign: "center",
-                  width: "50%",
-                }}
-              >
+              <Heading as="h2">NPK оксидов</Heading>
+              <table className={css.table}>
                 <thead>
                   <tr>
                     {FERTILIZER_ELEMENT_NAMES.map((e) => (
@@ -152,13 +158,8 @@ export default () => {
               </table>
             </div>
             <div>
-              <Heading className="mt-4">NPK чистых веществ</Heading>
-              <table
-                style={{
-                  textAlign: "center",
-                  width: "50%",
-                }}
-              >
+              <Heading as="h2">NPK чистых веществ</Heading>
+              <table className={css.table}>
                 <thead>
                   <tr>
                     {FERTILIZER_ELEMENT_NAMES.map((e) => (
@@ -178,6 +179,6 @@ export default () => {
           </div>
         ) : null}
       </div>
-    </div>
+    </Card>
   );
 };

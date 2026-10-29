@@ -1,20 +1,45 @@
+@layer theme, base, components, utilities;
 @layer components {
-  /* Текстовый/числовой инпут (эквивалент легасного инпута формы в теме polaris:
-   * border цветом текста, без радиуса, прозрачный фон; нативные спиннеры number
-   * скрыты — у приложения свои кнопки спиннера) */
+  /* Поле ввода — канон макета (.input, гайдлайн §3.4): подложка --card,
+   * рамка/радиус — shape-токены схемы (--border-width/--border/--radius),
+   * font-size 0.875rem (§5), padding 0.5rem 0.75rem, min-height 2.5rem
+   * (touch-цель ≥40px, §8). Placeholder — --muted (подсказка, не текст);
+   * disabled — затемнение как у Button. Цветовых литералов нет (§4.4):
+   * «утопленные» белые поля win95 — исключение в scheme-win95.css
+   * через хук [data-ui="input"]. Layout легасный сохранён: display block,
+   * width 100%, line-height inherit. */
   .input {
     display: block;
+    box-sizing: border-box;
     width: 100%;
-    padding: 8px;
+    min-height: 2.5rem;
+    padding: 0.5rem 0.75rem;
     font-family: inherit;
-    font-size: inherit;
+    font-size: 0.875rem;
     line-height: inherit;
-    color: var(--color-text);
-    background-color: transparent;
-    border: 1px solid var(--color-text);
-    border-radius: 0;
+    color: var(--text);
+    background-color: var(--card);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius);
   }
 
+  /* focus — inset outline как в макете .input:focus (§8: видимый
+   * «внутренний» контур на полях) */
+  .input:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: -1px;
+  }
+
+  .input::placeholder {
+    color: var(--muted);
+  }
+
+  .input:disabled {
+    opacity: 0.5;
+  }
+
+  /* Нативные спиннеры number скрыты — легасное поведение сохранено
+   * (у приложения свои кнопки спиннера в NumberInput) */
   .input::-webkit-inner-spin-button,
   .input::-webkit-outer-spin-button {
     -webkit-appearance: none;

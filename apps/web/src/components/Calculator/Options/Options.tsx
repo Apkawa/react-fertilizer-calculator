@@ -8,29 +8,20 @@ import { ToppingUp } from "./ToppingUp";
 
 type OptionsProps = {};
 
+// Колонка карточек опций — канон content column (§2.2): стек карточек с единым
+// gap-2; поведение и порядок секций легасные (не меняются).
 export const Options: ComponentType<OptionsProps> = () => {
   return (
-    <div className="flex flex-col">
-      <div className="flex-1">
-        <Button className="my-2 w-full" type="submit">
-          Calculate
-        </Button>
-      </div>
-      <div className="my-2">
-        <Solution />
-      </div>
-      <div className="my-2">
-        <ToppingUp />
-      </div>
-      <div className="my-2">
-        <Dilution />
-      </div>
-      <div className="[&>*]:flex-1">
-        <IgnoreElement />
-        <div className="ml-2">
-          <Accuracy />
-        </div>
-      </div>
+    <div className="flex flex-col gap-2">
+      {/* Кнопка расчёта — канон ui Button (§3.1), на всю ширину колонки */}
+      <Button className="w-full" type="submit">
+        Calculate
+      </Button>
+      <Solution />
+      <ToppingUp />
+      <Dilution />
+      <IgnoreElement />
+      <Accuracy />
     </div>
   );
 };

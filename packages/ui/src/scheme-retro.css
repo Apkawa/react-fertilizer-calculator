@@ -1,0 +1,113 @@
+/* ============================================================
+    Схема «Сайт из 90-х» — ТОЛЬКО переопределения токенов схемы
+    (перенос из apps/web-design/color-retro.css: цвета дословно;
+    классовые overrides макета — залитые кнопки с тёмной maroon-рамкой,
+    «бумажные» .input, толстые обводки чипов, жёлтая активная вкладка —
+    НЕ переносены: толщину рамки закрывает --border-width, залитость
+    кнопки — --btn-tint-pct, остальное — компоненты в Stage 2).
+    Чистый CSS, без @import.
+
+    Механизм специфичности: light `html[data-scheme="retro"]` (0-1-1)
+    перебивает default `:root` (0-1-0) из theme.css; dark
+    `html[data-scheme="retro"][data-theme="dark"]` (0-2-1) перебивает
+    media-fallback theme.css (0-2-0) — цвета схемы побеждают
+    (гайдлайн §4.2). Цветовые литералы — только здесь (гайдлайн §4.4).
+    ============================================================ */
+
+/* Светлая: бежевые поверхности #e8e4d8/#f2ecdd, maroon primary #8b4513,
+   жёлтый акцент --excess. */
+html[data-scheme="retro"] {
+  --bg: #e8e4d8;
+  --card: #f2ecdd;
+  --text: #2b2620;
+  --muted: #6a5f4f;
+  --border: #8a7c66;
+  --primary: #8b4513;
+  --danger: #b22222;
+  --ok: #2f7a34;
+  --deficit: #a83a2c;
+  --excess: #c08800;
+
+  /* Палитра элементов — приглушённая «бумажная», hues сохранены */
+  --el-no3: #3f6f38;
+  --el-nh4: #3f6f38;
+  --el-p: #a8881a;
+  --el-k: #a85f22;
+  --el-ca: #8a7c66;
+  --el-mg: #74486e;
+  --el-s: #8a7c66;
+  --el-cl: #8a7c66;
+  --el-micro: #8a7c66; /* микро остаётся серо-бежевым (т. заказчика) */
+
+  /* Shape: «табличный» radius 0.25rem, толстые рамки 2px (макет:
+     кнопки/карточки/поля — border 2px). --shadow-small = карточка
+     (inset-обводка border 45%), --shadow-large = модалка (inset-обводка
+     + drop text 25%). Тени выводятся из var(--border)/var(--text),
+     поэтому dark-вариант адаптируется автоматически — в dark-блоке
+     shape не дублируется. */
+  --radius: 0.25rem;
+  --border-width: 2px;
+  --shadow-small: inset 0 0 0 1px color-mix(in srgb, var(--border) 45%, transparent);
+  --shadow-large:
+    inset 0 0 0 1px color-mix(in srgb, var(--border) 45%, transparent),
+    0 2px 10px color-mix(in srgb, var(--text) 25%, transparent);
+
+  /* Кнопки залитые primary (макет: background: var(--primary), светлый
+     текст) → --btn-tint-pct: 100%. Hover макета затемняет заливку
+     (primary 80% + black) — в токенах hover выражается процентом
+     заливки от primary, поэтому 100% (полная заливка без затемнения);
+     точное затемнение закроет Button в Stage 2 через data-ui
+     исключение. Рамка кнопки макета — solid #5f3011 (dark #2e1f12),
+     вне primary-процентов: толщину задаёт --border-width: 2px, цвет
+     рамки — тот же Stage 2 разрыв. */
+  --btn-tint-pct: 100%;
+  --btn-hover-pct: 100%;
+}
+
+/* Тёмная: тил-слайт #1a2630/#24333f, осветлённый maroon primary.
+   Только цвета: shape/тени схемы выведены из var(--border)/var(--text). */
+html[data-scheme="retro"][data-theme="dark"] {
+  --bg: #1a2630;
+  --card: #24333f;
+  --text: #ece4d4;
+  --muted: #97a7ad;
+  --border: #46606f;
+  --primary: #b3722f;
+  --danger: #e05a48;
+  --ok: #66b06e;
+  --deficit: #dd6a54;
+  --excess: #e0ad3e;
+
+  --el-no3: #62a068;
+  --el-nh4: #62a068;
+  --el-p: #cfa33a;
+  --el-k: #c8803a;
+  --el-ca: #97a4ad;
+  --el-mg: #a878a2;
+  --el-s: #97a4ad;
+  --el-cl: #97a4ad;
+  --el-micro: #97a4ad;
+}
+
+/* ------------------------------------------------------------
+   Редкое structural-исключение схемы (гайдлайн §4.3): рамка кнопки
+   макета — solid #5f3011 (dark #2e1f12), вне primary-процентов
+   (--btn-border-pct их не выражает; толщина уже --border-width: 2px).
+   Литералы рамки допустимы гайдлайном §4.4. */
+html[data-scheme="retro"] [data-ui="button"] {
+  border-color: #5f3011;
+}
+
+html[data-scheme="retro"][data-theme="dark"] [data-ui="button"] {
+  border-color: #2e1f12;
+}
+
+/* hover — затемнение залитой подложки (--btn-hover-pct: 100% выражает
+   только полную заливку без затемнения): primary 80% + black. */
+html[data-scheme="retro"] [data-ui="button"]:hover {
+  background: color-mix(in srgb, var(--primary) 80%, #000000);
+}
+
+html[data-scheme="retro"][data-theme="dark"] [data-ui="button"]:hover {
+  background: color-mix(in srgb, var(--primary) 80%, #000000);
+}

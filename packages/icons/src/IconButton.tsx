@@ -4,8 +4,6 @@ import React, {
   type CSSProperties,
   forwardRef,
   type PropsWithChildren,
-  useEffect,
-  useState,
 } from "react";
 import { type IconName, icons } from "./registry";
 
@@ -19,10 +17,11 @@ const ALIGN_SELF: Record<string, string> = {
   end: "self-end",
   "flex-end": "self-end",
 };
-// Токены темы старой дизайн-системы (фон кнопки) → CSS-переменные @fertilizer/ui (theme.css)
+// Токены темы старой дизайн-системы (фон кнопки) → core-токены @fertilizer/ui
+// (theme.css: --primary, --danger)
 const BG_TOKENS: Record<string, string> = {
-  primary: "var(--color-primary)",
-  danger: "var(--color-danger)",
+  primary: "var(--primary)",
+  danger: "var(--danger)",
 };
 
 interface IconButtonProps extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {
@@ -39,6 +38,9 @@ interface IconButtonProps extends PropsWithChildren<ButtonHTMLAttributes<HTMLBut
   marginRight?: number;
   /** Лёгасный проп: токен темы (primary/danger) или CSS-цвет. */
   backgroundColor?: string;
+  /** Непрозрачный фон --card (round 14): поверх просвечивающего tint Button —
+   * для контролов, стоящих над контентом (закрытие сайдбара поверх меню). */
+  solid?: boolean;
 }
 
 /**
@@ -48,7 +50,7 @@ interface IconButtonProps extends PropsWithChildren<ButtonHTMLAttributes<HTMLBut
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>((props, ref) => {
   const {
     name,
-    size = "1.5em",
+    size,
     color,
     children,
     className,
@@ -57,15 +59,21 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>((props,
     alignSelf,
     marginRight,
     backgroundColor,
+    solid,
+    title,
+    // Явный title от коньюмера — в приоритете; без него тултип берётся из aria-label
+    "aria-label": ariaLabel,
     ...extraProps
   } = props;
-  const [containerSize, setSize] = useState<number | string>(size ?? 0);
 
-  useEffect(() => {
-    if (!size && ref && "current" in ref) {
-      setSize(ref.current?.offsetWidth || 0);
-    }
-  }, [ref, size]);
+  // Канон иконко-кнопки (§3.1, макет .icon-btn): icon-only кнопка — квадрат
+  // 2.5rem×2.5rem с svg 24px. Инлайн стиль перебивает padding базы Button
+  // независимо от каскада слоёв; с children (текстом) канон не форсируется.
+  const iconOnly = children === undefined;
+  const iconSize = size ?? (iconOnly ? "1.5rem" : "1.5em");
+  const squareStyle: CSSProperties = iconOnly
+    ? { width: "2.5rem", paddingLeft: 0, paddingRight: 0 }
+    : {};
 
   // Лёгасные layout-пропы → tailwind-классы; токен фона — arbitrary-класс
   // (var() не парсится jsdom/cssstyle, браузер резолвит сам)
@@ -86,6 +94,13 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>((props,
   } else if (backgroundColor !== undefined) {
     bgStyle = { backgroundColor };
   }
+  // solid — inline фон --card поверх прозрачного tint Button (inline перебивает
+  // каскад слоёв; hover tint базы не работает — border/focus остаются).
+  // Inline, не tailwind-класс: browser-тесты проверяют резолв токена без
+  // сборки tailwind utilities.
+  if (solid) {
+    bgStyle = { ...bgStyle, backgroundColor: "var(--card)" };
+  }
 
   const IconComponent = icons[name];
   return (
@@ -93,10 +108,12 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>((props,
       type="button"
       ref={ref}
       className={cx(legacy, className)}
-      style={{ ...bgStyle, ...style }}
+      style={{ ...squareStyle, ...bgStyle, ...style }}
+      aria-label={ariaLabel}
+      title={title ?? ariaLabel}
       {...extraProps}
     >
-      <IconComponent size={containerSize} color={color} style={{ marginRight: children ? 2 : 0 }} />
+      <IconComponent size={iconSize} color={color} style={{ marginRight: children ? 2 : 0 }} />
       {children}
     </Button>
   );

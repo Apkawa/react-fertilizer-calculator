@@ -188,7 +188,9 @@ export function Dropdown<T>(props: DropdownProps<T>) {
 
   return (
     <DropdownContext.Provider value={context}>
-      <div className="flex flex-col" style={widthStyle} ref={containerRef}>
+      {/* Хук data-ui="dropdown" — на внешней обёртке-контейнере: стабильная
+          точка таргета схем и корень позиционирования списка. */}
+      <div className="flex flex-col" style={widthStyle} ref={containerRef} data-ui="dropdown">
         <div className="relative">
           <input
             type="text"

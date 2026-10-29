@@ -16,3 +16,10 @@ test("Input: onChange получает событие с введённым зн
   });
   expect(onChange).toHaveBeenCalledTimes(1);
 });
+
+// Stage 2 «restyle» (red-фаза): хук data-ui на самом input; красный.
+test('Input: корень несёт хук data-ui="input"', () => {
+  const { container } = render(<Input value="42" onChange={() => {}} />);
+  const input = container.querySelector("input") as HTMLInputElement;
+  expect(input.getAttribute("data-ui")).toBe("input");
+});

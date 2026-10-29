@@ -16,4 +16,7 @@ test("pages/Help smoke: справка рендерит markdown", async () => {
     },
     { timeout: 10000 },
   );
+  // Канон Stage 7 (§2.2): Справка живёт в общей рамке Root (max-w 936 px-4);
+  // легасный inline max-width: 960 — собственный контейнер ширины, запрещён.
+  expect(container.querySelector("[style]")).toBeNull();
 }, 30000);

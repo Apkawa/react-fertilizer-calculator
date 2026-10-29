@@ -3,6 +3,19 @@
  * скидками; A/B на странице help, 2026-08-28) и возвращён в Stage 7 после удаления legacy-темы. */
 @import "tailwindcss";
 @import "@fertilizer/ui/theme.css";
+/* Схемы оформления (redesign §5): переопределяют токены темы по html[data-scheme].
+   Порядок после theme.css — их специфичность выше базовых :root-значений. */
+@import "@fertilizer/ui/scheme-win95.css";
+@import "@fertilizer/ui/scheme-retro.css";
+@import "@fertilizer/ui/scheme-nature.css";
+@import "@fertilizer/ui/scheme-science.css";
 /* Утилиты tailwind, используемые внутри пакетов (className в packages/src),
  * авто-детект источников из каталога приложения их не видит — подключаем явно. */
 @source "../../../../packages/ui/src";
+
+/* Drawer (канон §2.3): при открытом drawer body без прокрутки.
+ * Класс drawer-open ставит Root (Stage 5B). Лок @fertilizer/ui (Helmet,
+ * открытая недокнутая панель) остаётся — двойной лок не мешает. */
+html.drawer-open body {
+  overflow: hidden;
+}

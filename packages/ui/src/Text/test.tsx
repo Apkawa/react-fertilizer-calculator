@@ -14,3 +14,11 @@ test("Heading: по умолчанию рендерит h2, тег меняет�
   const { container: c2 } = render(<Heading as="h1">заголовок</Heading>);
   expect(c2.querySelector("h1")?.textContent).toBe("заголовок");
 });
+
+// Stage 2 «restyle» (red-фаза): хук data-ui на корневом div текстового блока
+// (Heading — отдельная типографика, хук не требуется). Красный.
+test('Text: корень несёт хук data-ui="text"', () => {
+  const { container } = render(<Text>текст</Text>);
+  const div = container.querySelector("div") as HTMLElement;
+  expect(div.getAttribute("data-ui")).toBe("text");
+});

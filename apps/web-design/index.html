@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Калькулятор — макет 1.0.0-demo</title>
+
+<!-- Тема и схема: ТОЛЬКО применение data-theme / data-scheme. Никаких DOM-запросов (баг v1). -->
+<script>
+(function () {
+  var mode = localStorage.getItem('theme') || 'system';
+  var dark = mode === 'dark' || (mode === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  document.documentElement.dataset.scheme = localStorage.getItem('scheme') || 'default';
+})();
+</script>
+
+<link rel="stylesheet" href="style.css">
+<!-- Цветовые схемы (§5): токены + scheme-specific override'ы. default — токены прежнего style.css дословно. -->
+<link rel="stylesheet" href="color-default.css">
+<link rel="stylesheet" href="color-win95.css">
+<link rel="stylesheet" href="color-retro.css">
+<link rel="stylesheet" href="color-nature.css">
+<link rel="stylesheet" href="color-science.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+// Конфиг Tailwind Play: цвета — токены style.css через var(); брейкпоинты только через min-/max- варианты.
+tailwind.config = {
+  darkMode: ['selector', '[data-theme="dark"]'],
+  corePlugins: { preflight: false },
+  theme: { extend: { colors: {
+    bg: 'var(--bg)',
+    card: 'var(--card)',
+    text: 'var(--text)',
+    muted: 'var(--muted)',
+    border: 'var(--border)',
+    primary: 'var(--primary)',
+    danger: 'var(--danger)',
+    ok: 'var(--ok)',
+    deficit: 'var(--deficit)',
+    excess: 'var(--excess)',
+  } } }
+};
+</script>
+
+<style>
+/* Небольшая надстройка над style.css (компонентные классы берём оттуда). */
+.card {
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+.field-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+select.input {
+  appearance: auto; /* native dropdown, не override из .input */
+}
+/* Масса в шапке карточки: высота как у .del-btn — стандартной иконки-кнопки
+   (.icon-btn, height 2.5rem/40px), чтобы текст и кнопка удаления были на одном
+   y-уровне (items-center → равные верхние края). Специфичность 0-2-0: иначе
+   utility .text-sm (Play CDN, стили позже в head) перебивает. */
+.fertilizer-card .fert-weight { line-height: 2.5rem; }
+/* В style.css базовое .hamburger идёт ПОСЛЕ @media (min-width:1250px){display:none},
+   поэтому при ≥1250px переопределяет его. Компенсируем здесь (style.css не правим). */
+@media (min-width: 1250px) {
+  .hamburger { display: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ======================= САЙДБАР ======================= -->
+<aside class="sidebar" id="sidebar" aria-label="Боковое меню">
+  <div class="flex items-center gap-2 px-4 pt-4 pb-2">
+    <h1 class="text-lg font-semibold flex-1">Калькулятор</h1>
+    <button class="icon-btn hidden max-[1249px]:inline-flex" aria-label="Закрыть меню" data-drawer-close>
+      <!-- close ✕ -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6 18 18M6 18 18 6"/></svg>
+    </button>
+  </div>
+  <nav class="px-2 pb-2">
+    <a href="#" class="sidebar-tab is-active">Калькулятор</a>
+    <a href="#" class="sidebar-tab">Удобрения</a>
+    <a href="#" class="sidebar-tab">Парсер формул</a>
+    <a href="#" class="sidebar-tab">Плотность</a>
+    <a href="#" class="sidebar-tab">Справка</a>
+    <div class="sidebar-submenu">
+      <a href="#" class="sidebar-tab">Как использовать</a>
+      <a href="#" class="sidebar-tab">Гайд для новичка</a>
+      <a href="#" class="sidebar-tab">Профиль элементов</a>
+      <div class="sidebar-submenu">
+        <a href="#" class="sidebar-tab">Примеры профилей</a>
+        <a href="#" class="sidebar-tab">Методика расчета</a>
+        <a href="#" class="sidebar-tab">Изготовление хелатов</a>
+      </div>
+      <a href="#" class="sidebar-tab">Техника безопасности</a>
+      <div class="sidebar-submenu">
+        <a href="#" class="sidebar-tab">Таблица опасности веществ</a>
+      </div>
+      <a href="#" class="sidebar-tab">Светокультура</a>
+      <a href="#" class="sidebar-tab">Виды установок</a>
+      <a href="#" class="sidebar-tab">Ссылки и литература</a>
+    </div>
+  </nav>
+  <div class="px-4 pb-4 flex items-center gap-2">
+    <!-- ColorModeToggle: светлая → тёмная → системная -->
+    <button class="icon-btn" id="theme-toggle" aria-label="Переключить тема">
+      <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><!-- sun -->
+        <circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M19.8 4.2l-1.4 1.4M5.6 18.4l-1.4 1.4"/>
+      </svg>
+      <svg id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" hidden><!-- moon crescent -->
+        <path d="M20 13.5A8 8 0 1 1 10.5 4 6.5 6.5 0 0 0 20 13.5Z"/>
+      </svg>
+      <svg id="theme-icon-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" hidden><!-- система: круг, левая половина залита -->
+        <circle cx="12" cy="12" r="8" stroke="currentColor" fill="none"/><path d="M12 4 A8 8 0 0 0 12 20 Z" fill="currentColor"/>
+      </svg>
+    </button>
+    <!-- Выбор цветовой схемы: СПРАВА от кнопки темы (§5). Тема не меняется — оси ортогональны. -->
+    <select id="scheme-select" class="input w-40 py-1 px-2 text-xs" aria-label="Цветовая схема">
+      <option value="default" selected>По умолчанию</option>
+      <option value="win95">Windows 95</option>
+      <option value="retro">Сайт из 90-х</option>
+      <option value="nature">Природа</option>
+      <option value="science">Химия и наука</option>
+    </select>
+  </div>
+</aside>
+
+<!-- ======================= DRAWER ======================= -->
+<div class="drawer-overlay" data-drawer-close aria-hidden="true"></div>
+
+<div class="content">
+  <!-- Hamburger виден только <1250px (в style.css ≥1250px скрыт) -->
+  <div class="px-4 pt-3">
+    <button class="hamburger" aria-controls="sidebar" aria-label="Открыть меню" data-drawer-open>
+      <!-- menu ☰ -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+
+  <div class="max-w-[936px] mx-auto px-4 pb-6 flex flex-col gap-2 min-[800px]:grid min-[800px]:grid-cols-2 min-[800px]:gap-2">
+
+    <!-- ======================= ПРАВАЯ КОЛОНКА (в HTML первой) ======================= -->
+    <div class="order-1 min-[800px]:order-2 flex flex-col gap-2">
+
+      <!-- a. Рецепт -->
+      <section class="card" id="recipe">
+        <div class="flex items-center gap-2">
+          <label class="sr-only" for="recipe-select">Рецепт</label>
+          <select class="input flex-1 min-w-0" id="recipe-select">
+            <option selected>Перец Минвата Базовый</option>
+            <option>Перец Минвата Старт</option>
+            <option>Перец Минвата Жара</option>
+            <option>Перец Минвата Завязи</option>
+            <option>Перец Минвата Конец</option>
+            <option>Томат Минвата Базовый</option>
+            <option>Томат Минвата Старт</option>
+            <option>Томат Минвата Жара</option>
+            <option>Томат Минвата Завязи</option>
+            <option>Томат Минвата Конец</option>
+            <option>Земляника Минвата Базовый</option>
+            <option>Земляника Минвата Старт</option>
+            <option>Земляника Минвата Завязи</option>
+            <option>Огурец Минвата Базовый</option>
+            <option>Огурец Минвата Старт</option>
+            <option>Огурец Минвата Жара</option>
+            <option>Огурец Минвата Завязи</option>
+            <option>Огурец Минвата Минвата Конец</option>
+          </select>
+          <button class="icon-btn shrink-0" aria-label="Сохранить рецепт">
+            <!-- save floppy -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>
+          </button>
+          <button class="icon-btn shrink-0" aria-label="Сбросить рецепт">
+            <!-- broom -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v8"/><path d="M9 11h6l2 10H7l2-10z"/></svg>
+          </button>
+          <button class="icon-btn shrink-0" data-modal-open="tune" aria-label="Настройки рецепта" aria-haspopup="dialog">
+            <!-- tune sliders -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h4M12 6h8"/><path d="M4 12h8M16 12h4"/><path d="M4 18h3M11 18h9"/><circle cx="10" cy="6" r="2"/><circle cx="14" cy="12" r="2"/><circle cx="9" cy="18" r="2"/></svg>
+          </button>
+        </div>
+
+        <!-- Дозы элементов: на мобильном 4 колонки × 2 ряда, ≥800px — 1 ряд × 8 колонок -->
+        <div class="mt-3 grid grid-cols-4 min-[800px]:grid-cols-8 gap-2">
+          <div><span class="field-label el-no3">NO3</span><input class="input" type="number" inputmode="decimal" value="224" aria-label="Доза NO3"></div>
+          <div><span class="field-label el-nh4">NH4</span><input class="input" type="number" inputmode="decimal" value="14" aria-label="Доза NH4"></div>
+          <div><span class="field-label el-p">P</span><input class="input" type="number" inputmode="decimal" value="39" aria-label="Доза P"></div>
+          <div><span class="field-label el-k">K</span><input class="input" type="number" inputmode="decimal" value="264" aria-label="Доза K"></div>
+          <div><span class="field-label el-ca">Ca</span><input class="input" type="number" inputmode="decimal" value="200" aria-label="Доза Ca"></div>
+          <div><span class="field-label el-mg">Mg</span><input class="input" type="number" inputmode="decimal" value="36" aria-label="Доза Mg"></div>
+          <div><span class="field-label el-s">S</span><input class="input" type="number" inputmode="decimal" value="56" aria-label="Доза S"></div>
+          <div><span class="field-label el-cl">Cl</span><input class="input" type="number" inputmode="decimal" value="0" aria-label="Доза Cl"></div>
+        </div>
+
+        <!-- Чипы: 2 строки (подпись сверху, значение снизу); ряд — flex-nowrap, всегда одна строка -->
+        <div class="mt-3 flex flex-nowrap gap-2">
+          <span class="chip"><span class="chip-label">ΔΣI</span><span class="chip-value">−0.05</span></span>
+          <span class="chip"><span class="chip-label">EC</span><span class="chip-value">2.16</span></span>
+          <span class="chip"><span class="chip-label">%NH4</span><span class="chip-value">6.3</span></span>
+          <span class="chip"><span class="chip-label">K:N</span><span class="chip-value">1.109</span></span>
+          <span class="chip"><span class="chip-label">K:Ca</span><span class="chip-value">1.32</span></span>
+          <span class="chip"><span class="chip-label">K:Mg</span><span class="chip-value">7.333</span></span>
+        </div>
+      </section>
+
+      <!-- b. Результат -->
+      <section class="card" id="result">
+        <h2 class="font-semibold">Результат расчета</h2>
+        <div class="text-sm text-muted mt-1">Для 1 л раствора</div>
+
+        <!-- Ряды элементов: всегда 1 ряд × 8 колонок (на мобильном компактнее через .el-cell в style.css) -->
+        <!-- Макро-ячейки: 3 строки — имя, значение, дельта. Дельта БЕЗ символа «Δ» (т. заказчика):
+            только знаковое значение; «+» — зелёный (--ok, .status-pos), «−» — красный
+            (--deficit, .status-neg), «0» — нейтральный (--muted, базовый .el-delta). -->
+        <div class="mt-3 grid grid-cols-8 gap-1">
+          <div class="el-cell el-no3"><div class="el-name">NO3</div><div class="el-value">224</div><div class="el-delta">0</div></div>
+          <div class="el-cell el-nh4"><div class="el-name">NH4</div><div class="el-value">14</div><div class="el-delta">0</div></div>
+          <div class="el-cell el-p"><div class="el-name">P</div><div class="el-value">39</div><div class="el-delta">0</div></div>
+          <div class="el-cell el-k"><div class="el-name">K</div><div class="el-value">313</div><div class="el-delta status-neg">−49</div></div>
+          <div class="el-cell el-ca"><div class="el-name">Ca</div><div class="el-value">165</div><div class="el-delta status-pos">+35</div></div>
+          <div class="el-cell el-mg"><div class="el-name">Mg</div><div class="el-value">0</div><div class="el-delta status-pos">+36</div></div>
+          <div class="el-cell el-s"><div class="el-name">S</div><div class="el-value">56</div><div class="el-delta">0</div></div>
+          <div class="el-cell el-cl"><div class="el-name">Cl</div><div class="el-value">0</div><div class="el-delta">0</div></div>
+        </div>
+
+        <!-- Микро-ячейки: 3 строки — имя, значение (без «мг/л»), дельта как в макро (т. заказчика):
+            без «Δ»; в демо все «0» — нейтральные (--muted), без статус-класса. -->
+        <div class="mt-2 grid grid-cols-8 gap-1">
+          <div class="el-cell el-micro"><div class="el-name">Fe</div><div class="el-value">4500</div><div class="el-delta">0</div></div>
+          <div class="el-cell el-micro"><div class="el-name">Mn</div><div class="el-value">636</div><div class="el-delta">0</div></div>
+          <div class="el-cell el-micro"><div class="el-name">B</div><div class="el-value">636</div><div class="el-delta">0</div></div>
+          <div class="el-cell el-micro"><div class="el-name">Zn</div><div class="el-value">384</div><div class="el-delta">0</div></div>
+          <div class="el-cell el-micro"><div class="el-name">Cu</div><div class="el-value">69</div><div class="el-delta">0</div></div>
+          <div class="el-cell el-micro"><div class="el-name">Mo</div><div class="el-value">69</div><div class="el-delta">0</div></div>
+          <div class="el-cell el-micro"><div class="el-name">Co</div><div class="el-value">0</div><div class="el-delta">0</div></div>
+          <div class="el-cell el-micro"><div class="el-name">Si</div><div class="el-value">0</div><div class="el-delta">0</div></div>
+        </div>
+
+        <div class="mt-3 flex flex-nowrap gap-2">
+          <span class="chip"><span class="chip-label">ΔΣI</span><span class="chip-value">−0.01</span></span>
+          <span class="chip"><span class="chip-label">EC</span><span class="chip-value">1.83</span></span>
+          <span class="chip"><span class="chip-label">%NH4</span><span class="chip-value">6.3</span></span>
+          <span class="chip"><span class="chip-label">K:N</span><span class="chip-value">1.315</span></span>
+          <span class="chip"><span class="chip-label">K:Ca</span><span class="chip-value">1.897</span></span>
+        </div>
+
+        <div class="mt-4 space-y-2">
+          <div class="text-sm font-semibold">Раствор A</div>
+          <div class="text-sm">8.2 г · Нитрат аммония</div>
+          <div class="text-sm">69.7 г · Нитрат калия</div>
+          <div class="text-sm">99.3 г · Кальциевая селитра 4-в.</div>
+          <div class="text-sm font-semibold mt-2">Раствор B</div>
+          <div class="text-sm">17.5 г · Монофосфат калия</div>
+          <div class="text-sm font-semibold mt-2">Раствор C</div>
+          <div class="text-sm text-muted">нет макро-удобрений</div>
+          <div class="text-sm mt-2">Всего солей: 194.7 г</div>
+          <div class="text-sm">Концентрация солей: 194.7 г/л</div>
+          <div class="text-sm text-muted">Обработано вариантов: 23 · Время: 0.006 сек</div>
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-2">
+          <button class="btn" data-modal-open="save-complex" aria-haspopup="dialog"><!-- save (дискета) + текст -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>Сохранить комплекс
+          </button>
+          <button class="btn" data-modal-open="mixer" aria-haspopup="dialog"><!-- broom + текст -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v8"/><path d="M9 11h6l2 10H7l2-10z"/></svg>Отправить на миксер
+          </button>
+        </div>
+      </section>
+
+      <!-- c. Опции: «Рассчитать» + блок «Раствор» — в своей карточке (без изменений);
+           «Долив раствора», «Разбавление концентрата» и «Расширенные» — каждую в
+           ОТДЕЛЬНОЙ карточке, как в приложении (ToppingUp / Dilution / Ignore+Accuracy). -->
+      <section class="card" id="options">
+        <button class="btn w-full" id="calculate-btn">Рассчитать</button>
+
+        <div class="mt-4">
+          <div class="text-sm font-semibold mb-2">Раствор</div>
+          <div class="grid grid-cols-2 gap-3">
+            <div><span class="field-label">Объем, л</span><input class="input" type="number" inputmode="decimal" value="1" aria-label="Объем, л"></div>
+            <div>
+              <span class="field-label" id="conc-label">Концентрация</span>
+              <div class="flex items-center gap-1">
+                <span class="text-sm text-muted">1:</span>
+                <input class="input" type="number" inputmode="decimal" value="1000" aria-labelledby="conc-label" aria-label="Коэффициент разведения">
+              </div>
+            </div>
+          </div>
+          <div class="mt-2 flex items-center gap-2 text-sm text-muted">
+            <span>Или</span>
+            <input class="input w-20 min-w-0" type="number" inputmode="decimal" value="10" aria-label="Миллилитры концентрата">
+            <span>мл на</span>
+            <input class="input w-24 min-w-0" type="number" inputmode="decimal" value="1000" aria-label="Миллилитры рабочего раствора">
+            <span>мл рабочего раствора</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- «Долив раствора»: своя карточка. Чекбокс = аккордеон: демо — отмечен; снят ⇒
+          блок полей скрыт (JS ставит класс hidden → display:none). Строки: подпись СЛЕВА, инпут
+          СПРАВА (flex items-center gap-2 justify-between; подпись flex-1 min-w-0; инпут
+          фиксированной ширины w-24/w-28, text-right). Десятичный разделитель — запятая
+          (как в приложении/скриншоте); метки — русские (латинская «Concentration» исправлена). -->
+      <section class="card" id="topping-up">
+        <label class="flex items-center gap-2 text-sm font-semibold"><input type="checkbox" class="accent-[var(--primary)]" checked data-accordion="topping-up-fields">Долив раствора</label>
+        <div id="topping-up-fields" class="mt-3 flex flex-col gap-2">
+          <div class="flex items-center gap-2 justify-between">
+            <span class="field-label flex-1 min-w-0 mb-0">Новый объем, л</span>
+            <input class="input w-24 text-right" type="number" inputmode="decimal" value="10" aria-label="Новый объем, л">
+          </div>
+          <div class="flex items-center gap-2 justify-between">
+            <span class="field-label flex-1 min-w-0 mb-0">Текущий объем, л</span>
+            <input class="input w-24 text-right" type="number" inputmode="decimal" value="5" aria-label="Текущий объем, л">
+          </div>
+          <div class="flex items-center gap-2 justify-between">
+            <span class="field-label flex-1 min-w-0 mb-0">Текущий EC, мСм/см</span>
+            <input class="input w-24 text-right" type="text" inputmode="decimal" value="1,8" aria-label="Текущий EC, мСм/см">
+          </div>
+          <div class="flex items-center gap-2 justify-between">
+            <span class="field-label flex-1 min-w-0 mb-0">EC профиля раствора, мСм/см</span>
+            <input class="input w-24 text-right" type="text" inputmode="decimal" value="1,8" aria-label="EC профиля раствора, мСм/см">
+          </div>
+          <div class="flex items-center gap-2 justify-between">
+            <span class="field-label flex-1 min-w-0 mb-0">Концентрация солей профиля раствора, г/л</span>
+            <input class="input w-28 text-right" type="text" inputmode="decimal" value="194,7" aria-label="Концентрация солей профиля раствора, г/л">
+          </div>
+        </div>
+      </section>
+
+      <!-- «Разбавление концентрата»: своя карточка; чекбокс = аккордеон (демо — отмечен).
+          «Концентрация»: подпись слева, справа — «1:» + инпут; ниже inline-ряд
+          «Или [10] мл на [1000] мл.рабочего раствора» (RU-текст дословно, как в приложении). -->
+      <section class="card" id="dilution">
+        <label class="flex items-center gap-2 text-sm font-semibold"><input type="checkbox" class="accent-[var(--primary)]" checked data-accordion="dilution-fields">Разбавление концентрата</label>
+        <div id="dilution-fields" class="mt-3 flex flex-col gap-2">
+          <div class="flex items-center gap-2 justify-between">
+            <span class="field-label flex-1 min-w-0 mb-0">Объем, л</span>
+            <input class="input w-24 text-right" type="number" inputmode="decimal" value="1" aria-label="Объем, л">
+          </div>
+          <div class="flex items-center gap-2 justify-between">
+            <span class="field-label flex-1 min-w-0 mb-0">Концентрация</span>
+            <span class="flex items-center gap-1 shrink-0">
+              <span class="text-sm text-muted">1:</span>
+              <input class="input w-24 text-right" type="number" inputmode="decimal" value="1000" aria-label="Коэффициент разведения">
+            </span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 text-sm text-muted">
+            <span>Или</span>
+            <input class="input w-16 min-w-0 text-right" type="number" inputmode="decimal" value="10" aria-label="Миллилитры концентрата">
+            <span>мл на</span>
+            <input class="input w-16 min-w-0 text-right" type="number" inputmode="decimal" value="1000" aria-label="Миллилитры рабочего раствора">
+            <span>мл.рабочего раствора</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- «Расширенные»: своя карточка с details-аккордеоном (Игнорировать + Точность) -->
+      <details class="details-card rounded-lg border border-border bg-card" id="advanced">
+        <summary>Расширенные</summary>
+        <div class="details-body space-y-4">
+          <div>
+            <div class="text-sm font-semibold mb-2">Игнорировать</div>
+            <div class="grid grid-cols-2 min-[800px]:grid-cols-4 gap-3 text-sm">
+              <label class="flex items-center gap-2"><input type="checkbox" class="accent-[var(--primary)]">Кальций</label>
+              <label class="flex items-center gap-2"><input type="checkbox" class="accent-[var(--primary)]">Магний</label>
+              <label class="flex items-center gap-2"><input type="checkbox" class="accent-[var(--primary)]">Сера</label>
+              <label class="flex items-center gap-2"><input type="checkbox" class="accent-[var(--primary)]">Хлор</label>
+            </div>
+          </div>
+          <div>
+            <div class="text-sm font-semibold mb-2">Точность</div>
+            <div class="flex flex-wrap gap-3 text-sm">
+              <label class="flex items-center gap-2"><input type="radio" name="accuracy" checked>0.2 г.</label>
+              <label class="flex items-center gap-2"><input type="radio" name="accuracy">0.1 г.</label>
+              <label class="flex items-center gap-2"><input type="radio" name="accuracy">0.05 г.</label>
+              <label class="flex items-center gap-2"><input type="radio" name="accuracy">0.01 г.</label>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- d. Импорт/Экспорт -->
+      <section class="card" id="import-export">
+        <h2 class="font-semibold mb-3">Импорт/Экспорт</h2>
+        <div class="space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold flex-1">Рецепты</span>
+            <button class="icon-btn" aria-label="Импорт рецептов">
+              <!-- import ↓ tray -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+            </button>
+            <button class="icon-btn" aria-label="Экспорт рецептов">
+              <!-- export ↑ tray -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+            </button>
+            <button class="icon-btn" aria-label="Сбросить рецепты">
+              <!-- restart circular arrow -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v5h-5"/></svg>
+            </button>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold flex-1">Настройки</span>
+            <button class="icon-btn" aria-label="Импорт настроек">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+            </button>
+            <button class="icon-btn" aria-label="Экспорт настроек">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================= ЛЕВАЯ КОЛОНКА: «Удобрения» — список-менеджер (в HTML последним) ======================= -->
+    <!-- Селектор «Добавить удобрение» удалён (т. заказчика); добавление — plus-иконка-кнопка в шапке (§3.1). Модалка редактирования не верстается. -->
+    <section class="order-2 min-[800px]:order-1 card" id="fertilizers">
+      <!-- Шапка секции: заголовок слева, справа — ПЛЮС («Добавить удобрение», первая сразу
+           за заголовком), затем импорт/экспорт/сброс (иконки-кнопки инертны). -->
+      <div class="flex items-center gap-2">
+        <h2 class="font-semibold flex-1 min-w-0">Удобрения</h2>
+        <button class="icon-btn shrink-0" aria-label="Добавить удобрение">
+          <!-- plus: stroke-стиль как остальные inline-иконки страницы (stroke-width 2), не заливной глиф -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <button class="icon-btn shrink-0" aria-label="Импорт удобрений">
+          <!-- import ↓ tray -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        </button>
+        <button class="icon-btn shrink-0" aria-label="Экспорт удобрений">
+          <!-- export ↑ tray -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        </button>
+        <button class="icon-btn shrink-0" aria-label="Сбросить удобрения">
+          <!-- restart circular arrow -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v5h-5"/></svg>
+        </button>
+      </div>
+
+      <div class="mt-3 space-y-2">
+        <!-- ВЫБРАННЫЕ ряды (чекбокс отмечен): масса слева от edit-кнопки (карандаш),
+            del-кнопка (×/trash) — самая правая в ряду (т. заказчика: edit слева от del). -->
+        <div class="fertilizer-card">
+          <div class="flex items-center gap-2">
+            <button class="fert-grip shrink-0" aria-label="Переместить">
+              <!-- grip: 6 точек -->
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>
+            </button>
+            <input type="checkbox" class="fert-check accent-[var(--primary)] shrink-0" checked aria-label="Выбрать «Нитрат аммония»">
+            <span class="fert-name text-sm font-semibold flex-1 min-w-0">Нитрат аммония</span>
+            <span class="fert-weight text-sm font-semibold shrink-0">8.2 г</span>
+            <button class="icon-btn edit-btn shrink-0" aria-label="Редактировать"><!-- pencil: stroke-width 2, тот же стиль; edit СЛЕВА от del (т. заказчика) -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+            </button>
+            <button class="icon-btn del-btn shrink-0" aria-label="Удалить удобрение"><!-- trash-bin (крышка+ручка+корпус), stroke-стиль как остальные; самая правая в ряду -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M6 6v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div>
+          <!-- Чипы состава: flex-wrap — при 11+ чипов переносятся (квадратные ячейки сохраняются). -->
+          <div class="flex flex-wrap gap-1">
+            <span class="chip chip-el el-no3"><span class="chip-label">NO3</span><span class="chip-value">17.149</span></span>
+            <span class="chip chip-el el-nh4"><span class="chip-label">NH4</span><span class="chip-value">17.149</span></span>
+          </div>
+        </div>
+        <div class="fertilizer-card">
+          <div class="flex items-center gap-2">
+            <button class="fert-grip shrink-0" aria-label="Переместить">
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>
+            </button>
+            <input type="checkbox" class="fert-check accent-[var(--primary)] shrink-0" checked aria-label="Выбрать «Нитрат калия»">
+            <span class="fert-name text-sm font-semibold flex-1 min-w-0">Нитрат калия</span>
+            <span class="fert-weight text-sm font-semibold shrink-0">69.7 г</span>
+            <button class="icon-btn edit-btn shrink-0" aria-label="Редактировать"><!-- pencil: stroke-width 2, тот же стиль; edit СЛЕВА от del (т. заказчика) -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+            </button>
+            <button class="icon-btn del-btn shrink-0" aria-label="Удалить удобрение"><!-- trash-bin (крышка+ручка+корпус), stroke-стиль как остальные; самая правая в ряду -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M6 6v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-1">
+            <span class="chip chip-el el-no3"><span class="chip-label">NO3</span><span class="chip-value">13.577</span></span>
+            <span class="chip chip-el el-k"><span class="chip-label">K2O</span><span class="chip-value">45.668</span></span>
+          </div>
+        </div>
+        <div class="fertilizer-card">
+          <div class="flex items-center gap-2">
+            <button class="fert-grip shrink-0" aria-label="Переместить">
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>
+            </button>
+            <input type="checkbox" class="fert-check accent-[var(--primary)] shrink-0" checked aria-label="Выбрать «Монофосфат калия»">
+            <span class="fert-name text-sm font-semibold flex-1 min-w-0">Монофосфат калия</span>
+            <span class="fert-weight text-sm font-semibold shrink-0">17.5 г</span>
+            <button class="icon-btn edit-btn shrink-0" aria-label="Редактировать"><!-- pencil: stroke-width 2, тот же стиль; edit СЛЕВА от del (т. заказчика) -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+            </button>
+            <button class="icon-btn del-btn shrink-0" aria-label="Удалить удобрение"><!-- trash-bin (крышка+ручка+корпус), stroke-стиль как остальные; самая правая в ряду -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M6 6v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-1">
+            <span class="chip chip-el el-p"><span class="chip-label">P2O5</span><span class="chip-value">51.103</span></span>
+            <span class="chip chip-el el-k"><span class="chip-label">K2O</span><span class="chip-value">33.928</span></span>
+          </div>
+        </div>
+        <div class="fertilizer-card">
+          <div class="flex items-center gap-2">
+            <button class="fert-grip shrink-0" aria-label="Переместить">
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>
+            </button>
+            <input type="checkbox" class="fert-check accent-[var(--primary)] shrink-0" checked aria-label="Выбрать «Кальциевая селитра 4-в.»">
+            <span class="fert-name text-sm font-semibold flex-1 min-w-0">Кальциевая селитра 4-в.</span>
+            <span class="fert-weight text-sm font-semibold shrink-0">99.3 г</span>
+            <button class="icon-btn edit-btn shrink-0" aria-label="Редактировать"><!-- pencil: stroke-width 2, тот же стиль; edit СЛЕВА от del (т. заказчика) -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+            </button>
+            <button class="icon-btn del-btn shrink-0" aria-label="Удалить удобрение"><!-- trash-bin (крышка+ручка+корпус), stroke-стиль как остальные; самая правая в ряду -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M6 6v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-1">
+            <span class="chip chip-el el-no3"><span class="chip-label">NO3</span><span class="chip-value">11.626</span></span>
+            <span class="chip chip-el el-ca"><span class="chip-label">CaO</span><span class="chip-value">23.268</span></span>
+          </div>
+        </div>
+
+        <!-- НЕВЫБРАНные демо-ряды (.is-inactive): серые, инертные; чекбокс снят; массы нет.
+            Кнопки удаления и редактирования — те же, что у выбранных, и тот же порядок
+            (т. заказчика: inactive-ряды тоже показывают edit/del, edit слева от del). -->
+        <!-- Составы — из constants/fertilizers.ts и скриншота заказчика («Акварин Хвойный» — 11 чипов). -->
+        <div class="fertilizer-card is-inactive">
+          <div class="flex items-center gap-2">
+            <button class="fert-grip shrink-0" aria-label="Переместить">
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>
+            </button>
+            <input type="checkbox" class="fert-check accent-[var(--primary)] shrink-0" aria-label="Выбрать «Акварин Хвойный»">
+            <span class="fert-name text-sm font-semibold flex-1 min-w-0">Акварин Хвойный</span>
+            <button class="icon-btn edit-btn shrink-0" aria-label="Редактировать"><!-- pencil: edit слева от del (т. заказчика) -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+            </button>
+            <button class="icon-btn del-btn shrink-0" aria-label="Удалить удобрение"><!-- trash-bin, как у выбранных рядов; самая правая в ряду -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M6 6v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-1">
+            <span class="chip chip-el el-no3"><span class="chip-label">NO3</span><span class="chip-value">3</span></span>
+            <span class="chip chip-el el-p"><span class="chip-label">P2O5</span><span class="chip-value">10.997</span></span>
+            <span class="chip chip-el el-k"><span class="chip-label">K2O</span><span class="chip-value">35.022</span></span>
+            <span class="chip chip-el el-mg"><span class="chip-label">MgO</span><span class="chip-value">3.999</span></span>
+            <span class="chip chip-el el-s"><span class="chip-label">S</span><span class="chip-value">9</span></span>
+            <span class="chip chip-el el-micro"><span class="chip-label">Fe</span><span class="chip-value">0.054</span></span>
+            <span class="chip chip-el el-micro"><span class="chip-label">Mn</span><span class="chip-value">0.042</span></span>
+            <span class="chip chip-el el-micro"><span class="chip-label">B</span><span class="chip-value">0.02</span></span>
+            <span class="chip chip-el el-micro"><span class="chip-label">Zn</span><span class="chip-value">0.014</span></span>
+            <span class="chip chip-el el-micro"><span class="chip-label">Cu</span><span class="chip-value">0.01</span></span>
+            <span class="chip chip-el el-micro"><span class="chip-label">Mo</span><span class="chip-value">0.004</span></span>
+          </div>
+        </div>
+        <div class="fertilizer-card is-inactive">
+          <div class="flex items-center gap-2">
+            <button class="fert-grip shrink-0" aria-label="Переместить">
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>
+            </button>
+            <input type="checkbox" class="fert-check accent-[var(--primary)] shrink-0" aria-label="Выбрать «Аквамикс Л»">
+            <span class="fert-name text-sm font-semibold flex-1 min-w-0">Аквамикс Л</span>
+            <button class="icon-btn edit-btn shrink-0" aria-label="Редактировать"><!-- pencil: edit слева от del (т. заказчика) -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+            </button>
+            <button class="icon-btn del-btn shrink-0" aria-label="Удалить удобрение"><!-- trash-bin, как у выбранных рядов; самая правая в ряду -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M6 6v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-1">
+            <span class="chip chip-el el-micro"><span class="chip-label">Fe</span><span class="chip-value">4.1</span></span>
+            <span class="chip chip-el el-micro"><span class="chip-label">Mn</span><span class="chip-value">3</span></span>
+            <span class="chip chip-el el-micro"><span class="chip-label">Zn</span><span class="chip-value">0.63</span></span>
+            <span class="chip chip-el el-mg"><span class="chip-label">Mg</span><span class="chip-value">0.9</span></span>
+            <span class="chip chip-el el-micro"><span class="chip-label">Cu</span><span class="chip-value">0.63</span></span>
+            <span class="chip chip-el el-micro"><span class="chip-label">Mo</span><span class="chip-value">0.17</span></span>
+            <span class="chip chip-el el-micro"><span class="chip-label">Co</span><span class="chip-value">0.06</span></span>
+          </div>
+        </div>
+        <div class="fertilizer-card is-inactive">
+          <div class="flex items-center gap-2">
+            <button class="fert-grip shrink-0" aria-label="Переместить">
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>
+            </button>
+            <input type="checkbox" class="fert-check accent-[var(--primary)] shrink-0" aria-label="Выбрать «Fe 6% ЭДДГА»">
+            <span class="fert-name text-sm font-semibold flex-1 min-w-0">Fe 6% ЭДДГА</span>
+            <button class="icon-btn edit-btn shrink-0" aria-label="Редактировать"><!-- pencil: edit слева от del (т. заказчика) -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+            </button>
+            <button class="icon-btn del-btn shrink-0" aria-label="Удалить удобрение"><!-- trash-bin, как у выбранных рядов; самая правая в ряду -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M6 6v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-1">
+            <span class="chip chip-el el-micro"><span class="chip-label">Fe</span><span class="chip-value">6</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="max-w-[936px] mx-auto px-4 pb-6 text-right text-sm text-muted">1.0.0-demo · макет</footer>
+</div>
+
+<!-- ======================= МОДАЛЬНЫЕ ОКНА ======================= -->
+<div class="modal-overlay" data-modal="tune" role="dialog" aria-modal="true" aria-labelledby="tune-title">
+  <div class="modal-panel">
+    <div class="flex items-center gap-2">
+      <h2 class="font-semibold flex-1" id="tune-title">Настройка профиля</h2>
+      <button class="icon-btn" data-modal-close aria-label="Закрыть">
+        <!-- close ✕ -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6 18 18M6 18 18 6"/></svg>
+      </button>
+    </div>
+    <div class="mt-3 grid grid-cols-2 gap-2">
+      <div><span class="field-label">EC</span><input class="input" type="number" inputmode="decimal" value="2.16" aria-label="EC"></div>
+      <div><span class="field-label">K:N</span><input class="input" type="number" inputmode="decimal" value="1.109" aria-label="K:N"></div>
+      <div><span class="field-label">K:Ca</span><input class="input" type="number" inputmode="decimal" value="1.32" aria-label="K:Ca"></div>
+      <div><span class="field-label">K:Mg</span><input class="input" type="number" inputmode="decimal" value="7.333" aria-label="K:Mg"></div>
+      <div><span class="field-label">%NH4</span><input class="input" type="number" inputmode="decimal" value="6.3" aria-label="%NH4"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" data-modal="save-complex" role="dialog" aria-modal="true" aria-labelledby="save-title">
+  <div class="modal-panel">
+    <h2 class="font-semibold mb-3" id="save-title">Сохранить комплекс</h2>
+    <span class="field-label">Рецепт</span>
+    <input class="input" type="text" value="Перец Минвата Базовый" aria-label="Название рецепта">
+    <div class="mt-3 flex justify-end">
+      <button class="btn"><!-- save + текст -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>Сохранить
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" data-modal="mixer" role="dialog" aria-modal="true" aria-labelledby="mixer-title">
+  <div class="modal-panel">
+    <h2 class="font-semibold mb-3" id="mixer-title">Отправить на миксер</h2>
+    <div class="text-sm font-semibold">Раствор A</div>
+    <div class="text-sm">8.2 г · Нитрат аммония</div>
+    <div class="text-sm">69.7 г · Нитрат калия</div>
+    <div class="text-sm">99.3 г · Кальциевая селитра 4-в.</div>
+    <div class="text-sm font-semibold mt-2">Раствор B</div>
+    <div class="text-sm">17.5 г · Монофосфат калия</div>
+    <div class="mt-3 flex justify-end">
+      <button class="btn"><!-- broom + текст -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v8"/><path d="M9 11h6l2 10H7l2-10z"/></svg>Приготовить
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Минимальный JS: тема, drawer, модальные окна. Прокрутку блокирует CSS.
+var html = document.documentElement;
+var THEME = ['light', 'dark', 'system'];
+var themeBtn = document.getElementById('theme-toggle');
+var sun = document.getElementById('theme-icon-sun');
+var moon = document.getElementById('theme-icon-moon');
+var monitor = document.getElementById('theme-icon-monitor');
+
+var mq = matchMedia('(prefers-color-scheme: dark)'); // §5: один MediaQueryList для applyTheme и слушателя
+
+function applyTheme() {
+  var mode = localStorage.getItem('theme') || 'system';
+  var dark = mode === 'dark' || (mode === 'system' && mq.matches);
+  html.dataset.theme = dark ? 'dark' : 'light';
+  // aria-pressed отражает ПРИМЕНЕННУЮ тёмную тему (system может дать dark или light).
+  themeBtn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+  // Иконка отражает ВЫБРАННЫЙ РЕЖИМ, а не результирующую тему: light→sun, dark→moon, system→monitor.
+  // SVGElement: JS-свойство hidden не действует — переключаем display (виден ровно один svg).
+  sun.style.display = mode === 'light' ? '' : 'none';
+  moon.style.display = mode === 'dark' ? '' : 'none';
+  monitor.style.display = mode === 'system' ? '' : 'none';
+}
+
+themeBtn.addEventListener('click', function () {
+  var mode = localStorage.getItem('theme') || 'system';
+  var next = THEME[(THEME.indexOf(mode) + 1) % 3]; // light → dark → system → light…
+  localStorage.setItem('theme', next);
+  applyTheme();
+});
+applyTheme();
+
+// §5: при смене системной темы ОС обновляем data-theme/aria-pressed, если режим = system.
+mq.addEventListener('change', function () {
+  if ((localStorage.getItem('theme') || 'system') === 'system') applyTheme();
+});
+
+// §5: цветовая схема — html[data-scheme] + localStorage('scheme'). Ортогональна теме:
+// change select ставит атрибут и persists; head-скрипт уже применил схему до отрисовки.
+var schemeSelect = document.getElementById('scheme-select');
+function applyScheme() {
+  var scheme = localStorage.getItem('scheme') || 'default';
+  html.dataset.scheme = scheme;
+  schemeSelect.value = scheme; // после reload select отражает сохранённую схему
+}
+schemeSelect.addEventListener('change', function () {
+  localStorage.setItem('scheme', schemeSelect.value);
+  html.dataset.scheme = schemeSelect.value;
+});
+applyScheme();
+
+// dialog-атрибуты ставим только у ОТКРЫТОГО drawer: на десктопе сайдбар не притворяется диалогом (§2.2).
+var sidebar = document.getElementById('sidebar');
+function openDrawer() {
+  html.classList.add('drawer-open');
+  sidebar.setAttribute('role', 'dialog');
+  sidebar.setAttribute('aria-modal', 'true');
+  sidebar.setAttribute('aria-label', 'Меню');
+}
+function closeDrawer() {
+  html.classList.remove('drawer-open');
+  sidebar.removeAttribute('role');
+  sidebar.removeAttribute('aria-modal');
+  sidebar.setAttribute('aria-label', 'Боковое меню'); // статический label десктопа (§2.1)
+}
+document.querySelector('[data-drawer-open]').addEventListener('click', openDrawer);
+document.querySelectorAll('[data-drawer-close]').forEach(function (el) { el.addEventListener('click', closeDrawer); });
+
+function openModal(id) {
+  document.querySelector('.modal-overlay[data-modal="' + id + '"]').classList.add('is-open');
+}
+function closeModals() {
+  document.querySelectorAll('.modal-overlay.is-open').forEach(function (m) { m.classList.remove('is-open'); });
+}
+
+document.querySelectorAll('[data-modal-open]').forEach(function (btn) {
+  btn.addEventListener('click', function () { openModal(btn.getAttribute('data-modal-open')); });
+});
+document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
+  // клик по подложке (не по панели) закрывает окно
+  overlay.addEventListener('mousedown', function (e) { if (e.target === overlay) closeModals(); });
+  overlay.querySelectorAll('[data-modal-close]').forEach(function (btn) {
+    btn.addEventListener('click', closeModals);
+  });
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Escape') return;
+  if (document.querySelector('.modal-overlay.is-open')) closeModals(); // сначала модалка…
+  else closeDrawer();                                                  // …затем drawer
+});
+
+// Ряды «Удобрений»: чекбокс переключает .is-inactive ряда (серый/opacity в CSS). Ничего не пересчитывается.
+document.querySelectorAll('.fertilizer-card .fert-check').forEach(function (cb) {
+  cb.addEventListener('change', function () {
+    cb.closest('.fertilizer-card').classList.toggle('is-inactive', !cb.checked);
+  });
+});
+
+// §3.4: чекбокс = аккордеон в карточках «Долив раствора» / «Разбавление концентрата»:
+// снят ⇒ блок полей скрыт (класс hidden → display:none), отмечен ⇒ показан. Ничего не пересчитывается.
+document.querySelectorAll('[data-accordion]').forEach(function (cb) {
+  var block = document.getElementById(cb.getAttribute('data-accordion'));
+  block.classList.toggle('hidden', !cb.checked);
+  cb.addEventListener('change', function () {
+    block.classList.toggle('hidden', !cb.checked);
+  });
+});
+</script>
+
+</body>
+</html>

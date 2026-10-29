@@ -1,0 +1,82 @@
+/* ============================================================
+    Схема «Природа» — ТОЛЬКО переопределения токенов схемы
+    (перенос из apps/web-design/color-nature.css: цвета дословно;
+    классовые overrides макета — green-тонированные кнопки, крупный
+    radius по классам, тени сайдбара — НЕ переносены: их закрывают
+    токены --radius, --shadow-small/large, --btn-tint-pct/
+    --btn-hover-pct/--btn-border-pct и компоненты в Stage 2).
+    Чистый CSS, без @import.
+
+    Механизм специфичности: light `html[data-scheme="nature"]` (0-1-1)
+    перебивает default `:root` (0-1-0) из theme.css; dark
+    `html[data-scheme="nature"][data-theme="dark"]` (0-2-1) перебивает
+    media-fallback theme.css (0-2-0) — цвета схемы побеждают
+    (гайдлайн §4.2). Цветовые литералы — только здесь (гайдлайн §4.4).
+    ============================================================ */
+
+/* Светлая: тёплая бумага #eef3e6/#f6faf0, green primary #3e7a3e. */
+html[data-scheme="nature"] {
+  --bg: #eef3e6;
+  --card: #f6faf0;
+  --text: #24352a;
+  --muted: #5d6b5c;
+  --border: #c6d4bc;
+  --primary: #3e7a3e;
+  --danger: #b34a33;
+  --ok: #2e7040;
+  --deficit: #a44436;
+  --excess: #a87f2b;
+
+  /* Палитра элементов — earthy: ochre/rust вместо чистых yellow/orange
+     (микро остаётся серым — т. заказчика). */
+  --el-no3: #46784b;
+  --el-nh4: #46784b;
+  --el-p: #a88d34;
+  --el-k: #b06a38;
+  --el-ca: #8b8676;
+  --el-mg: #77598a;
+  --el-s: #8b8676;
+  --el-cl: #8b8676;
+  --el-micro: #8b8676;
+
+  /* Shape: крупный radius 0.75rem всей схемы (макет задаёт его
+     кнопкам, полям, чипам, ячейкам, карточкам). Тени мягкие,
+     green-тонированные через var(--ok): --shadow-small/--shadow-large =
+     тон карточки/модалки макета (0 4px 14px, ok 22% — в макете они
+     одинаковые). Тень выводится из var(--ok), поэтому dark-вариант
+     адаптируется автоматически — в dark-блоке shape не дублируется. */
+  --radius: 0.75rem;
+  --shadow-small: 0 4px 14px color-mix(in srgb, var(--ok) 22%, transparent);
+  --shadow-large: 0 4px 14px color-mix(in srgb, var(--ok) 22%, transparent);
+
+  /* Кнопки: тон подложки 14%, hover 24%, рамка tint 45% от primary —
+     проценты дословно из макета (.btn background/hover/border). */
+  --btn-tint-pct: 14%;
+  --btn-hover-pct: 24%;
+  --btn-border-pct: 45%;
+}
+
+/* Тёмная: глубокий лес #16221a/#202e25, осветлённый green primary.
+   Только цвета: тени схемы выведены из var(--ok). */
+html[data-scheme="nature"][data-theme="dark"] {
+  --bg: #16221a;
+  --card: #202e25;
+  --text: #dde6dc;
+  --muted: #8ca295;
+  --border: #374a3c;
+  --primary: #6ea36d;
+  --danger: #e0705c;
+  --ok: #6fb47c;
+  --deficit: #df6f5e;
+  --excess: #d3a655;
+
+  --el-no3: #66a06b;
+  --el-nh4: #66a06b;
+  --el-p: #c2a04e;
+  --el-k: #c5814c;
+  --el-ca: #98917f;
+  --el-mg: #9a7ba6;
+  --el-s: #98917f;
+  --el-cl: #98917f;
+  --el-micro: #98917f;
+}

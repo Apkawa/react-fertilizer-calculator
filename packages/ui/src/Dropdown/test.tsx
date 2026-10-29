@@ -119,3 +119,11 @@ test("Dropdown: кнопка внутри renderItem не выбирает пу�
   expect(onChange).not.toHaveBeenCalled();
   expect(comboboxValue()).toBe("a");
 });
+
+// Stage 2 «restyle» (red-фаза): хук data-ui на внешней обёртке-контейнере
+// (Provider не создаёт DOM-узла, firstElementChild — div-обёртка с ref).
+test('Dropdown: корень обёртки несёт хук data-ui="dropdown"', () => {
+  const { container } = render(<Dropdown<string> items={["a", "b"]} value="a" />);
+  const wrapper = container.firstElementChild as HTMLElement;
+  expect(wrapper.getAttribute("data-ui")).toBe("dropdown");
+});

@@ -77,3 +77,12 @@ test("Modal: при закрытии фокус возвращается на т
   });
   expect(document.activeElement).toBe(trigger);
 });
+
+// Stage 2 «restyle» (red-фаза): хук data-ui на диалоге (панели модалки), а не
+// на оверлее: оверлей — декоративный фон (закрашивается токенами), схемы
+// мишатся на панель (рамка/ширина/тень) через `html[data-scheme=x] [data-ui=modal]`.
+test('Modal: диалог несёт хук data-ui="modal"', () => {
+  render(<Modal opened title="Заголовок модалки" container={() => <div>контент модалки</div>} />);
+  const dialog = screen.getByRole("dialog");
+  expect(dialog.getAttribute("data-ui")).toBe("modal");
+});

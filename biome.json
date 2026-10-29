@@ -37,5 +37,12 @@
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true
-  }
+  },
+  "files": { "ignoreUnknown": false,
+   "includes": [
+      "**",
+      "!**/dist",
+      "!**/build",
+      "!**/apps/web-design"
+    ]}
 }

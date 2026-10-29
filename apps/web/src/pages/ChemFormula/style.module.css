@@ -1,0 +1,33 @@
+@layer theme, base, components, utilities;
+@layer components {
+  /* Таблицы утилитных страниц — канон дельт-таблицы макета (design-guideline
+     §5): шапка th uppercase 0.75rem/600 --muted, рамки рядов --border,
+     padding 0.375/0.5. display:block + overflow-x: широкая таблица (NPK —
+     16 колонок) скролится внутри себя — страница без горизонтального
+     переполнения на 390px (§8). Цветовых литералов нет (§4.4). */
+  .table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    margin-block: 0.5em;
+  }
+
+  .table th {
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+    padding: 0.375rem 0.5rem;
+    border-bottom: var(--border-width) solid var(--border);
+  }
+
+  .table td {
+    padding: 0.375rem 0.5rem;
+    border-top: var(--border-width) solid var(--border);
+    color: var(--text);
+  }
+}

@@ -1,0 +1,444 @@
+/* ============================================================
+    Структура макета — ТОЛЬКО scheme-независимые правила:
+    layout/grid/типографика/размеры/позиции/модалки/drawer/media.
+    Компонентные правила здесь читают var(--*) токены; сам визуал
+    (цвета, рамки, тени, radius по схемам) задают color-<name>.css
+    (§5): color-default.css, color-win95.css, color-retro.css,
+    color-nature.css, color-science.css.
+    ============================================================ */
+
+/* ============================================================
+   База
+   ============================================================ */
+html,
+body {
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   Палитра элементов: НЕ красят текст (т. заказчика §5: единый цвет
+   имён/значений — var(--text), читается в обеих темах). Классы .el-*
+   задают только тон подложки/рамки — переменную --el-tint читают
+   .chip-el и .el-cell. Микро — нейтральный серый (--el-micro = --el-s).
+   ============================================================ */
+.el-no3 { --el-tint: var(--el-no3); }
+.el-nh4 { --el-tint: var(--el-nh4); }
+.el-p   { --el-tint: var(--el-p); }
+.el-k   { --el-tint: var(--el-k); }
+.el-ca  { --el-tint: var(--el-ca); }
+.el-mg  { --el-tint: var(--el-mg); }
+.el-s   { --el-tint: var(--el-s); }
+.el-cl  { --el-tint: var(--el-cl); }
+.el-micro { --el-tint: var(--el-micro); }
+
+/* ============================================================
+   Компонентные классы
+   ============================================================ */
+
+/* Чип (баланс, состав удобрения): квадрированная тонированная ячейка — как .el-cell:
+   2 строки (подпись сверху, значение снизу), radius 0.5rem. Базовый чип — balance-ряды:
+   БЕЗ рамки, приглушённая подложка color-mix(--muted 6%) (т. заказчика: менее заметные);
+   тон + рамка сохраняются только у чипов элементов (.chip-el).
+   Вертикальный padding крупнее горизонтального + min-width → почти квадрат (w/h ≤ ~1.4).
+   Ряд чипов (flex-nowrap в разметке) всегда в одну строку; чип не сжимается. */
+.chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+  padding: 0.8rem 0.5rem;
+  min-width: 2.5rem;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--muted) 6%, transparent);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* Строка 1: подпись — жирная (700), единый цвет var(--text); строка 2: значение —
+   обычное (400), тот же цвет. Т. заказчика §5: имена/значения не красятся по
+   элементу — текст один и тот же в светлой и тёмной теме. */
+.chip-label {
+  font-size: 0.75rem;
+  line-height: 1.1;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.chip-value {
+  font-weight: 400;
+  color: var(--text);
+}
+
+/* Чип элемента: тонированная подложка + рамка — тон элемента (--el-tint из .el-*,
+   §5 выше), текст — единый var(--text) (.chip-label/.chip-value). ПЛОТНЕЕ базового
+   .chip — меньший padding и min-width (т. заказчика: ряды состава компактнее).
+   Правило идёт после .chip (та же специфичность 0-1-0) → перебивает его
+   padding/min-width. */
+.chip-el {
+  background: color-mix(in srgb, var(--el-tint, var(--muted)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--el-tint, var(--muted)) 45%, transparent);
+  padding: 0.45rem 0.4rem;
+  min-width: 2rem;
+}
+
+/* <800px: чипы компактнее (~0.7rem) — ряды Recipe/Result/удобрений
+   помещаются в одну строку без переноса и без переполнения страницы;
+   увеличенный вертикальный padding (квадратная форма сохраняется) */
+@media (max-width: 799px) {
+  .chip { font-size: 0.7rem; padding: 0.5rem 0.25rem; min-width: 2rem; gap: 0.06rem; }
+  .chip-label { font-size: 0.625rem; }
+  /* Чипы состава на мобильном — плотнее (~0.35rem 0.25rem); правило AFTER .chip в этом
+     блоке (специфичность 0-1-0) → перебивает компакт padding базового .chip. */
+  .chip-el { padding: 0.35rem 0.25rem; min-width: 2rem; }
+}
+
+/* Поля ввода */
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--card);
+  color: var(--text);
+  font-size: 0.875rem;
+}
+
+.input:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: -1px;
+}
+
+/* Поле с префиксом «1:» внутри (коэффициент разведения): ширина поля
+   такая же, как у соседних полей — префикс не отдельный инпут. */
+.input-prefixed {
+  padding-left: 1.75rem;
+}
+
+.input-prefix {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.875rem;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* Карточка выбранного удобрения */
+.fertilizer-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--bg);
+}
+
+/* Кнопка удаления ряда: ПОЛНОСТЬЮ стандартная иконка-кнопка — тот же цвет/подложка/
+   рамка, что у остальных .icon-btn (muted-override убран, т. заказчика: иконки
+   единообразны; primary-tint корректен и в тёмной теме). Остался только hover:
+   подложка danger-tint + иконка --danger. Специфичность 0-2-0 против .icon-btn
+   hover (0-1-0) независимо от порядка правил. */
+.icon-btn.del-btn:hover {
+  background: color-mix(in srgb, var(--danger) 18%, transparent);
+  color: var(--danger);
+}
+
+/* Второстепенные текстовые кнопки — единый стандарт .btn (см. секцию «Кнопки»:
+   тот же визуал, что .icon-btn); .btn-outline убран. */
+
+/* Таблица дельт */
+.delta-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.delta-table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.375rem 0.5rem;
+}
+
+.delta-table td {
+  padding: 0.375rem 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.delta-table .num {
+  text-align: right;
+}
+
+.delta-table .section-row td {
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: var(--bg);
+}
+
+/* Тёмная тема: доп. override для .del-btn не нужен — стандартный primary-tint
+   .icon-btn читается и на тёмной подложке; hover danger — в базовом правиле. */
+
+/* Ручка-грип ряда удобрения («Переместить»): 6 точек, cursor:grab — drag-n-drop не реализован.
+    Высота 2.5rem = высота шапки ряда (.fert-weight lh 2.5rem / .del-btn как .icon-btn),
+    ряд не «прыгает». */
+.fert-grip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--muted);
+  cursor: grab;
+}
+
+.fert-grip svg {
+  width: 18px;
+  height: 18px;
+}
+
+.fert-grip:hover {
+  color: var(--text);
+}
+
+.fert-grip:active {
+  cursor: grabbing;
+}
+
+/* Невыбранное удобрение: ряд приглушён (opacity ≤ 0.7), название — muted. */
+.fertilizer-card.is-inactive {
+  opacity: 0.6;
+}
+
+.fertilizer-card.is-inactive .fert-name {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Чипы inactive-ряда — нейтральный серый tint от --muted (перебивает .chip-el:
+   специфичность 0-3-0 против 0-1-0; тон микро/макро не используется). Текст чипов —
+   единый var(--text) (§5), серость ряда — через opacity ряда. */
+.fertilizer-card.is-inactive .chip-el {
+  background: color-mix(in srgb, var(--muted) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--muted) 30%, transparent);
+}
+
+/* «Расширенные» */
+.details-card summary {
+  padding: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.details-card[open] summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.details-body {
+  padding: 1rem;
+}
+
+/* ============================================================
+   Сайдбар: ≥1250px — фиксированный; <1250px — drawer
+   ============================================================ */
+.sidebar {
+  position: fixed;
+  inset-block: 0;
+  left: 0;
+  width: 300px;
+  overflow-y: auto;
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--text) 8%, transparent);
+}
+
+/* <1250px сайдбар скрыт до открытия drawer (гамбург + drawer; раскладка остаётся десктопной при ≥800px) */
+@media (max-width: 1249px) {
+  .sidebar { display: none; }
+}
+
+/* ≥1250px: контент сдвинут под фиксированный сайдбар, гамбург скрыт */
+@media (min-width: 1250px) {
+  .content { padding-left: 300px; }
+  .hamburger { display: none; }
+}
+
+/* Hamburger-кнопка видна только <1250px */
+.hamburger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--card);
+  color: var(--text);
+}
+
+/* Drawer: overlay на весь экран, body без прокрутки */
+.drawer-overlay { display: none; }
+
+html.drawer-open .sidebar {
+  display: block;
+  height: 100vh;
+  z-index: 60;
+  box-shadow: 4px 0 24px color-mix(in srgb, var(--text) 20%, transparent);
+}
+
+html.drawer-open .drawer-overlay {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
+}
+
+html.drawer-open body { overflow: hidden; }
+
+/* ============================================================
+   Сайдбар: вкладки и пункты подменю
+   ============================================================ */
+.sidebar-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.sidebar-tab:hover {
+  color: var(--text);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+
+.sidebar-tab.is-active {
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+/* Пункты подменю — мельче и с боковым отступом */
+.sidebar-submenu .sidebar-tab {
+  padding-left: 2rem;
+  font-size: 0.8125rem;
+}
+
+/* ============================================================
+   Модальные окна
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: none;
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
+}
+
+.modal-overlay.is-open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Панель: на узких экранах — почти во всю ширину */
+.modal-panel {
+  width: min(560px, calc(100% - 2rem));
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--text) 25%, transparent);
+}
+
+/* ============================================================
+   Ячейки элементов в результате (тон подложки — классом .el-* через
+   --el-tint; текст имён/значений — единый var(--text), т. заказчика §5)
+   ============================================================ */
+.el-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--el-tint, var(--muted)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--el-tint, var(--muted)) 30%, transparent);
+}
+
+/* Строка 1 — имя: жирное (700), мелкое (~0.75rem как подпись чипа), var(--text);
+   строка 2 — значение: обычное (400), ~0.875rem, тот же цвет;
+   строка 3 — дельта мельче; БЕЗ символа «Δ» (т. заказчика §3.3) — только знаковое
+   значение; окраска по знаку: «0» — нейтральный var(--muted) (базовый .el-delta),
+   «+» — --ok, «−» — --deficit. Δ-подписи balance-чипов («ΔΣI») не меняются. */
+.el-cell .el-name { font-size: 0.75rem; font-weight: 700; line-height: 1.15; color: var(--text); }
+.el-cell .el-value { font-size: 0.875rem; font-weight: 400; color: var(--text); }
+.el-cell .el-delta { font-size: 0.75rem; color: var(--muted); }
+
+/* Статус дельты по знаку (т. заказчика §3.3): «+» — зелёный (--ok), «−» — красный
+   (--deficit); «0» остаётся базовым нейтральным (--muted). Специфичность 0-3-0, иначе
+   базовая .el-cell .el-delta (0-2-0) перебивает цвет. */
+.el-cell .el-delta.status-pos { color: var(--ok); }
+.el-cell .el-delta.status-neg { color: var(--deficit); }
+
+/* <800px: сетка всегда 1 ряд × 8, поэтому ячейки компактнее (без горизонтального переполнения на 390px) */
+@media (max-width: 799px) {
+  .el-cell { padding: 0.25rem 0.25rem; gap: 0.05rem; }
+  .el-cell .el-name { font-size: 0.625rem; }
+  .el-cell .el-value { font-size: 0.75rem; }
+  .el-cell .el-delta { font-size: 0.625rem; }
+}
+
+/* ============================================================
+    Единый стандарт кнопок: .icon-btn — каноническая база всех кнопок
+    (save/broom/tune/close/import/export/restart, удаление ряда, тема);
+    .btn — тот же визуал для текстовых кнопок (текст вместо иконки),
+    с svg — иконка+текст (inline-flex, gap, тот же border/radius/bg/height).
+    ============================================================ */
+.icon-btn,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 35%, transparent);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  font-size: 0.875rem;
+}
+
+.icon-btn {
+  width: 2.5rem;
+  padding: 0;
+}
+
+.icon-btn svg,
+.btn svg { width: 24px; height: 24px; }
+
+.icon-btn:hover,
+.btn:hover {
+  background: color-mix(in srgb, var(--primary) 22%, transparent);
+}

@@ -1,0 +1,31 @@
+@layer theme, base, components, utilities;
+@layer components {
+  /* Радио — канон макета (гайдлайн §8, index.html): нативный контрол,
+   * тонировка --primary, размер 1rem. Touch-цель ≥40px — рядом-подписью
+   * ниже (min-height 2.5rem; label кликабелен). Цветовых литералов нет
+   * (§4.4). Симметрично Checkbox (см. Checkbox/style.module.css). */
+  .radio {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--primary);
+    cursor: pointer;
+  }
+
+  /* focus — inset outline как у поля (.input, §8) */
+  .radio:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: -1px;
+  }
+
+  /* Ряд «подпись + радио» (label оборачивает контрол): канон §3.6 —
+   * 0.875rem/600 var(--text), gap 0.5rem, min-height 2.5rem (≥40px, §8).
+   * Специфичность 0-2-0 > .label (0-1-0): field-label канон (§5) не
+   * ломается для подписей над полями без контрола внутри. */
+  [data-ui="label"]:has([data-ui="radio"]) {
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+}

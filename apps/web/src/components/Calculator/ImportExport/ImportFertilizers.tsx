@@ -1,27 +1,15 @@
 import { FERTILIZER_ELEMENT_NAMES } from "@fertilizer/calculator/constants";
 import { buildNPKFertilizer } from "@fertilizer/calculator/fertilizer";
-import { IconButton } from "@fertilizer/icons";
-import React, { type ChangeEvent, createRef, useEffect, useState } from "react";
+import React, { type ChangeEvent } from "react";
 import { useStore } from "@/store";
 import { csvParse } from "@/utils/csv";
+import { FileImportButton } from "./FileImportButton";
 
 type ImportFertilizersProps = {};
 
 const COLUMNS = ["id", ...FERTILIZER_ELEMENT_NAMES];
 
 export function ImportFertilizers(props: ImportFertilizersProps) {
-  const buttonRef = createRef<HTMLSpanElement>();
-  const [size, setSize] = useState({ width: 0, height: 0 });
-  useEffect(() => {
-    const newSize = {
-      width: buttonRef.current?.offsetWidth || 0,
-      height: buttonRef.current?.offsetHeight || 0,
-    };
-    if (size.width !== newSize.width) {
-      setSize(newSize);
-    }
-  }, [buttonRef, size.width]);
-
   const loadCSV = (csv: string) => {
     const p = csvParse(csv, { columns: COLUMNS });
     if (isNaN(parseInt(p[0].P))) {
@@ -47,25 +35,10 @@ export function ImportFertilizers(props: ImportFertilizersProps) {
     reader.readAsText(file);
   };
   return (
-    <>
-      {/* a11y (stage 4): file-инпут был вложен внутрь <button> (nested-interactive).
-          Теперь инпут — сосед кнопки и накрывает её: клик по иконке открывает диалог. */}
-      <span ref={buttonRef} className="relative inline-block">
-        <IconButton name="import" aria-label="Импорт удобрений" />
-        <input
-          type="file"
-          accept="text/csv, .csv"
-          aria-label="Импорт удобрений"
-          onChange={(event) => handleOnChange(event)}
-          style={{
-            top: 0,
-            left: 0,
-            position: "absolute",
-            opacity: 0,
-            ...size,
-          }}
-        />
-      </span>
-    </>
+    <FileImportButton
+      ariaLabel="Импорт удобрений"
+      accept="text/csv, .csv"
+      onChange={(event) => handleOnChange(event)}
+    />
   );
 }

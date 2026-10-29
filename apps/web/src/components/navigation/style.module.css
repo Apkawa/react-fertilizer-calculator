@@ -1,32 +1,32 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
+@layer theme, base, components, utilities;
 @layer components {
+  /* Строки навигации на токенах темы (канон §2.2–2.3, §5): system-стек из
+     theme.css вместо @import Roboto; минимальная высота строки 2.5rem
+     (touch-канон). Цветовых литералов нет — только core-токены. */
   .navTab {
-    font-family: "Roboto", sans-serif;
-    background-color: var(--color-background);
     display: inline-block;
+    min-height: 2.5rem;
     padding: 10px 25px;
-    color: var(--color-text);
-    border-bottom: 1px solid var(--color-gray);
+    background: transparent;
+    color: var(--text);
+    border-bottom: var(--border-width) solid var(--border);
     text-decoration: none;
   }
 
-  /* Hover: полупрозрачная подложка поверх фона темы (затемнение в светлой,
-     осветление в тёмной) — читается в обеих темах. */
+  /* Hover: тон primary 12% поверх фона темы (как активная строка макета
+     .sidebar-tab) — читается в обеих темах без dark-специального случая. */
   .navTab:hover {
-    background-color: rgba(0, 0, 0, 0.06);
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
   }
 
-  /* biome-ignore lint/correctness/noUnknownPseudoClass: :global — псевдокласс CSS-модулей */
-  :global(html)[data-theme="dark"] .navTab:hover {
-    background-color: rgba(255, 255, 255, 0.12);
-  }
-
+  /* Активная строка: легасная структура (рамка + верхний акцент 2px +
+     нижняя рамка «растворена» в фоне), но на токенах — orange убран. */
   .navTab.active {
-    background-color: var(--color-background);
-    color: var(--color-text);
-    border: 1px solid var(--color-gray);
-    border-top: 2px solid orange; /* deliberate-акцент */
-    border-bottom: 1px solid var(--color-background);
+    color: var(--text);
+    background: transparent;
+    border: var(--border-width) solid var(--border);
+    border-top: 2px solid var(--primary);
+    border-bottom-color: var(--bg);
     cursor: default;
   }
 

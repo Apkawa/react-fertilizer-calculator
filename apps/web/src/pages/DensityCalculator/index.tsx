@@ -3,7 +3,7 @@ import {
   getDensityFromConcentration,
 } from "@fertilizer/calculator/density-calculator";
 import { DATA_KEYS } from "@fertilizer/calculator/density-calculator/constants";
-import { Dropdown, Heading, Input, Label, Text } from "@fertilizer/ui";
+import { Card, Dropdown, Heading, Input, Label } from "@fertilizer/ui";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { round } from "@/utils";
@@ -65,47 +65,50 @@ export default () => {
     }
   }, [history, value, density, concentration]);
 
+  // Верстка — канон макета (guideline §2.2/§3.4/§5): Card-обёртка, заголовок
+  // страницы h1, строки полей «подпись слева / контрол справа» с единицами в
+  // подписи (§5: «Концентрация, г/л», «Плотность, г/мл»). Ширина — общая рамка
+  // Root; легасный inline width: 936/300 убран (на 390px давал переполнение).
+  // Логика пересчёта плотности/концентрации и роутинга не изменена.
   return (
-    <div className="flex justify-center">
-      <div style={{ width: 936 }}>
-        <div className="flex">
-          <Heading>Калькулятор плотности</Heading>
-        </div>
-        <div className="flex flex-col gap-2">
-          <div style={{ width: 300 }}>
-            <Label className="flex flex-col">
-              Соль
-              <Dropdown items={DATA_KEYS} onChange={onChangeFormula} value={value} />
-            </Label>
-          </div>
-          <Label className="flex flex-col">
-            Концентрация
-            <Input
-              className="w-40"
-              type="number"
-              step="0.1"
-              min={0}
-              max={2000}
-              value={concentration || 0}
-              onChange={(event) => onChangeConcentration(event.target.value)}
-            />
-            <Text className="whitespace-nowrap">г/л</Text>
-          </Label>
-          <Label className="flex flex-col">
-            Плотность
-            <Input
-              className="w-40"
-              type="number"
-              step="0.0001"
-              min={0}
-              max={2}
-              value={density || 0}
-              onChange={(event) => onChangeDensity(event.target.value)}
-            />
-            <Text className="whitespace-nowrap">г/мл</Text>
-          </Label>
-        </div>
+    <Card>
+      <Heading as="h1">Калькулятор плотности</Heading>
+      {/* На узком экране контрол переносится на свою строку (flex-wrap),
+          touch-высота — канон контролов (2.5rem). */}
+      <div className="flex flex-col gap-3">
+        <Label className="flex flex-wrap items-center justify-between gap-3">
+          Соль
+          {/* Dropdown не принимает className — обёртка даёт ширину без
+              inline-стилей (width-проп создавал style-атрибут). */}
+          <span className="flex min-w-0 grow basis-40 justify-end">
+            <Dropdown items={DATA_KEYS} onChange={onChangeFormula} value={value} label="Соль" />
+          </span>
+        </Label>
+        <Label className="flex flex-wrap items-center justify-between gap-3">
+          Концентрация, г/л
+          <Input
+            className="w-24 min-w-0 text-right"
+            type="number"
+            step="0.1"
+            min={0}
+            max={2000}
+            value={concentration || 0}
+            onChange={(event) => onChangeConcentration(event.target.value)}
+          />
+        </Label>
+        <Label className="flex flex-wrap items-center justify-between gap-3">
+          Плотность, г/мл
+          <Input
+            className="w-24 min-w-0 text-right"
+            type="number"
+            step="0.0001"
+            min={0}
+            max={2}
+            value={density || 0}
+            onChange={(event) => onChangeDensity(event.target.value)}
+          />
+        </Label>
       </div>
-    </div>
+    </Card>
   );
 };

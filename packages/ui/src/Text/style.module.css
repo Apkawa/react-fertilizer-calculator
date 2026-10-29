@@ -1,11 +1,44 @@
+@layer theme, base, components, utilities;
 @layer components {
-  /* Заголовок (эквивалент легасного заголовка: h2 по умолчанию, без margin) */
+  /* Текстовый блок — канон макета (гайдлайн §5): body/control-текст
+   * 0.875rem, line-height 1.5, цвет core-токен --text.
+   * Гарнитура наследуется от body (--font-body). */
+  .text {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  /* Заголовок: базовая типографика (гарнитура/вес/интерлиней — токены темы,
+   * цвет --text, margin 0 как в легасе) + шкала размеров по тегу
+   * (гайдлайн §5: title карточки 1.125rem/600 = h2 по умолчанию; h5/h6 —
+   * канонические второстепенные tiers макета: submenu 0.8125rem,
+   * sub-label 0.75rem). Класс уровня идёт после .heading (та же
+   * специфичность 0-1-0) → задаёт font-size. */
   .heading {
     margin: 0;
     font-family: var(--font-heading);
-    font-size: 0.875rem;
     font-weight: var(--font-weight-heading);
     line-height: var(--line-height-heading);
-    color: var(--color-text);
+    color: var(--text);
+  }
+
+  .h1 {
+    font-size: 1.5rem;
+  }
+  .h2 {
+    font-size: 1.125rem;
+  }
+  .h3 {
+    font-size: 1rem;
+  }
+  .h4 {
+    font-size: 0.875rem;
+  }
+  .h5 {
+    font-size: 0.8125rem;
+  }
+  .h6 {
+    font-size: 0.75rem;
   }
 }

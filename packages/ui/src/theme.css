@@ -1,27 +1,120 @@
-/* Базовая тема (@fertilizer/ui): замена легасному пресету polaris.
-   CSS-переменные потребляются компонентами packages/ui и утилитами tailwindcss.
-   Тёмный режим: html[data-theme="dark"] — атрибут ставит useColorMode (src/use-color-mode.ts). */
+@layer theme, base, components, utilities;
+/* ============================================================
+   Базовая тема (@fertilizer/ui): единый токен-словарь «тема × схема».
+   Значения этого файла — схема «По умолчанию» из эталонного макета
+   apps/web-design/color-default.css: light — :root, dark —
+   :root[data-theme="dark"] (атрибут ставит useColorMode,
+   src/use-color-mode.ts). Другие схемы переопределяют те же имена
+   токенов в scheme-*.css (специфичность html[data-scheme...] выше
+   :root и media-fallback). Цветовые литералы — только здесь
+   (default-схема) и в scheme-*.css (гайдлайн §4.4). Файл — чистый
+   CSS, без @import tailwind.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   Core токены (light, default-схема — из макета :root, с tuning'ом
+   контраста WCAG 2.x (§4.4, a11y e2e): --muted ≥4.5:1 на --card и
+   --bg (#5b6775 → 5.77 / 5.33); текстовые сигналы --ok/--deficit/--
+   danger затемнены до ≥4.5:1 на белом фоне (#1f7a3a → 5.38,
+   #b03027 → 6.37, #cf3526 → 5.01). Тонированные подложки color-mix
+   от --el-tint/--ok не красят текст (канон §3.2) — текст всегда
+   --text, поэтому подложки на контраст не влияют.
+   ------------------------------------------------------------ */
 :root {
-  /* Цвета (светлая схема, polaris) */
-  --color-text: #454f5b;
-  --color-background: #fff;
-  --color-primary: #5c6ac4;
-  --color-secondary: #006fbb;
-  --color-highlight: #47c1bf;
-  --color-muted: #e6e6e6;
-  --color-gray: #dfe3e8;
-  --color-danger: #f44;
-  --color-accent: #f49342;
-  --color-darken: #00044c;
-  /* Цвета элементов питания (результаты калькулятора) */
-  --color-no3: #05ad11;
-  --color-nh4: #fff;
-  --color-p: #dbc403;
-  --color-k: #e07206;
-  --color-ca: #d1c7c7;
-  --color-mg: #ab0ae0;
-  --color-s: #fff;
-  /* Типографика (polaris) */
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #22272e;
+  --muted: #5b6775;
+  --border: #dfe2e8;
+  --primary: #5c6ac4;
+  --danger: #cf3526;
+  --ok: #1f7a3a;
+  --deficit: #b03027;
+  --excess: #e0a800;
+  /* OS-поверхности контролов (popup у native <select>, скроллбары) красятся
+   * по схеме темы — тёмная тема делает dropdown читабельным без отдельного
+   * компонента (§5: native select канона ортогонален теме). */
+  color-scheme: light;
+}
+
+/* ------------------------------------------------------------
+   Палитра элементов питания (light) — это ТОЛЬКО тон подложки/рамки
+   (--el-tint через color-mix), текст по элементу не красится
+   (гайдлайн §3.3, §4.4). NH4 = NO3 (азот); S/Cl/micro — нейтральный
+   серый (т. заказчика: микро как чип S; --el-micro == --el-s).
+   ------------------------------------------------------------ */
+:root {
+  --el-no3: #2e9e3f;
+  --el-nh4: #2e9e3f; /* азот — как NO3 */
+  --el-p: #e5c11a;
+  --el-k: #e07020;
+  --el-ca: #8d8478;
+  --el-mg: #9326a8;
+  --el-s: #8d8478; /* как Ca */
+  --el-cl: #8d8478; /* как Ca */
+  --el-micro: #8d8478; /* как S/Ca — нейтральный серый тон микро */
+}
+
+/* ------------------------------------------------------------
+   Тон-классы элементов: задают ТОЛЬКО --el-tint (не красят текст).
+   Переменную читают тонированные ячейки (.chip-el / .el-cell и их
+   аналоги ui-*), которые сами смешивают тон с фоном.
+   ------------------------------------------------------------ */
+.el-no3 {
+  --el-tint: var(--el-no3);
+}
+.el-nh4 {
+  --el-tint: var(--el-nh4);
+}
+.el-p {
+  --el-tint: var(--el-p);
+}
+.el-k {
+  --el-tint: var(--el-k);
+}
+.el-ca {
+  --el-tint: var(--el-ca);
+}
+.el-mg {
+  --el-tint: var(--el-mg);
+}
+.el-s {
+  --el-tint: var(--el-s);
+}
+.el-cl {
+  --el-tint: var(--el-cl);
+}
+.el-micro {
+  --el-tint: var(--el-micro);
+}
+
+/* ------------------------------------------------------------
+   Shape-токены (геометрия default-схемы: radius 0.5rem, рамка 1px,
+   мягкие тени — значения из прежней темы приложения). Схемы могут
+   переопределять их в scheme-*.css (гайдлайн §3.1, §4.3).
+   ------------------------------------------------------------ */
+:root {
+  --radius: 0.5rem;
+  --border-width: 1px;
+  --shadow-small: 0 0 4px rgba(0, 0, 0, 0.125);
+  --shadow-large: 0 0 24px rgba(0, 0, 0, 0.125);
+
+  /* Component-токены кнопки — каноническая база макета .btn/.icon-btn
+     (style.css): подложка tint 12% от primary, hover tint 22%, рамка
+     tint 35% от primary, тень none (заливных primary нет). Потребляются
+     Button в Stage 2; схемы переопределяют их в scheme-*.css
+     (retro — залитая кнопка через --btn-tint-pct, win95 — inset-bevel
+     через --btn-shadow, nature/science — свои проценты тонирования). */
+  --btn-tint-pct: 12%;
+  --btn-hover-pct: 22%;
+  --btn-border-pct: 35%;
+  --btn-shadow: none;
+}
+
+/* ------------------------------------------------------------
+   Типографика — сохранена из прежней темы (наследие polaris).
+   ------------------------------------------------------------ */
+:root {
   --font-body:
     system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   --font-heading:
@@ -31,22 +124,76 @@
   --line-height-heading: 1.25;
   --font-weight-body: 400;
   --font-weight-heading: 600;
-  /* Тени (добавлены в тему приложения поверх polaris) */
-  --shadow-small: 0 0 4px rgba(0, 0, 0, 0.125);
-  --shadow-large: 0 0 24px rgba(0, 0, 0, 0.125);
 }
 
+/* ------------------------------------------------------------
+   Dark override default-схемы — значения из макета
+   :root[data-theme="dark"]. Contrast сохранён: --deficit/--danger
+   одинаково красные, --excess жёлтый, --ok зелёный (гайдлайн §4.4);
+   --muted ≥4.5:1 на --card/--bg (6.13 / 6.89); --primary осветлён
+   до #a378e0 (4.85 / 5.45 — текст Help-ссылок в dark).
+   ------------------------------------------------------------ */
 :root[data-theme="dark"] {
-  --color-text: #9d9d9d; /* override приложения (в polaris: #3e4155) */
-  --color-background: #000639;
-  --color-primary: #9c6ade;
-  --color-secondary: #b4e1fa;
-  --color-highlight: #b7ecec;
+  --bg: #14161a;
+  --card: #1e2127;
+  --text: #e6e8eb;
+  --muted: #9aa0aa;
+  --border: #333840;
+  --primary: #a378e0;
+  --danger: #f66;
+  --ok: #4caf50;
+  --deficit: #f66;
+  --excess: #e5c11a;
+  /* OS-popup контролов — тёмный (читабельный dropdown, см. :root выше). */
+  color-scheme: dark;
+
+  --el-no3: #4caf50;
+  --el-nh4: #4caf50;
+  --el-p: #ffd54f;
+  --el-k: #ff9800;
+  --el-ca: #b0a894;
+  --el-mg: #ba68c8;
+  --el-s: #b0a894;
+  --el-cl: #b0a894;
+  --el-micro: #b0a894; /* как S/Ca — нейтральный серый (т. заказчика) */
 }
 
-/* Тело страницы: фон и цвет текста по умолчанию из переменных темы
-   (не в слое — поверх preflight tailwind). */
+/* ------------------------------------------------------------
+   Media-fallback (режим «Система» до инициализации JS: первый кадр,
+   Storybook — только default-схема, те же dark-значения). Явные
+   scheme-dark блоки перебивают фолбэк специфичностью:
+   html[data-scheme][data-theme="dark"] (0-2-1) > :root:not(...) (0-2-0).
+   ------------------------------------------------------------ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161a;
+    --card: #1e2127;
+    --text: #e6e8eb;
+    --muted: #9aa0aa;
+    --border: #333840;
+    --primary: #a378e0;
+    --danger: #f66;
+    --ok: #4caf50;
+    --deficit: #f66;
+    --excess: #e5c11a;
+    /* Media-fallback: та же OS-поверхность контролов, что и :root[data-theme="dark"]. */
+    color-scheme: dark;
+
+    --el-no3: #4caf50;
+    --el-nh4: #4caf50;
+    --el-p: #ffd54f;
+    --el-k: #ff9800;
+    --el-ca: #b0a894;
+    --el-mg: #ba68c8;
+    --el-s: #b0a894;
+    --el-cl: #b0a894;
+    --el-micro: #b0a894; /* как S/Ca — нейтральный серый (т. заказчика) */
+  }
+}
+
+/* Тело страницы: фон и текст из core-токенов
+   (не в @layer — поверх preflight tailwind, как раньше). */
 body {
-  background-color: var(--color-background);
-  color: var(--color-text);
+  background-color: var(--bg);
+  color: var(--text);
 }

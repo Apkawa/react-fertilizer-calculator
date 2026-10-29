@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ElementCell: ARIA-снапшот базового рендера (без дельты) 1`] = `
+- text: Fe 1.4
+`;

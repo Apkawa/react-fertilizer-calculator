@@ -1,0 +1,94 @@
+/* ============================================================
+    Схема «Химия и наука»: холодный lab-light #eef4f8 / dark
+    #0f1a24, teal primary #2f7f9e, чёткие тонкие рамки, subtle
+    cyan-«лабораторная» подсветка теней, cooler-тони elements
+    (микро остаётся серым как S/Ca — т. заказчика).
+    ============================================================ */
+html[data-scheme="science"] {
+  --bg: #eef4f8;
+  --card: #ffffff;
+  --text: #22303c;
+  --muted: #5f7486;
+  --border: #bcd0de;
+  --primary: #2f7f9e;
+  --danger: #c0392b;
+  --ok: #2f7f5f;
+  --deficit: #b04a38;
+  --excess: #a8811f;
+
+  /* Палитра элементов — cooler: hues сдвинуты к slate/cyan */
+  --el-no3: #2f7f6e;
+  --el-nh4: #37796c;
+  --el-p: #4f7fa8;
+  --el-k: #58698f;
+  --el-ca: #6f828f;
+  --el-mg: #5c6298;
+  --el-s: #6f828f;
+  --el-cl: #6f828f;
+  --el-micro: #7d8b95; /* как S/Ca — холодный нейтральный серый */
+}
+
+html[data-scheme="science"][data-theme="dark"] {
+  --bg: #0f1a24;
+  --card: #16232f;
+  --text: #dbe7ef;
+  --muted: #8ba0b2;
+  --border: #2e4658;
+  --primary: #4f9fbe;
+  --danger: #ef6a58;
+  --ok: #58b28a;
+  --deficit: #e07060;
+  --excess: #d4a84a;
+
+  --el-no3: #54a893;
+  --el-nh4: #5fa296;
+  --el-p: #6fa5c6;
+  --el-k: #8b93b6;
+  --el-ca: #98a6b2;
+  --el-mg: #928ec0;
+  --el-s: #98a6b2;
+  --el-cl: #98a6b2;
+  --el-micro: #97a4ae;
+}
+
+/* Кнопки: crisp тонкие рамки (50% primary), минимальный тон подложки. */
+html[data-scheme="science"] .icon-btn,
+html[data-scheme="science"] .btn,
+html[data-scheme="science"] .hamburger {
+  border: 1px solid color-mix(in srgb, var(--primary) 50%, transparent);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+}
+html[data-scheme="science"] .icon-btn:hover,
+html[data-scheme="science"] .btn:hover,
+html[data-scheme="science"] .hamburger:hover {
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+}
+html[data-scheme="science"] .icon-btn.del-btn:hover {
+  background: color-mix(in srgb, var(--danger) 16%, transparent);
+  color: var(--danger);
+}
+
+/* Карточки/модалка/сайдбар: тонкая рамка + subtle cyan glow. */
+html[data-scheme="science"] .card,
+html[data-scheme="science"] .fertilizer-card,
+html[data-scheme="science"] .details-card {
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 6px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+html[data-scheme="science"] .modal-panel {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 8px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+html[data-scheme="science"] .sidebar {
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+/* Поля и чипы: crisp 1px, radius остаётся 0.5rem (базовый). */
+html[data-scheme="science"] .input { border: 1px solid var(--border); }
+html[data-scheme="science"] .chip-el,
+html[data-scheme="science"] .el-cell {
+  border: 1px solid color-mix(in srgb, var(--el-tint, var(--muted)) 38%, transparent);
+}

@@ -33,7 +33,9 @@ export interface NumberInputProps
 }
 
 // Числовой инпут со спиннером (портирован из легасного виджета числового поля):
-// кнопки ^/v показываются по фокусу и двигают значение на step
+// кнопки ^/v показываются по фокусу и двигают значение на step; по позиции —
+// по центру поля, своим краем касаясь его верхней/нижней границы (Round 6);
+// стиль кнопки — канон Button (composes), фон tint поверх карты (непрозрачный).
 export const NumberInput = (props: NumberInputProps) => {
   const {
     name,
@@ -93,7 +95,8 @@ export const NumberInput = (props: NumberInputProps) => {
     });
   }, []);
 
-  const offset = -(inputSize?.height || 0) + 5;
+  // Ширина кнопки = ширина поля (легасное измерение offsetWidth); вертикаль
+  // — в CSS: кнопка центрирована над/под полем с перекрытием его границы.
   const spinnerWidth = inputSize ? `${inputSize.width}px` : undefined;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -103,15 +106,20 @@ export const NumberInput = (props: NumberInputProps) => {
   // legacy `maxWidth` + обычный style → инлайновый стиль
   const inputStyle: CSSProperties = { maxWidth, ...style };
 
+  // Хук data-ui="number-input" на обёртке — стабильная точка таргета схем
+  // (`html[data-scheme=x] [data-ui=number-input]`); NumberInput рендерит
+  // свою обёртку, а не Input-компонент — хук отличается от "input".
   return (
-    <div className={cx(css.wrapper, className)}>
+    <div className={cx(css.wrapper, className)} data-ui="number-input">
       {showBtn ? (
         <button
           ref={upButtonRef}
           type="button"
           aria-label="увеличить"
-          className={css.spinnerButton}
-          style={{ top: `${offset}px`, width: spinnerWidth }}
+          title="увеличить"
+          className={cx(css.spinnerButton, css.spinTop)}
+          style={{ width: spinnerWidth }}
+          disabled={inputProps.disabled}
           onClick={onUpButtonHandler}
         >
           ^
@@ -134,8 +142,10 @@ export const NumberInput = (props: NumberInputProps) => {
           ref={downButtonRef}
           type="button"
           aria-label="уменьшить"
-          className={css.spinnerButton}
-          style={{ bottom: `${offset}px`, width: spinnerWidth }}
+          title="уменьшить"
+          className={cx(css.spinnerButton, css.spinBottom)}
+          style={{ width: spinnerWidth }}
+          disabled={inputProps.disabled}
           onClick={onDownButtonHandler}
         >
           v

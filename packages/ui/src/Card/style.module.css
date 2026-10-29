@@ -1,7 +1,14 @@
+@layer theme, base, components, utilities;
 @layer components {
-  /* Карточка (эквивалент легасной карточки в теме приложения: фон, тень small, p: 2) */
+  /* Карточка — канон макета (.card, гайдлайн §2.2/§5): подложка --card,
+   * рамка/радиус — shape-токены схемы (--border-width/--border/--radius),
+   * тень --shadow-small. Win95-bevel подхватывается из --shadow-small
+   * автоматически (scheme-win95.css), отдельное исключение не нужно.
+   * Цветовых литералов нет (гайдлайн §4.4). Padding легасный сохранён (p: 2). */
   .card {
-    background-color: var(--color-background);
+    background: var(--card);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius);
     box-shadow: var(--shadow-small);
     padding: 8px;
   }

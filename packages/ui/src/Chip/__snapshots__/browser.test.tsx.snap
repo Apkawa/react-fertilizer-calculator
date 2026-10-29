@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Chip: ARIA-снапшот базового рендера 1`] = `
+- text: EC 1.83
+`;

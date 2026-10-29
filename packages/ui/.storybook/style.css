@@ -1,2 +1,9 @@
 @import "tailwindcss";
 @import "../src/theme.css";
+
+/* Схемы оформления: переопределяют токены темы по html[data-scheme]
+   (атрибут ставит decorator из preview.ts — toolbar-globals theme/scheme). */
+@import "../src/scheme-win95.css";
+@import "../src/scheme-retro.css";
+@import "../src/scheme-nature.css";
+@import "../src/scheme-science.css";

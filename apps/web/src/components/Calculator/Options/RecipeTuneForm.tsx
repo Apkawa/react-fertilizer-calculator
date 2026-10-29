@@ -269,11 +269,15 @@ function RecipeInput(props: RecipeInputProps) {
         autoComplete="off"
         maxWidth="6rem"
         lang="en-US"
+        // Подсветка важного поля — tint от --ok (текст не красится);
+        // блокирующее поле — текст --danger; рамка — базовая токеновая
+        // (NumberInput), без цветовых литералов.
         style={{
           textAlign: "center",
-          backgroundColor: isImportant ? "#b3f7b8" : undefined,
-          color: isBlocking ? "red" : undefined,
-          borderColor: "black",
+          backgroundColor: isImportant
+            ? "color-mix(in srgb, var(--ok) 16%, transparent)"
+            : undefined,
+          color: isBlocking ? "var(--danger)" : undefined,
         }}
       />
     </div>

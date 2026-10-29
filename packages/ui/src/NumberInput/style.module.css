@@ -1,3 +1,4 @@
+@layer theme, base, components, utilities;
 @layer components {
   /* Числовой инпут со спиннером */
   /* Обёртка числового инпута: кнопки спиннера позиционируются абсолютно */
@@ -6,15 +7,47 @@
     display: block;
   }
 
-  /* Кнопка спиннера числового инпута (прозрачная накладка 3em сверху/снизу) */
+  /* Внутренний <input> использует класс Input — канон .input макета
+   * закрыт самим Input в Stage 2 (padding/border/radius/фон/color/
+   * 0.875rem + inset focus совпадают дословно), локальный override
+   * .wrapper input (0-1-1) стал избыточным и убран; поведение спиннера
+   * (offset по offsetHeight поля) не меняется. */
+
+  /* Кнопка спиннера числового инпута (накладка по фокусу): видна только при
+   * фокусе поля (условный рендер легасный, не меняется). Стиль — канон
+   * Button через composes: tint-рамка, тень, height, hover/active. Фон
+   * локально — tint от primary поверх --card (непрозрачный): кнопка
+   * перекрывает соседние ячейки и transparent-подложка Button просвечивает
+   * их. Приоритет override — .wrapper .spinnerButton (0-2-0), не зависит от
+   * порядка composes в бандле. Позиция — по горизонтали центр поля
+   * (left:50% + translateX, ширина inline = ширина поля), вертикаль —
+   * кнопка над/под инпутом, её край касается границы поля (Round 6). */
   .spinnerButton {
+    composes: button from "../Button/style.module.css";
     position: absolute;
-    height: 3em;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 30;
-    background: transparent;
-    border: 0;
-    padding: 0;
-    cursor: pointer;
-    color: var(--color-text);
+  }
+
+  .wrapper .spinnerButton {
+    background: color-mix(in srgb, var(--primary) var(--btn-tint-pct), var(--card));
+  }
+
+  .wrapper .spinnerButton:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--primary) var(--btn-hover-pct), var(--card));
+  }
+
+  /* active — затемнение заливки hover (+8%), как у Button */
+  .wrapper .spinnerButton:active:not(:disabled) {
+    background: color-mix(in srgb, var(--primary) calc(var(--btn-hover-pct) + 8%), var(--card));
+  }
+
+  /* ^ над полем, v под полем — касанием своих краёв к границам поля */
+  .spinTop {
+    bottom: 100%;
+  }
+  .spinBottom {
+    top: 100%;
   }
 }

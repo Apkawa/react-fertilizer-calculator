@@ -1,10 +1,13 @@
+@layer theme, base, components, utilities;
 @layer components {
   /* Сайдбар */
-  /* Оверлей сайдбара, докнутый (закреплён слева, узкий) */
+  /* Оверлей сайдбара, докнутый (закреплён слева, узкий). fixed (канон §2.2:
+   * fixed-панель) — панель прижата к viewport и не убегает при прокрутке
+   * страницы; height 100vh — карточка на всю высоту экрана. */
   .sidebarOverlay {
     overflow-y: auto;
-    position: absolute;
-    height: 100%;
+    position: fixed;
+    height: 100vh;
     top: 0;
     left: 0;
     display: flex;
@@ -20,19 +23,128 @@
     font: inherit;
   }
 
-  /* Оверлей сайдбара, не докнут (на весь экран, с полупрозрачным фоном) */
+  /* Оверлей сайдбара, не докнут (на весь экран, с полупрозрачным фоном):
+   * затемнение — тот же токен, что у оверлея Modal (§4.4: без
+   * rgba-литералов, в dark легасный белый светлил). */
   .sidebarOverlayUndocked {
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
+    background: color-mix(in srgb, var(--muted) 40%, transparent);
   }
 
-  /* Карточка сайдбара (заменяет легасную карточку внутри оверлея) */
+  /* Карточка сайдбара — канон drawer (гайдлайн §2.2–2.3): ширина 300px,
+   * подложка --card, правая рамка, тень --shadow-large (в win95 токен
+   * уже даёт inset-bevel). Док/drawer решает приложение (Stage 5) —
+   * здесь только визуал панели; margin-right 8px — легасная полоса
+   * «клик вне панели» сохранена. */
   .sidebarCard {
-    background-color: var(--color-background);
-    box-shadow: var(--shadow-small);
+    background: var(--card);
+    border-right: var(--border-width) solid var(--border);
+    box-shadow: var(--shadow-large);
     padding: 8px;
     height: 100vh;
     width: 300px;
     margin-right: 8px;
+    /* Колонка панели: контент flex-1 (потребитель прижат свои контролы
+     * вниз через footer-слот — канон «контролы внизу сайдбара»); без
+     * шапки-строки — меню начинается вверху (round 12). relative — база
+     * для absolute-иконки закрытия. */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Иконка закрытия drawer (round 12–13): IconButton прилеплена к верхнему
+   * правому углу карточки БЕЗ отступа (top/right 0 — поверх padding 8px),
+   * перекрывает первую строку контента; фон Button (--card) непрозрачный,
+   * z-index выше контента. */
+  .sidebarClose {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
+
+  /* Колонка контента: flex-1 + внутренний скролл (min-h-0) — длинный
+   * контент скроллится внутри карточки. Раскладка в модуле, не в
+   * tailwind-utilities: контракт живёт в пакете (browser-тесты ui идут
+   * без tailwind приложения). */
+  .sidebarContent {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  /* Footer-слот панели: прижат низу карточки (flex-shrink 0) вне
+   * скролл-области контента — consumer кладёт туда тумблер темы и
+   * выбор схемы (TabMenu в apps/web), всегда видимы. */
+  .sidebarFooter {
+    flex-shrink: 0;
+    padding-top: 12px;
+  }
+
+  /* Появление/убирание drawer (round 15): быстрая анимация — карточка
+   * выезжает слева (translateX) + оверлей fade. Имена keyframes = имена
+   * классов: CSS-modules хешит их с префиксом, тесты матчат по подстроке.
+   * slide-out с forwards — панель доигрывает уход до размонтирования
+   * (animationend в consumer, страховка — таймер для reduced-motion). */
+  @keyframes sidebarCardIn {
+    from {
+      transform: translateX(-100%);
+      opacity: 0.35;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  @keyframes sidebarCardOut {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(-100%);
+      opacity: 0.35;
+    }
+  }
+  @keyframes sidebarOverlayIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes sidebarOverlayOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  .sidebarCardIn {
+    animation: sidebarCardIn 0.18s ease-out;
+  }
+  .sidebarCardOut {
+    animation: sidebarCardOut 0.14s ease-in forwards;
+  }
+  .sidebarOverlayIn {
+    animation: sidebarOverlayIn 0.18s ease-out;
+  }
+  .sidebarOverlayOut {
+    animation: sidebarOverlayOut 0.14s ease-in forwards;
+  }
+  /* Reduced-motion: анимации выключены; размонтирование — по таймеру-страховке
+   * (animationend при animation: none не наступает). */
+  @media (prefers-reduced-motion: reduce) {
+    .sidebarCardIn,
+    .sidebarCardOut,
+    .sidebarOverlayIn,
+    .sidebarOverlayOut {
+      animation: none;
+    }
   }
 }

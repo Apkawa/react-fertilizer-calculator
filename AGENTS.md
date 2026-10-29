@@ -6,9 +6,9 @@
 
 - **pnpm workspace**: `apps/*` + `packages/*` (see `pnpm-workspace.yaml`), one lockfile, single Node/pnpm at the root.
 - **`apps/web`** (`@fertilizer/web`) — the React PWA: everything that used to be the repo root's `src/`.
-- React 16 + TypeScript 7 (strict) on **Vite** (@vitejs/plugin-react, JSX classic runtime) + vite-plugin-pwa.
+- React 19 + TypeScript 7 (strict) on **Vite** (@vitejs/plugin-react, JSX classic runtime) + vite-plugin-pwa. Версии react/react-dom — в каталоге `pnpm-workspace.yaml` (`catalog: react ~19.2.0`), пакеты ссылаться на `catalog:`.
 - State management: **zustand** (`apps/web/src/store/`, imported as `@/store`), persisted to `localStorage` (`appState`; legacy `reduxState` is auto-migrated on load). No redux / redux-form / redux-saga.
-- UI: **@fertilizer/ui** (plain CSS: `@layer components`, `ui-*` классы + tailwindcss v4; тема — CSS-переменные `theme.css`, тёмный режим — `data-theme`) + **@fertilizer/icons** (SVG-иконки по имени). Routing: react-router (HashRouter) + `@loadable/component` (lazy-loaded pages).
+- UI: **@fertilizer/ui** (CSS-модули `style.module.css` внутри `@layer components` + tailwindcss v4; тема — токены `theme.css`, тёмный режим — `html[data-theme]`, цветовые схемы — `html[data-scheme]` + `scheme-*.css`) + **@fertilizer/icons** (SVG-иконки по имени). Routing: react-router (HashRouter) + `@loadable/component` (lazy-loaded pages).
 - Calculations live in the pure source package **`packages/calculator`** (`@fertilizer/calculator`, algorithm from [siv237/HPG](https://github.com/siv237/HPG)) with no UI dependencies — it is consumed as TypeScript source (no build step) and bundled by the app's Vite.
 - Deploys to GitHub Pages (workflow: master → site root, other branches → subfolder).
 
@@ -19,14 +19,14 @@ All commands run from the repo root (proxy scripts in the root `package.json`):
 ```bash
 pnpm install              # install dependencies (workspace)
 pnpm start                # dev server (vite, http://localhost:3000)
-pnpm test                 # vitest: packages/calculator (node), packages/ui (jsdom unit tests only), packages/icons (jsdom) then apps/web (jsdom, setupFiles src/setupTests.ts)
+pnpm test                 # vitest: packages/calculator (node), packages/icons (jsdom), packages/ui (--project node, jsdom юнит-тесты) then apps/web (jsdom, setupFiles src/setupTests.ts)
 pnpm -C packages/ui test:browser   # vitest browser mode + @vitest/browser-playwright: browser regression tests (real chromium; local/manual — NOT in full-check/CI)
 pnpm -C packages/ui storybook      # Storybook dev server on :6006 (local tool — NOT in full-check; headless WSL2: use --no-open, auto-open crashes the process)
-pnpm -C packages/ui build-storybook# build → packages/ui/storybook-static/ (gitignored)
+pnpm -C packages/ui storybook:build # storybook build → packages/ui/storybook-static/ (gitignored)
 pnpm test:smoke           # playwright: route smoke tests (tests/smoke/)
 pnpm test:e2e             # playwright: e2e scenarios (tests/e2e/)
 pnpm lint                 # biome check apps packages
-pnpm type                 # tsc -p packages/calculator && tsc -p packages/icons && tsc -p apps/web
+pnpm type                 # tsc -p packages/calculator && tsc -p packages/icons && tsc -p packages/ui && tsc -p apps/web
 pnpm build                # production build (vite build → apps/web/build/)
 pnpm full-check           # test + lint + type + build (pre-commit / preversion)
 pnpm analyze              # bundle analysis (source-map-explorer)
@@ -34,7 +34,7 @@ node apps/web/server.js   # serve apps/web/build/ static files on :9005
 ```
 
 - The husky pre-commit hook runs `pnpm full-check`; commits only pass after the full cycle succeeds.
-- The playwright suites (`test:smoke` / `test:e2e`) are NOT part of `full-check` or CI: they spin up the dev server (`webServer` in `playwright.config.ts` — `pnpm start` at the root) and run in a real chromium, so they are run locally / manually when UI behavior matters. Co-located `*.test.tsx` files (render-smoke of components in jsdom) ARE part of `pnpm test`. The `packages/ui` browser tests (`pnpm -C packages/ui test:browser`) have the same status (local/manual, not in full-check/CI) and use `@vitest/browser-playwright` with the SAME chromium as the playwright suites (playwright 1.62.1 → `chromium-1234` in `~/.cache/ms-playwright`).
+- The playwright suites (`test:smoke` / `test:e2e`) are NOT part of `full-check` or CI: they spin up the dev server (`webServer` in `playwright.config.ts` — `pnpm start` at the root) and run in a real chromium, so they are run locally / manually when UI behavior matters. Co-located `*.test.tsx` files (render-smoke of components in jsdom) ARE part of `pnpm test`. The `packages/ui` browser tests (`pnpm -C packages/ui test:browser`) have the same status (local/manual, not in full-check/CI) and use `@vitest/browser-playwright` with the SAME chromium as the playwright suites (playwright 1.62.1 → `chromium-1234`; кэш браузеров в песочнице — `./.cache/ms-playwright`).
 - `packages/icons` PNG-превью иконок (`src/__tests__/icons-png.test.tsx`): каждая иконка из `registry.ts` рендерится в SVG и конвертируется системным `rsvg-convert` в PNG (96×96), сравнение с базлайном в `src/__tests__/snapshots/icons/`. Без `rsvg-convert` блок пропускается. Обновить базлайны: `UPDATE_ICON_PNGS=1 pnpm -C packages/icons test`; только свои иконки: `ICON_PNG_FILTER=plus,close`.
 - Versioning: `pnpm -C apps/web version patch|minor` (preversion = full-check). The app version lives in `apps/web/package.json` — `vite.config.ts` reads it for `__VERSION__`; the root has no version.
 
@@ -45,7 +45,8 @@ pnpm-workspace.yaml       # packages: ['apps/*', 'packages/*']
 apps/web/                 # @fertilizer/web — the React PWA (all deps of the app)
   src/
     components/Calculator/# calculator UI: Form, FertilizerManager, Mixer, ImportExport, Diary, Options, Result
-    pages/                # pages (lazy-loaded): Calculator, Help, ChemFormula, DensityCalculator, Example, NotFound
+    pages/                # pages (lazy-loaded): Calculator, Help, ChemFormula, DensityCalculator, NotFound
+    Root.tsx              # роутинг + header + footer; канон порога сайдбара DOCK_THRESHOLD=1250
     store/                # zustand store: calculator + fertilizerEdit + mixerOptions + fertilizersError; localStorage persistence (appState)
     docs/                 # reference .md files — imported with ?raw, displayed in Help
     hooks/, utils/
@@ -54,24 +55,29 @@ apps/web/                 # @fertilizer/web — the React PWA (all deps of the a
   vitest.config.ts        # tests: jsdom + shared config from vite.config.ts
   server.js               # static server for build/ on :9005 (express)
 packages/
-  ui/                     # @fertilizer/ui — UI-атомы и составные компоненты (plain CSS + tailwindcss v4), source package
+  ui/                     # @fertilizer/ui — UI-атомы и составные компоненты (CSS-модули + tailwindcss v4), source package
     src/
-      Button/, Card/, Checkbox/, Dropdown/, ForkMeOnGitHub/, Input/, Label/,
-      Modal/, NumberInput/, Radio/, Sidebar/, Text/
-                               # 12 папок компонентов: index.tsx + style.css (@layer components, ui-* классы)
+      Button/, Card/, Checkbox/, Chip/, Dropdown/, ElementCell/,
+      Input/, Label/, Modal/, NumberInput/, Radio/, Sidebar/, Text/
+                               # 13 папок компонентов: index.tsx + style.module.css
+                               # (CSS-модуль внутри @layer components, стартует с
+                               # `@layer theme, base, components, utilities;`)
                                # + test.tsx (jsdom) + browser.test.tsx (vitest browser, chromium) + <Name>.stories.tsx
       index.ts            # barrel (публичный API пакета)
       cx.ts               # склейка className
       number-utils.ts     # number-хелперы NumberInput
-      use-color-mode.ts   # data-theme + localStorage (мигрирует legacy-ключ)
-      use-window-size.ts  # размер окна (Sidebar)
-      theme.css           # тема CSS-переменными (светлая/тёмная: html[data-theme])
+      use-color-mode.ts   # ColorMode light|dark|system → html[data-theme] + localStorage (ключ ui:color-mode, мигрирует legacy)
+      use-color-scheme.ts # SchemeId → html[data-scheme] + localStorage (ключ ui:color-scheme)
+      schemes.ts          # реестр SCHEMES: default + win95/retro/nature/science
+      use-window-size.ts  # размер окна (потребитель — apps/web Root.tsx, порог сайдбара)
+      theme.css           # тема CSS-токенами: --bg/--card/--text/--muted/--border/--primary/--danger/--ok/--deficit/--excess + палитра --el-* (светлая :root; тёмная html[data-theme="dark"] + media-fallback, значения синхронны)
+      scheme-win95.css / scheme-retro.css / scheme-nature.css / scheme-science.css # цветовые схемы: переопределение тех же токенов при html[data-scheme]
       global.d.ts         # declare module "*.css" (tsc для side-effect CSS-импортов)
     .storybook/           # Storybook 10.5 (framework @storybook/react-vite)
     vitest.config.ts      # проекты: node (jsdom, юнит-тесты) + browser (chromium, test:browser)
   icons/                  # @fertilizer/icons — app icon set (SVG components chosen by name: Icon/IconButton), source package
     src/
-      icons/              # 14 hand-drawn 24×24 SVG icons
+      icons/              # 16 hand-drawn 24×24 SVG icons
       Icon.tsx            # icon by name (svg wrapped in a div)
       IconButton.tsx      # button with icon by name (packages/ui Button)
       registry.ts         # name → icon component map
@@ -93,7 +99,7 @@ docs/                     # jupyter models of the calculations (model_v3, EDTA_F
 tools/mdb_convert.ts      # conversion utility
 ```
 
-- `packages/calculator`, `packages/icons` and `packages/ui` are **source packages**: `main`/`exports` point at `./src/*.ts` directly — no build step; the app depends on them as `workspace:*`. Vite bundles the TS source, `tsc` resolves it via `moduleResolution: bundler`. `@fertilizer/icons` is the app's icon set: `Icon`/`IconButton` render icons by name from `registry.ts` (14 own SVGs); the app pulls the packages' `.ts` files into its program.
+- `packages/calculator`, `packages/icons` and `packages/ui` are **source packages**: `main`/`exports` point at `./src/*.ts` directly — no build step; the app depends on them as `workspace:*`. Vite bundles the TS source, `tsc` resolves it via `moduleResolution: bundler`. `@fertilizer/icons` is the app's icon set: `Icon`/`IconButton` render icons by name from `registry.ts` (16 own SVGs); the app pulls the packages' `.ts` files into its program.
 - Alias `@/` → `apps/web/src/` (vite `resolve.alias` + tsconfig.paths.json). The app imports the package via `@fertilizer/calculator[/subpath]`.
 - Markdown `.md` files are imported with the `?raw` query (native Vite mechanism, `apps/web/src/pages/Help/pages.ts`).
 - Build-time constants (`__VERSION__`, `__COMMIT_HASH__`, `__COMMIT_DATE__`, `__COMMIT_REF_NAME__`) are injected via `define` in `apps/web/vite.config.ts` from `git` — git is required for builds.
@@ -117,7 +123,11 @@ Calculation tests in `packages/calculator/src/__tests__/` are reference tests; d
 - TypeScript strict; linter is **Biome** (`biome.json`, `pnpm lint`). Committing without a passing lint/test/type/build is not allowed (enforced by husky).
 - New calculation logic goes into `packages/calculator` as pure functions with colocated tests; do not move it into the app's components.
 - App state is the zustand store `apps/web/src/store/` (`@/store`): a `calculator` slice + `fertilizerEdit` / `mixerOptions` form states + `fertilizersError`. The `CalculatorState` type is in `apps/web/src/components/Calculator/types.d.ts`. Form fields are controlled through `@/store/form-context` (`FormProvider` + `useFormField` dot-path fields, `@/components/ui/Form` inputs) — no prop-drilling, global state read/write.
-- UI is built on `@fertilizer/ui` (plain CSS: `@layer components`, `ui-*` classes + tailwindcss v4; тема — CSS-переменные `packages/ui/src/theme.css`, тёмный режим — `html[data-theme="dark"]`, хук `useColorMode`). Do not introduce new UI libraries without necessity.
+- UI is built on `@fertilizer/ui` (CSS-модули `style.module.css` внутри `@layer components` + tailwindcss v4; тема — токены `packages/ui/src/theme.css`, тёмный режим — `html[data-theme="dark"]`, хук `useColorMode`; цветовые схемы — `html[data-scheme]` + `scheme-*.css`, хук `useColorScheme`). Do not introduce new UI libraries without necessity.
+- **Каскад @layer (обязательно):** каждый CSS-файл, участвующий в каскаде слоёв, начинается с `@layer theme, base, components, utilities;` — порядок слоёв задаёт приоритет (components > base перебивает tailwind preflight). Tailwind v4 без `@theme`-реестра: utility-классов вида `text-muted` нет — использовать `text-[var(--muted)]` и т.п.
+- **Цветовые литералы (канон Stage 8):** hex/rgb/hsl допустимы только в `packages/ui/src/theme.css` и `packages/ui/src/scheme-*.css` (в схемах можно `color-mix` с токенами). Всё остальное — семантические токены (`--primary/--text/--muted/--border/--card`), новых литералов не добавлять.
+- **Хуки `data-ui`** — на корнях компонентных панелей (стабильные точки таргета схем: `html[data-scheme=x] [data-ui=...]`).
+- **Канон дизайна — `apps/web-design/`** (макеты): body/контролы 0.875rem, touch-target ≥40px, сайдбар: drawer при ширине <1250, dock при ≥1250 — порог `DOCK_THRESHOLD` живёт в `apps/web/src/Root.tsx`, внутри `Sidebar` порогов нет (docked/opened — пропсы извне). Тумблер темы и выбор схемы — в footer-слоте панели сайдбара (TabMenu; sidebarFooter в @fertilizer/ui — прижат низу карточки вне скролл-области контента); оверлей Sidebar fixed (§2.2) — панель не убегает при прокрутке страницы; fork-баннер из header убран (ForkMeOnGitHub удалён из пакета).
 - New pages: create `apps/web/src/pages/<Name>/` and register it in `apps/web/src/pages/index.ts` (loadable) and `Root.tsx` (Route).
 - Reference texts: `apps/web/src/docs/**/*.md`, displayed on the Help page.
 - Jupyter models belong in `docs/` (python, repo root), not in the app or package sources.
@@ -150,13 +160,13 @@ All implementation follows TDD, KISS, DRY, SOLID. On conflict: strict TDD+DRY+SO
 ## pnpm in the Sandbox
 
 - Caches are kept inside the project directory, not globally 
-- for pnpm the env var `pnpm_config_store_dir=./.pnpm-cache/v11` is set.
+- for pnpm the env var `pnpm_config_store_dir=./.cache/pnpm/v11` is set.
 
-`pnpm_config_store_dir=./.pnpm-cache/v11 pnpm install`
+`pnpm_config_store_dir=./.cache/pnpm/v11 pnpm install`
 
 ## playwright-cli in the Sandbox (browser for UI verification)
 
-DSH mechanics: each `bash` invocation runs in a fresh sandbox (its own /tmp; processes and /tmp from the previous invocation are gone). Persistent: the project directory, `.pnpm-cache`, `.cache/ms-playwright` (bind-mounted at `~/.cache/ms-playwright` — **shared with the user**) and the host network (localhost is reachable).
+DSH mechanics: each `bash` invocation runs in a fresh sandbox (its own /tmp; processes and /tmp from the previous invocation are gone). Persistent: the project directory, `.cache/pnpm`, `.cache/ms-playwright` (bind-mounted at `~/.cache/ms-playwright` — **shared with the user**) and the host network (localhost is reachable).
 
 Env vars for **all** playwright-cli commands (without them, EROFS: the daemon writes logs/sockets to `~/.cache` and `/tmp`, which are not writable/invocation-surviving):
 

@@ -18,7 +18,11 @@ export function useWindowSize() {
 
   useEffect(() => {
     function handleResize() {
-      setWindowSize(getWindowSize);
+      // Явный вызов getWindowSize(): раньше сюда передавалась сама функция
+      // и React звал её как updater — результат был эквивалентен, но
+      // читается такой код как «в state сохраняется функция» (guard-тест
+      // use-window-size.test.tsx фиксирует, что в state — числа).
+      setWindowSize(getWindowSize());
     }
     window.addEventListener("resize", handleResize);
     handleResize();

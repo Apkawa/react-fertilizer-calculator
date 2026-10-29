@@ -1,0 +1,70 @@
+@layer theme, base, components, utilities;
+@layer components {
+  /* Чип — канон макета .chip (guideline §3.2): квадрированная тонированная
+   * ячейка, 2 ряда (подпись сверху, значение снизу). Базовый чип — баланс-ряд:
+   * БЕЗ рамки, приглушённая подложка color-mix(--muted 6%); вертикальный
+   * padding крупнее горизонтального + min-width → почти квадрат. Ряд чипов
+   * (flex-nowrap в разметке) всегда в одну строку: nowrap + flex-shrink 0.
+   * Цветовых литералов нет: только var()/color-mix (guideline §4.4). */
+  .chip {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.125rem;
+    padding: 0.8rem 0.5rem;
+    min-width: 2.5rem;
+    border: none;
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--muted) 6%, transparent);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Ряд 1 — подпись: жирная (700), единый цвет var(--text); ряд 2 — значение:
+   * обычное (400), тот же цвет (канон §5: имена/значения не красятся). */
+  .label {
+    font-size: 0.75rem;
+    line-height: 1.1;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .value {
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  /* Чип элемента (.chip-el): тонированная подложка + рамка от --el-tint
+   * (наследуется от внешнего className .el-*), текст — единый var(--text).
+   * ПЛОТНЕЕ базового .chip — меньший padding/min-width; правило идёт после
+   * .chip (та же специфичность) → перебивает его padding/min-width/border. */
+  .element {
+    background: color-mix(in srgb, var(--el-tint, var(--muted)) 12%, transparent);
+    border: var(--border-width) solid
+      color-mix(in srgb, var(--el-tint, var(--muted)) 45%, transparent);
+    padding: 0.45rem 0.4rem;
+    min-width: 2rem;
+  }
+
+  /* <800px (канон — max-width: 799px): чипы компактнее — ряды Recipe/Result/
+   * удобрений помещаются в одну строку без переноса и переполнения страницы. */
+  @media (max-width: 799px) {
+    .chip {
+      font-size: 0.7rem;
+      padding: 0.5rem 0.25rem;
+      min-width: 2rem;
+      gap: 0.06rem;
+    }
+    .label {
+      font-size: 0.625rem;
+    }
+    /* Чипы состава на мобильном — плотнее; правило AFTER .chip в этом блоке
+     * перебивает компакт padding базового .chip. */
+    .element {
+      padding: 0.35rem 0.25rem;
+      min-width: 2rem;
+    }
+  }
+}

@@ -1,0 +1,81 @@
+/* ============================================================
+    Схема «По умолчанию» — токены перенесены из style.css ДОСЛОВНО
+    (визуал не меняется). Светлая — :root (по умолчанию, без gating
+    по data-scheme — другие схемы перебивают специфичностью).
+    Тёмная — явная (data-theme="dark", ставит JS) + фолбэк
+    prefers-color-scheme до запуска JS.
+    ============================================================ */
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #22272e;
+  --muted: #7a808a;
+  --border: #dfe2e8;
+  --primary: #5c6ac4;
+  --danger: #f44;
+  --ok: #2e9e3f;
+  --deficit: #d9534f;
+  --excess: #e0a800;
+
+  /* Палитра элементов */
+  --el-no3: #2e9e3f;
+  --el-nh4: #2e9e3f; /* азот — как NO3 */
+  --el-p: #e5c11a;
+  --el-k: #e07020;
+  --el-ca: #8d8478;
+  --el-mg: #9326a8;
+  --el-s: #8d8478; /* как Ca */
+  --el-cl: #8d8478; /* как Ca */
+  --el-micro: #8d8478; /* как S/Ca — нейтральный серый тон (т. заказчика: микро как чип S) */
+}
+
+:root[data-theme="dark"] {
+  --bg: #14161a;
+  --card: #1e2127;
+  --text: #e6e8eb;
+  --muted: #9aa0aa;
+  --border: #333840;
+  --primary: #9c6ade;
+  --danger: #f66;
+  --ok: #4caf50;
+  --deficit: #f66;
+  --excess: #e5c11a;
+
+  --el-no3: #4caf50;
+  --el-nh4: #4caf50;
+  --el-p: #ffd54f;
+  --el-k: #ff9800;
+  --el-ca: #b0a894;
+  --el-mg: #ba68c8;
+  --el-s: #b0a894;
+  --el-cl: #b0a894;
+  --el-micro: #b0a894; /* как S/Ca — нейтральный серый (т. заказчика) */
+}
+
+/* Фолбэк: пока JS не встал, режим «Система» решает media-запрос.
+   Явные scheme-dark блоки (html[data-scheme][data-theme="dark"], 0-2-1)
+   перебивают этот фолбэк (:root:not(...), 0-2-0) — цвета схемы побеждают. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161a;
+    --card: #1e2127;
+    --text: #e6e8eb;
+    --muted: #9aa0aa;
+    --border: #333840;
+    --primary: #9c6ade;
+    --danger: #f66;
+    --ok: #4caf50;
+    --deficit: #f66;
+    --excess: #e5c11a;
+
+    --el-no3: #4caf50;
+    --el-nh4: #4caf50;
+    --el-p: #ffd54f;
+    --el-k: #ff9800;
+    --el-ca: #b0a894;
+    --el-mg: #ba68c8;
+    --el-s: #b0a894;
+    --el-cl: #b0a894;
+    --el-micro: #b0a894; /* как S/Ca — нейтральный серый (т. заказчика) */
+  }
+}

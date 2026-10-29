@@ -1,0 +1,84 @@
+/* ============================================================
+    Схема «Химия и наука» — ТОЛЬКО переопределения токенов схемы
+    (перенос из apps/web-design/color-science.css: цвета дословно;
+    классовые overrides макета — crisp-рамки кнопок/полей, cyan-свечение
+    карточек/модалки/сайдбара, тонкие обводки чипов — НЕ переносены: их
+    закрывают токены --radius, --shadow-small/large, --btn-tint-pct/
+    --btn-hover-pct/--btn-border-pct и компоненты в Stage 2).
+    Чистый CSS, без @import.
+
+    Механизм специфичности: light `html[data-scheme="science"]` (0-1-1)
+    перебивает default `:root` (0-1-0) из theme.css; dark
+    `html[data-scheme="science"][data-theme="dark"]` (0-2-1) перебивает
+    media-fallback theme.css (0-2-0) — цвета схемы побеждают
+    (гайдлайн §4.2). Цветовые литералы — только здесь (гайдлайн §4.4).
+    ============================================================ */
+
+/* Светлая: холодный lab-light #eef4f8/#ffffff, teal primary #2f7f9e. */
+html[data-scheme="science"] {
+  --bg: #eef4f8;
+  --card: #ffffff;
+  --text: #22303c;
+  --muted: #5f7486;
+  --border: #bcd0de;
+  --primary: #2f7f9e;
+  --danger: #c0392b;
+  --ok: #2f7f5f;
+  --deficit: #b04a38;
+  --excess: #a8811f;
+
+  /* Палитра элементов — cooler: hues сдвинуты к slate/cyan
+     (микро остаётся серым как S/Ca — т. заказчика). */
+  --el-no3: #2f7f6e;
+  --el-nh4: #37796c;
+  --el-p: #4f7fa8;
+  --el-k: #58698f;
+  --el-ca: #6f828f;
+  --el-mg: #5c6298;
+  --el-s: #6f828f;
+  --el-cl: #6f828f;
+  --el-micro: #7d8b95; /* как S/Ca — холодный нейтральный серый */
+
+  /* Shape: crisp — тонкие рамки остаются базовыми (--border-width: 1px
+     из theme.css, макет их не меняет); contract схемы ужесточает
+     геометрию до --radius: 0.4rem (макет оставил базовый 0.5rem).
+     Тени — subtle cyan-«лабораторная» подсветка через var(--primary):
+     --shadow-small = тон карточки (0 1px 6px, primary 25%; сайдбар
+     макета 0 1px 4px близок к нему), --shadow-large = тон модалки
+     (0 1px 8px, primary 30%). Выводятся из var(--primary) — dark
+     адаптируется автоматически, в dark-блоке shape не дублируется. */
+  --radius: 0.4rem;
+  --shadow-small: 0 1px 6px color-mix(in srgb, var(--primary) 25%, transparent);
+  --shadow-large: 0 1px 8px color-mix(in srgb, var(--primary) 30%, transparent);
+
+  /* Кнопки: минимальный тон подложки 10%, hover 18%, crisp рамка tint
+     50% от primary — проценты дословно из макета (.btn). */
+  --btn-tint-pct: 10%;
+  --btn-hover-pct: 18%;
+  --btn-border-pct: 50%;
+}
+
+/* Тёмная: lab-dark #0f1a24/#16232f, осветлённый teal primary.
+   Только цвета: тени схемы выведены из var(--primary). */
+html[data-scheme="science"][data-theme="dark"] {
+  --bg: #0f1a24;
+  --card: #16232f;
+  --text: #dbe7ef;
+  --muted: #8ba0b2;
+  --border: #2e4658;
+  --primary: #4f9fbe;
+  --danger: #ef6a58;
+  --ok: #58b28a;
+  --deficit: #e07060;
+  --excess: #d4a84a;
+
+  --el-no3: #54a893;
+  --el-nh4: #5fa296;
+  --el-p: #6fa5c6;
+  --el-k: #8b93b6;
+  --el-ca: #98a6b2;
+  --el-mg: #928ec0;
+  --el-s: #98a6b2;
+  --el-cl: #98a6b2;
+  --el-micro: #97a4ae;
+}

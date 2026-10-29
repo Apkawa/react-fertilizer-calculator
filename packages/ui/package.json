@@ -6,7 +6,11 @@
   "main": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./theme.css": "./src/theme.css"
+    "./theme.css": "./src/theme.css",
+    "./scheme-win95.css": "./src/scheme-win95.css",
+    "./scheme-retro.css": "./src/scheme-retro.css",
+    "./scheme-nature.css": "./src/scheme-nature.css",
+    "./scheme-science.css": "./src/scheme-science.css"
   },
   "dependencies": {
     "@fertilizer/icons": "workspace:*",

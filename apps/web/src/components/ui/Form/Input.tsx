@@ -4,7 +4,7 @@ import { useFormField } from "@/store/use-form-field";
 
 // Лёгасные пропы раскладки (старая дизайн-система), которые коньюмеры передают на поле формы:
 // width/maxWidth/flex — обычные CSS-значения, marginRight — токен space-шкалы
-interface LegacyLayout {
+export interface LegacyLayout {
   width?: string;
   maxWidth?: string;
   flex?: number;
@@ -14,7 +14,7 @@ interface LegacyLayout {
 // space-шкала (px): индекс токена → пиксели (polaris: [0,4,8,16,32,64,128])
 const SPACE_SCALE = [0, 4, 8, 16, 32, 64, 128];
 
-const layoutStyle = (props: LegacyLayout & { style?: CSSProperties }): CSSProperties => {
+export const layoutStyle = (props: LegacyLayout & { style?: CSSProperties }): CSSProperties => {
   const { width, maxWidth, flex, marginRight, style } = props;
   return {
     width,
